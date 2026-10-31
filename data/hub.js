@@ -125,6 +125,18 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/redox/"
   },
   {
+   "id": "moles",
+   "logo": "assets/games/moles.webp",
+   "title": "The Mole",
+   "icon": "⛏️",
+   "blurb": "Avogadro’s number, molar mass, the Mole Road Map, percent composition, and empirical and molecular formulas.",
+   "courses": [
+    "3A",
+    "1A"
+   ],
+   "url": "https://itsdrdan.github.io/moles/"
+  },
+  {
    "id": "stoichiometry",
    "logo": "assets/games/stoichiometry.webp",
    "title": "Stoichiometry",
@@ -6700,6 +6712,7 @@ window.HUB_DATA = {
       "molecular formula"
      ],
      "games": [
+      "moles",
       "stoichiometry"
      ],
      "videos": [
@@ -7815,6 +7828,7 @@ window.HUB_DATA = {
       "mass percent, ppm, ppb"
      ],
      "games": [
+      "moles",
       "stoichiometry"
      ],
      "videos": [
