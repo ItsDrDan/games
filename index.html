@@ -335,6 +335,28 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .footbrand{display:inline-flex;align-items:center;gap:8px}
 @media (max-width:640px){.watermark{width:300px;margin-top:-150px;right:-110px;opacity:.12}.watermark.small{display:none}}
 @media (prefers-reduced-motion:reduce){.watermark{animation:none}}
+
+/* ===== bigger icons + chapter badges ===== */
+.course-card .stats{font-size:1.05rem}
+.course-card .stats span{display:inline-flex;align-items:center;gap:6px}
+.way .em{font-size:2.6rem;line-height:1}
+.game .icon{width:60px;height:60px;font-size:2rem;border-radius:18px}
+.play{font-size:1.05rem;min-height:48px}.play::after{font-size:1.35rem}
+.newtab{width:48px;min-height:48px;font-size:1.15rem}
+.btn{font-size:1.02rem}
+.ch-card{position:relative;padding-top:20px}
+.chicon{position:absolute;top:14px;right:14px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:1.7rem;background:var(--cb);box-shadow:inset 0 -3px 0 #0000000d}
+.ch-card b{padding-right:58px}
+.ch-card .meta{font-size:1rem}
+.toc a .ti{flex:0 0 22px;font-size:1.05rem;text-align:center}
+.toc a .n{min-width:40px}
+.chhead{display:flex;align-items:center;gap:16px}
+.chbadge{flex:0 0 76px;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:2.4rem;background:radial-gradient(circle at 35% 30%,#fff,var(--cb) 70%);border:3px solid var(--c);box-shadow:0 4px 0 var(--c)}
+.ritem .ri{width:48px;height:48px;font-size:1.5rem}
+.step .art{width:68px;height:68px}
+.panel h3,.path h3,.recipe h3,.tips h3,.watchout h3{font-size:1.2rem}
+.video .thumb::after{width:44px;height:44px;font-size:1rem}
+@media (max-width:640px){.chbadge{flex-basis:60px;width:60px;height:60px;font-size:1.9rem}}
 </style>
 </head>
 <body>
@@ -528,7 +550,7 @@ function viewCourse(cid, chid) {
     h('div', {class: 'bookline'}, h('span', {}, '📖'), book.url ? h('a', {href: book.url, target: '_blank', rel: 'noopener'}, `${book.title} (${book.publisher}) ↗`) : h('span', {}, h('b', {}, book.title + ': '), book.note || 'coming soon'))));
   const toc = h('nav', {class: 'toc', 'data-course': cid, 'aria-label': c.name + ' chapters'}, h('h2', {}, cid === '3B' ? 'Units' : 'Chapters'),
     c.chapters.map(x => h('a', {href: `#/course/${cid}/${x.id}`, 'aria-current': ch && x.id === ch.id ? 'true' : null},
-      h('span', {class: 'n'}, x.label), h('span', {}, x.title),
+      h('span', {class: 'n'}, x.label), h('span', {class: 'ti', 'aria-hidden': 'true'}, x.icon || ''), h('span', {}, x.title),
       h('span', {class: 'dots', 'aria-hidden': 'true'}, h('i', {class: x.read ? 'on' : ''}), h('i', {class: x.videos.length || x.playlists.length ? 'on' : ''}), h('i', {class: x.games.length ? 'on' : ''})))));
   const sel = h('select', {'aria-label': 'Jump to a chapter', onchange: e => go(e.target.value ? `#/course/${cid}/${e.target.value}` : '#/course/' + cid)},
     h('option', {value: ''}, cid === '3B' ? 'All units' : 'All chapters'), c.chapters.map(x => h('option', {value: x.id, selected: ch && x.id === ch.id}, `${x.label} · ${x.title}`)));
@@ -544,7 +566,7 @@ function courseOverview(c) {
     h('div', {class: 'kicker'}, 'Start here'), h('h2', {class: 'ct'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('p', {class: 'overview-intro', style: 'margin:0 0 18px'}, 'Each one gathers the reading, Dr. Dan’s video lessons, and the games for that topic, plus a quick summary and a step-by-step study plan.'),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
-      h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
+      h('span', {class: 'chicon', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
       h('span', {class: 'meta'}, ch.games.length ? h('span', {}, `🎮 ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, `▶️ ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, '▶️ playlist') : null, ch.read ? h('span', {}, '📖 reading') : null)))),
     h('div', {class: 'panel'}, h('h3', {}, '🎮 All games for ' + c.name, h('span', {class: 'count'}, allGames.length)), h('div', {class: 'grid'}, allGames.map(g => gameCard(g, c.id)))));
 }
@@ -591,7 +613,7 @@ function chapterBody(c, ch) {
   const read = ch.read;
   const top = read ? read.sections.filter(s => (s[0].match(/\./g) || []).length <= 1) : [];
   return h('article', {},
-    h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title),
+    h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
     guideBlock(c, ch, gs, vs, top),
     h('div', {class: 'panel'}, h('h3', {}, '🧠 Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
       h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
@@ -708,7 +730,7 @@ function renderResults(box, q, course) {
   }
   const group = (title, icon, arr, render, limit = 12) => { if (!arr.length) return; box.append(h('div', {class: 'rgroup'}, h('h3', {}, icon + ' ' + title, h('span', {class: 'count'}, arr.length)), h('div', {class: 'rlist'}, arr.slice(0, limit).map(render)))); };
   group('Chapters', '📚', groups.chapter, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: `#/course/${c.id}/${r.ch.id}`, 'data-course': c.id},
-    h('span', {class: 'ri'}, '📚'), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
+    h('span', {class: 'ri'}, r.ch.icon || '📚'), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
       h('div', {class: 'rs', html: r.via ? 'Covers: ' + highlight(r.via, qt) : `${r.ch.games.length} game${r.ch.games.length===1?'':'s'} · ${r.ch.videos.length} video${r.ch.videos.length===1?'':'s'}`}))); });
   group('Games', '🎮', groups.game, r => h('a', {class: 'ritem', href: '#/play/' + encodeURIComponent(r.g.id) + (course !== 'all' ? '?from=' + course : '')},
     h('span', {class: 'ri'}, r.g.icon || '🧪'), h('span', {}, h('div', {class: 'rt', html: highlight(r.g.title, qt)}), h('div', {class: 'rs'}, r.via ? `Practice for ${r.via}` : (r.g.blurb || '')))));
