@@ -357,6 +357,20 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .panel h3,.path h3,.recipe h3,.tips h3,.watchout h3{font-size:1.2rem}
 .video .thumb::after{width:44px;height:44px;font-size:1rem}
 @media (max-width:640px){.chbadge{flex-basis:60px;width:60px;height:60px;font-size:1.9rem}}
+
+/* clickable study-path steps */
+.steps>li{display:flex}
+.step{width:100%;text-align:left;font:inherit;color:inherit;border:2px solid transparent;cursor:pointer;box-shadow:0 4px 0 #5a4d9622;transition:transform .15s,box-shadow .15s,border-color .15s}
+.step .art,.step .num,.step b,.step .sp,.step .go{display:block}
+.step .sp{margin:0;color:#5e5679;font-size:.92rem;line-height:1.5}
+.step .go{margin-top:auto;padding-top:10px;font-weight:900;font-size:.92rem;color:var(--edge)}
+.step:hover{transform:translateY(-4px);box-shadow:0 8px 0 #5a4d9633;border-color:#cbbfe6}
+.step:active{transform:translateY(2px);box-shadow:0 1px 0 #5a4d9622}
+.step:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.panel,.recipe{scroll-margin-top:90px}
+@keyframes flash{0%{box-shadow:0 0 0 0 #9a6bff88}40%{box-shadow:0 0 0 10px #9a6bff33}100%{box-shadow:var(--shadow)}}
+.flash{animation:flash 1.2s ease-out}
+.flash:focus{outline:none}
 </style>
 </head>
 <body>
@@ -581,6 +595,12 @@ const ART = {
   check: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#f2e5fa"/><rect x="17" y="13" width="30" height="38" rx="5" fill="#fff" stroke="#9b5fc0" stroke-width="2.5"/><path d="M23 25l3 3 5-6M23 37l3 3 5-6" stroke="#2f9e83" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 26h6M35 38h6" stroke="#cdb3e6" stroke-width="2.5" stroke-linecap="round"/></svg>',
   idea: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#fff4cc"/><path d="M32 14a12 12 0 0 0-7 22c1.5 1.2 2 2.6 2 4.5h10c0-1.9.5-3.3 2-4.5a12 12 0 0 0-7-22z" fill="#fff" stroke="#e6a817" stroke-width="2.5"/><path d="M27 46h10M28.5 50h7" stroke="#e6a817" stroke-width="2.5" stroke-linecap="round"/></svg>',
 };
+function jumpTo(id) {
+  const el = document.getElementById(id); if (!el) return;
+  el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  el.setAttribute('tabindex', '-1'); el.focus({preventScroll: true});
+}
 function guideBlock(c, ch, gs, vs, topSections) {
   const g = GUIDES[c.id + ':' + ch.id];
   const wrap = h('div', {class: 'guide'});
@@ -588,16 +608,17 @@ function guideBlock(c, ch, gs, vs, topSections) {
     h('div', {}, h('div', {class: 'kicker2'}, 'In a nutshell'), h('p', {}, g.s))));
   // illustrated study path built from this chapter's own resources
   const steps = [];
-  if (ch.read) steps.push({art: 'read', title: 'Read', body: topSections.length ? 'Start with ' + topSections.slice(0, 2).map(x => x[0] + ' ' + x[1]).join(' and ') + '.' : 'Skim the chapter and its headings first.', act: h('a', {class: 'mini', href: ch.read.url, target: '_blank', rel: 'noopener'}, 'Open the reading ↗')});
-  if (vs.length) steps.push({art: 'watch', title: 'Watch', body: vs.length > 1 ? `Begin with “${vs[0].title}”, then pick the lessons for the parts that feel tricky.` : `Watch “${vs[0].title}” and pause to work along.`, act: h('button', {class: 'mini', type: 'button', onclick: () => openVideo(vs[0].id, 0)}, '▶ Play first lesson')});
-  else if (ch.playlists.length) steps.push({art: 'watch', title: 'Watch', body: 'Work through the lessons in the playlist, pausing to try each example yourself.', act: h('a', {class: 'mini', href: plUrl(ch.playlists[0]), target: '_blank', rel: 'noopener'}, '▶ Open playlist ↗')});
-  if (g?.r) steps.push({art: 'idea', title: 'Learn the recipe', body: g.r[0] + ': follow the steps below on one example by hand.', act: h('a', {class: 'mini', href: '#recipe', onclick: e => { e.preventDefault(); document.getElementById('recipe')?.scrollIntoView({behavior: 'smooth', block: 'start'}); }}, '↓ See the steps')});
-  if (gs.length) steps.push({art: 'play', title: 'Practice', body: `Play ${gs.map(x => x.title).slice(0, 2).join(' or ')} until you get 8 out of 10 right.`, act: h('a', {class: 'mini', href: '#/play/' + gs[0].id + '?from=' + c.id}, '🎮 Start practicing')});
-  steps.push({art: 'check', title: 'Check yourself', body: 'Explain each concept chip below out loud, without notes. Any you can’t? Search it and review.', act: null});
+  if (ch.read) steps.push({to: 'sec-read', art: 'read', title: 'Read', body: topSections.length ? 'Start with ' + topSections.slice(0, 2).map(x => x[0] + ' ' + x[1]).join(' and ') + '.' : 'Skim the chapter and its headings first.', act: h('a', {class: 'mini', href: ch.read.url, target: '_blank', rel: 'noopener'}, 'Open the reading ↗')});
+  if (vs.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: vs.length > 1 ? `Begin with “${vs[0].title}”, then pick the lessons for the parts that feel tricky.` : `Watch “${vs[0].title}” and pause to work along.`, act: h('button', {class: 'mini', type: 'button', onclick: () => openVideo(vs[0].id, 0)}, '▶ Play first lesson')});
+  else if (ch.playlists.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: 'Work through the lessons in the playlist, pausing to try each example yourself.', act: h('a', {class: 'mini', href: plUrl(ch.playlists[0]), target: '_blank', rel: 'noopener'}, '▶ Open playlist ↗')});
+  if (g?.r) steps.push({to: 'recipe', art: 'idea', title: 'Learn the recipe', body: g.r[0] + ': follow the steps below on one example by hand.', act: h('a', {class: 'mini', href: '#recipe', onclick: e => { e.preventDefault(); document.getElementById('recipe')?.scrollIntoView({behavior: 'smooth', block: 'start'}); }}, '↓ See the steps')});
+  if (gs.length) steps.push({to: 'sec-practice', art: 'play', title: 'Practice', body: `Play ${gs.map(x => x.title).slice(0, 2).join(' or ')} until you get 8 out of 10 right.`, act: h('a', {class: 'mini', href: '#/play/' + gs[0].id + '?from=' + c.id}, '🎮 Start practicing')});
+  steps.push({to: 'sec-concepts', art: 'check', title: 'Check yourself', body: 'Explain each concept chip below out loud, without notes. Any you can’t? Search it and review.', act: null});
   wrap.append(h('section', {class: 'path'}, h('h3', {}, '🗺️ Your study path'),
-    h('ol', {class: 'steps'}, steps.map((st, i) => h('li', {class: 'step s' + (i % 5)},
-      h('div', {class: 'art', html: ART[st.art]}), h('div', {class: 'num'}, String(i + 1)),
-      h('b', {}, st.title), h('p', {}, st.body), st.act)))));
+    h('ol', {class: 'steps'}, steps.map((st, i) => h('li', {},
+      h('button', {class: 'step s' + (i % 5), type: 'button', 'aria-label': `Step ${i + 1}: ${st.title}. Jump to this section`, onclick: () => jumpTo(st.to)},
+        h('span', {class: 'art', html: ART[st.art]}), h('span', {class: 'num'}, String(i + 1)),
+        h('b', {}, st.title), h('span', {class: 'sp'}, st.body), h('span', {class: 'go'}, 'Go to section ↓')))))));
   if (g?.r) wrap.append(h('section', {class: 'recipe', id: 'recipe'}, h('h3', {}, '🧪 Skill recipe: ' + g.r[0]),
     h('ol', {class: 'flow'}, g.r[1].map((t, i) => h('li', {}, h('span', {class: 'bubble'}, String(i + 1)), h('span', {class: 'txt'}, t))))));
   if (g?.t || g?.w) wrap.append(h('div', {class: 'tipgrid'},
@@ -615,17 +636,17 @@ function chapterBody(c, ch) {
   return h('article', {},
     h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
     guideBlock(c, ch, gs, vs, top),
-    h('div', {class: 'panel'}, h('h3', {}, '🧠 Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
+    h('div', {class: 'panel', id: 'sec-concepts'}, h('h3', {}, '🧠 Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
       h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
-    h('div', {class: 'panel'}, h('h3', {}, '🎮 Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
+    h('div', {class: 'panel', id: 'sec-practice'}, h('h3', {}, '🎮 Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
       gs.length ? h('div', {class: 'grid'}, gs.map(g => gameCard(g, c.id))) : h('p', {class: 'empty-note'}, 'No game for this one yet. Use the reading and videos, and check back: new games are added often.')),
-    h('div', {class: 'panel'}, h('h3', {}, '▶️ Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
+    h('div', {class: 'panel', id: 'sec-watch'}, h('h3', {}, '▶️ Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
       vs.length ? (() => { const grid = h('div', {class: 'vgrid'}, vs.slice(0, 6).map(videoCard)); if (vs.length <= 6) return grid;
         const more = h('button', {class: 'btn small secondary', type: 'button', style: 'margin-top:14px', onclick: () => { grid.replaceChildren(...vs.map(videoCard)); more.remove(); }}, `Show all ${vs.length} lessons ↓`);
         return h('div', {}, grid, more); })() : null,
       ch.playlists.length ? h('div', {class: 'playlists'}, ch.playlists.map(p => h('a', {class: 'btn small secondary', href: plUrl(p), target: '_blank', rel: 'noopener'}, '▶ ' + (playlistTitles[p] || 'Playlist') + ' ↗'))) : null,
       !vs.length && !ch.playlists.length ? h('p', {class: 'empty-note'}, h('span', {}, 'No video linked here yet. '), h('a', {href: 'https://www.youtube.com/@itsdrdan', target: '_blank', rel: 'noopener'}, 'Browse Dr. Dan’s channel ↗')) : null),
-    h('div', {class: 'panel'}, h('h3', {}, '📖 Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
+    h('div', {class: 'panel', id: 'sec-read'}, h('h3', {}, '📖 Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
       read ? [h('p', {style: 'margin:0 0 12px'}, h('a', {class: 'btn small secondary', href: read.url, target: '_blank', rel: 'noopener'}, `Open ${ch.label}: ${ch.title} ↗`)),
         read.sections.length ? h('ul', {class: 'sections'}, read.sections.map(([n, t, url]) => h('li', {class: (n.match(/\./g) || []).length > 1 ? 'sub' : ''}, h('a', {href: url, target: '_blank', rel: 'noopener'}, h('span', {class: 'sn'}, n), h('span', {}, t))))) : null]
         : h('p', {class: 'empty-note'}, c.book.note || 'Reading for this section is coming soon.')),
