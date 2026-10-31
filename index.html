@@ -927,7 +927,9 @@ function weekCard(cid) {
   const doneTxt = fresh ? (now.done || '') : '';
   const next = (sc?.weeks || []).filter(w => w.week >= weekNo).flatMap(w => w.events.filter(e => e.type === 'exam').map(e => ({...e, w})))
     .find(e => !new RegExp('exam\\s*#?\\s*' + e.id + '\\b.*done', 'i').test(doneTxt));
-  const exInfo = next ? (EXAMS[cid]?.exams || []).find(x => x.id === next.id) : null;
+  let nx = next;
+  if (fresh && now.next) nx = {id: now.next, w: (sc?.weeks || []).find(w => w.events.some(e => e.type === 'exam' && e.id === now.next)) || {}};
+  const exInfo = nx ? (EXAMS[cid]?.exams || []).find(x => x.id === nx.id) : null;
   return h('section', {class: 'weekcard', 'data-course': cid},
     h('div', {class: 'wkhead'}, h('span', {class: 'wkbadge'}, `Week ${weekNo}`), h('b', {}, `This week in ${courseById[cid].name}`),
       sc ? h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗') : null),
@@ -936,8 +938,8 @@ function weekCard(cid) {
       lecText ? h('div', {class: 'wkitem'}, h('small', {}, '📖 In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, `${lecCh.icon || ''} Study ${lecCh.label} →`) : null) : null,
       chk ? h('div', {class: 'wkitem'}, h('small', {}, `✅ Next: Skill Check #${chk.n}`), h('span', {}, chk.topic || 'Topic posted on Canvas'),
         chk.ch?.length ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${chk.ch.join(',')}`}, 'Build my plan →') : null) : null,
-      next ? h('div', {class: 'wkitem'}, h('small', {}, next.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + next.id}${next.w.date ? ' · ' + next.w.date : ''}`),
-        exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${next.id}`}, 'Exam guide →') : null) : null),
+      nx ? h('div', {class: 'wkitem'}, h('small', {}, nx.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + nx.id}${nx.w?.date ? ' · ' + nx.w.date : ''}`),
+        exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${nx.id}`}, 'Exam guide →') : null) : null),
     fresh ? h('p', {class: 'wknote'}, `Updated by Dr. Dan on ${new Date(now.updated + 'T12:00:00').toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}. The schedule can shift; Canvas has the final word.`) : null);
 }
 
