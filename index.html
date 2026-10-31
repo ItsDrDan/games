@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f6faf7">
+<meta name="theme-color" content="#fff8f1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 <meta name="description" content="Dr. Dan's Chemistry Study Hub: games, textbook readings, and video lessons for CHEM 3A, 1A, 1B, and 3B at Fresno City College.">
 <title>Dr. Dan’s Chemistry Study Hub</title>
 <style>
@@ -208,6 +210,88 @@ dialog.vmodal::backdrop{background:#0d221ecc}
 .toc-mobile select{width:100%;height:50px;border:2px solid var(--edge);border-radius:12px;padding:0 12px;background:#fff;font-weight:700}
 .toc-mobile{margin-bottom:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* ===== Soft & fun theme ===== */
+:root{
+  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;
+  --c3A:#2a9478;--c3A-bg:#d9f4ea;--c1A:#5468d4;--c1A-bg:#e3e8ff;--c1B:#d9654f;--c1B-bg:#ffe5dc;--c3B:#9555bd;--c3B-bg:#f1e3fa;
+  --r:24px;--shadow:0 8px 28px #5a4d9614;
+}
+body{background:var(--bg);color:var(--ink);font-family:Nunito,"Segoe UI",system-ui,-apple-system,sans-serif;font-weight:600}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 12%,#ffe3ec 0,transparent 22%),radial-gradient(circle at 92% 8%,#e3f0ff 0,transparent 24%),
+  radial-gradient(circle at 85% 85%,#e4f8ee 0,transparent 26%),radial-gradient(circle at 12% 88%,#fff1c9 0,transparent 22%)}
+h1,h2,h3,.brand,.btn,.chip,.play{font-family:Nunito,"Segoe UI",system-ui,sans-serif}
+h1{font-weight:900;letter-spacing:-.035em} h2{font-weight:900} h3{font-weight:850}
+.top{background:#fffaf5e8;border-bottom:1px solid var(--line)}
+.brand-icon{background:linear-gradient(135deg,#ffe0ea,#e1e6ff);border-radius:14px}
+.navlinks a{color:var(--ink)} .navlinks a:hover,.navlinks a[aria-current=page]{background:#efe9ff;color:var(--brand-ink)}
+.topsearch input{background:#fff;border-color:#e4daf2;border-radius:999px}
+.hero{background:linear-gradient(120deg,#ffe9f0 0%,#f1ebff 45%,#e3f6ff 75%,#e9fbef 100%);border-bottom:0;position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none;opacity:.7;animation:bob 9s ease-in-out infinite}
+.hero::before{width:220px;height:220px;right:6%;top:-40px;background:radial-gradient(circle at 35% 35%,#fff,#ffd6a8 60%,#ffc08a);filter:blur(1px)}
+.hero::after{width:120px;height:120px;right:24%;bottom:-30px;background:radial-gradient(circle at 35% 35%,#fff,#c9b8ff 60%,#ad97ff);animation-delay:-4s}
+@keyframes bob{50%{transform:translateY(14px)}}
+.hero-inner{position:relative;z-index:1}
+.eyebrow{color:#8a5fc9;letter-spacing:.14em}
+h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{color:#5e5679}
+.btn{background:var(--brand);border-color:var(--edge);box-shadow:0 4px 0 var(--edge);border-radius:999px;padding-inline:20px}
+.btn.secondary{background:#fff;color:var(--edge)} .btn.secondary:hover{background:#f4f0ff}
+.btn:hover{box-shadow:0 6px 0 var(--edge)} .btn:active{box-shadow:0 1px 0 var(--edge)}
+.bigsearch input{border-color:var(--edge);box-shadow:0 5px 0 var(--edge);border-radius:999px;padding-left:56px}
+.bigsearch .btn{border-radius:999px;top:9px}
+.chip{border-color:#e2d8f2;color:#4d4470;border-radius:999px;background:#ffffffd9}
+.chip:hover{border-color:var(--brand);background:#f4f0ff}
+.chip[aria-pressed=true]{background:var(--brand);border-color:var(--brand)}
+.course-card{border-radius:28px;box-shadow:0 6px 0 var(--c);background:linear-gradient(180deg,#fff 60%,var(--cb))}
+.course-card:hover{box-shadow:0 10px 0 var(--c);transform:translateY(-4px) rotate(-.4deg)}
+.course-card .tag{border-radius:999px;padding:6px 13px}
+.way{border-radius:24px;border:0;box-shadow:var(--shadow)} .way:nth-child(1){background:#fff1ea}.way:nth-child(2){background:#eef0ff}.way:nth-child(3){background:#e9f8f0}
+.course-head{background:linear-gradient(120deg,var(--cb),#fff8f1 75%)}
+.toc{border-radius:24px;border-color:var(--line)} .toc a{border-radius:14px} .toc a .n{color:var(--c)}
+.panel{border-radius:24px;border-color:var(--line)}
+.game{border-radius:22px;border-color:var(--line)}
+.game .icon{background:var(--cb,#efe9ff);border-radius:16px}
+.play{border-color:var(--edge);box-shadow:0 3px 0 var(--edge);background:#efe9ff;color:var(--edge);border-radius:999px}
+.play:hover{background:var(--brand);color:#fff;box-shadow:0 5px 0 var(--edge)}
+.newtab{border-radius:999px;border-color:#d9cfee;color:var(--edge)}
+.video{border-radius:20px} .ch-card{border-radius:20px}
+.ritem{border-radius:18px} .ritem mark{background:#ffe9a6}
+.player{border-radius:24px} .player-bar{background:linear-gradient(90deg,#f1ebff,#e3f6ff)}
+.toc-mobile select{border-color:var(--edge);border-radius:999px}
+.footer{border-top:0}
+
+/* chapter guide */
+.guide{display:grid;gap:18px;margin-top:16px}
+.kicker2{font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem;color:var(--c)}
+.nutshell{display:flex;gap:18px;align-items:center;background:linear-gradient(120deg,#fff7d9,#fff);border:2px solid #ffe6a3;border-radius:26px;padding:18px 22px}
+.nutshell .art{flex:0 0 74px;width:74px}
+.nutshell p{margin:4px 0 0;font-size:1.06rem;line-height:1.65;color:#4a4268}
+.path,.recipe,.tips,.watchout{background:#fff;border-radius:26px;padding:20px 22px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.path h3,.recipe h3,.tips h3,.watchout h3{margin:0 0 14px;font-size:1.12rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;position:relative}
+.step{position:relative;border-radius:22px;padding:16px 14px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.step.s0{background:#fff1ea}.step.s1{background:#eef0ff}.step.s2{background:#fff8dc}.step.s3{background:#e8f8f0}.step.s4{background:#f6ecfc}
+.step .art{width:58px;height:58px}
+.step .num{position:absolute;top:12px;right:14px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--edge);font-weight:900;box-shadow:0 2px 0 #00000014}
+.step b{font-size:1.05rem}
+.step p{margin:0;color:#5e5679;font-size:.9rem;line-height:1.5}
+.step .mini{margin-top:auto;padding-top:6px;font-weight:800;font-size:.86rem;color:var(--edge);background:none;border:0;cursor:pointer;text-decoration:none;padding-left:0}
+.step .mini:hover{text-decoration:underline}
+@media (min-width:900px){.step:not(:last-child)::after{content:"";position:absolute;right:-12px;top:42px;width:10px;height:10px;border-top:3px solid #cbbfe6;border-right:3px solid #cbbfe6;transform:rotate(45deg);z-index:1}}
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:0;counter-reset:f}
+.flow li{display:flex;gap:14px;align-items:flex-start;position:relative;padding:0 0 16px}
+.flow li:not(:last-child)::before{content:"";position:absolute;left:19px;top:40px;bottom:2px;border-left:3px dashed #d6cbee}
+.flow .bubble{flex:0 0 40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:900;color:#fff;font-size:1.05rem;box-shadow:0 3px 0 #0000001a}
+.flow li:nth-child(1) .bubble{background:#ff8fa3}.flow li:nth-child(2) .bubble{background:#ffb547}.flow li:nth-child(3) .bubble{background:#4fc3a1}.flow li:nth-child(4) .bubble{background:#7c8cf0}.flow li:nth-child(5) .bubble{background:#b07ce0}
+.flow .txt{background:#faf7ff;border:1px solid #eee6fb;border-radius:16px;padding:9px 14px;flex:1;line-height:1.5}
+.tipgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.tips{background:#f0fbf6;border-color:#d3f0e2}.watchout{background:#fff4f1;border-color:#ffdcd2}
+.tips ul,.watchout ul{margin:0;padding-left:20px;display:grid;gap:8px;line-height:1.5}
+@media (max-width:760px){.tipgrid{grid-template-columns:1fr}.nutshell{flex-direction:column;align-items:flex-start}.nutshell .art{width:58px;flex-basis:58px}}
+@media (prefers-reduced-motion:reduce){.hero::before,.hero::after{animation:none}}
 </style>
 </head>
 <body>
@@ -233,6 +317,7 @@ dialog.vmodal::backdrop{background:#0d221ecc}
 </dialog>
 
 <script src="data/hub.js"></script>
+<script src="data/guides.js"></script>
 <script>
 'use strict';
 /* ---------- data ---------- */
@@ -296,7 +381,7 @@ let INDEX = [];
 function buildIndex() {
   INDEX = [];
   for (const c of D.courses) for (const ch of c.chapters) {
-    INDEX.push({type: 'chapter', course: c.id, ch, hay: haystack(ch.title, ch.label, 'chapter ' + ch.id), hayDeep: haystack(ch.concepts)});
+    INDEX.push({type: 'chapter', course: c.id, ch, hay: haystack(ch.title, ch.label, 'chapter ' + ch.id), hayDeep: haystack(ch.concepts, (window.HUB_GUIDES || {})[c.id + ':' + ch.id]?.s || '')});
     for (const con of ch.concepts) INDEX.push({type: 'concept', course: c.id, ch, text: con, hay: haystack(con)});
     if (ch.read) for (const [n, t, url] of ch.read.sections) INDEX.push({type: 'section', course: c.id, ch, num: n, text: t, url, hay: haystack(t)});
   }
@@ -421,6 +506,41 @@ function courseOverview(c) {
     h('div', {class: 'panel'}, h('h3', {}, '🎮 All games for ' + c.name, h('span', {class: 'count'}, allGames.length)), h('div', {class: 'grid'}, allGames.map(g => gameCard(g, c.id)))));
 }
 
+
+/* ---------- chapter guide: summary, illustrated study path, skill recipe, tips ---------- */
+const GUIDES = window.HUB_GUIDES || {};
+const ART = {
+  read: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#ffe6d6"/><path d="M14 20c7-3 13-3 18 1v25c-5-4-11-4-18-1z" fill="#fff" stroke="#e0705a" stroke-width="2.5" stroke-linejoin="round"/><path d="M50 20c-7-3-13-3-18 1v25c5-4 11-4 18-1z" fill="#fff" stroke="#e0705a" stroke-width="2.5" stroke-linejoin="round"/><path d="M19 26h8M19 31h8M37 26h8M37 31h8" stroke="#f4a48f" stroke-width="2" stroke-linecap="round"/></svg>',
+  watch: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#e5e9ff"/><rect x="13" y="18" width="38" height="26" rx="7" fill="#fff" stroke="#5b6fd6" stroke-width="2.5"/><path d="M29 25v12l10-6z" fill="#ff7a8a"/><path d="M24 50h16" stroke="#5b6fd6" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  play: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#ddf5ec"/><rect x="11" y="22" width="42" height="22" rx="11" fill="#fff" stroke="#2f9e83" stroke-width="2.5"/><path d="M21 29v8M17 33h8" stroke="#2f9e83" stroke-width="2.5" stroke-linecap="round"/><circle cx="41" cy="30" r="2.6" fill="#ff9f43"/><circle cx="46" cy="35" r="2.6" fill="#9b5fc0"/></svg>',
+  check: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#f2e5fa"/><rect x="17" y="13" width="30" height="38" rx="5" fill="#fff" stroke="#9b5fc0" stroke-width="2.5"/><path d="M23 25l3 3 5-6M23 37l3 3 5-6" stroke="#2f9e83" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M35 26h6M35 38h6" stroke="#cdb3e6" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  idea: '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#fff4cc"/><path d="M32 14a12 12 0 0 0-7 22c1.5 1.2 2 2.6 2 4.5h10c0-1.9.5-3.3 2-4.5a12 12 0 0 0-7-22z" fill="#fff" stroke="#e6a817" stroke-width="2.5"/><path d="M27 46h10M28.5 50h7" stroke="#e6a817" stroke-width="2.5" stroke-linecap="round"/></svg>',
+};
+function guideBlock(c, ch, gs, vs, topSections) {
+  const g = GUIDES[c.id + ':' + ch.id];
+  const wrap = h('div', {class: 'guide'});
+  if (g?.s) wrap.append(h('section', {class: 'nutshell'}, h('div', {class: 'art', html: ART.idea}),
+    h('div', {}, h('div', {class: 'kicker2'}, 'In a nutshell'), h('p', {}, g.s))));
+  // illustrated study path built from this chapter's own resources
+  const steps = [];
+  if (ch.read) steps.push({art: 'read', title: 'Read', body: topSections.length ? 'Start with ' + topSections.slice(0, 2).map(x => x[0] + ' ' + x[1]).join(' and ') + '.' : 'Skim the chapter and its headings first.', act: h('a', {class: 'mini', href: ch.read.url, target: '_blank', rel: 'noopener'}, 'Open the reading ↗')});
+  if (vs.length) steps.push({art: 'watch', title: 'Watch', body: vs.length > 1 ? `Begin with “${vs[0].title}”, then pick the lessons for the parts that feel tricky.` : `Watch “${vs[0].title}” and pause to work along.`, act: h('button', {class: 'mini', type: 'button', onclick: () => openVideo(vs[0].id, 0)}, '▶ Play first lesson')});
+  else if (ch.playlists.length) steps.push({art: 'watch', title: 'Watch', body: 'Work through the lessons in the playlist, pausing to try each example yourself.', act: h('a', {class: 'mini', href: plUrl(ch.playlists[0]), target: '_blank', rel: 'noopener'}, '▶ Open playlist ↗')});
+  if (g?.r) steps.push({art: 'idea', title: 'Learn the recipe', body: g.r[0] + ': follow the steps below on one example by hand.', act: h('a', {class: 'mini', href: '#recipe', onclick: e => { e.preventDefault(); document.getElementById('recipe')?.scrollIntoView({behavior: 'smooth', block: 'start'}); }}, '↓ See the steps')});
+  if (gs.length) steps.push({art: 'play', title: 'Practice', body: `Play ${gs.map(x => x.title).slice(0, 2).join(' or ')} until you get 8 out of 10 right.`, act: h('a', {class: 'mini', href: '#/play/' + gs[0].id + '?from=' + c.id}, '🎮 Start practicing')});
+  steps.push({art: 'check', title: 'Check yourself', body: 'Explain each concept chip below out loud, without notes. Any you can’t? Search it and review.', act: null});
+  wrap.append(h('section', {class: 'path'}, h('h3', {}, '🗺️ Your study path'),
+    h('ol', {class: 'steps'}, steps.map((st, i) => h('li', {class: 'step s' + (i % 5)},
+      h('div', {class: 'art', html: ART[st.art]}), h('div', {class: 'num'}, String(i + 1)),
+      h('b', {}, st.title), h('p', {}, st.body), st.act)))));
+  if (g?.r) wrap.append(h('section', {class: 'recipe', id: 'recipe'}, h('h3', {}, '🧪 Skill recipe: ' + g.r[0]),
+    h('ol', {class: 'flow'}, g.r[1].map((t, i) => h('li', {}, h('span', {class: 'bubble'}, String(i + 1)), h('span', {class: 'txt'}, t))))));
+  if (g?.t || g?.w) wrap.append(h('div', {class: 'tipgrid'},
+    g.t ? h('section', {class: 'tips'}, h('h3', {}, '💡 Study tips'), h('ul', {}, g.t.map(t => h('li', {}, t)))) : null,
+    g.w ? h('section', {class: 'watchout'}, h('h3', {}, '⚠️ Watch out for'), h('ul', {}, g.w.map(t => h('li', {}, t)))) : null));
+  return wrap;
+}
+
 function chapterBody(c, ch) {
   const idx = c.chapters.indexOf(ch), prev = c.chapters[idx - 1], next = c.chapters[idx + 1];
   const gs = ch.games.map(id => games.get(id)).filter(Boolean);
@@ -429,12 +549,15 @@ function chapterBody(c, ch) {
   const top = read ? read.sections.filter(s => (s[0].match(/\./g) || []).length <= 1) : [];
   return h('article', {},
     h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title),
+    guideBlock(c, ch, gs, vs, top),
     h('div', {class: 'panel'}, h('h3', {}, '🧠 Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
       h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
     h('div', {class: 'panel'}, h('h3', {}, '🎮 Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
       gs.length ? h('div', {class: 'grid'}, gs.map(g => gameCard(g, c.id))) : h('p', {class: 'empty-note'}, 'No game for this one yet. Use the reading and videos, and check back: new games are added often.')),
     h('div', {class: 'panel'}, h('h3', {}, '▶️ Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
-      vs.length ? h('div', {class: 'vgrid'}, vs.map(videoCard)) : null,
+      vs.length ? (() => { const grid = h('div', {class: 'vgrid'}, vs.slice(0, 6).map(videoCard)); if (vs.length <= 6) return grid;
+        const more = h('button', {class: 'btn small secondary', type: 'button', style: 'margin-top:14px', onclick: () => { grid.replaceChildren(...vs.map(videoCard)); more.remove(); }}, `Show all ${vs.length} lessons ↓`);
+        return h('div', {}, grid, more); })() : null,
       ch.playlists.length ? h('div', {class: 'playlists'}, ch.playlists.map(p => h('a', {class: 'btn small secondary', href: plUrl(p), target: '_blank', rel: 'noopener'}, '▶ ' + (playlistTitles[p] || 'Playlist') + ' ↗'))) : null,
       !vs.length && !ch.playlists.length ? h('p', {class: 'empty-note'}, h('span', {}, 'No video linked here yet. '), h('a', {href: 'https://www.youtube.com/@itsdrdan', target: '_blank', rel: 'noopener'}, 'Browse Dr. Dan’s channel ↗')) : null),
     h('div', {class: 'panel'}, h('h3', {}, '📖 Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
