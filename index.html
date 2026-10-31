@@ -452,6 +452,8 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .wkitem small{font-weight:900;color:var(--c);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
 .wkitem span{font-weight:800;line-height:1.35}
 .wkitem .btn{margin-top:auto}
+.wkdone{margin:-4px 0 12px;font-weight:800;color:#1f7a62}
+.wknote{margin:10px 2px 0;font-size:.85rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -479,6 +481,7 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 <script src="data/hub.js"></script>
 <script src="data/guides.js"></script>
 <script src="data/exams.js"></script>
+<script src="data/now.js"></script>
 <script>
 'use strict';
 /* ---------- data ---------- */
@@ -906,21 +909,36 @@ function matchChapter(cid, text) {
   return bs >= 2 ? best : null;
 }
 function weekCard(cid) {
-  const sc = sylCourse(cid); if (!sc?.weeks?.length) return null;
-  const wn = sylWeekNow(sc); if (!wn || wn.before || wn.after) return null;
-  const wk = sc.weeks.find(w => w.week === wn.n) || null; if (!wk) return null;
-  const next = sc.weeks.filter(w => w.week >= wn.n).flatMap(w => w.events.filter(e => e.type === 'exam').map(e => ({...e, w}))).at(0);
-  const ch = matchChapter(cid, wk.lecture);
-  const check = wk.events.find(e => e.type === 'check');
+  const sc = sylCourse(cid);
+  const now = (window.HUB_NOW || {})[cid];
+  const fresh = now && (Date.now() - new Date(now.updated + 'T12:00:00').getTime()) < 21 * 864e5;
+  const wn = sylWeekNow(sc);
+  if (!fresh && (!sc?.weeks?.length || !wn || wn.before || wn.after)) return null;
+  const weekNo = fresh ? now.week : wn.n;
+  const wk = sc?.weeks?.find(w => w.week === (fresh ? now.week : wn.n)) || null;
+  // what's in lecture
+  const lecText = fresh && now.lecture ? now.lecture.text : wk?.lecture?.replace(/\s*\|\s*/g, ' ');
+  const lecCh = fresh && now.lecture?.ch ? courseById[cid].chapters.find(c => c.id === now.lecture.ch) : (lecText ? matchChapter(cid, lecText) : null);
+  // next skill check
+  let chk = null;
+  if (fresh && now.check) chk = {n: now.check.n, topic: now.check.topic, ch: now.check.ch};
+  else if (wk) { const e = wk.events.find(e => e.type === 'check'); if (e) { const m = e.topic ? matchChapter(cid, e.topic) : lecCh; chk = {n: e.id, topic: e.topic, ch: m ? [m.id] : []}; } }
+  // next exam: first exam event at/after this week that isn't marked done
+  const doneTxt = fresh ? (now.done || '') : '';
+  const next = (sc?.weeks || []).filter(w => w.week >= weekNo).flatMap(w => w.events.filter(e => e.type === 'exam').map(e => ({...e, w})))
+    .find(e => !new RegExp('exam\\s*#?\\s*' + e.id + '\\b.*done', 'i').test(doneTxt));
   const exInfo = next ? (EXAMS[cid]?.exams || []).find(x => x.id === next.id) : null;
   return h('section', {class: 'weekcard', 'data-course': cid},
-    h('div', {class: 'wkhead'}, h('span', {class: 'wkbadge'}, `Week ${wn.n}`), h('b', {}, `This week in ${courseById[cid].name}`), h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗')),
+    h('div', {class: 'wkhead'}, h('span', {class: 'wkbadge'}, `Week ${weekNo}`), h('b', {}, `This week in ${courseById[cid].name}`),
+      sc ? h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗') : null),
+    doneTxt ? h('p', {class: 'wkdone'}, '✔️ ' + doneTxt) : null,
     h('div', {class: 'wkgrid'},
-      h('div', {class: 'wkitem'}, h('small', {}, '📖 In lecture'), h('span', {}, wk.lecture.replace(/\s*\|\s*/g, ' ')), ch ? h('a', {class: 'btn small', href: `#/course/${cid}/${ch.id}`}, `${ch.icon || ''} Study ${ch.label} →`) : null),
-      check ? h('div', {class: 'wkitem'}, h('small', {}, `✅ Skill Check #${check.id}`), h('span', {}, check.topic || 'Topic posted on Canvas'),
-        (() => { const sch = check.topic ? matchChapter(cid, check.topic) : ch; return sch ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${sch.id}`}, 'Build my plan →') : null; })()) : null,
-      next ? h('div', {class: 'wkitem'}, h('small', {}, next.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + next.id} · Week ${next.w.week}${next.w.date ? ' (' + next.w.date + ')' : ''}`),
-        exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${next.id}`}, 'Exam guide →') : null) : null));
+      lecText ? h('div', {class: 'wkitem'}, h('small', {}, '📖 In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, `${lecCh.icon || ''} Study ${lecCh.label} →`) : null) : null,
+      chk ? h('div', {class: 'wkitem'}, h('small', {}, `✅ Next: Skill Check #${chk.n}`), h('span', {}, chk.topic || 'Topic posted on Canvas'),
+        chk.ch?.length ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${chk.ch.join(',')}`}, 'Build my plan →') : null) : null,
+      next ? h('div', {class: 'wkitem'}, h('small', {}, next.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + next.id}${next.w.date ? ' · ' + next.w.date : ''}`),
+        exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${next.id}`}, 'Exam guide →') : null) : null),
+    fresh ? h('p', {class: 'wknote'}, `Updated by Dr. Dan on ${new Date(now.updated + 'T12:00:00').toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}. The schedule can shift; Canvas has the final word.`) : null);
 }
 
 /* ---------- exam & skill-check guides ---------- */
