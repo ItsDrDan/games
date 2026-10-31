@@ -397,6 +397,37 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .theater .moment{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;font-weight:700;font-size:.95rem;line-height:1.35;background:#fff;border:2px solid #ebe3f7;border-radius:14px;padding:9px 12px;cursor:pointer;transition:transform .12s,border-color .12s}
 .theater .moment:hover{border-color:var(--brand);transform:translateY(-2px)}
 .theater .moment b{flex:0 0 auto;background:#ffe5ea;color:#c2334d;border-radius:8px;padding:1px 7px;font-variant-numeric:tabular-nums;margin:0}
+
+/* exam guides */
+.exambanner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:linear-gradient(110deg,#fff1d6,#ffe4ec 60%,#ece6ff);border:2px solid #ffd59a;border-radius:24px;padding:18px 22px;text-decoration:none;color:inherit;margin-bottom:24px}
+.exambanner b{font-size:1.2rem}.exambanner p{margin:4px 0 0;color:#5e5679;font-size:1.02rem}
+.exambanner .ebtns{display:flex;gap:8px;flex-wrap:wrap}
+.exambanner .btn[data-course]{color:var(--c);border-color:var(--c);box-shadow:0 3px 0 var(--c)}
+.exambanner.slim{padding:12px 18px;font-size:1.02rem}
+.examgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:12px}
+.examgrid.small{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.examcard{display:flex;flex-direction:column;gap:6px;background:#fff;border:2px solid var(--c);box-shadow:0 5px 0 var(--c);border-radius:22px;padding:18px;text-decoration:none;transition:transform .14s,box-shadow .14s}
+.examcard:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--c)}
+.examcard .ei{font-size:2rem}.examcard b{font-size:1.2rem}.examcard small{color:var(--muted);font-size:.95rem;font-weight:700}
+.examcard .echs{font-size:1.3rem;letter-spacing:2px}
+.chpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.pick{display:flex;align-items:center;gap:10px;background:#faf7ff;border:2px solid #ebe3f7;border-radius:14px;padding:9px 12px;cursor:pointer;font-size:.98rem}
+.pick:has(input:checked){border-color:var(--brand);background:#efe9ff}
+.pick input{width:20px;height:20px;accent-color:var(--brand)}
+.pick .pi{font-size:1.3rem}
+.examwrap{padding:24px 0 60px;display:grid;gap:0}
+.pbar{height:14px;border-radius:99px;background:#eee6fb;overflow:hidden}.pbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff8fa3,#ffb547,#4fc3a1);transition:width .3s}
+.canlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.canlist label{display:flex;gap:12px;align-items:flex-start;background:#faf7ff;border:2px solid #eee6fb;border-radius:14px;padding:10px 14px;cursor:pointer;line-height:1.45;font-size:1.02rem}
+.canlist label:has(input:checked){background:#e9f8f0;border-color:#a7e3c8}
+.canlist input{width:22px;height:22px;flex:0 0 22px;margin-top:1px;accent-color:#2a9478}
+.canlist small{color:var(--muted);font-weight:700}
+.days{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.day{border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.day.s0{background:#fff1ea}.day.s1{background:#eef0ff}.day.s2{background:#fff8dc}.day.s3{background:#e8f8f0}.day.s4{background:#f6ecfc}
+.day .dn{font-weight:900;color:var(--edge);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.day .dch{font-weight:800;text-decoration:none;display:flex;gap:6px;line-height:1.3}.day .dch:hover{text-decoration:underline}
+.day p{margin:4px 0 0;color:#5e5679;font-size:.92rem;line-height:1.45}
 </style>
 </head>
 <body>
@@ -423,6 +454,7 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 
 <script src="data/hub.js"></script>
 <script src="data/guides.js"></script>
+<script src="data/exams.js"></script>
 <script>
 'use strict';
 /* ---------- data ---------- */
@@ -550,7 +582,7 @@ function viewHome() {
     h('label', {class: 'sr', for: 'heroQ'}, 'What do you need to study?'),
     h('input', {id: 'heroQ', name: 'q', type: 'search', placeholder: 'Try “limiting reactant”, “buffers”, or “3A chapter 8”', autocomplete: 'off'}),
     h('button', {class: 'btn', type: 'submit'}, 'Search'));
-  const tries = ['limiting reactant', 'net ionic equations', 'VSEPR', 'partial pressure', 'electron configuration', 'Fischer projections', '3A chapter 11'];
+  const tries = ['limiting reactant', 'exam 2', 'net ionic equations', 'VSEPR', 'partial pressure', 'skill check 6', 'Fischer projections', '3A chapter 11'];
   app.replaceChildren(
     h('section', {class: 'hero'}, h('img', {class: 'watermark', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap hero-inner'},
       h('div', {}, h('div', {class: 'eyebrow'}, 'Dr. Dan’s chemistry study hub'),
@@ -569,6 +601,9 @@ function viewHome() {
           h('div', {class: 'stats'}, h('span', {}, `📖 ${n.ch} ${id === '3B' ? 'units' : 'chapters'}`), h('span', {}, `🎮 ${n.g} games`), n.v ? h('span', {}, `▶️ ${n.v} videos`) : null),
           h('span', {class: 'go'}, 'Open course →'));
       }))),
+    h('section', {class: 'section wrap', style: 'padding-top:0'}, h('div', {class: 'exambanner'},
+      h('div', {}, h('b', {}, '📝 Studying for an exam or skill check?'), h('p', {}, 'Get the chapters, a skills checklist, games, video moments, and a 7-day plan. You can also type “exam 2” in search.')),
+      h('div', {class: 'ebtns'}, COURSE_ORDER.map(id => h('a', {class: 'btn small secondary', 'data-course': id, href: '#/exams/' + id}, 'CHEM ' + id))))),
     h('section', {class: 'section wrap', style: 'padding-top:0'},
       h('div', {class: 'ways'},
         h('div', {class: 'way'}, h('span', {class: 'em'}, '📖'), h('b', {}, 'Read'), h('p', {}, 'Every chapter links straight to the matching section of your free textbook.')),
@@ -603,6 +638,7 @@ function courseOverview(c) {
   // add discovered games tagged with this course that no chapter lists yet
   for (const g of games.values()) if (!allGames.includes(g) && (g.courses || []).includes(c.id)) allGames.push(g);
   return h('div', {},
+    h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, '📝 Exam coming up?'), ' Open the exam & skill-check guides for ' + c.name), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('div', {class: 'kicker'}, 'Start here'), h('h2', {class: 'ct'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('p', {class: 'overview-intro', style: 'margin:0 0 18px'}, 'Each one gathers the reading, Dr. Dan’s video lessons, and the games for that topic, plus a quick summary and a step-by-step study plan.'),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
@@ -797,6 +833,11 @@ function renderResults(box, q, course) {
   const perVid = {}; groups.transcript = groups.transcript.filter(r => (perVid[r.v.id] = (perVid[r.v.id] || 0) + 1) <= 3).slice(0, 18);
   const total = Object.values(groups).reduce((n, a) => n + a.length, 0);
   box.replaceChildren();
+  const ex = examHits(q, course);
+  if (ex.length) box.append(h('div', {class: 'rgroup'}, h('h3', {}, '📝 Exam & skill-check guides', h('span', {class: 'count'}, ex.length)),
+    h('div', {class: 'rlist'}, ex.map(r => h('a', {class: 'ritem', href: r.href, 'data-course': r.cid}, h('span', {class: 'ri'}, r.custom ? '🛠️' : '📝'),
+      h('span', {}, h('div', {class: 'rt'}, courseBadge(r.cid), ' ', r.title), h('div', {class: 'rs'}, r.sub)))))));
+  if (!total && ex.length) return;
   if (!total) {
     box.append(h('div', {class: 'noresults'}, h('p', {style: 'margin-top:0'}, `Nothing matched “${q}”${course !== 'all' ? ' in CHEM ' + course : ''}.`),
       course !== 'all' ? h('p', {}, h('a', {href: '#/search?q=' + encodeURIComponent(q)}, 'Search all courses instead')) : null,
@@ -820,6 +861,116 @@ function renderResults(box, q, course) {
   if (transcriptState === 'loading') box.append(h('p', {class: 'status'}, 'Searching video transcripts…'));
 }
 
+
+/* ---------- exam & skill-check guides ---------- */
+const EXAMS = window.HUB_EXAMS || {};
+function parseExamQuery(q) {
+  const t = norm(q);
+  const cm = t.match(/\b(3a|1a|1b|3b)\b/); const course = cm ? cm[1].toUpperCase() : null;
+  let m = t.match(/\b(?:exam|test|midterm)\s*#?\s*(\d)\b/); if (m) return {kind: 'exam', id: m[1], course};
+  if (/\bfinal\b/.test(t)) return {kind: 'exam', id: 'final', course};
+  m = t.match(/\b(?:skill\s*check|quiz|sc)\s*#?\s*(\d{1,2})\b/); if (m) return {kind: 'check', id: m[1], course};
+  if (/\b(exam|test|midterm|skill\s*check|quiz)s?\b/.test(t)) return {kind: 'any', course};
+  return null;
+}
+function examHits(q, filter) {
+  const eq = parseExamQuery(q); if (!eq) return [];
+  const out = [];
+  for (const cid of COURSE_ORDER) {
+    if ((eq.course && cid !== eq.course) || (!eq.course && filter !== 'all' && cid !== filter)) continue;
+    const E = EXAMS[cid];
+    if (eq.kind === 'exam' || eq.kind === 'any') for (const ex of E?.exams || []) if (eq.kind === 'any' || ex.id === eq.id) out.push({href: `#/exam/${cid}/${ex.id}`, cid, title: `${ex.title}`, sub: `Dr. Dan’s sections · Chapters ${ex.ch.filter(x => x !== 'review').join(', ')}`});
+    if (eq.kind === 'check' || eq.kind === 'any') for (const sc of E?.checks || []) if (eq.kind === 'any' || String(sc.n) === eq.id) out.push({href: `#/check/${cid}/${sc.n}`, cid, title: `Skill Check ${sc.n}: ${sc.title}`, sub: `Dr. Dan’s sections · Chapter ${sc.ch.join(', ')}`});
+    out.push({href: `#/exams/${cid}`, cid, title: `Build your own ${courseById[cid].name} exam plan`, sub: 'Pick the chapters your exam covers (works for any instructor)', custom: true});
+  }
+  return out;
+}
+function examStore(key) { try { return JSON.parse(localStorage.getItem('hub-check-' + key) || '{}'); } catch { return {}; } }
+function examSave(key, v) { try { localStorage.setItem('hub-check-' + key, JSON.stringify(v)); } catch {} }
+
+function viewExamHub(cid) {
+  const c = courseById[cid]; if (!c) return viewNotFound();
+  setTitle(`${c.name} exam guides`);
+  const E = EXAMS[cid];
+  const picks = new Set();
+  const go = h('a', {class: 'btn', href: '#', onclick: e => { e.preventDefault(); if (!picks.size) { go.textContent = 'Pick at least one chapter first'; return; } location.hash = `#/exam/${cid}/custom?ch=${[...picks].join(',')}`; }}, 'Make my study plan →');
+  const chooser = h('div', {class: 'chpick'}, c.chapters.map(ch => h('label', {class: 'pick'},
+    h('input', {type: 'checkbox', onchange: e => { e.target.checked ? picks.add(ch.id) : picks.delete(ch.id); go.textContent = picks.size ? `Make my study plan (${picks.size}) →` : 'Make my study plan →'; }}),
+    h('span', {class: 'pi'}, ch.icon || '🧪'), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
+  app.replaceChildren(
+    h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
+      h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('span', {}, 'Exams')),
+      h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), 'Exam & skill-check guides'),
+      h('p', {}, 'Find exactly what to study for your next exam: the chapters, the skills, the games, and the video moments.'))),
+    h('section', {class: 'wrap section', 'data-course': cid},
+      E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, '📝 Exams'),
+        h('div', {class: 'examgrid'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
+          h('span', {class: 'ei'}, ex.id === 'final' ? '🏁' : '📝'), h('b', {}, ex.title),
+          h('span', {class: 'echs'}, ex.ch.filter(x => x !== 'review').map(id => c.chapters.find(x => x.id === id)?.icon || '').join(' ')),
+          h('small', {}, `Chapters ${ex.ch.filter(x => x !== 'review').join(', ')}`)))),
+        E.checks?.length ? [h('h2', {style: 'margin-top:30px'}, '✅ Skill checks'),
+          h('div', {class: 'examgrid small'}, E.checks.map(sc => h('a', {class: 'examcard', href: `#/check/${cid}/${sc.n}`},
+            h('span', {class: 'ei'}, '✅'), h('b', {}, `Skill Check ${sc.n}`), h('small', {}, sc.title))))] : null,
+        h('p', {class: 'sub', style: 'margin-top:14px'}, 'Exam numbers and coverage can shift a little each semester. Your syllabus and Canvas have the final word.')]
+        : h('p', {class: 'empty-note'}, `Exam guides for Dr. Dan’s ${c.name} sections are coming. Until then, build your own plan below.`),
+      h('div', {class: 'panel', style: 'margin-top:28px'}, h('h3', {}, '🛠️ Build your own exam plan'),
+        h('p', {style: 'margin:0 0 14px;color:var(--muted)'}, 'In a different section, or studying for a quiz? Tick the chapters your exam covers and get a combined checklist, games, videos, and a 7-day plan.'),
+        chooser, h('div', {style: 'margin-top:16px'}, go))));
+}
+
+function viewExam(cid, id, params, isCheck) {
+  const c = courseById[cid]; if (!c) return viewNotFound();
+  const E = EXAMS[cid] || {};
+  let ex;
+  if (isCheck) { const sc = (E.checks || []).find(x => String(x.n) === id); if (!sc) return viewNotFound('That skill check isn’t listed yet.'); ex = {title: `Skill Check ${sc.n}: ${sc.title}`, ch: sc.ch, can: null, tips: ['Skill checks are short. Aim to do each skill without notes.']}; }
+  else if (id === 'custom') ex = {title: 'My exam plan', ch: (params.get('ch') || '').split(',').filter(Boolean), can: null, tips: [], custom: true};
+  else { ex = (E.exams || []).find(x => x.id === id); if (!ex) return viewNotFound('That exam guide isn’t listed yet. Try building your own plan.'); }
+  const chs = ex.ch.map(x => c.chapters.find(y => y.id === x)).filter(Boolean);
+  if (!chs.length) return viewExamHub(cid);
+  setTitle(`${c.name} ${ex.title}`);
+  // checklist
+  const key = `${cid}-${isCheck ? 'sc' : 'ex'}-${id}-${ex.ch.join('.')}`;
+  const state = examStore(key);
+  const items = ex.can ? ex.can.map((t, i) => ({k: 'c' + i, t})) : chs.flatMap(ch => ch.concepts.map((t, i) => ({k: ch.id + '-' + i, t: t.charAt(0).toUpperCase() + t.slice(1), ch})));
+  const bar = h('div', {class: 'pbar'}, h('span'));
+  const label = h('b');
+  const upd = () => { const n = items.filter(x => state[x.k]).length; bar.firstChild.style.width = (100 * n / items.length) + '%'; label.textContent = `${n} of ${items.length} skills ready`; };
+  const list = h('ul', {class: 'canlist'}, items.map(it => h('li', {}, h('label', {},
+    h('input', {type: 'checkbox', checked: !!state[it.k], onchange: e => { state[it.k] = e.target.checked; examSave(key, state); upd(); }}),
+    h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, it.ch ? h('small', {}, ` · ${it.ch.icon || ''} ${it.ch.label}`) : null)))));
+  upd();
+  // games and videos across chapters
+  const gs = [...new Set(chs.flatMap(ch => ch.games))].map(g => games.get(g)).filter(Boolean);
+  const vs = [...new Set(chs.flatMap(ch => ch.videos))].map(v => videos.get(v)).filter(Boolean);
+  // 7-day plan
+  const studyChs = chs.filter(ch => ch.id !== 'review');
+  const days = [];
+  const slots = Math.min(5, studyChs.length) || 1;
+  for (let d = 0; d < slots; d++) days.push(studyChs.filter((_, i) => i % slots === d));
+  const plan = h('ol', {class: 'days'},
+    days.map((group, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
+      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
+      h('p', {}, 'Read the nutshell and skill recipe, watch the key moments you need, then play the game to 80%.'))),
+    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, `Day ${days.length + 1}`), h('b', {}, '🔁 Mixed practice'), h('p', {}, 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.')),
+    h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, '😴 Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
+  app.replaceChildren(
+    h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
+      h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
+      h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, isCheck ? '✅' : id === 'final' ? '🏁' : '📝'),
+        h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ex.custom ? 'Custom plan' : 'Dr. Dan’s sections'}`), h('h1', {style: 'margin:2px 0'}, ex.title))),
+      ex.custom ? null : h('p', {}, 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
+    h('div', {class: 'wrap examwrap', 'data-course': cid},
+      h('section', {class: 'panel'}, h('h3', {}, '📚 Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
+        h('div', {class: 'chapters-overview'}, chs.map(ch => h('a', {class: 'ch-card', href: `#/course/${cid}/${ch.id}`},
+          h('span', {class: 'chicon', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
+      h('section', {class: 'panel'}, h('h3', {}, '✔️ Skills checklist', h('span', {class: 'count'}, label)), bar,
+        h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
+      ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, '💡 Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
+      h('section', {class: 'panel'}, h('h3', {}, '🗓️ Your 7-day plan'), plan),
+      gs.length ? h('section', {class: 'panel'}, h('h3', {}, '🎮 Practice games', h('span', {class: 'count'}, gs.length)), h('div', {class: 'grid'}, gs.map(g => gameCard(g, cid)))) : null,
+      vs.length ? h('section', {class: 'panel'}, h('h3', {}, '▶️ Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
+}
+
 function viewNotFound(msg) { setTitle('Not found'); app.replaceChildren(h('section', {class: 'section wrap'}, h('h2', {}, 'Hmm, that page isn’t here.'), h('p', {class: 'sub'}, msg || 'Try the course list or search.'), h('a', {class: 'btn', href: '#/'}, 'Go to courses'))); }
 
 /* ---------- router ---------- */
@@ -837,6 +988,9 @@ function route() {
   else if (parts[0] === 'games') { viewGames(params); document.querySelector('[data-nav=games]')?.setAttribute('aria-current', 'page'); }
   else if (parts[0] === 'play') viewPlay(parts[1], params);
   else if (parts[0] === 'search') viewSearch(params);
+  else if (parts[0] === 'exams') viewExamHub((parts[1] || '').toUpperCase());
+  else if (parts[0] === 'exam') viewExam((parts[1] || '').toUpperCase(), parts[2] || '1', params, false);
+  else if (parts[0] === 'check') viewExam((parts[1] || '').toUpperCase(), parts[2] || '1', params, true);
   else if (['3a', '1a', '1b', '3b'].includes(parts[0].toLowerCase())) viewCourse(parts[0].toUpperCase(), parts[1]);
   else viewNotFound();
   window.scrollTo(0, 0);
