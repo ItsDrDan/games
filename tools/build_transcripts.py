@@ -34,11 +34,14 @@ def hub_videos():
 def main():
     caps = Path(sys.argv[1]).expanduser()
     catalog = hub_videos()
+    durations = {}
     if len(sys.argv) > 2:
         for line in Path(sys.argv[2]).expanduser().read_text(encoding="utf-8").splitlines():
-            if "\t" in line:
-                vid, title = line.split("\t", 1)
-                catalog[vid.strip()] = title.strip()
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                catalog[parts[0].strip()] = parts[1].strip()
+                if len(parts) > 2 and parts[2].strip().isdigit():
+                    durations[parts[0].strip()] = int(parts[2])
     overrides = {}
     ov = HERE / "caption_overrides.tsv"
     if ov.exists():
@@ -61,11 +64,22 @@ def main():
         if p.name in overrides:
             chosen[p.name] = overrides[p.name]; continue
         k = key(stem)
+        lines = parse_captions(p.read_text(encoding="utf-8", errors="ignore"))
+        end = lines[-1][0] if lines else 0
         for v, vk in keys.items():
-            cands.append((difflib.SequenceMatcher(None, k, vk).ratio(), p.name, v))
+            r = difflib.SequenceMatcher(None, k, vk).ratio()
+            # bonus when every word of the file name appears in the YouTube title
+            kw = set(k.split())
+            if kw and kw <= set(vk.split()): r = max(r, 0.75)
+            d = durations.get(v)
+            if d and end:
+                gap = abs(d - end)
+                if gap <= max(25, 0.04 * d): r += 0.25      # caption ends where the video ends
+                elif gap > max(120, 0.2 * d): r -= 0.3      # clearly a different length
+            cands.append((r, p.name, v))
     used = set(chosen.values())
     for score, name, v in sorted(cands, reverse=True):
-        if score < 0.8: break
+        if score < 0.7: break
         if name in chosen or v in used: continue
         chosen[name] = v; used.add(v)
     for stem, p in sorted(names.items()):

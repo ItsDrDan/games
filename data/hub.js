@@ -209,122 +209,146 @@ window.HUB_DATA = {
   {
    "id": "DPH8NZF_99I",
    "title": "Introduction to Chemical Reactions: Understanding Chemical Changes and Equations",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 852
   },
   {
    "id": "t65x7RaFeFY",
    "title": "How to Balance Chemical Reactions",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 1241
   },
   {
    "id": "2MsgPQYwsjA",
    "title": "Types of Chemical Reactions",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 987
   },
   {
    "id": "YqZjFTpnHjc",
    "title": "Tips and Tricks on Predicting and Balancing Chemical Reactions",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 1666
   },
   {
    "id": "7Qf_7T3XDns",
    "title": "Gas Evolution Reactions",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 1188
   },
   {
    "id": "RsPUbM1DivA",
    "title": "How to Write Net Ionic Equations: Precipitation Reactions",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 1280
   },
   {
    "id": "IsypcIC7XqA",
    "title": "Introduction to Oxidation and Reduction Reactions: LEO Goes GER!",
-   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
+   "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
+   "duration": 1210
   },
   {
    "id": "txENA0lLLg4",
    "title": "How to Balance REDOX Reactions in Acidic Solutions",
-   "playlist": null
+   "playlist": null,
+   "duration": 1119
   },
   {
    "id": "zr0Y2hF_aOE",
    "title": "How to Balance REDOX Reactions in Basic Solutions",
-   "playlist": null
+   "playlist": null,
+   "duration": 1299
   },
   {
    "id": "fFGZdJ6F-e4",
    "title": "What is Stoichiometry? Mole to Mole Ratios Explained",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 818
   },
   {
    "id": "x4VcJBZFGAY",
    "title": "Introduction to Stoichiometry: Mole to Mole and Mass to Mass",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 883
   },
   {
    "id": "7FP2lehyuRU",
    "title": "Introduction to Limiting Reactants",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 1130
   },
   {
    "id": "EcT5aqQzaYA",
    "title": "How to Calculate Theoretical and Percent Yield",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 993
   },
   {
    "id": "VPY5E6j5ltM",
    "title": "Gas Stoichiometry, Part 1: Molar Volume and Liter-to-Liter",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 980
   },
   {
    "id": "bfW4V1krrkY",
    "title": "Gas Stoichiometry, Part 2: Ideal Gas Law and Limiting Reactants",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 1603
   },
   {
    "id": "auELinUz1R4",
    "title": "Solution Stoichiometry: Finding Molarity, Volume, and Mass",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 1688
   },
   {
    "id": "Ca7o0AjwhcY",
    "title": "Acid-Base Titration Stoichiometry: Finding Molarity",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 1240
   },
   {
    "id": "tbcxL9K3KBU",
    "title": "Practice Problems for Acid-Base Stoichiometry",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 1088
   },
   {
    "id": "yXV7aNPvkWA",
    "title": "Let’s Practice Stoichiometry: Mass, Volume, and Gases",
-   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
+   "playlist": "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB",
+   "duration": 2274
   },
   {
    "id": "-G1zjTVpkgU",
    "title": "Solution Concentrations: Percent, Molarity, and Molality",
-   "playlist": "PLEaxsqCAZKoAvzESG5KwkzeNLHWl0ElL9"
+   "playlist": "PLEaxsqCAZKoAvzESG5KwkzeNLHWl0ElL9",
+   "duration": 1764
   },
   {
    "id": "dtdiKtrVQ5Y",
    "title": "Electrolytes: Strong, Weak, and Nonelectrolytes",
-   "playlist": null
+   "playlist": null,
+   "duration": 896
   },
   {
    "id": "drIkMSVAE0A",
    "title": "Solubility",
-   "playlist": null
+   "playlist": null,
+   "duration": 1136
   },
   {
    "id": "efD7e2XiNsM",
    "title": "Understanding Colligative Properties",
-   "playlist": null
+   "playlist": null,
+   "duration": 1361
   },
   {
    "id": "T0fOuTmNY6g",
    "title": "Introduction to the Ideal Gas Law",
-   "playlist": null
+   "playlist": null,
+   "duration": 1208
   },
   {
    "id": "efgNeWjlsGY",
@@ -351,72 +375,752 @@ window.HUB_DATA = {
      1479,
      "Mole fractions"
     ]
-   ]
+   ],
+   "duration": 1731
   },
   {
    "id": "b__bU7D6YIM",
    "title": "What Are the Seven Diatomic Elements?",
-   "playlist": null
+   "playlist": null,
+   "duration": 583
   },
   {
    "id": "_3MEHX5yvzQ",
    "title": "Properties of Acids and Bases: Arrhenius, Brønsted–Lowry, and Lewis",
-   "playlist": "PLEaxsqCAZKoDQDKc3zSkPAocpU0Z_Q7HE"
+   "playlist": "PLEaxsqCAZKoDQDKc3zSkPAocpU0Z_Q7HE",
+   "duration": 1176
   },
   {
    "id": "udPzY15vH1w",
    "title": "Phase Changes and How to Solve Heat of Fusion and Heat of Vaporization",
-   "playlist": null
+   "playlist": null,
+   "duration": 1095
   },
   {
    "id": "KqKvWr6Y2zs",
    "title": "Energy and the First Law of Thermodynamics",
-   "playlist": null
+   "playlist": null,
+   "duration": 851
   },
   {
    "id": "wB01PrQBxVw",
    "title": "What Is a Mole? Three Essential Conversions",
-   "playlist": null
+   "playlist": null,
+   "duration": 1099
   },
   {
    "id": "r3IGajq0hD8",
    "title": "MO Theory Part 2",
-   "playlist": null
+   "playlist": null,
+   "duration": 1280
   },
   {
    "id": "-WH0D2cWcJc",
    "title": "Formal Charge and Resonance Structures",
-   "playlist": null
+   "playlist": null,
+   "duration": 1603
   },
   {
    "id": "Nb4z-SSwmb4",
    "title": "Hybridization: Basics to Advanced Concepts",
-   "playlist": null
+   "playlist": null,
+   "duration": 2973
   },
   {
    "id": "RNQKJ1hnHes",
    "title": "Basic Concepts Behind Intermolecular Forces",
-   "playlist": null
+   "playlist": null,
+   "duration": 1001
   },
   {
    "id": "CGmbd2YwflY",
    "title": "How to Draw Lewis Structures",
-   "playlist": null
+   "playlist": null,
+   "duration": 1345
   },
   {
    "id": "0fzuzHnkPAc",
    "title": "Electronegativity and Polarity: Polar Molecules",
-   "playlist": null
+   "playlist": null,
+   "duration": 1082
   },
   {
    "id": "T6j9Gw1EyPU",
    "title": "Periodic Table Trends",
-   "playlist": null
+   "playlist": null,
+   "duration": 1512
   },
   {
    "id": "wD3b-7J0Xy0",
    "title": "Introduction to VSEPR Theory",
-   "playlist": null
+   "playlist": null,
+   "duration": 1220
+  },
+  {
+   "id": "gVI0NWuv9VU",
+   "title": "Dimensional Analysis",
+   "playlist": null,
+   "duration": 1791
+  },
+  {
+   "id": "s7Dr7FSQ4R8",
+   "title": "How to Convert Units in Chem! (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 1498
+  },
+  {
+   "id": "ilqm5Quaggc",
+   "title": "Practice Problem Series for Unit Conversions",
+   "playlist": null,
+   "duration": 1076
+  },
+  {
+   "id": "c3m2L5Ni3wk",
+   "title": "Significant Figures (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 996
+  },
+  {
+   "id": "SsLd_YRnLtw",
+   "title": "Rounding Significant Figures (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 632
+  },
+  {
+   "id": "UCQq22qA-vo",
+   "title": "Scientific Notation (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 960
+  },
+  {
+   "id": "ewjg7JtM_cA",
+   "title": "Order of Operations and Rounding (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 1268
+  },
+  {
+   "id": "FEl475fUSqY",
+   "title": "Percents That You Will See in Chemistry (Math Skills to Ace Chemistry)",
+   "playlist": null,
+   "duration": 1042
+  },
+  {
+   "id": "QsFEWZz-Uj0",
+   "title": "Math Skills to Ace Chemistry",
+   "playlist": null,
+   "duration": 107
+  },
+  {
+   "id": "USaNyE1y6gE",
+   "title": "What is Density: Understanding Matter with Easy Chemistry Unit Conversions",
+   "playlist": null,
+   "duration": 1410
+  },
+  {
+   "id": "p1vMT2wxsBc",
+   "title": "How to Calculate Density using the Displacement Method",
+   "playlist": null,
+   "duration": 448
+  },
+  {
+   "id": "W1fKRtt0CZc",
+   "title": "Temperature Conversions: Kelvin, Fahrenheit, and Celsius Made Simple",
+   "playlist": null,
+   "duration": 828
+  },
+  {
+   "id": "sCmUQWVB90Q",
+   "title": "How does the Scientific Method Work? How Observations lead to a Hypothesis and Findings!",
+   "playlist": null,
+   "duration": 1117
+  },
+  {
+   "id": "ARE5_CgcxW4",
+   "title": "Why Learn Chemistry? To Observe Nature as a Scientist!",
+   "playlist": null,
+   "duration": 823
+  },
+  {
+   "id": "Gl6OxNmAc7M",
+   "title": "Introductory Nuclear Atomic Theory: The Anatomy of the Atom",
+   "playlist": null,
+   "duration": 1212
+  },
+  {
+   "id": "JmyWmu3RA6Q",
+   "title": "How to Use the Periodic Table",
+   "playlist": null,
+   "duration": 1206
+  },
+  {
+   "id": "Ia26SFitnIE",
+   "title": "Isotopes: Percent Abundances and Atomic Masses",
+   "playlist": null,
+   "duration": 1237
+  },
+  {
+   "id": "jNh0S62GrHg",
+   "title": "What are Cations and Anions? Finding Predictable Charges of Ions!",
+   "playlist": null,
+   "duration": 1041
+  },
+  {
+   "id": "AgKAXoYLRBA",
+   "title": "Introduction to Electromagnetic Radiation for Chemistry: (Part 1) Wavelength, Frequency, and Energy!",
+   "playlist": null,
+   "duration": 1027
+  },
+  {
+   "id": "2QWO4oGxvfA",
+   "title": "Introduction to Electromagnetic Radiation for Chemistry: (Part 2) Quantum and Atomic Spectroscopy",
+   "playlist": null,
+   "duration": 827
+  },
+  {
+   "id": "a73T36_j0Xg",
+   "title": "How to write Electron Configuration by Reading Your Periodic Table",
+   "playlist": null,
+   "duration": 1275
+  },
+  {
+   "id": "84sL9kEAVmQ",
+   "title": "Orbital Diagrams: Diagonal Method, Aufbau, Pauli-Exclusion, and Hund's Rule Explained!",
+   "playlist": null,
+   "duration": 1276
+  },
+  {
+   "id": "YFd6XTQpI08",
+   "title": "Understanding the States of Matter: A Look into Particulate Theory",
+   "playlist": null,
+   "duration": 1252
+  },
+  {
+   "id": "oy7dm7qZiXY",
+   "title": "The Law of Conservation of Mass - Chemistry - Exam and HW Examples Explained!",
+   "playlist": null,
+   "duration": 471
+  },
+  {
+   "id": "u_Y1sC58C7M",
+   "title": "Chemical Bonding: Introduction to Covalent, Ionic, and Metallic Bonds! Examples!",
+   "playlist": null,
+   "duration": 864
+  },
+  {
+   "id": "7fWGLGY_6Wo",
+   "title": "How to Read Chemical Formulas! Counting Atoms from Compounds Explained!",
+   "playlist": null,
+   "duration": 690
+  },
+  {
+   "id": "2ZT9T8M2CWM",
+   "title": "Writing Ionic Formulas with the Swap-Drop Method",
+   "playlist": null,
+   "duration": 870
+  },
+  {
+   "id": "A1-PS3fGOw8",
+   "title": "Writing Ionic Formulas with Polyatomic Ions (Part II)",
+   "playlist": null,
+   "duration": 679
+  },
+  {
+   "id": "REdYqnSIjCg",
+   "title": "How to Memorize the Polyatomic Ions for Chemistry ! T43 Method Explained! Formulas, Naming, Charges",
+   "playlist": null,
+   "duration": 387
+  },
+  {
+   "id": "wCVdwxuh__U",
+   "title": "How to Use the Polyatomic Naming Green Sheet for FCC Chemistry Students!",
+   "playlist": null,
+   "duration": 370
+  },
+  {
+   "id": "CTvvJRGMdxY",
+   "title": "How to Name Ionic Compounds! Binary Compounds Explained!",
+   "playlist": null,
+   "duration": 712
+  },
+  {
+   "id": "VjF8XYfvkLI",
+   "title": "Naming Covalent Molecules",
+   "playlist": null,
+   "duration": 371
+  },
+  {
+   "id": "hLxGdWoM7Fk",
+   "title": "Naming Acids and Bases",
+   "playlist": null,
+   "duration": 822
+  },
+  {
+   "id": "W_AHDPMBqrA",
+   "title": "How to Name Hydrates: Exam and HW Examples of Nomenclature of Hydrated Salts!",
+   "playlist": null,
+   "duration": 534
+  },
+  {
+   "id": "mvdjSfWFdaU",
+   "title": "How to Calculate Molar Mass for Atoms, Molecules, Compounds, and Hydrates with Examples!",
+   "playlist": null,
+   "duration": 1066
+  },
+  {
+   "id": "Uk5EulrSWeI",
+   "title": "Practicing Conversion Factors found in Chemical Formulas: Mole to Mole, Mass to Moles, Avogadro!",
+   "playlist": null,
+   "duration": 1684
+  },
+  {
+   "id": "ZtWHJci1vgc",
+   "title": "How to Find Percent Composition by Mass in 3 Simple Steps! Exam and HW Style Examples!",
+   "playlist": null,
+   "duration": 1013
+  },
+  {
+   "id": "r5ciwMWV8Ns",
+   "title": "Introduction to Finding the Empirical and Molecular Formula! Exam Style Examples!",
+   "playlist": null,
+   "duration": 1004
+  },
+  {
+   "id": "oxbd7aS8ROg",
+   "title": "How to Count Valence Electrons and Draw Lewis Structures for Atoms, Cations, and Anions",
+   "playlist": null,
+   "duration": 1271
+  },
+  {
+   "id": "H_waFW9LG_Y",
+   "title": "Exceptions to the Octet Rule: Incomplete Octets, Odd Electrons, and Expanded Octets Explained!",
+   "playlist": null,
+   "duration": 1379
+  },
+  {
+   "id": "Wz23sE4KUBE",
+   "title": "Electronegativity and Polarity (Part 1: Polar Bonds)",
+   "playlist": null,
+   "duration": 750
+  },
+  {
+   "id": "--NtKZsyS4I",
+   "title": "Understanding Properties of Intermolecular Forces (Part 1): Polarity, Dipoles, and Phases",
+   "playlist": null,
+   "duration": 755
+  },
+  {
+   "id": "vf1I8M32OXQ",
+   "title": "Dispersion Forces and Polarizability: Properties of Intermolecular Forces (Part 2)",
+   "playlist": null,
+   "duration": 841
+  },
+  {
+   "id": "CdA3Ov94lw0",
+   "title": "Dipole-Dipole, Hydrogen Bonding, and Ion-Dipole: Properties of Intermolecular Forces (Part 3)",
+   "playlist": null,
+   "duration": 1034
+  },
+  {
+   "id": "lAcgVwEmjM8",
+   "title": "Properties of Intermolecular Forces (Part 4): Boiling Point Melting Point Viscosity Surface Tension",
+   "playlist": null,
+   "duration": 889
+  },
+  {
+   "id": "r7isVoOlWyU",
+   "title": "Specific Heat Capacity and the Two Types of Problems You Will See!",
+   "playlist": null,
+   "duration": 984
+  },
+  {
+   "id": "1xjSCl5hsug",
+   "title": "Introduction to Calorimetry: Lab-based Examples of Heat Transfer and Specific Heat Calculations !",
+   "playlist": null,
+   "duration": 1186
+  },
+  {
+   "id": "-fyDACk_Zx0",
+   "title": "Illustrating Heating and Cooling Curves in Thermochemistry: Example of Ice to Steam Solved!",
+   "playlist": null,
+   "duration": 1120
+  },
+  {
+   "id": "qcuMu3m77Yw",
+   "title": "Introduction to Gases and Kinetic Molecular Theory (KMT)",
+   "playlist": null,
+   "duration": 922
+  },
+  {
+   "id": "uexlvfNkuhs",
+   "title": "Gas Laws (Part 1) Boyles, Charles, and Gay Lussac's Law",
+   "playlist": null,
+   "duration": 1214
+  },
+  {
+   "id": "_8sGFdLBhRk",
+   "title": "Gas Laws (Part II) Combined Gas Law and Avogadro's Law",
+   "playlist": null,
+   "duration": 1015
+  },
+  {
+   "id": "gpjC3C_zkoE",
+   "title": "Dalton's Law of Partial Pressure",
+   "playlist": null,
+   "duration": 1463
+  },
+  {
+   "id": "UteEh5Vgvv8",
+   "title": "Using Molar Volume and Gas Laws to Solve for Empirical and Molecular Formulas! Step by Step Guide!",
+   "playlist": null,
+   "duration": 725
+  },
+  {
+   "id": "oLCLggs3Zmw",
+   "title": "What is Molarity? Why Do You Need it to Pass Chemistry!",
+   "playlist": null,
+   "duration": 1118
+  },
+  {
+   "id": "qwkB_gLdg6s",
+   "title": "Solution Dilutions: How to Make and Calculate Dilutions using M1V1=M2V2 with Examples!",
+   "playlist": null,
+   "duration": 789
+  },
+  {
+   "id": "sadO3B7s_UY",
+   "title": "Introduction to Solubility Curves: Saturated, Unsaturated, Supersaturated Solutions!",
+   "playlist": null,
+   "duration": 1123
+  },
+  {
+   "id": "-PeAGG6s6nY",
+   "title": "How to Read a Solubility Table! Using the FCC Green Sheet!",
+   "playlist": null,
+   "duration": 875
+  },
+  {
+   "id": "XMlP-sRigPM",
+   "title": "Enthalpy (∆H) Stoichiometry: How to Find Heat Released and Mass Used in Thermochemical Equations!",
+   "playlist": null,
+   "duration": 1333
+  },
+  {
+   "id": "M5gCzKjb0kA",
+   "title": "Introduction to the pH scale |pH, pOH, H+, and OH-",
+   "playlist": null,
+   "duration": 1153
+  },
+  {
+   "id": "AAOXGkcrUMg",
+   "title": "Logarithms and Antilogs: Math Skills to Ace Chemistry",
+   "playlist": null,
+   "duration": 845
+  },
+  {
+   "id": "tGqiUbBxqec",
+   "title": "Acid-Base Equilibria (Ka):  Strength of Acids and Bases",
+   "playlist": null,
+   "duration": 1581
+  },
+  {
+   "id": "-UrwKIGAj08",
+   "title": "Introduction to Buffers! Resist the pH! What are they? How do they work? Buffer capacity Explained!",
+   "playlist": null,
+   "duration": 1433
+  },
+  {
+   "id": "qatdA_ALnx8",
+   "title": "Exploring Chemical Equilibrium: Understanding the Basics behind Reaction Rates and Collision Theory",
+   "playlist": null,
+   "duration": 1171
+  },
+  {
+   "id": "-ie15qDdHjE",
+   "title": "Chemical Equilibrium: How to Write Equilibrium Expressions (Kc and Keq)",
+   "playlist": null,
+   "duration": 905
+  },
+  {
+   "id": "JMRz9TRVUQg",
+   "title": "Understanding Le Chatelier's Principle: Predicting Chemical Equilibrium Shifts",
+   "playlist": null,
+   "duration": 1847
+  },
+  {
+   "id": "ZojNOgXleJA",
+   "title": "Let's Practice Equilibrium Together! Le Chatelier, Equilibrium Expressions  and Shifts!",
+   "playlist": null,
+   "duration": 1809
+  },
+  {
+   "id": "WDBiyaeivFY",
+   "title": "Introduction to Nuclear Chemistry: Alpha particles, Beta particles, positrons, and gamma rays",
+   "playlist": null,
+   "duration": 1061
+  },
+  {
+   "id": "tjAebD_t8PA",
+   "title": "Introductory Half Life Nuclear Chemistry with Step by Step Examples! Quick Tutorial!",
+   "playlist": null,
+   "duration": 748
+  },
+  {
+   "id": "g--JowvBqM8",
+   "title": "Radiant Realms: Navigating Nuclear Chemistry's X-Rays, Gamma Rays, Alpha, Beta, Positron Particles!",
+   "playlist": null,
+   "duration": 2075
+  },
+  {
+   "id": "bZHo3kHvGi0",
+   "title": "Let's Practice Balancing Nuclear Decay Equations, Half Life, Fission, and Fusion",
+   "playlist": null,
+   "duration": 1895
+  },
+  {
+   "id": "NYbTp0OEHCM",
+   "title": "Let's Practice Chemistry Together! A Kahoot Review for the 1st Introductory Chemistry Exam!",
+   "playlist": null,
+   "duration": 7717
+  },
+  {
+   "id": "PslRg4W-QDY",
+   "title": "Lets Practice Chemistry Together! A Kahoot! Review for CHEM 3A Exam #2",
+   "playlist": null,
+   "duration": 6199
+  },
+  {
+   "id": "6GcGBVTu3c8",
+   "title": "Lets Practice Chemistry Together! A Kahoot! Review for CHEM 3A Exam #3",
+   "playlist": null,
+   "duration": 5694
+  },
+  {
+   "id": "e8MKqfkXo4k",
+   "title": "CHEM 3A Final Exam Review: Part 1: What to Expect?",
+   "playlist": null,
+   "duration": 1339
+  },
+  {
+   "id": "EnO_abUy44Q",
+   "title": "CHEM 3A Final Exam ACS Review: Part 2: What You NEED TO Study! Chapter by Chapter Analysis!",
+   "playlist": null,
+   "duration": 1839
+  },
+  {
+   "id": "oV83y0awOow",
+   "title": "CHEM 3A Final Exam Prep: Part 3: ACS General-Organic-Biochemistry Mock Test & Expert Strategies!",
+   "playlist": null,
+   "duration": 2808
+  },
+  {
+   "id": "8kCMJML2hrg",
+   "title": "Acing Your CHEM 3A Laboratory Practical: Part 1 of Dr. Dans' Guide to Success!",
+   "playlist": null,
+   "duration": 1057
+  },
+  {
+   "id": "bizYea5i82k",
+   "title": "Acing Your CHEM 3A Laboratory Practical: Part 2 In-Depth Review & Key Concepts of Each Experiment!",
+   "playlist": null,
+   "duration": 2625
+  },
+  {
+   "id": "NoEGwwWuNmg",
+   "title": "Molecular Orbital Theory Basics! Part 1 What is MO Theory? (Lecture)",
+   "playlist": null,
+   "duration": 1178
+  },
+  {
+   "id": "gSKpPWYVnTU",
+   "title": "Organic Chemistry: An Introduction (Part 1)",
+   "playlist": null,
+   "duration": 1001
+  },
+  {
+   "id": "xbsGe976lZ4",
+   "title": "Organic Chemistry: An Introduction (Part 2)",
+   "playlist": null,
+   "duration": 1195
+  },
+  {
+   "id": "9lxWINhQtUc",
+   "title": "Naming Alkanes with Branches",
+   "playlist": null,
+   "duration": 916
+  },
+  {
+   "id": "JbkiO-RLx6A",
+   "title": "Practice Problem Series for Equilibrium (Keq, Ka)",
+   "playlist": null,
+   "duration": 1170
+  },
+  {
+   "id": "OxLTA0CZrd4",
+   "title": "Naming Alkanes with Propyl & Butyl Isomers",
+   "playlist": null,
+   "duration": 742
+  },
+  {
+   "id": "kEkvxf6e-Ro",
+   "title": "Tips and Tricks on Drawing Isomers: Finding the 18 Isomers of Octane (C8H18)",
+   "playlist": null,
+   "duration": 831
+  },
+  {
+   "id": "JutTTWvB2wQ",
+   "title": "Identifying and Naming Cis and Trans Alkenes",
+   "playlist": null,
+   "duration": 768
+  },
+  {
+   "id": "b4DBut72xEI",
+   "title": "Drawing Cis and Trans Alkenes",
+   "playlist": null,
+   "duration": 1054
+  },
+  {
+   "id": "Dcun-l5jM9w",
+   "title": "Addition Reactions of Alkenes and Markovnikov's Rule",
+   "playlist": null,
+   "duration": 1239
+  },
+  {
+   "id": "nN-RMEEbjLI",
+   "title": "How to Name Ethers in 3 Easy Steps! Using IUPAC and Common Naming",
+   "playlist": null,
+   "duration": 707
+  },
+  {
+   "id": "l3Sb_GWBano",
+   "title": "Dehydration Reactions of Alcohols and Zaitsev's Rule",
+   "playlist": null,
+   "duration": 626
+  },
+  {
+   "id": "veiUgkx_Dlc",
+   "title": "Oxidation of Alcohols",
+   "playlist": null,
+   "duration": 567
+  },
+  {
+   "id": "K0oEXP7JBZU",
+   "title": "Reduction Reactions of Aldehydes and Ketones",
+   "playlist": null,
+   "duration": 681
+  },
+  {
+   "id": "1KPqZ2pp9bg",
+   "title": "Formation of Hemiacetals and acetals (Introductory Organic Chemistry)",
+   "playlist": null,
+   "duration": 713
+  },
+  {
+   "id": "whVLjQhx3FI",
+   "title": "Cyclic Acetals and Ketals: Step by Step Reaction for Introductory Organic Chemistry",
+   "playlist": null,
+   "duration": 980
+  },
+  {
+   "id": "4Z7_TvNmeR4",
+   "title": "Chirality: Tips and Tricks to Finding Chiral Carbons for Organic Chemistry",
+   "playlist": null,
+   "duration": 1374
+  },
+  {
+   "id": "RudBXy5lTuU",
+   "title": "Introduction to Chirality, Enantiomers, and Diastereomers in Organic Chemistry",
+   "playlist": null,
+   "duration": 1264
+  },
+  {
+   "id": "2pwJ5G0uOtA",
+   "title": "How to Make Esters through Esterification",
+   "playlist": null,
+   "duration": 689
+  },
+  {
+   "id": "vfSSUIcgzTY",
+   "title": "Hydrolysis of Esters",
+   "playlist": null,
+   "duration": 1068
+  },
+  {
+   "id": "HU4KHyptdVA",
+   "title": "Hydrolysis Reactions of Amides with Acids and Bases! Explained in 2 Steps!",
+   "playlist": null,
+   "duration": 1145
+  },
+  {
+   "id": "417CUTR3H1E",
+   "title": "Carbohydrate Basics: Classifying Aldoses and Ketoses for Beginners",
+   "playlist": null,
+   "duration": 467
+  },
+  {
+   "id": "5L0AmyTCyi4",
+   "title": "How to Draw Haworth Projections of L and D Glucose from Fischer Projections",
+   "playlist": null,
+   "duration": 1049
+  },
+  {
+   "id": "xMjXa2mliZA",
+   "title": "How to Draw a Haworth Projection (Ketose Edition)",
+   "playlist": null,
+   "duration": 459
+  },
+  {
+   "id": "fBVx-i_Ehmc",
+   "title": "Tips and Tricks for Converting Haworth to Fischer Projections",
+   "playlist": null,
+   "duration": 941
+  },
+  {
+   "id": "ckrRl0L3sr4",
+   "title": "Carbohydrates: How to Draw Fischer to Haworth Projections using Mannose",
+   "playlist": null,
+   "duration": 1033
+  },
+  {
+   "id": "pwyW-X99GI8",
+   "title": "Oxidation and Reduction of Carbohydrates",
+   "playlist": null,
+   "duration": 644
+  },
+  {
+   "id": "BQwU9Z7myeg",
+   "title": "Lipids: Formation of Triacylglycerides (Condensation)",
+   "playlist": null,
+   "duration": 314
+  },
+  {
+   "id": "Heg74N-mZms",
+   "title": "Lipids: Hydrolysis of Triacylglycerides",
+   "playlist": null,
+   "duration": 290
+  },
+  {
+   "id": "M7VkdbGkPXY",
+   "title": "Lipids: Hydrogenation of Unsaturated Fats",
+   "playlist": null,
+   "duration": 372
+  },
+  {
+   "id": "gO3YPk_2lTE",
+   "title": "Lipids: Saponification of Triacylglycerides",
+   "playlist": null,
+   "duration": 325
+  },
+  {
+   "id": "Y_bXmJDoANI",
+   "title": "Drawing Zwitterions and Amino Acids Made Simple: Tips & Tricks",
+   "playlist": null,
+   "duration": 874
+  },
+  {
+   "id": "ec1npXqFdDM",
+   "title": "Understanding Protein Structure: Primary, Secondary, Tertiary, and Quaternary",
+   "playlist": null,
+   "duration": 1419
   }
  ],
  "courses": [
@@ -518,7 +1222,20 @@ window.HUB_DATA = {
       "sigfig",
       "metric"
      ],
-     "videos": [],
+     "videos": [
+      "gVI0NWuv9VU",
+      "s7Dr7FSQ4R8",
+      "ilqm5Quaggc",
+      "c3m2L5Ni3wk",
+      "SsLd_YRnLtw",
+      "UCQq22qA-vo",
+      "ewjg7JtM_cA",
+      "FEl475fUSqY",
+      "QsFEWZz-Uj0",
+      "USaNyE1y6gE",
+      "p1vMT2wxsBc",
+      "W1fKRtt0CZc"
+     ],
      "playlists": []
     },
     {
@@ -590,7 +1307,14 @@ window.HUB_DATA = {
      "games": [
       "elements"
      ],
-     "videos": [],
+     "videos": [
+      "sCmUQWVB90Q",
+      "ARE5_CgcxW4",
+      "Gl6OxNmAc7M",
+      "JmyWmu3RA6Q",
+      "Ia26SFitnIE",
+      "jNh0S62GrHg"
+     ],
      "playlists": []
     },
     {
@@ -670,7 +1394,11 @@ window.HUB_DATA = {
       "quantumchemistry"
      ],
      "videos": [
-      "T6j9Gw1EyPU"
+      "T6j9Gw1EyPU",
+      "AgKAXoYLRBA",
+      "2QWO4oGxvfA",
+      "a73T36_j0Xg",
+      "84sL9kEAVmQ"
      ],
      "playlists": []
     },
@@ -784,7 +1512,20 @@ window.HUB_DATA = {
       "elements"
      ],
      "videos": [
-      "b__bU7D6YIM"
+      "b__bU7D6YIM",
+      "YFd6XTQpI08",
+      "oy7dm7qZiXY",
+      "u_Y1sC58C7M",
+      "7fWGLGY_6Wo",
+      "jNh0S62GrHg",
+      "2ZT9T8M2CWM",
+      "A1-PS3fGOw8",
+      "REdYqnSIjCg",
+      "wCVdwxuh__U",
+      "CTvvJRGMdxY",
+      "VjF8XYfvkLI",
+      "hLxGdWoM7Fk",
+      "W_AHDPMBqrA"
      ],
      "playlists": []
     },
@@ -810,7 +1551,11 @@ window.HUB_DATA = {
       "stoichiometry"
      ],
      "videos": [
-      "wB01PrQBxVw"
+      "wB01PrQBxVw",
+      "mvdjSfWFdaU",
+      "Uk5EulrSWeI",
+      "ZtWHJci1vgc",
+      "r5ciwMWV8Ns"
      ],
      "playlists": []
     },
@@ -893,7 +1638,10 @@ window.HUB_DATA = {
       "CGmbd2YwflY",
       "wD3b-7J0Xy0",
       "0fzuzHnkPAc",
-      "RNQKJ1hnHes"
+      "RNQKJ1hnHes",
+      "oxbd7aS8ROg",
+      "H_waFW9LG_Y",
+      "Wz23sE4KUBE"
      ],
      "playlists": []
     },
@@ -994,7 +1742,14 @@ window.HUB_DATA = {
      ],
      "videos": [
       "udPzY15vH1w",
-      "KqKvWr6Y2zs"
+      "KqKvWr6Y2zs",
+      "--NtKZsyS4I",
+      "vf1I8M32OXQ",
+      "CdA3Ov94lw0",
+      "lAcgVwEmjM8",
+      "r7isVoOlWyU",
+      "1xjSCl5hsug",
+      "-fyDACk_Zx0"
      ],
      "playlists": []
     },
@@ -1075,7 +1830,12 @@ window.HUB_DATA = {
      ],
      "videos": [
       "efgNeWjlsGY",
-      "T0fOuTmNY6g"
+      "T0fOuTmNY6g",
+      "qcuMu3m77Yw",
+      "uexlvfNkuhs",
+      "_8sGFdLBhRk",
+      "gpjC3C_zkoE",
+      "UteEh5Vgvv8"
      ],
      "playlists": []
     },
@@ -1187,7 +1947,10 @@ window.HUB_DATA = {
       "-G1zjTVpkgU",
       "dtdiKtrVQ5Y",
       "drIkMSVAE0A",
-      "efD7e2XiNsM"
+      "efD7e2XiNsM",
+      "oLCLggs3Zmw",
+      "qwkB_gLdg6s",
+      "sadO3B7s_UY"
      ],
      "playlists": [
       "PLEaxsqCAZKoAvzESG5KwkzeNLHWl0ElL9"
@@ -1339,7 +2102,8 @@ window.HUB_DATA = {
       "YqZjFTpnHjc",
       "7Qf_7T3XDns",
       "RsPUbM1DivA",
-      "IsypcIC7XqA"
+      "IsypcIC7XqA",
+      "-PeAGG6s6nY"
      ],
      "playlists": [
       "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
@@ -1425,7 +2189,8 @@ window.HUB_DATA = {
       "auELinUz1R4",
       "Ca7o0AjwhcY",
       "tbcxL9K3KBU",
-      "yXV7aNPvkWA"
+      "yXV7aNPvkWA",
+      "XMlP-sRigPM"
      ],
      "playlists": [
       "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
@@ -1513,7 +2278,11 @@ window.HUB_DATA = {
      "videos": [
       "_3MEHX5yvzQ",
       "Ca7o0AjwhcY",
-      "tbcxL9K3KBU"
+      "tbcxL9K3KBU",
+      "M5gCzKjb0kA",
+      "AAOXGkcrUMg",
+      "tGqiUbBxqec",
+      "-UrwKIGAj08"
      ],
      "playlists": [
       "PLEaxsqCAZKoDQDKc3zSkPAocpU0Z_Q7HE"
@@ -1568,7 +2337,12 @@ window.HUB_DATA = {
       "Le Chatelier's principle"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "qatdA_ALnx8",
+      "-ie15qDdHjE",
+      "JMRz9TRVUQg",
+      "ZojNOgXleJA"
+     ],
      "playlists": []
     },
     {
@@ -1640,7 +2414,36 @@ window.HUB_DATA = {
       "radioactivity in medicine"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "WDBiyaeivFY",
+      "tjAebD_t8PA",
+      "g--JowvBqM8",
+      "bZHo3kHvGi0"
+     ],
+     "playlists": []
+    },
+    {
+     "id": "review",
+     "label": "Review",
+     "title": "Exam & Lab Practical Review",
+     "read": null,
+     "concepts": [
+      "exam review",
+      "Kahoot review",
+      "ACS final exam",
+      "lab practical"
+     ],
+     "games": [],
+     "videos": [
+      "NYbTp0OEHCM",
+      "PslRg4W-QDY",
+      "6GcGBVTu3c8",
+      "e8MKqfkXo4k",
+      "EnO_abUy44Q",
+      "oV83y0awOow",
+      "8kCMJML2hrg",
+      "bizYea5i82k"
+     ],
      "playlists": []
     }
    ]
@@ -1711,7 +2514,18 @@ window.HUB_DATA = {
       "sigfig",
       "metric"
      ],
-     "videos": [],
+     "videos": [
+      "gVI0NWuv9VU",
+      "s7Dr7FSQ4R8",
+      "ilqm5Quaggc",
+      "c3m2L5Ni3wk",
+      "SsLd_YRnLtw",
+      "UCQq22qA-vo",
+      "USaNyE1y6gE",
+      "W1fKRtt0CZc",
+      "YFd6XTQpI08",
+      "sCmUQWVB90Q"
+     ],
      "playlists": []
     },
     {
@@ -1777,7 +2591,20 @@ window.HUB_DATA = {
       "polyatomic"
      ],
      "videos": [
-      "b__bU7D6YIM"
+      "b__bU7D6YIM",
+      "Gl6OxNmAc7M",
+      "JmyWmu3RA6Q",
+      "Ia26SFitnIE",
+      "jNh0S62GrHg",
+      "oy7dm7qZiXY",
+      "7fWGLGY_6Wo",
+      "CTvvJRGMdxY",
+      "2ZT9T8M2CWM",
+      "A1-PS3fGOw8",
+      "REdYqnSIjCg",
+      "VjF8XYfvkLI",
+      "hLxGdWoM7Fk",
+      "W_AHDPMBqrA"
      ],
      "playlists": []
     },
@@ -1826,7 +2653,13 @@ window.HUB_DATA = {
      ],
      "videos": [
       "wB01PrQBxVw",
-      "-G1zjTVpkgU"
+      "-G1zjTVpkgU",
+      "mvdjSfWFdaU",
+      "Uk5EulrSWeI",
+      "ZtWHJci1vgc",
+      "r5ciwMWV8Ns",
+      "oLCLggs3Zmw",
+      "qwkB_gLdg6s"
      ],
      "playlists": []
     },
@@ -1900,7 +2733,12 @@ window.HUB_DATA = {
       "7FP2lehyuRU",
       "EcT5aqQzaYA",
       "auELinUz1R4",
-      "Ca7o0AjwhcY"
+      "Ca7o0AjwhcY",
+      "DPH8NZF_99I",
+      "fFGZdJ6F-e4",
+      "tbcxL9K3KBU",
+      "yXV7aNPvkWA",
+      "-PeAGG6s6nY"
      ],
      "playlists": []
     },
@@ -1946,7 +2784,11 @@ window.HUB_DATA = {
      ],
      "videos": [
       "KqKvWr6Y2zs",
-      "udPzY15vH1w"
+      "udPzY15vH1w",
+      "r7isVoOlWyU",
+      "1xjSCl5hsug",
+      "XMlP-sRigPM",
+      "-fyDACk_Zx0"
      ],
      "playlists": []
     },
@@ -2004,7 +2846,11 @@ window.HUB_DATA = {
       "quantumchemistry"
      ],
      "videos": [
-      "T6j9Gw1EyPU"
+      "T6j9Gw1EyPU",
+      "AgKAXoYLRBA",
+      "2QWO4oGxvfA",
+      "a73T36_j0Xg",
+      "84sL9kEAVmQ"
      ],
      "playlists": []
     },
@@ -2067,7 +2913,11 @@ window.HUB_DATA = {
       "CGmbd2YwflY",
       "-WH0D2cWcJc",
       "wD3b-7J0Xy0",
-      "0fzuzHnkPAc"
+      "0fzuzHnkPAc",
+      "u_Y1sC58C7M",
+      "oxbd7aS8ROg",
+      "H_waFW9LG_Y",
+      "Wz23sE4KUBE"
      ],
      "playlists": []
     },
@@ -2113,7 +2963,8 @@ window.HUB_DATA = {
      ],
      "videos": [
       "Nb4z-SSwmb4",
-      "r3IGajq0hD8"
+      "r3IGajq0hD8",
+      "NoEGwwWuNmg"
      ],
      "playlists": []
     },
@@ -2178,7 +3029,12 @@ window.HUB_DATA = {
       "efgNeWjlsGY",
       "T0fOuTmNY6g",
       "VPY5E6j5ltM",
-      "bfW4V1krrkY"
+      "bfW4V1krrkY",
+      "qcuMu3m77Yw",
+      "uexlvfNkuhs",
+      "_8sGFdLBhRk",
+      "gpjC3C_zkoE",
+      "UteEh5Vgvv8"
      ],
      "playlists": []
     },
@@ -2236,7 +3092,12 @@ window.HUB_DATA = {
      ],
      "videos": [
       "RNQKJ1hnHes",
-      "udPzY15vH1w"
+      "udPzY15vH1w",
+      "--NtKZsyS4I",
+      "vf1I8M32OXQ",
+      "CdA3Ov94lw0",
+      "lAcgVwEmjM8",
+      "-fyDACk_Zx0"
      ],
      "playlists": []
     },
@@ -2292,7 +3153,8 @@ window.HUB_DATA = {
       "drIkMSVAE0A",
       "dtdiKtrVQ5Y",
       "efD7e2XiNsM",
-      "-G1zjTVpkgU"
+      "-G1zjTVpkgU",
+      "sadO3B7s_UY"
      ],
      "playlists": []
     },
@@ -2335,7 +3197,11 @@ window.HUB_DATA = {
       "lewisstructures",
       "organic"
      ],
-     "videos": [],
+     "videos": [
+      "gSKpPWYVnTU",
+      "xbsGe976lZ4",
+      "9lxWINhQtUc"
+     ],
      "playlists": []
     }
    ]
@@ -2416,7 +3282,13 @@ window.HUB_DATA = {
       "effect of concentration, pressure, volume, temperature, and catalysts"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "qatdA_ALnx8",
+      "-ie15qDdHjE",
+      "JMRz9TRVUQg",
+      "ZojNOgXleJA",
+      "JbkiO-RLx6A"
+     ],
      "playlists": []
     },
     {
@@ -2483,7 +3355,11 @@ window.HUB_DATA = {
      "games": [],
      "videos": [
       "_3MEHX5yvzQ",
-      "Ca7o0AjwhcY"
+      "Ca7o0AjwhcY",
+      "M5gCzKjb0kA",
+      "AAOXGkcrUMg",
+      "tGqiUbBxqec",
+      "-UrwKIGAj08"
      ],
      "playlists": []
     },
@@ -2524,7 +3400,8 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [
-      "drIkMSVAE0A"
+      "drIkMSVAE0A",
+      "JbkiO-RLx6A"
      ],
      "playlists": []
     },
@@ -2585,7 +3462,9 @@ window.HUB_DATA = {
       "catalysis"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "qatdA_ALnx8"
+     ],
      "playlists": []
     },
     {
@@ -2791,7 +3670,12 @@ window.HUB_DATA = {
       "uses and biological effects of radiation"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "WDBiyaeivFY",
+      "tjAebD_t8PA",
+      "g--JowvBqM8",
+      "bZHo3kHvGi0"
+     ],
      "playlists": []
     }
    ]
@@ -2826,7 +3710,15 @@ window.HUB_DATA = {
       "organic",
       "functionalgroups"
      ],
-     "videos": [],
+     "videos": [
+      "gSKpPWYVnTU",
+      "xbsGe976lZ4",
+      "CGmbd2YwflY",
+      "wD3b-7J0Xy0",
+      "Wz23sE4KUBE",
+      "0fzuzHnkPAc",
+      "RNQKJ1hnHes"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2856,7 +3748,14 @@ window.HUB_DATA = {
       "organicreactions",
       "lewisstructures"
      ],
-     "videos": [],
+     "videos": [
+      "9lxWINhQtUc",
+      "OxLTA0CZrd4",
+      "kEkvxf6e-Ro",
+      "JutTTWvB2wQ",
+      "b4DBut72xEI",
+      "Dcun-l5jM9w"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2901,7 +3800,11 @@ window.HUB_DATA = {
       "functionalgroups",
       "organicreactions"
      ],
-     "videos": [],
+     "videos": [
+      "nN-RMEEbjLI",
+      "l3Sb_GWBano",
+      "veiUgkx_Dlc"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2925,7 +3828,11 @@ window.HUB_DATA = {
       "functionalgroups",
       "organicreactions"
      ],
-     "videos": [],
+     "videos": [
+      "K0oEXP7JBZU",
+      "1KPqZ2pp9bg",
+      "whVLjQhx3FI"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2946,7 +3853,10 @@ window.HUB_DATA = {
      "games": [
       "carbohydrates"
      ],
-     "videos": [],
+     "videos": [
+      "4Z7_TvNmeR4",
+      "RudBXy5lTuU"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2971,7 +3881,10 @@ window.HUB_DATA = {
       "functionalgroups",
       "organicreactions"
      ],
-     "videos": [],
+     "videos": [
+      "2pwJ5G0uOtA",
+      "vfSSUIcgzTY"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -2996,7 +3909,9 @@ window.HUB_DATA = {
       "functionalgroups",
       "organicreactions"
      ],
-     "videos": [],
+     "videos": [
+      "HU4KHyptdVA"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -3024,7 +3939,14 @@ window.HUB_DATA = {
      "games": [
       "carbohydrates"
      ],
-     "videos": [],
+     "videos": [
+      "417CUTR3H1E",
+      "5L0AmyTCyi4",
+      "xMjXa2mliZA",
+      "fBVx-i_Ehmc",
+      "ckrRl0L3sr4",
+      "pwyW-X99GI8"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -3048,7 +3970,12 @@ window.HUB_DATA = {
       "cell membranes and transport"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "BQwU9Z7myeg",
+      "Heg74N-mZms",
+      "M7VkdbGkPXY",
+      "gO3YPk_2lTE"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]
@@ -3069,7 +3996,10 @@ window.HUB_DATA = {
       "protein hydrolysis and denaturation"
      ],
      "games": [],
-     "videos": [],
+     "videos": [
+      "Y_bXmJDoANI",
+      "ec1npXqFdDM"
+     ],
      "playlists": [
       "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
      ]

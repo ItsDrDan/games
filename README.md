@@ -26,7 +26,17 @@ Or search any topic (“limiting reactant”, “buffers”, “3A chapter 8”)
 - **CHEM 3B textbook:** when the LibreTexts book is published, set `book.url` for course `3B` and add a `read` block (`url` + `sections`) to each unit.
 - **Hide a repo from the catalog:** add its name to `hide`.
 
-## Turning on video + transcript search
+## Updating transcript search from your saved captions (what we use now)
+
+Your Descript caption files live in `~/Desktop/YouTube Production/Subtitles `. To rebuild after adding new ones:
+
+1. Export the video list from YouTube Studio (Analytics → Advanced mode → Content → download) and turn it into
+   `tools/channel_videos.tsv` (`VIDEO_ID<TAB>Title<TAB>seconds`), or just ask Claude to do it.
+2. `python3 tools/build_transcripts.py "~/Desktop/YouTube Production/Subtitles " tools/channel_videos.tsv`
+
+Files are matched to videos by title and by length. Hand pairings live in `tools/caption_overrides.tsv`.
+
+## Alternative: pulling everything straight from YouTube
 
 YouTube blocks most cloud servers, so run this on your own computer from the repo folder:
 

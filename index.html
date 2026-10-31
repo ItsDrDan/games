@@ -327,7 +327,7 @@ function gameCard(g, courseCtx) {
 function videoCard(v) {
   const card = h('button', {class: 'video', type: 'button', onclick: () => openVideo(v.id, 0)},
     h('span', {class: 'thumb', style: `background-image:url('${thumb(v.id)}')`, 'aria-hidden': 'true'}),
-    h('span', {class: 'vt'}, v.title, v.playlist && playlistTitles[v.playlist] ? h('small', {}, playlistTitles[v.playlist]) : null));
+    h('span', {class: 'vt'}, v.title, h('small', {}, [v.duration ? Math.round(v.duration / 60) + ' min' : '', v.playlist && playlistTitles[v.playlist] ? playlistTitles[v.playlist] : ''].filter(Boolean).join(' · ') || 'Dr. Dan on YouTube')));
   if (!v.moments.length) return card;
   return h('div', {}, card, h('div', {class: 'moments', 'aria-label': 'Key moments in ' + v.title},
     v.moments.map(([t, label]) => h('button', {class: 'moment', type: 'button', onclick: () => openVideo(v.id, t)}, h('b', {}, fmtTime(t)), label))));
