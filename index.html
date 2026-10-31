@@ -146,6 +146,9 @@ h1 span{color:var(--brand)}
 /* game + video cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
 .game{display:flex;flex-direction:column;background:#fff;border:1px solid #dfe9e2;border-radius:18px;padding:18px;box-shadow:var(--shadow);min-height:210px}
+.chtags{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 2px}
+.chtag{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.85rem;font-weight:800;color:var(--c,#5a4fcf);background:#fff;border:1.5px solid var(--c,#cfc4ef);border-radius:999px;padding:3px 10px;text-decoration:none;line-height:1.3}
+.chtag:hover{background:#f6f2ff}
 .game-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
 .game .icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:1.5rem;background:#e7f1fa;flex:0 0 auto}
 .game .badges{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
@@ -572,11 +575,13 @@ function chaptersUsing(kind, id) {
 function videoCourses(id) { return [...new Set(chaptersUsing('video', id).map(x => x.c.id))]; }
 
 /* ---------- components ---------- */
-function gameCard(g, courseCtx) {
+function gameCard(g, courseCtx, showCh) {
   const cs = g.courses?.length ? g.courses : coursesOf(g.course);
+  const chs = showCh && courseCtx ? chaptersUsing('game', g.id).filter(x => x.c.id === courseCtx) : [];
   return h('article', {class: 'game'},
     h('div', {class: 'game-top'}, h('span', {class: 'icon', 'aria-hidden': 'true'}, g.icon || '🧪'), courseCtx ? null : h('div', {class: 'badges'}, cs.map(courseBadge))),
     h('h4', {}, g.title),
+    chs.length ? h('div', {class: 'chtags'}, chs.map(({c, ch}) => h('a', {class: 'chtag', href: `#/course/${c.id}/${ch.id}`, 'data-course': c.id, title: `${ch.label}: ${ch.title}`}, chs.length === 1 ? `${ch.icon || ''} ${ch.label}: ${ch.title}` : `${ch.icon || ''} ${ch.label}`))) : null,
     h('p', {}, g.blurb || g.description || ''),
     h('div', {class: 'actions'},
       h('a', {class: 'play', href: '#/play/' + encodeURIComponent(g.id) + (courseCtx ? '?from=' + courseCtx : '')}, 'Play')));
@@ -778,13 +783,27 @@ function viewGames(params) {
   setTitle('All games');
   let active = params.get('course') || 'all';
   const list = h('div', {class: 'grid'});
-  const q = h('input', {class: '', type: 'search', placeholder: 'Filter games…', style: 'height:44px;border:1.5px solid #cfdfd8;border-radius:12px;padding:0 14px;min-width:220px', oninput: draw});
+  const q = h('input', {class: '', type: 'search', placeholder: 'Try “gases” or “ch 11”', style: 'height:44px;border:1.5px solid #cfdfd8;border-radius:12px;padding:0 14px;min-width:300px;font-size:1rem', oninput: draw});
   const chips = h('div', {class: 'filters', role: 'group', 'aria-label': 'Filter by course'}, h('strong', {}, 'COURSE'),
     ['all', ...COURSE_ORDER].map(id => h('button', {class: 'chip', type: 'button', 'aria-pressed': String(active === id), onclick: e => { active = id; chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); draw(); }}, id === 'all' ? 'All' : 'CHEM ' + id)), q);
   function draw() {
-    const qt = tokens(q.value);
-    const items = [...games.values()].filter(g => (active === 'all' || (g.courses || []).includes(active)) && (!qt.length || scoreText(haystack(g.title, g.blurb, g.tags || []), qt))).sort((a, b) => a.title.localeCompare(b.title));
-    list.replaceChildren(...(items.length ? items.map(g => gameCard(g, active !== 'all' ? active : '')) : [h('p', {class: 'noresults'}, 'No games match. Try another word or choose All.')]));
+    const raw = q.value.trim();
+    const used = g => chaptersUsing('game', g.id).filter(x => active === 'all' || x.c.id === active);
+    const num = norm(raw).match(/^(?:(3a|1a|1b|3b)\s*)?(?:ch|chapter|chap|unit|u)?\.?\s*(\d{1,2})$/);
+    const qt = num ? [] : tokens(raw);
+    const hit = g => {
+      if (num) return used(g).some(x => x.ch.id === num[2] && (!num[1] || x.c.id === num[1].toUpperCase()));
+      if (!qt.length) return true;
+      return scoreText(haystack(g.title, g.blurb, g.tags || [], used(g).map(x => x.ch.title)), qt);
+    };
+    const firstCh = g => Math.min(...used(g).map(x => parseInt(x.ch.id) || 99), 99);
+    const pool = [...games.values()].filter(g => active === 'all' || (g.courses || []).includes(active));
+    let found = pool.filter(hit);
+    // nothing by name or chapter title? fall back to the chapters' concept lists (e.g. "molarity")
+    if (!found.length && qt.length) found = pool.filter(g => scoreText(haystack(used(g).flatMap(x => x.ch.concepts)), qt));
+    const items = found
+      .sort((a, b) => (active !== 'all' ? firstCh(a) - firstCh(b) : 0) || a.title.localeCompare(b.title));
+    list.replaceChildren(...(items.length ? items.map(g => gameCard(g, active !== 'all' ? active : '', true)) : [h('p', {class: 'noresults'}, 'No games match. Try a chapter number like “11”, a topic like “gases”, or choose All.')]));
   }
   draw();
   app.replaceChildren(h('section', {class: 'section wrap'}, h('div', {class: 'eyebrow'}, 'Every game in one place'), h('h2', {}, 'All study games'),
