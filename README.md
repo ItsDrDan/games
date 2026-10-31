@@ -20,6 +20,7 @@ Or search any topic (“limiting reactant”, “buffers”, “3A chapter 8”)
 
 - **Add a new game to a chapter:** add the game to the `games` list (`id` = repo name), then put that id in the chapter’s `"games": [...]`.
   New repos that have GitHub Pages and a `meta.json` also appear on **All games** automatically, even before you add them to a chapter.
+  - **Game logos:** card logos live in `assets/games/<game id>.webp` (set as `"logo"` in `data/hub.js`). A brand-new game can show its logo automatically by adding `"logo": "logo.png"` to its `meta.json` (a file in that game's repo).
 - **Add a video to a chapter:** add it to `videos` (`id` = the part after `watch?v=`), then put the id in the chapter’s `"videos": [...]`.
   Add `"moments": [[seconds, "label"], ...]` to give it jump-to buttons.
 - **Link a whole playlist to a chapter:** put the playlist id in the chapter’s `"playlists": [...]`. Once `youtube.json` exists, every video in that playlist shows up on the chapter automatically.

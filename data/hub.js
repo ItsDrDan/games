@@ -42,6 +42,7 @@ window.HUB_DATA = {
   },
   {
    "id": "elements",
+   "logo": "assets/games/elements.webp",
    "title": "Element Symbol Study Lab",
    "icon": "🔤",
    "blurb": "Learn element names and symbols, starting with the first 20 and a health-science set.",
@@ -75,6 +76,7 @@ window.HUB_DATA = {
   },
   {
    "id": "quantumchemistry",
+   "logo": "assets/games/quantumchemistry.webp",
    "title": "Quantum Quest",
    "icon": "⚛️",
    "blurb": "Light, Bohr model, orbital diagrams, electron configurations, and periodic trends. Pick 3A or 1A.",
@@ -86,6 +88,7 @@ window.HUB_DATA = {
   },
   {
    "id": "lewisstructures",
+   "logo": "assets/games/lewisstructures.webp",
    "title": "Lewis Structure Studio",
    "icon": "🔬",
    "blurb": "Build Lewis structures, then predict shape and polarity. 3B adds condensed and skeletal drawing.",
@@ -109,6 +112,7 @@ window.HUB_DATA = {
   },
   {
    "id": "redox",
+   "logo": "assets/games/redox.webp",
    "title": "LEO Goes GER! (Redox)",
    "icon": "🦁",
    "blurb": "Oxidation states, activity series, and balancing redox by half-reactions in acid and base.",
@@ -121,6 +125,7 @@ window.HUB_DATA = {
   },
   {
    "id": "stoichiometry",
+   "logo": "assets/games/stoichiometry.webp",
    "title": "Stoichiometry",
    "icon": "⚖️",
    "blurb": "Mass, solution, and gas stoichiometry, limiting reactants, percent yield, and titrations.",
@@ -132,6 +137,7 @@ window.HUB_DATA = {
   },
   {
    "id": "gaslaws",
+   "logo": "assets/games/gaslaws.webp",
    "title": "Under Pressure (Gas Laws)",
    "icon": "🎈",
    "blurb": "Gas laws, ideal gas calculations, mixtures, wet gases, and mystery gases.",
@@ -143,6 +149,7 @@ window.HUB_DATA = {
   },
   {
    "id": "thermochemistry",
+   "logo": "assets/games/thermochemistry.webp",
    "title": "Thermochemistry",
    "icon": "🔥",
    "blurb": "Specific heat, phase changes, calorimetry, Hess's law, and enthalpies of formation.",
@@ -154,6 +161,7 @@ window.HUB_DATA = {
   },
   {
    "id": "chem1bready",
+   "logo": "assets/games/chem1bready.webp",
    "title": "CHEM 1B Readiness Quest",
    "icon": "🚀",
    "blurb": "A 1A review with a readiness check and a personal study plan before you start 1B.",
@@ -176,6 +184,7 @@ window.HUB_DATA = {
   },
   {
    "id": "functionalgroups",
+   "logo": "assets/games/functionalgroups.webp",
    "title": "Functional Groups Studio",
    "icon": "🧪",
    "blurb": "Spot, classify, name, and draw organic compounds, then predict how they react.",
@@ -186,6 +195,7 @@ window.HUB_DATA = {
   },
   {
    "id": "organicreactions",
+   "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
    "icon": "⛵",
    "blurb": "Identify reactions and draw reactants and products for the 3B organic chapters.",
@@ -196,6 +206,7 @@ window.HUB_DATA = {
   },
   {
    "id": "carbohydrates",
+   "logo": "assets/games/carbohydrates.webp",
    "title": "Sweet Structures (Carbohydrates)",
    "icon": "🍬",
    "blurb": "Fischer and Haworth projections, D/L sugars, anomers, glycosidic links, and sugar reactions.",
@@ -6264,7 +6275,7 @@ window.HUB_DATA = {
    "id": "3A",
    "name": "CHEM 3A",
    "title": "Introductory Chemistry",
-   "who": "For nursing, dental hygiene, radiologic technology, respiratory therapy, and other health-science majors.",
+   "who": "For nursing, dental hygiene, radiologic technology, respiratory therapy, and other Allied Health and Science majors.",
    "book": {
     "title": "Introductory Chemistry, Atoms First for FCC",
     "publisher": "LibreTexts",
