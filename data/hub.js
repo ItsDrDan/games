@@ -101,9 +101,10 @@ window.HUB_DATA = {
   },
   {
    "id": "reactions",
+   "logo": "assets/games/reactions.webp",
    "title": "Chemical Reactions",
    "icon": "⚗️",
-   "blurb": "Predict products, balance equations, and write complete and net ionic equations.",
+   "blurb": "Balance, predict products, write net ionic equations, and race the 60-second Blitz.",
    "courses": [
     "3A",
     "1A"
