@@ -36,49 +36,14 @@ window.HUB_EXAMS = {
      "Predict double-displacement products and the 4 gas-forming reactions; write net ionic equations",
      "Assign oxidation numbers and identify what is oxidized, reduced, and the oxidizing/reducing agents"],
     tips: ["Lewis structures and VSEPR questions usually come in parts: draw it, count lone pairs, name the shape.", "Practice mole and empirical-formula problems with a calculator until they feel routine.", "Check whether a 3×5 index card is allowed for your section (see Canvas)."]},
-   {id: "3", title: "Exam 3", ch: ["8", "9", "11"],
-    can: [
-     "State the assumptions of kinetic molecular theory",
-     "Predict how P, V, T, or n changes when other properties are held constant",
-     "Use PV = nRT (convert units for R), STP, and molar volume (22.4 L/mol)",
-     "Find partial pressures, including gases collected over water",
-     "Find molar mass or density of a gas from P, V, T data",
-     "Use solubility rules to decide aqueous vs solid; picture ionic compounds as separate ions in water",
-     "Calculate molarity, use it as a conversion factor, and do dilutions (M₁V₁ = M₂V₂)",
-     "Do stoichiometry from any starting unit: mass, particles, gas volume, or solution volume",
-     "Find limiting and excess reactant (by math and from drawings), theoretical yield, and percent yield",
-     "Use ΔH as a conversion factor for heat released or absorbed"],
-    tips: ["Every stoichiometry path goes through moles: unit of A → mol A → mol B → unit of B.", "Some exams have a team portion; check Canvas for your section’s format.", "Convert temperature to kelvin before every gas calculation."]},
-   {id: "4", title: "Exam 4", ch: ["9", "12", "13", "14"],
-    can: [
-     "Calculate percent concentrations and molality; explain colligative properties and osmosis",
-     "Identify Arrhenius and Brønsted–Lowry acids and bases and conjugate pairs",
-     "Tell strong from weak acids and bases",
-     "Calculate pH, pOH, [H₃O⁺], and [OH⁻] for strong acids and bases",
-     "Explain what a buffer does",
-     "Describe collision theory and what changes reaction rates",
-     "Write equilibrium-constant expressions and interpret K",
-     "Predict Le Chatelier shifts",
-     "Identify alpha, beta, and gamma decay and balance nuclear equations",
-     "Solve whole-number half-life problems"],
-    tips: ["Confirm with Canvas which chapters your section’s Exam 4 covers.", "Memorize the strong acids and bases from the green sheet."]},
    {id: "final", title: "Final Exam (ACS)", ch: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "review"],
     can: [
-     "Review every exam’s checklist above; the ACS final is cumulative",
+     "Review the Exam 1 and Exam 2 checklists; the ACS final is cumulative",
+     "Cover Chapters 8–14 (gases, solutions, stoichiometry, acids & bases, equilibrium, nuclear) using each chapter’s concepts and skill recipe, since they weren’t on Exams 1–2",
      "Work through the ACS review videos on the Review page",
      "Retake the games for your weakest chapters until you’re at 80%+"],
     tips: ["The final is a standardized ACS exam: multiple choice, no partial credit, so speed and accuracy both matter.", "Do a timed practice set to build pacing."]},
   ],
-  checks: [
-   {n: 1, title: "Matter & significant figures", ch: ["1", "4"]},
-   {n: 2, title: "Unit conversions", ch: ["1"]},
-   {n: 3, title: "Atoms & isotopes", ch: ["2"]},
-   {n: 4, title: "Electron configurations & naming", ch: ["3", "4"]},
-   {n: 5, title: "Moles & empirical formulas", ch: ["5"]},
-   {n: 6, title: "Lewis structures, VSEPR & polarity", ch: ["6"]},
-   {n: 7, title: "Thermochemistry & intermolecular forces", ch: ["7", "6"]},
-   {n: 8, title: "Chemical reactions", ch: ["10"]},
-  ]
  },
  "1A": {
   exams: [
@@ -128,15 +93,5 @@ window.HUB_EXAMS = {
      "Recognize common organic functional groups"],
     tips: ["Redo your missed exam and skill-check topics first.", "Do one full timed practice session before the final."]},
   ],
-  checks: [
-   {n: 1, title: "Measurement & significant figures", ch: ["1"]},
-   {n: 2, title: "Unit conversions & dimensional analysis", ch: ["1"]},
-   {n: 3, title: "Atoms & isotopes", ch: ["2"]},
-   {n: 4, title: "Nomenclature", ch: ["2"]},
-   {n: 6, title: "Stoichiometry", ch: ["3", "4"]},
-   {n: 7, title: "Net ionic equations & redox", ch: ["4"]},
-   {n: 8, title: "Balancing redox", ch: ["4"]},
-   {n: 9, title: "Gases", ch: ["9"]},
-  ]
  }
 };
