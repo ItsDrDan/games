@@ -120,4 +120,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:  # show the reason as a GitHub annotation
+        body = ""
+        if hasattr(e, "read"):
+            try: body = e.read()[:300].decode("utf-8", "ignore")
+            except Exception: pass
+        print(f"::error::{type(e).__name__}: {e} {body}".replace("\n", " "))
+        sys.exit(1)
