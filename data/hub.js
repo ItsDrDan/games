@@ -102,8 +102,8 @@ window.HUB_DATA = {
   {
    "id": "reactions",
    "logo": "assets/games/reactions.webp",
-   "title": "Chemical Reactions",
-   "icon": "⚗️",
+   "title": "Reaction Rumble (Chemical Reactions)",
+   "icon": "⚡",
    "blurb": "Balance, predict products, write net ionic equations, and race the 60-second Blitz.",
    "courses": [
     "3A",
