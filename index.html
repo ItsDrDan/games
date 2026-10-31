@@ -116,6 +116,9 @@ h1 span{color:var(--brand)}
 .toc-mobile{display:none}
 .retake{margin:16px 0 0;padding:14px 18px;border-radius:18px;background:#f3ecff;border:1.5px solid #ddd0f7;color:#4a4268;font-size:1.02rem;line-height:1.5}
 .examcard small{font-size:1rem}
+.examgrid.centered{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
+.examgrid.centered .examcard{width:220px;align-items:center;text-align:center}
+@media (max-width:560px){.examgrid.centered{gap:12px}.examgrid.centered .examcard{width:calc(50% - 6px);padding:14px}}
 .layout.solo{grid-template-columns:minmax(0,1fr)}
 .seg{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
 .seg .chip{font-size:1.02rem;padding:9px 16px;cursor:pointer}
@@ -1014,7 +1017,7 @@ function viewExamHub(cid) {
       h('p', {}, 'Pick your exam to get a checklist and a study plan.'))),
     h('section', {class: 'wrap section', 'data-course': cid}, weekCard(cid),
       E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, '📝 Exams'),
-        h('div', {class: 'examgrid'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
+        h('div', {class: 'examgrid centered'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
           h('span', {class: 'ei'}, ex.id === 'final' ? '🏁' : '📝'), h('b', {}, ex.title),
           h('small', {}, chRange(ex.ch.filter(x => x !== 'review')))))),
 
