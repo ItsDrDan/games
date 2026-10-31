@@ -1,0 +1,241 @@
+{
+ "updated": "2026-10-31",
+ "source": "https://fresnocitycollege.simplesyllabus.com/en-US/syllabus-library",
+ "courses": {
+  "3A": {
+   "term": "2026FA",
+   "title": "Introductory General Chemistry",
+   "section": "CHEM 3A 25784",
+   "url": "https://fresnocitycollege.simplesyllabus.com/en-US/doc/vmbhc7co7",
+   "start": "08/10/2026",
+   "end": "12/11/2026",
+   "weeks": [
+    {
+     "week": 1,
+     "date": "Aug. 9",
+     "lecture": "Ch 1 and 2: How Scientists Communicate, Significant Figures, Rounding, Scientific Notation",
+     "lab": "Introduction to Lab, | Getting Ready for CHEM 3A | EXP 0A",
+     "quiz": "Topics may change from what is posted here… Dr. Dan will always post a Study Guide with practice problems on Canvas | (one week in advance)",
+     "events": []
+    },
+    {
+     "week": 2,
+     "date": "Aug. 16",
+     "lecture": "Ch 2: Dimensional Analysis and Atoms",
+     "lab": "EXP 1A | Math Review Workshop",
+     "quiz": "Skill Check #1: | Measurements and Significant Figures",
+     "events": [
+      {
+       "type": "check",
+       "id": "1",
+       "topic": "Measurements and Significant Figures"
+      }
+     ]
+    },
+    {
+     "week": 3,
+     "date": "Aug. 23rd",
+     "lecture": "Ch 3: Matter, Energy, and Atoms",
+     "lab": "EXP 3z | Found or Forgery: A Case Study",
+     "quiz": "Skill Check #2: | Dimensional Analysis",
+     "events": [
+      {
+       "type": "check",
+       "id": "2",
+       "topic": "Dimensional Analysis"
+      }
+     ]
+    },
+    {
+     "week": 4,
+     "date": "Aug. 30",
+     "lecture": "Ch 4: Electrons, Bonding, Compounds, and Molecules",
+     "lab": "EXP 4b: | Rolling for Compound Initiative",
+     "quiz": "Skill Check #3: | Atoms, Elements, and Isotopes",
+     "events": [
+      {
+       "type": "check",
+       "id": "3",
+       "topic": "Atoms, Elements, and Isotopes"
+      }
+     ]
+    },
+    {
+     "week": 5,
+     "date": "Sept. 6th",
+     "lecture": "Ch 5: Moles and Matter: Moles as in the animal?",
+     "lab": "Exam #1 and Team Assessment #1",
+     "quiz": "",
+     "events": [
+      {
+       "type": "exam",
+       "id": "1"
+      }
+     ]
+    },
+    {
+     "week": 6,
+     "date": "Sept 13th",
+     "lecture": "Ch 6: Naming and Molecular Shape",
+     "lab": "EXP 5a: | Empirical Formulas",
+     "quiz": "Skill Check #4: | Mole Calculations",
+     "events": [
+      {
+       "type": "check",
+       "id": "4",
+       "topic": "Mole Calculations"
+      }
+     ]
+    },
+    {
+     "week": 7,
+     "date": "Sept. 20",
+     "lecture": "Ch 6 and 7: Electronegativity, Polarity, IMF",
+     "lab": "EXP 6a: | Molecular Modeling",
+     "quiz": "Skill Check #5: | Naming Ionic Compounds and Covalent Molecules",
+     "events": [
+      {
+       "type": "check",
+       "id": "5",
+       "topic": "Naming Ionic Compounds and Covalent Molecules"
+      }
+     ]
+    },
+    {
+     "week": 8,
+     "date": "Sept. 27",
+     "lecture": "Ch 10: Balancing and Predicting Chemical Reactions",
+     "lab": "EXP 7a: | Calorimetry",
+     "quiz": "Mastery Skill Check #1 | (Replaces Lowest Skill Check Score #1-5)",
+     "events": [
+      {
+       "type": "mastery"
+      }
+     ]
+    },
+    {
+     "week": 9,
+     "date": "Oct. 4th",
+     "lecture": "Ch 9: Aqueous Reactions and Solubility",
+     "lab": "EXP 10a: | Types of Reactions",
+     "quiz": "Skill Check #6: TBD | Depends on Lecture pace and what the class needs to understand for the rest of the semester and future courses",
+     "events": [
+      {
+       "type": "check",
+       "id": "6",
+       "topic": ""
+      }
+     ]
+    },
+    {
+     "week": 10,
+     "date": "Oct. 11",
+     "lecture": "Ch 8: Gases",
+     "lab": "Exam #2 and Team Assessment #2",
+     "quiz": "",
+     "events": [
+      {
+       "type": "exam",
+       "id": "2"
+      }
+     ]
+    },
+    {
+     "week": 11,
+     "date": "Oct. 18",
+     "lecture": "Ch 9: Solutions and Molarity",
+     "lab": "EXP 8a: | Determine Gas Constant R",
+     "quiz": "Skill Check #7: TBD",
+     "events": [
+      {
+       "type": "check",
+       "id": "7",
+       "topic": ""
+      }
+     ]
+    },
+    {
+     "week": 12,
+     "date": "Oct. 25",
+     "lecture": "Ch 11: Stoichiometry",
+     "lab": "EXP 9a: | Solutions and Dilutions",
+     "quiz": "Skill Check #8: TBD",
+     "events": [
+      {
+       "type": "check",
+       "id": "8",
+       "topic": ""
+      }
+     ]
+    },
+    {
+     "week": 13,
+     "date": "Nov. 1",
+     "lecture": "Ch 11: Stoichiometry and Limiting Reactants",
+     "lab": "EXP 12a: | Determination of Citric Acid",
+     "quiz": "Skill Check #9: TBD",
+     "events": [
+      {
+       "type": "check",
+       "id": "9",
+       "topic": ""
+      }
+     ]
+    },
+    {
+     "week": 14,
+     "date": "Nov. 8",
+     "lecture": "Ch 12: Acids and Bases",
+     "lab": "EXP 12b: pH of Household Chemicals",
+     "quiz": "Mastery Skill Check #2 | (Replaces Lowest Skill Check Score #6-9)",
+     "events": [
+      {
+       "type": "mastery"
+      }
+     ]
+    },
+    {
+     "week": 15,
+     "date": "Nov. 15",
+     "lecture": "Ch 13: Equilibrium",
+     "lab": "Lab Practical",
+     "quiz": "",
+     "events": [
+      {
+       "type": "practical"
+      }
+     ]
+    },
+    {
+     "week": 16,
+     "date": "Nov. 22",
+     "lecture": "Ch. 14: Nuclear and Electrochemistry",
+     "lab": "(Tuesday) Study Hall | (Thursday) No Lab",
+     "quiz": "",
+     "events": []
+    },
+    {
+     "week": 17,
+     "date": "Nov. 29",
+     "lecture": "Catch up Week",
+     "lab": "Mock Final Exam and ACS Study Week",
+     "quiz": "",
+     "events": []
+    },
+    {
+     "week": 18,
+     "date": "",
+     "lecture": "Final Exam at 12 PM on Monday, December 7th",
+     "lab": "",
+     "quiz": "",
+     "events": [
+      {
+       "type": "exam",
+       "id": "final"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

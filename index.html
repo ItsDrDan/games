@@ -441,6 +441,17 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .cangroup .gcount.done{background:#d9f4ea;color:#1f7a62}
 .cangroup .canlist{padding:0 12px 12px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px}
 .cangroup .canlist label{padding:7px 12px;font-size:.98rem}
+
+/* this week card */
+.weekcard{background:#fff;border:2px solid var(--c);box-shadow:0 5px 0 var(--c);border-radius:24px;padding:16px 20px;margin:0 0 22px}
+.wkhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.wkhead b{font-size:1.2rem}.wkbadge{background:var(--c);color:#fff;font-weight:900;border-radius:99px;padding:4px 12px}
+.wksrc{margin-left:auto;font-size:.9rem;color:var(--edge);font-weight:800}
+.wkgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.wkitem{background:var(--cb);border-radius:18px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.wkitem small{font-weight:900;color:var(--c);font-size:.85rem;letter-spacing:.04em;text-transform:uppercase}
+.wkitem span{font-weight:800;line-height:1.35}
+.wkitem .btn{margin-top:auto}
 </style>
 </head>
 <body>
@@ -651,6 +662,7 @@ function courseOverview(c) {
   // add discovered games tagged with this course that no chapter lists yet
   for (const g of games.values()) if (!allGames.includes(g) && (g.courses || []).includes(c.id)) allGames.push(g);
   return h('div', {},
+    weekCard(c.id),
     h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, '📝 Exam coming up?'), ' Open the exam & skill-check guides for ' + c.name), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('div', {class: 'kicker'}, 'Start here'), h('h2', {class: 'ct'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('p', {class: 'overview-intro', style: 'margin:0 0 18px'}, 'Each one gathers the reading, Dr. Dan’s video lessons, and the games for that topic, plus a quick summary and a step-by-step study plan.'),
@@ -875,6 +887,42 @@ function renderResults(box, q, course) {
 }
 
 
+
+/* ---------- syllabus calendar ("this week") from data/syllabus.json ---------- */
+let SYL = null;
+async function loadSyllabus() { try { const r = await fetch('data/syllabus.json', {cache: 'no-cache'}); if (r.ok) { SYL = await r.json(); route(); } } catch {} }
+function sylCourse(cid) { return SYL?.courses?.[cid] || null; }
+function sylWeekNow(sc) {
+  if (!sc?.start) return null;
+  const [m, d, y] = sc.start.split('/').map(Number); const start = new Date(y, m - 1, d);
+  const end = sc.end ? (([m2, d2, y2]) => new Date(y2, m2 - 1, d2))(sc.end.split('/').map(Number)) : null;
+  const now = new Date(); if (now < start) return {before: true}; if (end && now > new Date(end.getTime() + 7 * 864e5)) return {after: true};
+  return {n: Math.floor((now - start) / (7 * 864e5)) + 1};
+}
+function matchChapter(cid, text) {
+  const c = courseById[cid]; const qt = tokens(String(text).replace(/^\s*ch\.?\s*\d+(\s*(and|&)\s*\d+)?\s*:?/i, ''));
+  let best = null, bs = 0;
+  for (const ch of c.chapters) { if (ch.id === 'review') continue; const hay = haystack(ch.title, ch.concepts); let sc = 0; for (const w of qt) if (w.length > 2 && hay.includes(' ' + w)) sc += hay.includes(' ' + w + ' ') ? 2 : 1; if (sc > bs) { bs = sc; best = ch; } }
+  return bs >= 2 ? best : null;
+}
+function weekCard(cid) {
+  const sc = sylCourse(cid); if (!sc?.weeks?.length) return null;
+  const wn = sylWeekNow(sc); if (!wn || wn.before || wn.after) return null;
+  const wk = sc.weeks.find(w => w.week === wn.n) || null; if (!wk) return null;
+  const next = sc.weeks.filter(w => w.week >= wn.n).flatMap(w => w.events.filter(e => e.type === 'exam').map(e => ({...e, w}))).at(0);
+  const ch = matchChapter(cid, wk.lecture);
+  const check = wk.events.find(e => e.type === 'check');
+  const exInfo = next ? (EXAMS[cid]?.exams || []).find(x => x.id === next.id) : null;
+  return h('section', {class: 'weekcard', 'data-course': cid},
+    h('div', {class: 'wkhead'}, h('span', {class: 'wkbadge'}, `Week ${wn.n}`), h('b', {}, `This week in ${courseById[cid].name}`), h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗')),
+    h('div', {class: 'wkgrid'},
+      h('div', {class: 'wkitem'}, h('small', {}, '📖 In lecture'), h('span', {}, wk.lecture.replace(/\s*\|\s*/g, ' ')), ch ? h('a', {class: 'btn small', href: `#/course/${cid}/${ch.id}`}, `${ch.icon || ''} Study ${ch.label} →`) : null),
+      check ? h('div', {class: 'wkitem'}, h('small', {}, `✅ Skill Check #${check.id}`), h('span', {}, check.topic || 'Topic posted on Canvas'),
+        (() => { const sch = check.topic ? matchChapter(cid, check.topic) : ch; return sch ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${sch.id}`}, 'Build my plan →') : null; })()) : null,
+      next ? h('div', {class: 'wkitem'}, h('small', {}, next.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + next.id} · Week ${next.w.week}${next.w.date ? ' (' + next.w.date + ')' : ''}`),
+        exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${next.id}`}, 'Exam guide →') : null) : null));
+}
+
 /* ---------- exam & skill-check guides ---------- */
 const EXAMS = window.HUB_EXAMS || {};
 function parseExamQuery(q) {
@@ -918,7 +966,7 @@ function viewExamHub(cid) {
       h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('span', {}, 'Exams')),
       h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), 'Exam & skill-check guides'),
       h('p', {}, 'Find exactly what to study for your next exam: the chapters, the skills, the games, and the video moments.'))),
-    h('section', {class: 'wrap section', 'data-course': cid},
+    h('section', {class: 'wrap section', 'data-course': cid}, weekCard(cid),
       E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, '📝 Exams'),
         h('div', {class: 'examgrid'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
           h('span', {class: 'ei'}, ex.id === 'final' ? '🏁' : '📝'), h('b', {}, ex.title),
@@ -992,7 +1040,7 @@ function viewExam(cid, id, params, isCheck) {
       h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
       h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, isCheck ? '✅' : id === 'final' ? '🏁' : '📝'),
         h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${isCheck ? 'Weekly skill check' : ex.custom ? 'Custom plan' : 'Dr. Dan’s sections'}`), h('h1', {style: 'margin:2px 0'}, ex.title))),
-      ex.custom ? null : h('p', {}, 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
+      ex.custom ? null : h('p', {}, (() => { const w = sylCourse(cid)?.weeks?.find(w => w.events.some(e => e.type === 'exam' && e.id === id)); return w ? `📅 Week ${w.week}${w.date ? ' (' + w.date + ')' : ''} on Dr. Dan’s syllabus. ` : ''; })(), 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
     h('div', {class: 'wrap examwrap', 'data-course': cid},
       h('section', {class: 'panel'}, h('h3', {}, '📚 Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
         h('div', {class: 'chapters-overview'}, chs.map(ch => h('a', {class: 'ch-card', href: `#/course/${cid}/${ch.id}`},
@@ -1097,6 +1145,7 @@ buildIndex();
 route();
 discoverGames();
 loadYouTube();
+loadSyllabus();
 </script>
 </body>
 </html>
