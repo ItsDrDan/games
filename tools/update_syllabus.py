@@ -2,9 +2,10 @@
 """Pull Dr. Dan's current course calendars from FCC's public Simple Syllabus library
 and save them to data/syllabus.json for the study hub ("This week in CHEM 3A", exam weeks).
 
-Runs automatically every week from GitHub Actions (.github/workflows/syllabus.yml),
-or by hand:  python3 tools/update_syllabus.py
-Only public syllabi are read; nothing needs a login.
+Run by hand:  python3 tools/update_syllabus.py
+Only public syllabi are read; nothing needs a login. Simple Syllabus blocks requests from
+cloud servers (like GitHub Actions), so this is not scheduled there; Claude can also refresh
+data/syllabus.json by reading the syllabus in Dr. Dan's browser.
 """
 import json, re, sys, time, urllib.request
 from html.parser import HTMLParser

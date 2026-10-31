@@ -52,3 +52,9 @@ video chapter markers become “key moments,” playlist videos attach to their 
 
 Tip: chapter markers come from timestamps in each video’s description (`0:00 Intro`, `5:17 Combined gas law`, …),
 so adding those in YouTube Studio makes the “key moments” richer.
+
+## Syllabus calendar ("This week in CHEM 3A")
+
+`data/syllabus.json` holds the weekly calendar from Dr. Dan's public Simple Syllabus pages. The hub uses it to show
+"This week" (lecture topic, skill check, next exam) and exam weeks. Refresh it each semester, or when TBD skill checks
+are filled in, by asking Claude to "update the hub from my syllabus" or by running `python3 tools/update_syllabus.py`.
