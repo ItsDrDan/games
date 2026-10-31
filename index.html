@@ -371,6 +371,26 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 @keyframes flash{0%{box-shadow:0 0 0 0 #9a6bff88}40%{box-shadow:0 0 0 10px #9a6bff33}100%{box-shadow:var(--shadow)}}
 .flash{animation:flash 1.2s ease-out}
 .flash:focus{outline:none}
+
+/* video theater */
+.theater{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr);gap:18px;align-items:start}
+.screen{aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#1d1830;box-shadow:0 6px 0 var(--edge)}
+.screen iframe{width:100%;height:100%;border:0;display:block}
+.nowtitle{font-weight:900;font-size:1.2rem;margin:16px 2px 4px;line-height:1.3}
+.nowmeta{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.95rem;margin:0 2px}
+.nowmeta a{color:var(--edge);font-weight:800}
+.theater .moments{margin-top:10px}.mlabel{font-weight:800;color:var(--muted);align-self:center;margin-right:2px}
+.side{background:#faf7ff;border:1px solid #eee6fb;border-radius:20px;padding:12px;display:flex;flex-direction:column;max-height:520px}
+.sidehead{font-weight:900;padding:4px 6px 10px;color:var(--ink)}
+.tlist{list-style:none;margin:0;padding:0;overflow:auto;display:grid;gap:8px;padding-right:4px}
+.tlist button{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;font:inherit;color:inherit;background:#fff;border:2px solid #ebe3f7;border-radius:16px;padding:10px 12px;cursor:pointer;transition:transform .12s,border-color .12s,background .12s}
+.tlist button:hover{border-color:#c9b9ee;transform:translateX(3px)}
+.tlist button[aria-current=true]{background:var(--brand);border-color:var(--edge);color:#fff;box-shadow:0 3px 0 var(--edge)}
+.tlist .tn{flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:900;background:#efe9ff;color:var(--edge);font-size:.9rem}
+.tlist button[aria-current=true] .tn{background:#fff}
+.tlist .tt{font-weight:800;line-height:1.35;font-size:.98rem}
+.tlist .tt small{display:block;font-weight:700;opacity:.75;font-size:.82rem;margin-top:2px}
+@media (max-width:860px){.theater{grid-template-columns:1fr}.side{max-height:420px}}
 </style>
 </head>
 <body>
@@ -627,6 +647,36 @@ function guideBlock(c, ch, gs, vs, topSections) {
   return wrap;
 }
 
+
+/* ---------- chapter video theater: embedded player + topic list ---------- */
+function theater(vs) {
+  let cur = 0;
+  const frame = h('iframe', {title: 'Video lesson', loading: 'lazy', allow: 'accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen', allowfullscreen: true});
+  const title = h('div', {class: 'nowtitle'});
+  const meta = h('div', {class: 'nowmeta'});
+  const moments = h('div', {class: 'moments'});
+  const list = h('ol', {class: 'tlist', 'aria-label': 'Lessons in this chapter'});
+  function load(i, t = 0, autoplay = false) {
+    cur = i; const v = vs[i];
+    frame.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(v.id)}?rel=0&modestbranding=1${autoplay ? '&autoplay=1' : ''}${t ? '&start=' + Math.floor(t) : ''}`;
+    frame.title = v.title;
+    title.textContent = v.title;
+    meta.replaceChildren(h('span', {}, `Lesson ${i + 1} of ${vs.length}`), v.duration ? h('span', {}, Math.round(v.duration / 60) + ' min') : null,
+      h('a', {href: ytUrl(v.id, t), target: '_blank', rel: 'noopener'}, 'Open on YouTube ↗'));
+    moments.replaceChildren(...(v.moments.length ? [h('span', {class: 'mlabel'}, 'Jump to:'), ...v.moments.map(([mt, label]) => h('button', {class: 'moment', type: 'button', onclick: () => load(i, mt, true)}, h('b', {}, fmtTime(mt)), label))] : []));
+    list.querySelectorAll('button').forEach((b, j) => { b.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+  }
+  vs.forEach((v, i) => list.append(h('li', {}, h('button', {type: 'button', onclick: () => { load(i, 0, true); if (matchMedia('(max-width: 860px)').matches) frame.scrollIntoView({behavior: 'smooth', block: 'center'}); }},
+    h('span', {class: 'tn'}, String(i + 1)), h('span', {class: 'tt'}, v.title, v.duration ? h('small', {}, Math.round(v.duration / 60) + ' min') : null)))));
+  const box = h('div', {class: 'theater'},
+    h('div', {class: 'stage'}, h('div', {class: 'screen'}, frame), title, meta, moments),
+    h('div', {class: 'side'}, h('div', {class: 'sidehead'}, `🎬 ${vs.length} lesson${vs.length > 1 ? 's' : ''}: pick a topic`), list));
+  load(0);
+  const stage = box.firstChild, side = box.lastChild;
+  if (window.ResizeObserver) new ResizeObserver(() => { side.style.maxHeight = matchMedia('(max-width: 860px)').matches ? '' : Math.max(320, stage.offsetHeight) + 'px'; }).observe(stage);
+  return box;
+}
+
 function chapterBody(c, ch) {
   const idx = c.chapters.indexOf(ch), prev = c.chapters[idx - 1], next = c.chapters[idx + 1];
   const gs = ch.games.map(id => games.get(id)).filter(Boolean);
@@ -641,9 +691,7 @@ function chapterBody(c, ch) {
     h('div', {class: 'panel', id: 'sec-practice'}, h('h3', {}, '🎮 Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
       gs.length ? h('div', {class: 'grid'}, gs.map(g => gameCard(g, c.id))) : h('p', {class: 'empty-note'}, 'No game for this one yet. Use the reading and videos, and check back: new games are added often.')),
     h('div', {class: 'panel', id: 'sec-watch'}, h('h3', {}, '▶️ Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
-      vs.length ? (() => { const grid = h('div', {class: 'vgrid'}, vs.slice(0, 6).map(videoCard)); if (vs.length <= 6) return grid;
-        const more = h('button', {class: 'btn small secondary', type: 'button', style: 'margin-top:14px', onclick: () => { grid.replaceChildren(...vs.map(videoCard)); more.remove(); }}, `Show all ${vs.length} lessons ↓`);
-        return h('div', {}, grid, more); })() : null,
+      vs.length ? theater(vs) : null,
       ch.playlists.length ? h('div', {class: 'playlists'}, ch.playlists.map(p => h('a', {class: 'btn small secondary', href: plUrl(p), target: '_blank', rel: 'noopener'}, '▶ ' + (playlistTitles[p] || 'Playlist') + ' ↗'))) : null,
       !vs.length && !ch.playlists.length ? h('p', {class: 'empty-note'}, h('span', {}, 'No video linked here yet. '), h('a', {href: 'https://www.youtube.com/@itsdrdan', target: '_blank', rel: 'noopener'}, 'Browse Dr. Dan’s channel ↗')) : null),
     h('div', {class: 'panel', id: 'sec-read'}, h('h3', {}, '📖 Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
