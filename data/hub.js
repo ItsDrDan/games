@@ -198,9 +198,9 @@ window.HUB_DATA = {
   {
    "id": "functionalgroups",
    "logo": "assets/games/functionalgroups.webp",
-   "title": "Functional Groups Studio",
+   "title": "Organic Origins (Hydrocarbons to Amides)",
    "icon": "🧪",
-   "blurb": "Spot, classify, name, and draw organic compounds, then predict how they react.",
+   "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then predict how they react.",
    "courses": [
     "3B"
    ],
