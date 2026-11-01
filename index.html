@@ -1075,17 +1075,18 @@ function viewExam(cid, id, params, isCheck) {
   // checklist
   const key = `${cid}-${isCheck ? 'sc' : 'ex'}-${id}-${ex.ch.join('.')}`;
   const state = examStore(key);
-  const items = ex.can ? ex.can.map((t, i) => ({k: 'c' + i, t})) : chs.flatMap(ch => ch.concepts.map((t, i) => ({k: ch.id + '-' + i, t: t.charAt(0).toUpperCase() + t.slice(1), ch})));
+  const chById = id => chs.find(y => y.id === id);
+  const items = ex.can ? ex.can.map((t, i) => Array.isArray(t) ? {k: 'g' + i, t: t[1], ch: chById(t[0])} : {k: 'c' + i, t}) : chs.flatMap(ch => ch.concepts.map((t, i) => ({k: ch.id + '-' + i, t: t.charAt(0).toUpperCase() + t.slice(1), ch})));
   const bar = h('div', {class: 'pbar'}, h('span'));
   const label = h('b');
   let upd = () => { const n = items.filter(x => state[x.k]).length; bar.firstChild.style.width = (100 * n / items.length) + '%'; label.textContent = `${n} of ${items.length} skills ready`; };
-  const grouped = !ex.can && chs.length > 1;
+  const grouped = (!ex.can || ex.can.some(Array.isArray)) && chs.length > 1;
   const groupUpd = [];
   const item = it => h('li', {}, h('label', {},
     h('input', {type: 'checkbox', checked: !!state[it.k], onchange: e => { state[it.k] = e.target.checked; examSave(key, state); upd(); }}),
     h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, !grouped && it.ch ? h('small', {}, ` · ${it.ch.icon || ''} ${it.ch.label}`) : null)));
   const list = grouped
-    ? h('div', {class: 'cangroups'}, chs.map((ch, i) => {
+    ? h('div', {class: 'cangroups'}, chs.filter(ch => items.some(it => it.ch === ch)).map((ch, i) => {
         const mine = items.filter(it => it.ch === ch);
         const cnt = h('span', {class: 'gcount'});
         groupUpd.push(() => { const n = mine.filter(x => state[x.k]).length; cnt.textContent = n === mine.length ? '✓ all ready' : `${n}/${mine.length}`; cnt.classList.toggle('done', n === mine.length); });
@@ -1108,6 +1109,10 @@ function viewExam(cid, id, params, isCheck) {
     h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
       h('p', {}, 'Read the nutshell, work one example with the skill recipe, and watch the topic moments you need below.')),
     h('li', {class: 'day s3'}, h('div', {class: 'dn'}, 'Day 2 · Practice'), h('b', {}, '🎮 Game + checklist'), h('p', {}, 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.')))
+  : ex.plan ? h('ol', {class: 'days'}, ex.plan.map((d, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
+      h('b', {}, d.t),
+      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
+      h('p', {}, d.note))))
   : h('ol', {class: 'days'},
     days.map((group, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
       group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
@@ -1127,7 +1132,7 @@ function viewExam(cid, id, params, isCheck) {
       h('section', {class: 'panel'}, h('h3', {}, '✔️ Skills checklist', h('span', {class: 'count'}, label)), bar,
         h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
       ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, '💡 Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
-      h('section', {class: 'panel'}, h('h3', {}, isCheck ? '🗓️ Your 2-day plan' : '🗓️ Your 7-day plan'), plan, retakeNote()),
+      h('section', {class: 'panel'}, h('h3', {}, isCheck ? '🗓️ Your 2-day plan' : `🗓️ Your ${ex.plan ? ex.plan.length : 7}-day plan`), plan, retakeNote()),
       gs.length ? h('section', {class: 'panel'}, h('h3', {}, '🎮 Practice games', h('span', {class: 'count'}, gs.length)), h('div', {class: 'grid'}, gs.map(g => gameCard(g, cid)))) : null,
       vs.length ? h('section', {class: 'panel'}, h('h3', {}, '▶️ Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
 }
