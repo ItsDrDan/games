@@ -237,6 +237,20 @@ window.HUB_DATA = {
     "3B"
    ],
    "url": "https://itsdrdan.github.io/carbohydrates/"
+  },
+  {
+   "id": "finalexam",
+   "logo": "assets/games/finalexam.webp",
+   "title": "Final Exam Review",
+   "icon": "exam",
+   "blurb": "Final Boss! Timed practice finals, an exam-day mode, topic training, and weak-spot review.",
+   "courses": [
+    "3A",
+    "3B",
+    "1A",
+    "1B"
+   ],
+   "url": "https://itsdrdan.github.io/finalexam/"
   }
  ],
  "videos": [
@@ -8189,7 +8203,9 @@ window.HUB_DATA = {
       "ACS final exam",
       "lab practical"
      ],
-     "games": [],
+     "games": [
+      "finalexam"
+     ],
      "videos": [
       "NYbTp0OEHCM",
       "PslRg4W-QDY",
