@@ -65,7 +65,7 @@ svg text{fill:var(--muted);font-size:11px}
 </div>
 <script>
 const STATS_URL='https://script.google.com/macros/s/AKfycbylSKoW9GE6AkN4HiC1uts3Y5Z4oUPHY7OQ88vXrjpcanooloYRTIGW9cS5n0dulp4vQg/exec';
-const NAMES={stoichiometry:'Stoichiometry Quest',moles:'The Mole',carbohydrates:'Sweet Structures'};
+const NAMES={"sigfig":"Significant Figures","metric":"SI Prefix Challenge","elements":"Element Symbol Study Lab","polyatomic":"Polyatomic Ions (Green Sheet)","ionicformula":"Naming & Formulas","quantumchemistry":"Quantum Quest","lewisstructures":"Lewis Structure Studio","reactions":"Reaction Rumble (Chemical Reactions)","redox":"LEO Goes GER! (Redox)","moles":"The Mole","stoichiometry":"Stoichiometry","gaslaws":"Under Pressure (Gas Laws)","thermochemistry":"Thermochemistry","chem1bready":"CHEM 1B Readiness Quest","organic":"Functional Group Flashcards","functionalgroups":"Organic Origins (Hydrocarbons to Amides)","organicreactions":"Bond Voyage! Organic Reactions","carbohydrates":"Sweet Structures (Carbohydrates)"};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
