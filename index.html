@@ -204,6 +204,7 @@ h1 span{color:var(--brand)}
 .player iframe{display:block;width:100%;height:80vh;min-height:540px;border:0;background:#f8faff}
 .player:fullscreen{display:flex;flex-direction:column;border-radius:0}
 .player:fullscreen iframe{flex:1;height:auto}
+.play-watch{margin:-36px 0 60px}
 .player .related{padding:12px 18px;font-size:.9rem;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 dialog.vmodal{border:0;padding:0;border-radius:18px;width:min(960px,94vw);background:#fff;box-shadow:0 30px 90px #0b1f1c55}
 dialog.vmodal::backdrop{background:#0d221ecc}
@@ -594,11 +595,11 @@ function gameCard(g, courseCtx, showCh) {
     h('div', {class: 'actions'},
       h('a', {class: 'play', href: '#/play/' + encodeURIComponent(g.id) + (courseCtx ? '?from=' + courseCtx : '')}, 'Play')));
 }
-function videoCard(v) {
+function videoCard(v, bare) {
   const card = h('button', {class: 'video', type: 'button', onclick: () => openVideo(v.id, 0)},
     h('span', {class: 'thumb', style: `background-image:url('${thumb(v.id)}')`, 'aria-hidden': 'true'}),
     h('span', {class: 'vt'}, v.title, h('small', {}, [v.duration ? Math.round(v.duration / 60) + ' min' : '', v.playlist && playlistTitles[v.playlist] ? playlistTitles[v.playlist] : ''].filter(Boolean).join(' · ') || 'Dr. Dan on YouTube')));
-  if (!v.moments.length) return card;
+  if (bare || !v.moments.length) return card;
   return h('div', {}, card, h('div', {class: 'moments', 'aria-label': 'Key moments in ' + v.title},
     v.moments.map(([t, label]) => h('button', {class: 'moment', type: 'button', onclick: () => openVideo(v.id, t)}, h('b', {}, fmtTime(t)), label))));
 }
@@ -833,7 +834,15 @@ function viewPlay(id, params) {
     frame);
   const used = chaptersUsing('game', id).filter(x => !from || x.c.id === from);
   if (used.length) box.append(h('div', {class: 'related'}, h('span', {}, 'Goes with:'), used.map(({c, ch}) => h('a', {class: 'chip', href: `#/course/${c.id}/${ch.id}`}, `${c.name} ${ch.label}: ${ch.title}`))));
-  app.replaceChildren(h('div', {class: 'wrap'}, box));
+  const vs = [...new Set(used.flatMap(({ch}) => ch.videos))].map(v => videos.get(v)).filter(Boolean);
+  const watch = vs.length ? h('section', {class: 'panel play-watch', id: 'play-watch'},
+    h('h3', {}, '▶️ Stuck? Watch Dr. Dan explain it', h('span', {class: 'count'}, vs.length + (vs.length === 1 ? ' lesson' : ' lessons'))),
+    h('div', {class: 'grid'}, vs.slice(0, 6).map(v => videoCard(v, true)))) : null;
+  if (watch && vs.length > 6) {
+    const more = h('button', {class: 'btn small secondary', type: 'button', onclick: () => { watch.querySelector('.grid').replaceChildren(...vs.map(v => videoCard(v, true))); more.remove(); }}, `Show all ${vs.length} lessons`);
+    watch.append(h('p', {style: 'margin:14px 0 0'}, more));
+  }
+  app.replaceChildren(h('div', {class: 'wrap'}, box, watch));
 }
 
 /* ---------- search ---------- */

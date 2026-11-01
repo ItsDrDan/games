@@ -15,7 +15,17 @@ window.HUB_DATA = {
   "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6": "CHEM 3A · Chapter 10: Chemical Reactions",
   "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB": "CHEM 3A · Chapter 11: Stoichiometry",
   "PLEaxsqCAZKoDQDKc3zSkPAocpU0Z_Q7HE": "CHEM 3A · Chapter 12: Acids & Bases",
-  "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f": "CHEM 3B lessons"
+  "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f": "CHEM 3B lessons",
+  "PLPg4WVI9v3T0": "CHEM 3B: Intro to Organic & Alkanes",
+  "PLB_ao9WCzngU": "CHEM 3B: Alkenes",
+  "PLTXHJHUi44RA": "CHEM 3B: Alcohols & Ethers",
+  "PLKQkUY4NWfyg": "CHEM 3B: Aldehydes & Ketones",
+  "PLEgyNetRxDQQ": "CHEM 3B: Stereochemistry & Chirality",
+  "PLAwGSAn_Me9U": "CHEM 3B: Acids, Esters & Amides",
+  "PLRdcExlgOw6g": "CHEM 3B: Carbohydrates",
+  "PLaaGAcANvhHw": "CHEM 3B: Lipids",
+  "PLFRtXsYv2DZs": "CHEM 3B: Amino Acids & Proteins",
+  "PLVEydLQvpp9w": "CHEM 1B playlist"
  },
  "games": [
   {
@@ -6281,6 +6291,11 @@ window.HUB_DATA = {
      "Summary of Everything"
     ]
    ]
+  },
+  {
+   "id": "qPM-C3V0l80",
+   "title": "Introduction to Heat and Energy (Mini Lecture)",
+   "duration": 1734
   }
  ],
  "courses": [
@@ -6908,6 +6923,7 @@ window.HUB_DATA = {
       "thermochemistry"
      ],
      "videos": [
+      "qPM-C3V0l80",
       "udPzY15vH1w",
       "KqKvWr6Y2zs",
       "--NtKZsyS4I",
@@ -7965,6 +7981,7 @@ window.HUB_DATA = {
       "thermochemistry"
      ],
      "videos": [
+      "qPM-C3V0l80",
       "KqKvWr6Y2zs",
       "udPzY15vH1w",
       "r7isVoOlWyU",
@@ -8920,7 +8937,7 @@ window.HUB_DATA = {
       "RNQKJ1hnHes"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLPg4WVI9v3T0"
      ],
      "icon": "🌿"
     },
@@ -8958,7 +8975,8 @@ window.HUB_DATA = {
       "Dcun-l5jM9w"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLPg4WVI9v3T0",
+      "PLB_ao9WCzngU"
      ],
      "icon": "⛽"
     },
@@ -8979,9 +8997,7 @@ window.HUB_DATA = {
       "functionalgroups"
      ],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "💍"
     },
     {
@@ -9009,7 +9025,7 @@ window.HUB_DATA = {
       "veiUgkx_Dlc"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLTXHJHUi44RA"
      ],
      "icon": "🍷"
     },
@@ -9038,7 +9054,7 @@ window.HUB_DATA = {
       "whVLjQhx3FI"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLKQkUY4NWfyg"
      ],
      "icon": "🍦"
     },
@@ -9063,7 +9079,7 @@ window.HUB_DATA = {
       "RudBXy5lTuU"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLEgyNetRxDQQ"
      ],
      "icon": "🤚"
     },
@@ -9092,7 +9108,7 @@ window.HUB_DATA = {
       "vfSSUIcgzTY"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLAwGSAn_Me9U"
      ],
      "icon": "🍌"
     },
@@ -9120,7 +9136,7 @@ window.HUB_DATA = {
       "HU4KHyptdVA"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLAwGSAn_Me9U"
      ],
      "icon": "🐟"
     },
@@ -9156,7 +9172,7 @@ window.HUB_DATA = {
       "pwyW-X99GI8"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLRdcExlgOw6g"
      ],
      "icon": "🍬"
     },
@@ -9186,7 +9202,7 @@ window.HUB_DATA = {
       "gO3YPk_2lTE"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLaaGAcANvhHw"
      ],
      "icon": "🧈"
     },
@@ -9211,7 +9227,7 @@ window.HUB_DATA = {
       "ec1npXqFdDM"
      ],
      "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
+      "PLFRtXsYv2DZs"
      ],
      "icon": "🥩"
     },
@@ -9231,9 +9247,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "✂️"
     },
     {
@@ -9254,9 +9268,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "🧬"
     },
     {
@@ -9277,9 +9289,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "🍞"
     },
     {
@@ -9296,9 +9306,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "⚡"
     },
     {
@@ -9318,9 +9326,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "🥑"
     },
     {
@@ -9338,9 +9344,7 @@ window.HUB_DATA = {
      ],
      "games": [],
      "videos": [],
-     "playlists": [
-      "PLEaxsqCAZKoCKsxdsJLMbZTqSuBQF2z2f"
-     ],
+     "playlists": [],
      "icon": "🍗"
     }
    ]
