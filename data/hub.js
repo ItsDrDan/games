@@ -244,7 +244,45 @@ window.HUB_DATA = {
    "id": "DPH8NZF_99I",
    "title": "Introduction to Chemical Reactions: Understanding Chemical Changes and Equations",
    "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
-   "duration": 852
+   "duration": 852,
+   "moments": [
+    [
+     0,
+     "Chemical reactions in everyday life"
+    ],
+    [
+     226,
+     "Signs of a chemical change"
+    ],
+    [
+     364,
+     "Demos: color changes and flame colors"
+    ],
+    [
+     454,
+     "Why this matters in health science"
+    ],
+    [
+     475,
+     "Reading an equation: reactants → products"
+    ],
+    [
+     548,
+     "State symbols (s, l, g, aq)"
+    ],
+    [
+     639,
+     "Conservation of mass"
+    ],
+    [
+     692,
+     "Coefficients vs. subscripts"
+    ],
+    [
+     742,
+     "Practice: counting atoms on each side"
+    ]
+   ]
   },
   {
    "id": "t65x7RaFeFY",
@@ -454,19 +492,169 @@ window.HUB_DATA = {
    "id": "IsypcIC7XqA",
    "title": "Introduction to Oxidation and Reduction Reactions: LEO Goes GER!",
    "playlist": "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6",
-   "duration": 1210
+   "duration": 1210,
+   "moments": [
+    [
+     0,
+     "Redox reactions all around you"
+    ],
+    [
+     74,
+     "Electrons moving between species"
+    ],
+    [
+     203,
+     "What \"reduction\" really means"
+    ],
+    [
+     252,
+     "LEO goes GER"
+    ],
+    [
+     325,
+     "Oxidation states: electron bookkeeping"
+    ],
+    [
+     435,
+     "Which species is oxidized or reduced?"
+    ],
+    [
+     543,
+     "Writing half reactions with electrons"
+    ],
+    [
+     644,
+     "Rules for assigning oxidation states"
+    ],
+    [
+     720,
+     "Example: iron + chlorine"
+    ],
+    [
+     901,
+     "Practice: assigning oxidation states"
+    ],
+    [
+     1152,
+     "Summary"
+    ]
+   ]
   },
   {
    "id": "txENA0lLLg4",
    "title": "How to Balance REDOX Reactions in Acidic Solutions",
    "playlist": null,
-   "duration": 1119
+   "duration": 1119,
+   "moments": [
+    [
+     0,
+     "Intro: redox in acidic solution"
+    ],
+    [
+     74,
+     "What these problems look like"
+    ],
+    [
+     141,
+     "The full list of steps"
+    ],
+    [
+     189,
+     "Step 1: Assign oxidation numbers"
+    ],
+    [
+     375,
+     "Oxidizing vs. reducing agents"
+    ],
+    [
+     450,
+     "Step 2: Write the half reactions"
+    ],
+    [
+     502,
+     "Step 3: Balance atoms other than O and H"
+    ],
+    [
+     563,
+     "Step 4: Balance O with H₂O, H with H⁺"
+    ],
+    [
+     648,
+     "Step 5: Balance charge with electrons"
+    ],
+    [
+     714,
+     "The second half reaction"
+    ],
+    [
+     823,
+     "Step 6: Multiply so electrons match"
+    ],
+    [
+     907,
+     "Step 7: Add and cancel"
+    ],
+    [
+     1026,
+     "Summary of the steps"
+    ]
+   ]
   },
   {
    "id": "zr0Y2hF_aOE",
    "title": "How to Balance REDOX Reactions in Basic Solutions",
    "playlist": null,
-   "duration": 1299
+   "duration": 1299,
+   "moments": [
+    [
+     0,
+     "Intro: redox in basic solution"
+    ],
+    [
+     86,
+     "What these problems look like"
+    ],
+    [
+     152,
+     "Step 1: Assign oxidation numbers"
+    ],
+    [
+     309,
+     "Which species is oxidized or reduced?"
+    ],
+    [
+     358,
+     "Oxidizing vs. reducing agents"
+    ],
+    [
+     413,
+     "Step 2: Write the half reactions"
+    ],
+    [
+     522,
+     "Step 3: Balance atoms, then O and H"
+    ],
+    [
+     634,
+     "Balance charge with electrons"
+    ],
+    [
+     675,
+     "The second half reaction"
+    ],
+    [
+     757,
+     "Multiply so electrons match, then add"
+    ],
+    [
+     980,
+     "Basic step: neutralize H⁺ with OH⁻"
+    ],
+    [
+     1152,
+     "Summary of the steps"
+    ]
+   ]
   },
   {
    "id": "fFGZdJ6F-e4",
@@ -1316,7 +1504,61 @@ window.HUB_DATA = {
    "id": "r3IGajq0hD8",
    "title": "MO Theory Part 2",
    "playlist": null,
-   "duration": 1280
+   "duration": 1280,
+   "moments": [
+    [
+     0,
+     "How to fill an MO diagram"
+    ],
+    [
+     63,
+     "Bond order formula"
+    ],
+    [
+     156,
+     "How two s orbitals combine"
+    ],
+    [
+     231,
+     "H₂: filling, bond order, magnetism"
+    ],
+    [
+     319,
+     "Molecular electron configurations"
+    ],
+    [
+     365,
+     "He₂: bond order of zero"
+    ],
+    [
+     452,
+     "Li₂"
+    ],
+    [
+     567,
+     "Be₂"
+    ],
+    [
+     701,
+     "p-block diatomics: B₂, C₂, N₂"
+    ],
+    [
+     973,
+     "O₂ and the switched orbital order"
+    ],
+    [
+     1116,
+     "Demo: liquid oxygen between magnets"
+    ],
+    [
+     1138,
+     "O₂ bond order and configuration"
+    ],
+    [
+     1237,
+     "Practice question"
+    ]
+   ]
   },
   {
    "id": "-WH0D2cWcJc",
@@ -3272,25 +3514,185 @@ window.HUB_DATA = {
    "id": "--NtKZsyS4I",
    "title": "Understanding Properties of Intermolecular Forces (Part 1): Polarity, Dipoles, and Phases",
    "playlist": null,
-   "duration": 755
+   "duration": 755,
+   "moments": [
+    [
+     0,
+     "Polar vs. nonpolar bonds"
+    ],
+    [
+     99,
+     "Polar vs. nonpolar molecules (symmetry)"
+    ],
+    [
+     229,
+     "Dipoles and \"like dissolves like\""
+    ],
+    [
+     302,
+     "Bonds vs. IMFs: family vs. friends"
+    ],
+    [
+     348,
+     "IMFs and phases of matter"
+    ],
+    [
+     471,
+     "The four types of IMF"
+    ],
+    [
+     498,
+     "Ion–dipole"
+    ],
+    [
+     546,
+     "Hydrogen bonding"
+    ],
+    [
+     595,
+     "Dipole–dipole"
+    ],
+    [
+     621,
+     "Dispersion forces"
+    ],
+    [
+     671,
+     "Ranking IMF strength"
+    ]
+   ]
   },
   {
    "id": "vf1I8M32OXQ",
    "title": "Dispersion Forces and Polarizability: Properties of Intermolecular Forces (Part 2)",
    "playlist": null,
-   "duration": 841
+   "duration": 841,
+   "moments": [
+    [
+     0,
+     "What dispersion forces are"
+    ],
+    [
+     48,
+     "Instantaneous dipoles"
+    ],
+    [
+     149,
+     "Size and boiling point"
+    ],
+    [
+     346,
+     "Why bigger means stronger: the coin-flip model"
+    ],
+    [
+     486,
+     "Polarizability"
+    ],
+    [
+     561,
+     "Larger molecules: gas → liquid → solid"
+    ],
+    [
+     603,
+     "Practice: which has stronger dispersion?"
+    ],
+    [
+     755,
+     "Summary"
+    ]
+   ]
   },
   {
    "id": "CdA3Ov94lw0",
    "title": "Dipole-Dipole, Hydrogen Bonding, and Ion-Dipole: Properties of Intermolecular Forces (Part 3)",
    "playlist": null,
-   "duration": 1034
+   "duration": 1034,
+   "moments": [
+    [
+     0,
+     "Review and overview"
+    ],
+    [
+     76,
+     "Dipole–dipole forces"
+    ],
+    [
+     186,
+     "Hydrogen bonding: H bonded to F, O, or N"
+    ],
+    [
+     343,
+     "Practice: can it hydrogen bond?"
+    ],
+    [
+     445,
+     "Why hydrogen bonds matter (DNA)"
+    ],
+    [
+     520,
+     "Ion–dipole forces"
+    ],
+    [
+     569,
+     "Ranking IMFs for similar-size molecules"
+    ],
+    [
+     649,
+     "The \"subscription plan\" analogy"
+    ],
+    [
+     746,
+     "Practice: find the strongest IMF"
+    ],
+    [
+     903,
+     "Solubility: like dissolves like"
+    ]
+   ]
   },
   {
    "id": "lAcgVwEmjM8",
    "title": "Properties of Intermolecular Forces (Part 4): Boiling Point Melting Point Viscosity Surface Tension",
    "playlist": null,
-   "duration": 889
+   "duration": 889,
+   "moments": [
+    [
+     0,
+     "Potential energy and IMF strength"
+    ],
+    [
+     122,
+     "Bulk properties"
+    ],
+    [
+     165,
+     "Surface tension"
+    ],
+    [
+     371,
+     "Viscosity"
+    ],
+    [
+     485,
+     "Practice: which has the highest viscosity?"
+    ],
+    [
+     581,
+     "Evaporation and volatility"
+    ],
+    [
+     735,
+     "Vapor pressure and dynamic equilibrium"
+    ],
+    [
+     781,
+     "What speeds up evaporation"
+    ],
+    [
+     848,
+     "Boiling point and vapor pressure"
+    ]
+   ]
   },
   {
    "id": "r7isVoOlWyU",
@@ -4208,7 +4610,77 @@ window.HUB_DATA = {
    "id": "g--JowvBqM8",
    "title": "Radiant Realms: Navigating Nuclear Chemistry's X-Rays, Gamma Rays, Alpha, Beta, Positron Particles!",
    "playlist": null,
-   "duration": 2075
+   "duration": 2075,
+   "moments": [
+    [
+     0,
+     "Radiation in health science"
+    ],
+    [
+     45,
+     "History: X-rays and Marie Curie"
+    ],
+    [
+     219,
+     "Radioactive decay and unstable nuclei"
+    ],
+    [
+     332,
+     "Band of stability: neutron-to-proton ratio"
+    ],
+    [
+     450,
+     "Chemical vs. nuclear reactions"
+    ],
+    [
+     552,
+     "Balancing nuclear equations"
+    ],
+    [
+     647,
+     "Alpha decay"
+    ],
+    [
+     724,
+     "Beta decay"
+    ],
+    [
+     795,
+     "Electron capture"
+    ],
+    [
+     863,
+     "Positron emission"
+    ],
+    [
+     958,
+     "Gamma emission"
+    ],
+    [
+     1007,
+     "Penetrating vs. ionizing ability"
+    ],
+    [
+     1212,
+     "Radiation safety: the radium girls"
+    ],
+    [
+     1383,
+     "Detecting radiation"
+    ],
+    [
+     1523,
+     "Background radiation"
+    ],
+    [
+     1657,
+     "Uses: carbon dating and nuclear power"
+    ],
+    [
+     1809,
+     "Medical uses: radiation therapy and CT scans"
+    ]
+   ]
   },
   {
    "id": "bZHo3kHvGi0",
@@ -5062,7 +5534,45 @@ window.HUB_DATA = {
    "id": "NoEGwwWuNmg",
    "title": "Molecular Orbital Theory Basics! Part 1 What is MO Theory? (Lecture)",
    "playlist": null,
-   "duration": 1178
+   "duration": 1178,
+   "moments": [
+    [
+     0,
+     "What MO theory is"
+    ],
+    [
+     73,
+     "Why we need it: liquid O₂ is magnetic"
+    ],
+    [
+     276,
+     "Review: hybridization and localized electrons"
+    ],
+    [
+     370,
+     "Delocalized electrons and molecular orbitals"
+    ],
+    [
+     579,
+     "Combining orbitals in and out of phase"
+    ],
+    [
+     693,
+     "Bonding vs. antibonding orbitals"
+    ],
+    [
+     826,
+     "Sigma and pi from p orbitals"
+    ],
+    [
+     929,
+     "Practice: sigma or pi?"
+    ],
+    [
+     1132,
+     "Next up: filling MO diagrams"
+    ]
+   ]
   },
   {
    "id": "gSKpPWYVnTU",
@@ -6295,7 +6805,53 @@ window.HUB_DATA = {
   {
    "id": "qPM-C3V0l80",
    "title": "Introduction to Heat and Energy (Mini Lecture)",
-   "duration": 1734
+   "duration": 1734,
+   "moments": [
+    [
+     8,
+     "Heating and cooling curves"
+    ],
+    [
+     82,
+     "q = mcΔT"
+    ],
+    [
+     135,
+     "Specific heat"
+    ],
+    [
+     209,
+     "Plateaus mean phase changes"
+    ],
+    [
+     263,
+     "Melting and freezing: q = nΔH_fus"
+    ],
+    [
+     325,
+     "Boiling and condensing: q = nΔH_vap"
+    ],
+    [
+     424,
+     "Example: q = mcΔT with water"
+    ],
+    [
+     690,
+     "Converting joules to calories"
+    ],
+    [
+     767,
+     "Example: identify a metal by its specific heat"
+    ],
+    [
+     928,
+     "Challenge: ice at −100 °C to steam at 250 °C"
+    ],
+    [
+     1624,
+     "Adding up the total heat"
+    ]
+   ]
   }
  ],
  "courses": [
