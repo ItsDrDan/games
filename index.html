@@ -43,7 +43,7 @@ button,input,select{font:inherit;color:inherit}
 .navlinks a:hover,.navlinks a[aria-current=page]{background:#e9f3ee;color:var(--brand-ink)}
 .topsearch{flex:1;max-width:380px;position:relative}
 .topsearch input{width:100%;height:42px;border:1.5px solid #d3e2db;border-radius:12px;background:#f8fbf9;padding:0 14px 0 38px}
-.topsearch::before{content:"🔎";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.9rem;opacity:.7}
+.topsearch::before{content:"";position:absolute;left:13px;top:50%;width:16px;height:16px;transform:translateY(-50%);background:currentColor;opacity:.55;-webkit-mask:var(--mag) center/contain no-repeat;mask:var(--mag) center/contain no-repeat}
 
 /* buttons (tactile, from the previous hub) */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:9px 17px;border-radius:12px;border:2px solid var(--edge);box-shadow:0 4px 0 var(--edge);background:var(--brand);color:#fff;text-decoration:none;font-weight:780;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
@@ -65,7 +65,7 @@ h1 span{color:var(--brand)}
 .hero p.lead{font-size:clamp(1.02rem,2vw,1.17rem);color:#4f6a6d;max-width:680px;margin:0}
 .bigsearch{position:relative;max-width:760px}
 .bigsearch input{width:100%;height:64px;border:2px solid var(--edge);box-shadow:0 5px 0 var(--edge);border-radius:18px;padding:0 140px 0 54px;font-size:1.1rem;background:#fff}
-.bigsearch::before{content:"🔎";position:absolute;left:20px;top:50%;transform:translateY(-55%);font-size:1.15rem}
+.bigsearch::before{content:"";position:absolute;left:22px;top:50%;width:22px;height:22px;transform:translateY(-55%);background:#6a5acd;-webkit-mask:var(--mag) center/contain no-repeat;mask:var(--mag) center/contain no-repeat}
 .bigsearch .btn{position:absolute;right:9px;top:8px;min-height:44px;box-shadow:0 3px 0 var(--edge)}
 .tryrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:.88rem;color:var(--muted)}
 
@@ -472,6 +472,30 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .wkitem .btn{margin-top:auto}
 .wkdone{margin:-4px 0 12px;font-weight:800;color:#1f7a62}
 .wknote{margin:10px 2px 0;font-size:.85rem;color:var(--muted)}
+
+/* ===== drawn SVG icons (assets/icons.svg) ===== */
+:root{--mag:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M232.49%2C215.51%2C185%2C168a92.12%2C92.12%2C0%2C1%2C0-17%2C17l47.53%2C47.54a12%2C12%2C0%2C0%2C0%2C17-17ZM44%2C112a68%2C68%2C0%2C1%2C1%2C68%2C68A68.07%2C68.07%2C0%2C0%2C1%2C44%2C112Z%22/%3E%3C/svg%3E")}
+svg.ic{display:inline-block;width:1.2em;height:1.2em;vertical-align:-.22em;flex:none;overflow:visible}
+h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
+[data-course] h3 svg.ic,.panel h3 svg.ic{color:var(--c,#6a5acd)}
+.chicon svg.ic{width:32px;height:32px;color:var(--c)}
+.chbadge svg.ic{width:44px;height:44px;color:var(--c)}
+.game .icon:not(.haslogo){width:76px;height:76px;border-radius:22px;background:linear-gradient(140deg,#fff 0%,#efe9ff 55%,#e3f4ff 100%)!important;border:2px solid #ddd3fb;box-shadow:0 4px 0 #ddd3fb}
+.game .icon svg.ic{width:44px;height:44px;color:#6a5acd}
+.ritem .ri svg.ic{width:28px;height:28px;color:var(--c,#4f6b66)}
+.toc a .ti svg.ic{width:20px;height:20px;color:var(--c);vertical-align:middle}
+.chtag svg.ic{width:1.1em;height:1.1em;margin-right:1px}
+.bookline svg.ic{width:1.4em;height:1.4em;color:var(--c,var(--brand))}
+.ch-card .meta svg.ic{color:var(--c);opacity:.9}
+.wkitem small svg.ic{width:1.25em;height:1.25em;vertical-align:-.3em}
+.examcard .ei svg.ic{width:40px;height:40px;color:var(--c,#6a5acd)}
+.pick .pi svg.ic,.cangroup .gi svg.ic{width:26px;height:26px;color:var(--c)}
+.day .dch svg.ic{width:1.3em;height:1.3em;color:var(--c)}
+.day b svg.ic{color:var(--c,#6a5acd)}
+.wkdone svg.ic{width:1.25em;height:1.25em}
+.btn svg.ic,.mini svg.ic{width:1.2em;height:1.2em}
+.navlinks a.only-sm svg.ic{width:22px;height:22px}
+.playtitle svg.ic{width:1.1em;height:1.1em;color:#6a5acd}
 </style>
 </head>
 <body>
@@ -481,7 +505,7 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
     <form class="topsearch" role="search" id="topSearchForm"><label class="sr" for="topSearch">Search the hub</label><input id="topSearch" type="search" placeholder="Search a topic or chapter…" autocomplete="off"></form>
     <nav class="navlinks" aria-label="Main">
       <a href="#/" data-nav="home" class="hide-sm">Courses</a>
-      <a href="#/search" class="only-sm" aria-label="Search">🔎</a>
+      <a href="#/search" class="only-sm" aria-label="Search"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg?v=2#i-search"/></svg></a>
       <a href="#/games" data-nav="games">All games</a>
       <a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener" class="hide-sm">YouTube ↗</a>
     </nav>
@@ -526,6 +550,16 @@ function h(tag, attrs = {}, ...kids) {
   }
   for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(kid));
   return el;
+}
+/* Icons: drawn SVG sprite in assets/icons.svg (rebuild with tools/build_icons.py). Data may use an icon name or, for older games, an emoji. */
+const ICON_URL = 'assets/icons.svg?v=2#i-';
+const ICON_NAMES = new Set(["measure", "atom", "gauge", "scales", "fire", "radioactive", "exam", "timer", "thermometer", "battery", "dna", "lightning", "bridge", "cards", "flask", "fuel", "wine", "bread", "avocado", "egg", "search", "book", "game", "video", "note", "check", "books", "finish", "idea", "tools", "calendar", "map", "warning", "film", "brain", "chat", "heart", "repeat", "rest", "fullscreen", "list", "periodic", "lattice", "pile", "molecule", "phases", "solution", "reaction", "ph", "equilibrium", "orbital", "complex", "organic", "hydrocarbon", "benzene", "alcohol", "carbonyl", "acid", "amine", "chirality", "sugar", "lipid", "protein", "enzyme", "carbmetab", "lipidmetab", "aametab", "sigfig", "ion", "formula", "hands"]);
+const EMOJI_ICON = {"🔢": "sigfig", "📏": "measure", "🔤": "periodic", "🧲": "ion", "🧩": "formula", "⚛️": "atom", "🔬": "molecule", "⚡": "lightning", "🦁": "battery", "⛏️": "pile", "⚖️": "scales", "🎈": "gauge", "🔥": "fire", "🚀": "bridge", "🃏": "cards", "🧪": "flask", "⛵": "reaction", "🍬": "sugar", "🌈": "periodic", "🧂": "lattice", "🧮": "pile", "🔗": "molecule", "🧊": "phases", "💧": "solution", "💥": "reaction", "🍳": "scales", "🍋": "ph", "🔄": "equilibrium", "☢️": "radioactive", "📝": "exam", "🪐": "orbital", "🌿": "organic", "⏱️": "timer", "🌡️": "thermometer", "🔋": "battery", "💎": "complex", "⛽": "hydrocarbon", "💍": "benzene", "🍷": "alcohol", "🍦": "carbonyl", "🤚": "chirality", "🍌": "acid", "🐟": "amine", "🧈": "lipid", "🥩": "protein", "✂️": "enzyme", "🧬": "dna", "🍞": "carbmetab", "🥑": "lipidmetab", "🍗": "aametab", "📚": "books", "📖": "book", "🎮": "game", "✅": "check", "🧠": "brain"};
+function iconKey(x) { x = String(x || '').trim(); return ICON_NAMES.has(x) ? x : EMOJI_ICON[x] || EMOJI_ICON[x.replace(/\uFE0F/g, '')] || EMOJI_ICON[x + '\uFE0F'] || 'flask'; }
+function ic(name, cls) {
+  const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg'), use = document.createElementNS(NS, 'use');
+  svg.setAttribute('class', 'ic' + (cls ? ' ' + cls : '')); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+  use.setAttribute('href', ICON_URL + iconKey(name)); svg.append(use); return svg;
 }
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const fmtTime = s => { s = Math.max(0, Math.floor(s)); const hh = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60; return (hh ? hh + ':' + String(m).padStart(2, '0') : m) + ':' + String(ss).padStart(2, '0'); };
@@ -582,7 +616,7 @@ function videoCourses(id) { return [...new Set(chaptersUsing('video', id).map(x 
 
 /* ---------- components ---------- */
 function gameIcon(g, cls = 'icon') {
-  return g.logo ? h('span', {class: cls + ' haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy'})) : h('span', {class: cls, 'aria-hidden': 'true'}, g.icon || '🧪');
+  return g.logo ? h('span', {class: cls + ' haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy'})) : h('span', {class: cls, 'aria-hidden': 'true'}, ic(g.icon));
 }
 function gameCard(g, courseCtx, showCh) {
   const cs = g.courses?.length ? g.courses : coursesOf(g.course);
@@ -590,7 +624,7 @@ function gameCard(g, courseCtx, showCh) {
   return h('article', {class: 'game'},
     h('div', {class: 'game-top'}, gameIcon(g), courseCtx ? null : h('div', {class: 'badges'}, cs.map(courseBadge))),
     h('h4', {}, g.title),
-    chs.length ? h('div', {class: 'chtags'}, chs.map(({c, ch}) => h('a', {class: 'chtag', href: `#/course/${c.id}/${ch.id}`, 'data-course': c.id, title: `${ch.label}: ${ch.title}`}, chs.length === 1 ? `${ch.icon || ''} ${ch.label}: ${ch.title}` : `${ch.icon || ''} ${ch.label}`))) : null,
+    chs.length ? h('div', {class: 'chtags'}, chs.map(({c, ch}) => h('a', {class: 'chtag', href: `#/course/${c.id}/${ch.id}`, 'data-course': c.id, title: `${ch.label}: ${ch.title}`}, [ic(ch.icon), chs.length === 1 ? ` ${ch.label}: ${ch.title}` : ` ${ch.label}`]))) : null,
     h('p', {}, g.blurb || g.description || ''),
     h('div', {class: 'actions'},
       h('a', {class: 'play', href: '#/play/' + encodeURIComponent(g.id) + (courseCtx ? '?from=' + courseCtx : '')}, 'Play')));
@@ -650,7 +684,7 @@ function viewHome() {
           h('span', {class: 'go'}, 'Open course →'));
       }))),
     h('section', {class: 'section wrap', style: 'padding-top:0'}, h('div', {class: 'exambanner'},
-      h('div', {}, h('b', {}, '📝 Exam or skill check coming up?'), h('p', {}, 'Get a checklist and a day-by-day study plan. Pick your class:')),
+      h('div', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), h('p', {}, 'Get a checklist and a day-by-day study plan. Pick your class:')),
       h('div', {class: 'ebtns'}, COURSE_ORDER.map(id => h('a', {class: 'btn small secondary', 'data-course': id, href: '#/exams/' + id}, 'CHEM ' + id))))));
 }
 
@@ -665,10 +699,10 @@ function viewCourse(cid, chid) {
     h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', ch ? h('a', {href: '#/course/' + cid}, c.name) : h('span', {}, c.name), ch ? ['›', h('span', {}, ch.label)] : null),
     h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), c.title),
     h('p', {}, c.who),
-    h('div', {class: 'bookline'}, h('span', {}, '📖'), book.url ? h('a', {href: book.url, target: '_blank', rel: 'noopener'}, `${book.title} (${book.publisher}) ↗`) : h('span', {}, h('b', {}, book.title + ': '), book.note || 'coming soon'))));
+    h('div', {class: 'bookline'}, ic('book'), book.url ? h('a', {href: book.url, target: '_blank', rel: 'noopener'}, `${book.title} (${book.publisher}) ↗`) : h('span', {}, h('b', {}, book.title + ': '), book.note || 'coming soon'))));
   const toc = h('nav', {class: 'toc', 'data-course': cid, 'aria-label': c.name + ' chapters'}, h('h2', {}, cid === '3B' ? 'Units' : 'Chapters'),
     c.chapters.map(x => h('a', {href: `#/course/${cid}/${x.id}`, 'aria-current': ch && x.id === ch.id ? 'true' : null},
-      h('span', {class: 'n'}, x.label), h('span', {class: 'ti', 'aria-hidden': 'true'}, x.icon || ''), h('span', {}, x.title),
+      h('span', {class: 'n'}, x.label), h('span', {class: 'ti', 'aria-hidden': 'true'}, ic(x.icon)), h('span', {}, x.title),
       h('span', {class: 'dots', 'aria-hidden': 'true'}, h('i', {class: x.read ? 'on' : ''}), h('i', {class: x.videos.length || x.playlists.length ? 'on' : ''}), h('i', {class: x.games.length ? 'on' : ''})))));
   const sel = h('select', {'aria-label': 'Jump to a chapter', onchange: e => go(e.target.value ? `#/course/${cid}/${e.target.value}` : '#/course/' + cid)},
     h('option', {value: ''}, cid === '3B' ? 'All units' : 'All chapters'), c.chapters.map(x => h('option', {value: x.id, selected: ch && x.id === ch.id}, `${x.label} · ${x.title}`)));
@@ -682,12 +716,12 @@ function courseOverview(c) {
   for (const g of games.values()) if (!allGames.includes(g) && (g.courses || []).includes(c.id)) allGames.push(g);
   return h('div', {},
     weekCard(c.id),
-    h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, '📝 Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
+    h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('h2', {class: 'ct', style: 'margin-top:8px'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
-      h('span', {class: 'chicon', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
-      h('span', {class: 'meta'}, ch.games.length ? h('span', {}, `🎮 ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, `▶️ ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, '▶️ playlist') : null, ch.read ? h('span', {}, '📖 reading') : null)))),
-    h('p', {style: 'margin:22px 0 0'}, h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, `🎮 See all ${allGames.length} ${c.name} games →`)));
+      h('span', {class: 'chicon', 'aria-hidden': 'true'}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
+      h('span', {class: 'meta'}, ch.games.length ? h('span', {}, ic('game'), ` ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, ic('video'), ` ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, ic('video'), ' playlist') : null, ch.read ? h('span', {}, ic('book'), ' reading') : null)))),
+    h('p', {style: 'margin:22px 0 0'}, h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, ic('game'), ` See all ${allGames.length} ${c.name} games →`)));
 }
 
 
@@ -714,21 +748,21 @@ function guideBlock(c, ch, gs, vs, topSections) {
   // illustrated study path built from this chapter's own resources
   const steps = [];
   if (ch.read) steps.push({to: 'sec-read', art: 'read', title: 'Read', body: topSections.length ? 'Start with ' + topSections.slice(0, 2).map(x => x[0] + ' ' + x[1]).join(' and ') + '.' : 'Skim the chapter and its headings first.', act: h('a', {class: 'mini', href: ch.read.url, target: '_blank', rel: 'noopener'}, 'Open the reading ↗')});
-  if (vs.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: vs.length > 1 ? `Begin with “${vs[0].title}”, then pick the lessons for the parts that feel tricky.` : `Watch “${vs[0].title}” and pause to work along.`, act: h('button', {class: 'mini', type: 'button', onclick: () => openVideo(vs[0].id, 0)}, '▶ Play first lesson')});
-  else if (ch.playlists.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: 'Work through the lessons in the playlist, pausing to try each example yourself.', act: h('a', {class: 'mini', href: plUrl(ch.playlists[0]), target: '_blank', rel: 'noopener'}, '▶ Open playlist ↗')});
+  if (vs.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: vs.length > 1 ? `Begin with “${vs[0].title}”, then pick the lessons for the parts that feel tricky.` : `Watch “${vs[0].title}” and pause to work along.`, act: h('button', {class: 'mini', type: 'button', onclick: () => openVideo(vs[0].id, 0)}, ic('video'), ' Play first lesson')});
+  else if (ch.playlists.length) steps.push({to: 'sec-watch', art: 'watch', title: 'Watch', body: 'Work through the lessons in the playlist, pausing to try each example yourself.', act: h('a', {class: 'mini', href: plUrl(ch.playlists[0]), target: '_blank', rel: 'noopener'}, ic('video'), ' Open playlist ↗')});
   if (g?.r) steps.push({to: 'recipe', art: 'idea', title: 'Learn the recipe', body: g.r[0] + ': follow the steps below on one example by hand.', act: h('a', {class: 'mini', href: '#recipe', onclick: e => { e.preventDefault(); document.getElementById('recipe')?.scrollIntoView({behavior: 'smooth', block: 'start'}); }}, '↓ See the steps')});
-  if (gs.length) steps.push({to: 'sec-practice', art: 'play', title: 'Practice', body: `Play ${gs.map(x => x.title).slice(0, 2).join(' or ')} until you get 8 out of 10 right.`, act: h('a', {class: 'mini', href: '#/play/' + gs[0].id + '?from=' + c.id}, '🎮 Start practicing')});
+  if (gs.length) steps.push({to: 'sec-practice', art: 'play', title: 'Practice', body: `Play ${gs.map(x => x.title).slice(0, 2).join(' or ')} until you get 8 out of 10 right.`, act: h('a', {class: 'mini', href: '#/play/' + gs[0].id + '?from=' + c.id}, ic('game'), ' Start practicing')});
   steps.push({to: 'sec-concepts', art: 'check', title: 'Check yourself', body: 'Explain each concept chip below out loud, without notes. Any you can’t? Search it and review.', act: null});
-  wrap.append(h('section', {class: 'path'}, h('h3', {}, '🗺️ Your study path'),
+  wrap.append(h('section', {class: 'path'}, h('h3', {}, ic('map'), ' Your study path'),
     h('ol', {class: 'steps'}, steps.map((st, i) => h('li', {},
       h('button', {class: 'step s' + (i % 5), type: 'button', 'aria-label': `Step ${i + 1}: ${st.title}. Jump to this section`, onclick: () => jumpTo(st.to)},
         h('span', {class: 'art', html: ART[st.art]}), h('span', {class: 'num'}, String(i + 1)),
         h('b', {}, st.title), h('span', {class: 'sp'}, st.body), h('span', {class: 'go'}, 'Go to section ↓')))))));
-  if (g?.r) wrap.append(h('section', {class: 'recipe', id: 'recipe'}, h('h3', {}, '🧪 Skill recipe: ' + g.r[0]),
+  if (g?.r) wrap.append(h('section', {class: 'recipe', id: 'recipe'}, h('h3', {}, ic('flask'), ' Skill recipe: ' + g.r[0]),
     h('ol', {class: 'flow'}, g.r[1].map((t, i) => h('li', {}, h('span', {class: 'bubble'}, String(i + 1)), h('span', {class: 'txt'}, t))))));
   if (g?.t || g?.w) wrap.append(h('div', {class: 'tipgrid'},
-    g.t ? h('section', {class: 'tips'}, h('h3', {}, '💡 Study tips'), h('ul', {}, g.t.map(t => h('li', {}, t)))) : null,
-    g.w ? h('section', {class: 'watchout'}, h('h3', {}, '⚠️ Watch out for'), h('ul', {}, g.w.map(t => h('li', {}, t)))) : null));
+    g.t ? h('section', {class: 'tips'}, h('h3', {}, ic('idea'), ' Study tips'), h('ul', {}, g.t.map(t => h('li', {}, t)))) : null,
+    g.w ? h('section', {class: 'watchout'}, h('h3', {}, ic('warning'), ' Watch out for'), h('ul', {}, g.w.map(t => h('li', {}, t)))) : null));
   return wrap;
 }
 
@@ -755,7 +789,7 @@ function theater(vs) {
     h('span', {class: 'tn'}, String(i + 1)), h('span', {class: 'tt'}, v.title, v.duration ? h('small', {}, Math.round(v.duration / 60) + ' min') : null)))));
   const box = h('div', {class: 'theater'},
     h('div', {class: 'stage'}, h('div', {class: 'screen'}, frame), title, meta, moments),
-    h('div', {class: 'side'}, h('div', {class: 'sidehead'}, `🎬 ${vs.length} lesson${vs.length > 1 ? 's' : ''}: pick a topic`), list));
+    h('div', {class: 'side'}, h('div', {class: 'sidehead'}, ic('film'), ` ${vs.length} lesson${vs.length > 1 ? 's' : ''}: pick a topic`), list));
   load(0);
   const stage = box.firstChild, side = box.lastChild;
   if (window.ResizeObserver) new ResizeObserver(() => { side.style.maxHeight = matchMedia('(max-width: 860px)').matches ? '' : Math.max(320, stage.offsetHeight) + 'px'; }).observe(stage);
@@ -769,17 +803,17 @@ function chapterBody(c, ch) {
   const read = ch.read;
   const top = read ? read.sections.filter(s => (s[0].match(/\./g) || []).length <= 1) : [];
   return h('article', {},
-    h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
+    h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ic(ch.icon)), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
     guideBlock(c, ch, gs, vs, top),
-    h('div', {class: 'panel', id: 'sec-concepts'}, h('h3', {}, '🧠 Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
+    h('div', {class: 'panel', id: 'sec-concepts'}, h('h3', {}, ic('brain'), ' Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
       h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
-    h('div', {class: 'panel', id: 'sec-practice'}, h('h3', {}, '🎮 Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
+    h('div', {class: 'panel', id: 'sec-practice'}, h('h3', {}, ic('game'), ' Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
       gs.length ? h('div', {class: 'grid'}, gs.map(g => gameCard(g, c.id))) : h('p', {class: 'empty-note'}, 'No game for this one yet. Use the reading and videos, and check back: new games are added often.')),
-    h('div', {class: 'panel', id: 'sec-watch'}, h('h3', {}, '▶️ Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
+    h('div', {class: 'panel', id: 'sec-watch'}, h('h3', {}, ic('video'), ' Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
       vs.length ? theater(vs) : null,
-      ch.playlists.length ? h('div', {class: 'playlists'}, ch.playlists.map(p => h('a', {class: 'btn small secondary', href: plUrl(p), target: '_blank', rel: 'noopener'}, '▶ ' + (playlistTitles[p] || 'Playlist') + ' ↗'))) : null,
+      ch.playlists.length ? h('div', {class: 'playlists'}, ch.playlists.map(p => h('a', {class: 'btn small secondary', href: plUrl(p), target: '_blank', rel: 'noopener'}, ic('video'), ' ' + (playlistTitles[p] || 'Playlist') + ' ↗'))) : null,
       !vs.length && !ch.playlists.length ? h('p', {class: 'empty-note'}, h('span', {}, 'No video linked here yet. '), h('a', {href: 'https://www.youtube.com/@itsdrdan', target: '_blank', rel: 'noopener'}, 'Browse Dr. Dan’s channel ↗')) : null),
-    h('div', {class: 'panel', id: 'sec-read'}, h('h3', {}, '📖 Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
+    h('div', {class: 'panel', id: 'sec-read'}, h('h3', {}, ic('book'), ' Read', h('span', {class: 'count'}, read ? `${c.book.publisher}` : '')),
       read ? [h('p', {style: 'margin:0 0 12px'}, h('a', {class: 'btn small secondary', href: read.url, target: '_blank', rel: 'noopener'}, `Open ${ch.label}: ${ch.title} ↗`)),
         read.sections.length ? h('ul', {class: 'sections'}, read.sections.map(([n, t, url]) => h('li', {class: (n.match(/\./g) || []).length > 1 ? 'sub' : ''}, h('a', {href: url, target: '_blank', rel: 'noopener'}, h('span', {class: 'sn'}, n), h('span', {}, t))))) : null]
         : h('p', {class: 'empty-note'}, c.book.note || 'Reading for this section is coming soon.')),
@@ -830,13 +864,13 @@ function viewPlay(id, params) {
       h('div', {class: 'btns'},
         h('a', {class: 'btn secondary small', href: from && courseById[from] ? '#/course/' + from : '#/games'}, '← Back'),
         h('a', {class: 'btn secondary small', href: g.url, target: '_blank', rel: 'noopener'}, 'Open separately ↗'),
-        h('button', {class: 'btn small', type: 'button', onclick: async e => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await box.requestFullscreen(); } catch { e.target.textContent = 'Use “Open separately”'; } }}, '⛶ Full screen'))),
+        h('button', {class: 'btn small', type: 'button', onclick: async e => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await box.requestFullscreen(); } catch { e.currentTarget.textContent = 'Use “Open separately”'; } }}, ic('fullscreen'), ' Full screen'))),
     frame);
   const used = chaptersUsing('game', id).filter(x => !from || x.c.id === from);
   if (used.length) box.append(h('div', {class: 'related'}, h('span', {}, 'Goes with:'), used.map(({c, ch}) => h('a', {class: 'chip', href: `#/course/${c.id}/${ch.id}`}, `${c.name} ${ch.label}: ${ch.title}`))));
   const vs = [...new Set(used.flatMap(({ch}) => ch.videos))].map(v => videos.get(v)).filter(Boolean);
   const watch = vs.length ? h('section', {class: 'panel play-watch', id: 'play-watch'},
-    h('h3', {}, '▶️ Stuck? Watch Dr. Dan explain it', h('span', {class: 'count'}, vs.length + (vs.length === 1 ? ' lesson' : ' lessons'))),
+    h('h3', {}, ic('video'), ' Stuck? Watch Dr. Dan explain it', h('span', {class: 'count'}, vs.length + (vs.length === 1 ? ' lesson' : ' lessons'))),
     h('div', {class: 'grid'}, vs.slice(0, 6).map(v => videoCard(v, true)))) : null;
   if (watch && vs.length > 6) {
     const more = h('button', {class: 'btn small secondary', type: 'button', onclick: () => { watch.querySelector('.grid').replaceChildren(...vs.map(v => videoCard(v, true))); more.remove(); }}, `Show all ${vs.length} lessons`);
@@ -907,8 +941,8 @@ function renderResults(box, q, course) {
   const total = Object.values(groups).reduce((n, a) => n + a.length, 0);
   box.replaceChildren();
   const ex = examHits(q, course);
-  if (ex.length) box.append(h('div', {class: 'rgroup'}, h('h3', {}, '📝 Exam & skill-check guides', h('span', {class: 'count'}, ex.length)),
-    h('div', {class: 'rlist'}, ex.map(r => h('a', {class: 'ritem', href: r.href, 'data-course': r.cid}, h('span', {class: 'ri'}, r.icon || (r.custom ? '🛠️' : '📝')),
+  if (ex.length) box.append(h('div', {class: 'rgroup'}, h('h3', {}, ic('note'), ' Exam & skill-check guides', h('span', {class: 'count'}, ex.length)),
+    h('div', {class: 'rlist'}, ex.map(r => h('a', {class: 'ritem', href: r.href, 'data-course': r.cid}, h('span', {class: 'ri'}, ic(r.icon || (r.custom ? 'tools' : 'note'))),
       h('span', {}, h('div', {class: 'rt'}, courseBadge(r.cid), ' ', r.title), h('div', {class: 'rs'}, r.sub)))))));
   if (!total && ex.length) return;
   if (!total) {
@@ -919,20 +953,20 @@ function renderResults(box, q, course) {
   }
   const group = (title, icon, arr, render, limit = 4) => { if (!arr.length) return; const list = h('div', {class: 'rlist'}, arr.slice(0, limit).map(render));
     const more = arr.length > limit ? h('button', {class: 'btn small secondary more', type: 'button', onclick: () => { list.replaceChildren(...arr.slice(0, 24).map(render)); more.remove(); }}, `Show ${Math.min(arr.length, 24) - limit} more`) : null;
-    box.append(h('div', {class: 'rgroup'}, h('h3', {}, icon + ' ' + title, h('span', {class: 'count'}, arr.length)), list, more)); };
-  group('Chapters', '📚', groups.chapter, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: `#/course/${c.id}/${r.ch.id}`, 'data-course': c.id},
-    h('span', {class: 'ri'}, r.ch.icon || '📚'), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
+    box.append(h('div', {class: 'rgroup'}, h('h3', {}, ic(icon), ' ' + title, h('span', {class: 'count'}, arr.length)), list, more)); };
+  group('Chapters', 'books', groups.chapter, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: `#/course/${c.id}/${r.ch.id}`, 'data-course': c.id},
+    h('span', {class: 'ri'}, ic(r.ch.icon)), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
       h('div', {class: 'rs', html: r.via ? 'Covers: ' + highlight(r.via, qt) : `${r.ch.games.length} game${r.ch.games.length===1?'':'s'} · ${r.ch.videos.length} video${r.ch.videos.length===1?'':'s'}`}))); });
-  group('Games', '🎮', groups.game, r => h('a', {class: 'ritem', href: '#/play/' + encodeURIComponent(r.g.id) + (course !== 'all' ? '?from=' + course : '')},
+  group('Games', 'game', groups.game, r => h('a', {class: 'ritem', href: '#/play/' + encodeURIComponent(r.g.id) + (course !== 'all' ? '?from=' + course : '')},
     gameIcon(r.g, 'ri'), h('span', {}, h('div', {class: 'rt', html: highlight(r.g.title, qt)}), h('div', {class: 'rs'}, r.via ? `Practice for ${r.via}` : (r.g.blurb || '')))));
-  group('Video lessons', '▶️', groups.video, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, 0)},
+  group('Video lessons', 'video', groups.video, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, 0)},
     h('img', {src: thumb(r.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('div', {class: 'rt', html: highlight(r.v.title, qt)}), h('div', {class: 'rs'}, playlistTitles[r.v.playlist] || 'Dr. Dan on YouTube'))));
   group('Key moments in videos', '⏱️', groups.moment, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, r.t)},
     h('img', {src: thumb(r.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('div', {class: 'rt'}, h('span', {class: 'ts'}, fmtTime(r.t)), ' ', h('span', {html: highlight(r.text, qt)})), h('div', {class: 'rs'}, r.v.title))));
-  group('Said in Dr. Dan’s videos', '💬', groups.transcript, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, Math.max(0, r.t - 2))},
+  group('Said in Dr. Dan’s videos', 'chat', groups.transcript, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, Math.max(0, r.t - 2))},
     h('img', {src: thumb(r.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('div', {class: 'rt'}, h('span', {class: 'ts'}, fmtTime(r.t)), ' ', r.v.title), h('div', {class: 'rs', html: '“…' + highlight(clip(r.text, qt), qt) + '…”'}))));
-  group('Textbook sections', '📖', groups.section, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: r.url, target: '_blank', rel: 'noopener', 'data-course': c.id},
-    h('span', {class: 'ri'}, '📖'), h('span', {}, h('div', {class: 'rt'}, `${r.num} `, h('span', {html: highlight(r.text, qt)}), ' ↗'), h('div', {class: 'rs'}, `${c.book.title} · used in `, courseBadge(c.id)))); });
+  group('Textbook sections', 'book', groups.section, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: r.url, target: '_blank', rel: 'noopener', 'data-course': c.id},
+    h('span', {class: 'ri'}, ic('book')), h('span', {}, h('div', {class: 'rt'}, `${r.num} `, h('span', {html: highlight(r.text, qt)}), ' ↗'), h('div', {class: 'rs'}, `${c.book.title} · used in `, courseBadge(c.id)))); });
   if (transcriptState === 'loading') box.append(h('p', {class: 'status'}, 'Searching video transcripts…'));
 }
 
@@ -980,12 +1014,12 @@ function weekCard(cid) {
   return h('section', {class: 'weekcard', 'data-course': cid},
     h('div', {class: 'wkhead'}, h('span', {class: 'wkbadge'}, `Week ${weekNo}`), h('b', {}, `This week in ${courseById[cid].name}`),
       sc ? h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗') : null),
-    doneTxt ? h('p', {class: 'wkdone'}, '✔️ ' + doneTxt) : null,
+    doneTxt ? h('p', {class: 'wkdone'}, ic('check'), ' ' + doneTxt) : null,
     h('div', {class: 'wkgrid'},
-      lecText ? h('div', {class: 'wkitem'}, h('small', {}, '📖 In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, `${lecCh.icon || ''} Study ${lecCh.label} →`) : null) : null,
-      chk ? h('div', {class: 'wkitem'}, h('small', {}, `✅ Next: Skill Check #${chk.n}`), h('span', {}, chk.topic || 'Topic posted on Canvas'),
+      lecText ? h('div', {class: 'wkitem'}, h('small', {}, ic('book'), ' In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, ic(lecCh.icon), ` Study ${lecCh.label} →`) : null) : null,
+      chk ? h('div', {class: 'wkitem'}, h('small', {}, ic('check'), ` Next: Skill Check #${chk.n}`), h('span', {}, chk.topic || 'Topic posted on Canvas'),
         chk.ch?.length ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${chk.ch.join(',')}`}, 'Build my plan →') : null) : null,
-      nx ? h('div', {class: 'wkitem'}, h('small', {}, nx.id === 'final' ? '🏁 Coming up' : '📝 Next exam'), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + nx.id}${nx.w?.date ? ' · ' + nx.w.date : ''}`),
+      nx ? h('div', {class: 'wkitem'}, h('small', {}, ...(nx.id === 'final' ? [ic('finish'), ' Coming up'] : [ic('note'), ' Next exam'])), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + nx.id}${nx.w?.date ? ' · ' + nx.w.date : ''}`),
         exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${nx.id}`}, 'Exam guide →') : null) : null),
     fresh ? h('p', {class: 'wknote'}, `Updated by Dr. Dan on ${new Date(now.updated + 'T12:00:00').toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}. The schedule can shift; Canvas has the final word.`) : null);
 }
@@ -1008,7 +1042,7 @@ function examHits(q, filter) {
     if ((eq.course && cid !== eq.course) || (!eq.course && filter !== 'all' && cid !== filter)) continue;
     const E = EXAMS[cid];
     if (eq.kind === 'exam' || eq.kind === 'any') for (const ex of E?.exams || []) if (eq.kind === 'any' || ex.id === eq.id) out.push({href: `#/exam/${cid}/${ex.id}`, cid, title: `${ex.title}`, sub: `Dr. Dan’s sections · Chapters ${ex.ch.filter(x => x !== 'review').join(', ')}`});
-    if (eq.kind === 'check' || eq.kind === 'any') out.push({href: `#/exams/${cid}#checks`, cid, title: `${courseById[cid].name} skill check builder`, sub: 'Pick this week’s topic and get a quick 2-day plan', custom: true, icon: '✅'});
+    if (eq.kind === 'check' || eq.kind === 'any') out.push({href: `#/exams/${cid}#checks`, cid, title: `${courseById[cid].name} skill check builder`, sub: 'Pick this week’s topic and get a quick 2-day plan', custom: true, icon: 'check'});
     if (eq.kind !== 'check') out.push({href: `#/exams/${cid}`, cid, title: `Build your own ${courseById[cid].name} exam plan`, sub: 'Pick the chapters your exam covers (works for any instructor)', custom: true});
   }
   return out;
@@ -1024,7 +1058,7 @@ function chRange(ids) {
   return (ids.length === 1 ? 'Chapter ' : 'Chapters ') + out.join(', ');
 }
 function retakeNote() {
-  return h('p', {class: 'retake'}, h('b', {}, '💜 Don’t forget: '), 'most professors offer an exam or skill check retake, or drop your lowest score. Check your syllabus! Exam numbers and chapters can also shift a little each semester.');
+  return h('p', {class: 'retake'}, h('b', {}, ic('heart'), ' Don’t forget: '), 'most professors offer an exam or skill check retake, or drop your lowest score. Check your syllabus! Exam numbers and chapters can also shift a little each semester.');
 }
 function builder(cid, c) {
   const picks = new Set();
@@ -1034,12 +1068,12 @@ function builder(cid, c) {
   const btn = h('a', {class: 'btn', href: '#', onclick: e => { e.preventDefault(); if (!picks.size) { btn.textContent = 'Tick at least one chapter first'; return; } location.hash = `#/${mode === 'check' ? 'check' : 'exam'}/${cid}/custom?ch=${[...picks].join(',')}`; }});
   const seg = h('div', {class: 'seg', role: 'group', 'aria-label': 'What are you studying for?'});
   const draw = () => { hint.textContent = mode === 'check' ? 'Tick the chapter this week’s skill check covers (usually just one). You’ll get a short checklist and a 2-day plan.' : 'Tick the chapters your exam covers. You’ll get one checklist, the games and videos, and a 7-day plan.'; btn.textContent = cta(); seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === mode))); };
-  for (const [m, label] of [['exam', '📝 An exam'], ['check', '✅ A skill check']]) seg.append(h('button', {type: 'button', class: 'chip', 'data-m': m, onclick: () => { mode = m; draw(); }}, label));
+  for (const [m, icn, label] of [['exam', 'note', 'An exam'], ['check', 'check', 'A skill check']]) seg.append(h('button', {type: 'button', class: 'chip', 'data-m': m, onclick: () => { mode = m; draw(); }}, ic(icn), ' ' + label));
   const box = h('div', {class: 'chpick'}, c.chapters.filter(ch => ch.id !== 'review').map(ch => h('label', {class: 'pick'},
     h('input', {type: 'checkbox', onchange: e => { e.target.checked ? picks.add(ch.id) : picks.delete(ch.id); btn.textContent = cta(); }}),
-    h('span', {class: 'pi'}, ch.icon || '🧪'), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
+    h('span', {class: 'pi'}, ic(ch.icon)), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
   draw();
-  return h('div', {class: 'panel', id: 'checks', style: 'margin-top:28px'}, h('h3', {}, '🛠️ Build your own plan'),
+  return h('div', {class: 'panel', id: 'checks', style: 'margin-top:28px'}, h('h3', {}, ic('tools'), ' Build your own plan'),
     h('p', {style: 'margin:0 0 10px;font-weight:700'}, 'In another instructor’s section, or want to pick the chapters yourself? What are you studying for?'), seg, hint, box, h('div', {style: 'margin-top:16px'}, btn));
 }
 function viewExamHub(cid) {
@@ -1052,9 +1086,9 @@ function viewExamHub(cid) {
       h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), 'Exam & skill-check guides'),
       h('p', {}, 'Pick your exam to get a checklist and a study plan.'))),
     h('section', {class: 'wrap section', 'data-course': cid}, weekCard(cid),
-      E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, '📝 Exams'),
+      E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, ic('note'), ' Exams'),
         h('div', {class: 'examgrid centered'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
-          h('span', {class: 'ei'}, ex.id === 'final' ? '🏁' : '📝'), h('b', {}, ex.title),
+          h('span', {class: 'ei'}, ic(ex.id === 'final' ? 'finish' : 'note')), h('b', {}, ex.title),
           h('small', {}, chRange(ex.ch.filter(x => x !== 'review')))))),
 
         retakeNote()]
@@ -1084,14 +1118,14 @@ function viewExam(cid, id, params, isCheck) {
   const groupUpd = [];
   const item = it => h('li', {}, h('label', {},
     h('input', {type: 'checkbox', checked: !!state[it.k], onchange: e => { state[it.k] = e.target.checked; examSave(key, state); upd(); }}),
-    h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, !grouped && it.ch ? h('small', {}, ` · ${it.ch.icon || ''} ${it.ch.label}`) : null)));
+    h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, !grouped && it.ch ? h('small', {}, ' · ', ic(it.ch.icon), ` ${it.ch.label}`) : null)));
   const list = grouped
     ? h('div', {class: 'cangroups'}, chs.filter(ch => items.some(it => it.ch === ch)).map((ch, i) => {
         const mine = items.filter(it => it.ch === ch);
         const cnt = h('span', {class: 'gcount'});
         groupUpd.push(() => { const n = mine.filter(x => state[x.k]).length; cnt.textContent = n === mine.length ? '✓ all ready' : `${n}/${mine.length}`; cnt.classList.toggle('done', n === mine.length); });
         return h('details', {class: 'cangroup', open: i === 0},
-          h('summary', {}, h('span', {class: 'gi'}, ch.icon || '🧪'), h('span', {class: 'gt'}, `${ch.label}: ${ch.title}`), cnt),
+          h('summary', {}, h('span', {class: 'gi'}, ic(ch.icon)), h('span', {class: 'gt'}, `${ch.label}: ${ch.title}`), cnt),
           h('ul', {class: 'canlist'}, mine.map(item)));
       }))
     : h('ul', {class: 'canlist'}, items.map(item));
@@ -1106,35 +1140,35 @@ function viewExam(cid, id, params, isCheck) {
   const slots = Math.min(5, studyChs.length) || 1;
   for (let d = 0; d < slots; d++) days.push(studyChs.filter((_, i) => i % slots === d));
   const plan = isCheck ? h('ol', {class: 'days'},
-    h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
+    h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, 'Read the nutshell, work one example with the skill recipe, and watch the topic moments you need below.')),
-    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, 'Day 2 · Practice'), h('b', {}, '🎮 Game + checklist'), h('p', {}, 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.')))
+    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, 'Day 2 · Practice'), h('b', {}, ic('game'), ' Game + checklist'), h('p', {}, 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.')))
   : ex.plan ? h('ol', {class: 'days'}, ex.plan.map((d, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
-      h('b', {}, d.t),
-      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
+      h('b', {}, d.i ? [ic(d.i), ' '] : null, d.t),
+      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, d.note))))
   : h('ol', {class: 'days'},
     days.map((group, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
-      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ch.icon || '🧪'), `${ch.label}: ${ch.title}`)),
+      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, 'Read the nutshell and skill recipe, watch the key moments you need, then play the game to 80%.'))),
-    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, `Day ${days.length + 1}`), h('b', {}, '🔁 Mixed practice'), h('p', {}, 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.')),
-    h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, '😴 Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
+    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, `Day ${days.length + 1}`), h('b', {}, ic('repeat'), ' Mixed practice'), h('p', {}, 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.')),
+    h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, ic('rest'), ' Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
   app.replaceChildren(
     h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
       h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
-      h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, isCheck ? '✅' : id === 'final' ? '🏁' : '📝'),
+      h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ic(isCheck ? 'check' : id === 'final' ? 'finish' : 'note')),
         h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${isCheck ? 'Weekly skill check' : ex.custom ? 'Custom plan' : 'Dr. Dan’s sections'}`), h('h1', {style: 'margin:2px 0'}, ex.title))),
-      ex.custom ? null : h('p', {}, (() => { const w = sylCourse(cid)?.weeks?.find(w => w.events.some(e => e.type === 'exam' && e.id === id)); return w ? `📅 Week ${w.week}${w.date ? ' (' + w.date + ')' : ''} on Dr. Dan’s syllabus. ` : ''; })(), 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
+      ex.custom ? null : h('p', {}, (() => { const w = sylCourse(cid)?.weeks?.find(w => w.events.some(e => e.type === 'exam' && e.id === id)); return w ? [ic('calendar'), ` Week ${w.week}${w.date ? ' (' + w.date + ')' : ''} on Dr. Dan’s syllabus. `] : ''; })(), 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
     h('div', {class: 'wrap examwrap', 'data-course': cid},
-      h('section', {class: 'panel'}, h('h3', {}, '📚 Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
+      h('section', {class: 'panel'}, h('h3', {}, ic('books'), ' Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
         h('div', {class: 'chapters-overview'}, chs.map(ch => h('a', {class: 'ch-card', href: `#/course/${cid}/${ch.id}`},
-          h('span', {class: 'chicon', 'aria-hidden': 'true'}, ch.icon || '🧪'), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
-      h('section', {class: 'panel'}, h('h3', {}, '✔️ Skills checklist', h('span', {class: 'count'}, label)), bar,
+          h('span', {class: 'chicon', 'aria-hidden': 'true'}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
+      h('section', {class: 'panel'}, h('h3', {}, ic('list'), ' Skills checklist', h('span', {class: 'count'}, label)), bar,
         h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
-      ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, '💡 Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
-      h('section', {class: 'panel'}, h('h3', {}, isCheck ? '🗓️ Your 2-day plan' : `🗓️ Your ${ex.plan ? ex.plan.length : 7}-day plan`), plan, retakeNote()),
-      gs.length ? h('section', {class: 'panel'}, h('h3', {}, '🎮 Practice games', h('span', {class: 'count'}, gs.length)), h('div', {class: 'grid'}, gs.map(g => gameCard(g, cid)))) : null,
-      vs.length ? h('section', {class: 'panel'}, h('h3', {}, '▶️ Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
+      ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, ic('idea'), ' Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
+      h('section', {class: 'panel'}, h('h3', {}, ic('calendar'), isCheck ? ' Your 2-day plan' : ` Your ${ex.plan ? ex.plan.length : 7}-day plan`), plan, retakeNote()),
+      gs.length ? h('section', {class: 'panel'}, h('h3', {}, ic('game'), ' Practice games', h('span', {class: 'count'}, gs.length)), h('div', {class: 'grid'}, gs.map(g => gameCard(g, cid)))) : null,
+      vs.length ? h('section', {class: 'panel'}, h('h3', {}, ic('video'), ' Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
 }
 
 function viewNotFound(msg) { setTitle('Not found'); app.replaceChildren(h('section', {class: 'section wrap'}, h('h2', {}, 'Hmm, that page isn’t here.'), h('p', {class: 'sub'}, msg || 'Try the course list or search.'), h('a', {class: 'btn', href: '#/'}, 'Go to courses'))); }
@@ -1203,7 +1237,7 @@ function mergeMeta(repo, meta) {
   if (cur) { cur.tags = tags; cur.description = String(meta.description || ''); return; }
   const title = String(meta.title || meta.name || '').trim(); if (!title) return;
   const blurb = String(meta.summary || meta.shortDescription || meta.description || '').replace(/\s+/g, ' ').trim();
-  games.set(id, {id, title, icon: String(meta.icon || '🧪').slice(0, 8), blurb: blurb.length > 150 ? (blurb.match(/^.{30,150}?[.!?](\s|$)/)?.[0] || blurb.slice(0, 147) + '…') : blurb,
+  games.set(id, {id, title, icon: String(meta.icon || 'flask').slice(0, 24), blurb: blurb.length > 150 ? (blurb.match(/^.{30,150}?[.!?](\s|$)/)?.[0] || blurb.slice(0, 147) + '…') : blurb,
     courses: coursesOf(meta.course), tags, description: String(meta.description || ''), url: `https://itsdrdan.github.io/${encodeURIComponent(repo)}/`, discovered: true,
     logo: typeof meta.logo === 'string' && /^[\w\-./]+\.(png|webp|svg|jpe?g)$/i.test(meta.logo) && !meta.logo.includes('..') ? `https://itsdrdan.github.io/${encodeURIComponent(repo)}/${meta.logo.replace(/^\.?\//, '')}` : ''});
 }

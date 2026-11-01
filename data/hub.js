@@ -31,7 +31,7 @@ window.HUB_DATA = {
   {
    "id": "sigfig",
    "title": "Significant Figures",
-   "icon": "🔢",
+   "icon": "sigfig",
    "blurb": "Count significant figures in measured and exact numbers, in standard and scientific notation.",
    "courses": [
     "3A",
@@ -42,7 +42,7 @@ window.HUB_DATA = {
   {
    "id": "metric",
    "title": "SI Prefix Challenge",
-   "icon": "📏",
+   "icon": "measure",
    "blurb": "Practice metric prefixes and powers of ten, one conversion at a time.",
    "courses": [
     "3A",
@@ -54,7 +54,7 @@ window.HUB_DATA = {
    "id": "elements",
    "logo": "assets/games/elements.webp",
    "title": "Element Symbol Study Lab",
-   "icon": "🔤",
+   "icon": "periodic",
    "blurb": "Learn element names and symbols, starting with the first 20 and a health-science set.",
    "courses": [
     "3A",
@@ -65,7 +65,7 @@ window.HUB_DATA = {
   {
    "id": "polyatomic",
    "title": "Polyatomic Ions (Green Sheet)",
-   "icon": "🧲",
+   "icon": "ion",
    "blurb": "Match polyatomic ion names, formulas, and charges from the green sheet.",
    "courses": [
     "3A",
@@ -76,7 +76,7 @@ window.HUB_DATA = {
   {
    "id": "ionicformula",
    "title": "Naming & Formulas",
-   "icon": "🧩",
+   "icon": "formula",
    "blurb": "Turn names into formulas and formulas into names: ionic, polyatomic, acids, and covalent.",
    "courses": [
     "3A",
@@ -88,7 +88,7 @@ window.HUB_DATA = {
    "id": "quantumchemistry",
    "logo": "assets/games/quantumchemistry.webp",
    "title": "Quantum Quest",
-   "icon": "⚛️",
+   "icon": "orbital",
    "blurb": "Light, Bohr model, orbital diagrams, electron configurations, and periodic trends. Pick 3A or 1A.",
    "courses": [
     "3A",
@@ -100,7 +100,7 @@ window.HUB_DATA = {
    "id": "lewisstructures",
    "logo": "assets/games/lewisstructures.webp",
    "title": "Lewis Structure Studio",
-   "icon": "🔬",
+   "icon": "molecule",
    "blurb": "Build Lewis structures, then predict shape and polarity. 3B adds condensed and skeletal drawing.",
    "courses": [
     "3A",
@@ -113,7 +113,7 @@ window.HUB_DATA = {
    "id": "reactions",
    "logo": "assets/games/reactions.webp",
    "title": "Reaction Rumble (Chemical Reactions)",
-   "icon": "⚡",
+   "icon": "reaction",
    "blurb": "Balance, predict products, write net ionic equations, and race the 60-second Blitz.",
    "courses": [
     "3A",
@@ -125,7 +125,7 @@ window.HUB_DATA = {
    "id": "redox",
    "logo": "assets/games/redox.webp",
    "title": "LEO Goes GER! (Redox)",
-   "icon": "🦁",
+   "icon": "battery",
    "blurb": "Oxidation states, activity series, and balancing redox by half-reactions in acid and base.",
    "courses": [
     "3A",
@@ -138,7 +138,7 @@ window.HUB_DATA = {
    "id": "moles",
    "logo": "assets/games/moles.webp",
    "title": "The Mole",
-   "icon": "⛏️",
+   "icon": "pile",
    "blurb": "Avogadro’s number, molar mass, the Mole Road Map, percent composition, and empirical and molecular formulas.",
    "courses": [
     "3A",
@@ -150,7 +150,7 @@ window.HUB_DATA = {
    "id": "stoichiometry",
    "logo": "assets/games/stoichiometry.webp",
    "title": "Stoichiometry",
-   "icon": "⚖️",
+   "icon": "scales",
    "blurb": "Mass, solution, and gas stoichiometry, limiting reactants, percent yield, and titrations.",
    "courses": [
     "3A",
@@ -162,7 +162,7 @@ window.HUB_DATA = {
    "id": "gaslaws",
    "logo": "assets/games/gaslaws.webp",
    "title": "Under Pressure (Gas Laws)",
-   "icon": "🎈",
+   "icon": "gauge",
    "blurb": "Gas laws, ideal gas calculations, mixtures, wet gases, and mystery gases.",
    "courses": [
     "3A",
@@ -174,7 +174,7 @@ window.HUB_DATA = {
    "id": "thermochemistry",
    "logo": "assets/games/thermochemistry.webp",
    "title": "Thermochemistry",
-   "icon": "🔥",
+   "icon": "fire",
    "blurb": "Specific heat, phase changes, calorimetry, Hess's law, and enthalpies of formation.",
    "courses": [
     "3A",
@@ -186,7 +186,7 @@ window.HUB_DATA = {
    "id": "chem1bready",
    "logo": "assets/games/chem1bready.webp",
    "title": "CHEM 1B Readiness Quest",
-   "icon": "🚀",
+   "icon": "bridge",
    "blurb": "A 1A review with a readiness check and a personal study plan before you start 1B.",
    "courses": [
     "1A",
@@ -197,7 +197,7 @@ window.HUB_DATA = {
   {
    "id": "organic",
    "title": "Functional Group Flashcards",
-   "icon": "🃏",
+   "icon": "cards",
    "blurb": "Recognize 16 common organic functional groups from pictures and names.",
    "courses": [
     "3B",
@@ -209,7 +209,7 @@ window.HUB_DATA = {
    "id": "functionalgroups",
    "logo": "assets/games/functionalgroups.webp",
    "title": "Organic Origins (Hydrocarbons to Amides)",
-   "icon": "🧪",
+   "icon": "organic",
    "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then predict how they react.",
    "courses": [
     "3B"
@@ -220,7 +220,7 @@ window.HUB_DATA = {
    "id": "organicreactions",
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
-   "icon": "⛵",
+   "icon": "reaction",
    "blurb": "Identify reactions and draw reactants and products for the 3B organic chapters.",
    "courses": [
     "3B"
@@ -231,7 +231,7 @@ window.HUB_DATA = {
    "id": "carbohydrates",
    "logo": "assets/games/carbohydrates.webp",
    "title": "Sweet Structures (Carbohydrates)",
-   "icon": "🍬",
+   "icon": "sugar",
    "blurb": "Fischer and Haworth projections, D/L sugars, anomers, glycosidic links, and sugar reactions.",
    "courses": [
     "3B"
@@ -6968,7 +6968,7 @@ window.HUB_DATA = {
       "W1fKRtt0CZc"
      ],
      "playlists": [],
-     "icon": "📏"
+     "icon": "measure"
     },
     {
      "id": "2",
@@ -7048,7 +7048,7 @@ window.HUB_DATA = {
       "jNh0S62GrHg"
      ],
      "playlists": [],
-     "icon": "⚛️"
+     "icon": "atom"
     },
     {
      "id": "3",
@@ -7134,7 +7134,7 @@ window.HUB_DATA = {
       "84sL9kEAVmQ"
      ],
      "playlists": [],
-     "icon": "🌈"
+     "icon": "periodic"
     },
     {
      "id": "4",
@@ -7262,7 +7262,7 @@ window.HUB_DATA = {
       "W_AHDPMBqrA"
      ],
      "playlists": [],
-     "icon": "🧂"
+     "icon": "lattice"
     },
     {
      "id": "5",
@@ -7294,7 +7294,7 @@ window.HUB_DATA = {
       "r5ciwMWV8Ns"
      ],
      "playlists": [],
-     "icon": "🧮"
+     "icon": "pile"
     },
     {
      "id": "6",
@@ -7382,7 +7382,7 @@ window.HUB_DATA = {
       "Wz23sE4KUBE"
      ],
      "playlists": [],
-     "icon": "🔗"
+     "icon": "molecule"
     },
     {
      "id": "7",
@@ -7492,7 +7492,7 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "🧊"
+     "icon": "phases"
     },
     {
      "id": "8",
@@ -7579,7 +7579,7 @@ window.HUB_DATA = {
       "UteEh5Vgvv8"
      ],
      "playlists": [],
-     "icon": "🎈"
+     "icon": "gauge"
     },
     {
      "id": "9",
@@ -7697,7 +7697,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoAvzESG5KwkzeNLHWl0ElL9"
      ],
-     "icon": "💧"
+     "icon": "solution"
     },
     {
      "id": "10",
@@ -7851,7 +7851,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoD4Q8BHsKut1uikfyaucQL6"
      ],
-     "icon": "💥"
+     "icon": "reaction"
     },
     {
      "id": "11",
@@ -7939,7 +7939,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
      ],
-     "icon": "🍳"
+     "icon": "scales"
     },
     {
      "id": "12",
@@ -8033,7 +8033,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoDQDKc3zSkPAocpU0Z_Q7HE"
      ],
-     "icon": "🍋"
+     "icon": "ph"
     },
     {
      "id": "13",
@@ -8092,7 +8092,7 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "🔄"
+     "icon": "equilibrium"
     },
     {
      "id": "14",
@@ -8170,7 +8170,7 @@ window.HUB_DATA = {
       "bZHo3kHvGi0"
      ],
      "playlists": [],
-     "icon": "☢️"
+     "icon": "radioactive"
     },
     {
      "id": "review",
@@ -8195,7 +8195,7 @@ window.HUB_DATA = {
       "bizYea5i82k"
      ],
      "playlists": [],
-     "icon": "📝"
+     "icon": "exam"
     }
    ]
   },
@@ -8278,7 +8278,7 @@ window.HUB_DATA = {
       "sCmUQWVB90Q"
      ],
      "playlists": [],
-     "icon": "📏"
+     "icon": "measure"
     },
     {
      "id": "2",
@@ -8359,7 +8359,7 @@ window.HUB_DATA = {
       "W_AHDPMBqrA"
      ],
      "playlists": [],
-     "icon": "⚛️"
+     "icon": "atom"
     },
     {
      "id": "3",
@@ -8416,7 +8416,7 @@ window.HUB_DATA = {
       "qwkB_gLdg6s"
      ],
      "playlists": [],
-     "icon": "🧮"
+     "icon": "pile"
     },
     {
      "id": "4",
@@ -8496,7 +8496,7 @@ window.HUB_DATA = {
       "-PeAGG6s6nY"
      ],
      "playlists": [],
-     "icon": "💥"
+     "icon": "scales"
     },
     {
      "id": "5",
@@ -8548,7 +8548,7 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "🔥"
+     "icon": "fire"
     },
     {
      "id": "6",
@@ -8611,7 +8611,7 @@ window.HUB_DATA = {
       "84sL9kEAVmQ"
      ],
      "playlists": [],
-     "icon": "🌈"
+     "icon": "periodic"
     },
     {
      "id": "7",
@@ -8679,7 +8679,7 @@ window.HUB_DATA = {
       "Wz23sE4KUBE"
      ],
      "playlists": [],
-     "icon": "🔗"
+     "icon": "molecule"
     },
     {
      "id": "8",
@@ -8727,7 +8727,7 @@ window.HUB_DATA = {
       "NoEGwwWuNmg"
      ],
      "playlists": [],
-     "icon": "🪐"
+     "icon": "orbital"
     },
     {
      "id": "9",
@@ -8798,7 +8798,7 @@ window.HUB_DATA = {
       "UteEh5Vgvv8"
      ],
      "playlists": [],
-     "icon": "🎈"
+     "icon": "gauge"
     },
     {
      "id": "10",
@@ -8862,7 +8862,7 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "🧊"
+     "icon": "phases"
     },
     {
      "id": "11",
@@ -8920,7 +8920,7 @@ window.HUB_DATA = {
       "sadO3B7s_UY"
      ],
      "playlists": [],
-     "icon": "💧"
+     "icon": "solution"
     },
     {
      "id": "20",
@@ -8967,7 +8967,7 @@ window.HUB_DATA = {
       "9lxWINhQtUc"
      ],
      "playlists": [],
-     "icon": "🌿"
+     "icon": "organic"
     }
    ]
   },
@@ -9005,7 +9005,7 @@ window.HUB_DATA = {
       "Nb4z-SSwmb4"
      ],
      "playlists": [],
-     "icon": "🚀"
+     "icon": "bridge"
     },
     {
      "id": "13",
@@ -9056,7 +9056,7 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "🔄"
+     "icon": "equilibrium"
     },
     {
      "id": "14",
@@ -9130,7 +9130,7 @@ window.HUB_DATA = {
       "-UrwKIGAj08"
      ],
      "playlists": [],
-     "icon": "🍋"
+     "icon": "ph"
     },
     {
      "id": "15",
@@ -9173,7 +9173,7 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "🧂"
+     "icon": "lattice"
     },
     {
      "id": "12",
@@ -9236,7 +9236,7 @@ window.HUB_DATA = {
       "qatdA_ALnx8"
      ],
      "playlists": [],
-     "icon": "⏱️"
+     "icon": "timer"
     },
     {
      "id": "16",
@@ -9284,7 +9284,7 @@ window.HUB_DATA = {
       "KqKvWr6Y2zs"
      ],
      "playlists": [],
-     "icon": "🌡️"
+     "icon": "thermometer"
     },
     {
      "id": "17",
@@ -9354,7 +9354,7 @@ window.HUB_DATA = {
       "zr0Y2hF_aOE"
      ],
      "playlists": [],
-     "icon": "🔋"
+     "icon": "battery"
     },
     {
      "id": "19",
@@ -9394,7 +9394,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "💎"
+     "icon": "complex"
     },
     {
      "id": "21",
@@ -9451,7 +9451,7 @@ window.HUB_DATA = {
       "bZHo3kHvGi0"
      ],
      "playlists": [],
-     "icon": "☢️"
+     "icon": "radioactive"
     }
    ]
   },
@@ -9497,7 +9497,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLPg4WVI9v3T0"
      ],
-     "icon": "🌿"
+     "icon": "organic"
     },
     {
      "id": "2",
@@ -9536,7 +9536,7 @@ window.HUB_DATA = {
       "PLPg4WVI9v3T0",
       "PLB_ao9WCzngU"
      ],
-     "icon": "⛽"
+     "icon": "fuel"
     },
     {
      "id": "3",
@@ -9556,7 +9556,7 @@ window.HUB_DATA = {
      ],
      "videos": [],
      "playlists": [],
-     "icon": "💍"
+     "icon": "benzene"
     },
     {
      "id": "4",
@@ -9585,7 +9585,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLTXHJHUi44RA"
      ],
-     "icon": "🍷"
+     "icon": "wine"
     },
     {
      "id": "5",
@@ -9614,7 +9614,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLKQkUY4NWfyg"
      ],
-     "icon": "🍦"
+     "icon": "carbonyl"
     },
     {
      "id": "6",
@@ -9639,7 +9639,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLEgyNetRxDQQ"
      ],
-     "icon": "🤚"
+     "icon": "hands"
     },
     {
      "id": "7",
@@ -9668,7 +9668,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLAwGSAn_Me9U"
      ],
-     "icon": "🍌"
+     "icon": "acid"
     },
     {
      "id": "8",
@@ -9696,7 +9696,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLAwGSAn_Me9U"
      ],
-     "icon": "🐟"
+     "icon": "amine"
     },
     {
      "id": "9",
@@ -9732,7 +9732,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLRdcExlgOw6g"
      ],
-     "icon": "🍬"
+     "icon": "sugar"
     },
     {
      "id": "10",
@@ -9762,7 +9762,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLaaGAcANvhHw"
      ],
-     "icon": "🧈"
+     "icon": "lipid"
     },
     {
      "id": "11",
@@ -9787,7 +9787,7 @@ window.HUB_DATA = {
      "playlists": [
       "PLFRtXsYv2DZs"
      ],
-     "icon": "🥩"
+     "icon": "protein"
     },
     {
      "id": "12",
@@ -9806,7 +9806,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "✂️"
+     "icon": "enzyme"
     },
     {
      "id": "13",
@@ -9827,7 +9827,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "🧬"
+     "icon": "dna"
     },
     {
      "id": "14",
@@ -9848,7 +9848,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "🍞"
+     "icon": "bread"
     },
     {
      "id": "15",
@@ -9865,7 +9865,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "⚡"
+     "icon": "lightning"
     },
     {
      "id": "16",
@@ -9885,7 +9885,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "🥑"
+     "icon": "avocado"
     },
     {
      "id": "17",
@@ -9903,7 +9903,7 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "🍗"
+     "icon": "egg"
     }
    ]
   }

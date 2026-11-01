@@ -101,9 +101,9 @@ window.HUB_EXAMS = {
      {t: "Stoichiometry", ch: ["11"], note: "New since Exam 2: give it the full day. Read the nutshell, work the skill recipe, watch the key moments, then play the game to 80%."},
      {t: "Acids and bases", ch: ["12"], note: "New since Exam 2: give it the full day. Read the nutshell, work the skill recipe, watch the key moments, then play the game to 80%."},
      {t: "Equilibrium and nuclear", ch: ["13", "14"], note: "New since Exam 2: give it the full day. Read the nutshell, work the skill recipe, watch the key moments, then play the game to 80%."},
-     {t: "🔁 Mixed practice", ch: [], note: "Uncheck anything shaky in the checklist above and redo just those. Play each game once more in mixed mode."},
+     {t: "Mixed practice", i: "repeat", ch: [], note: "Uncheck anything shaky in the checklist above and redo just those. Play each game once more in mixed mode."},
      {t: "⏱️ Timed practice", ch: ["review"], note: "Do a timed practice set or the review videos on the Review page, like it’s the real ACS final. Note what you missed and fix it."},
-     {t: "😴 Light review & rest", ch: [], note: "Skim your formulas and the “watch out for” lists. Get a full night of sleep."}]},
+     {t: "Light review & rest", i: "rest", ch: [], note: "Skim your formulas and the “watch out for” lists. Get a full night of sleep."}]},
   ],
  },
  "1A": {
@@ -200,9 +200,9 @@ window.HUB_EXAMS = {
      {t: "Liquids and solids", ch: ["10"], note: "New since Exam 3: give it the full day. Read the nutshell, work the skill recipe, watch the key moments, then play the game to 80%."},
      {t: "Solutions and colloids", ch: ["11"], note: "New since Exam 3: give it the full day. Read the nutshell, work the skill recipe, and watch the key moments."},
      {t: "Organic chemistry", ch: ["20"], note: "New since Exam 3: read the nutshell, practice naming, and play the game to 80%."},
-     {t: "🔁 Mixed practice", ch: [], note: "Uncheck anything shaky in the checklist above and redo just those. Play each game once more in mixed mode."},
+     {t: "Mixed practice", i: "repeat", ch: [], note: "Uncheck anything shaky in the checklist above and redo just those. Play each game once more in mixed mode."},
      {t: "⏱️ Timed practice", ch: [], note: "Do one full timed practice session, like it’s the real final. Note what you missed and fix it."},
-     {t: "😴 Light review & rest", ch: [], note: "Skim your formulas and the “watch out for” lists. Get a full night of sleep."}]},
+     {t: "Light review & rest", i: "rest", ch: [], note: "Skim your formulas and the “watch out for” lists. Get a full night of sleep."}]},
   ],
  }
 };
