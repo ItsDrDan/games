@@ -3,7 +3,7 @@
    each chapter lists the concepts (from the Course Outline of Record), the textbook
    reading, the games (by repo name), and the YouTube videos (by video ID). */
 window.HUB_DATA = {
- "updated": "2026-10-31",
+ "updated": "2026-11-01",
  "channel": "https://www.youtube.com/@itsdrdan",
  "hide": [
   "games",
@@ -49,6 +49,19 @@ window.HUB_DATA = {
     "1A"
    ],
    "url": "https://itsdrdan.github.io/metric/"
+  },
+  {
+   "id": "algebratrainer",
+   "logo": "assets/games/algebratrainer.webp",
+   "title": "Algebra for Chemistry",
+   "icon": "scales",
+   "blurb": "Rearrange chemistry equations one step at a time, then plug in the numbers with TI-36X Pro keystroke help.",
+   "courses": [
+    "3A",
+    "1A",
+    "1B"
+   ],
+   "url": "https://itsdrdan.github.io/algebratrainer/"
   },
   {
    "id": "elements",
@@ -6965,7 +6978,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "sigfig",
-      "metric"
+      "metric",
+      "algebratrainer"
      ],
      "videos": [
       "gVI0NWuv9VU",
@@ -7139,7 +7153,8 @@ window.HUB_DATA = {
       "octet rule and ion formation"
      ],
      "games": [
-      "quantumchemistry"
+      "quantumchemistry",
+      "algebratrainer"
      ],
      "videos": [
       "T6j9Gw1EyPU",
@@ -7493,7 +7508,8 @@ window.HUB_DATA = {
       "sublimation"
      ],
      "games": [
-      "thermochemistry"
+      "thermochemistry",
+      "algebratrainer"
      ],
      "videos": [
       "qPM-C3V0l80",
@@ -7584,7 +7600,8 @@ window.HUB_DATA = {
       "gases collected over water"
      ],
      "games": [
-      "gaslaws"
+      "gaslaws",
+      "algebratrainer"
      ],
      "videos": [
       "efgNeWjlsGY",
@@ -7700,7 +7717,8 @@ window.HUB_DATA = {
       "osmosis and osmotic pressure"
      ],
      "games": [
-      "stoichiometry"
+      "stoichiometry",
+      "algebratrainer"
      ],
      "videos": [
       "-G1zjTVpkgU",
@@ -8037,7 +8055,8 @@ window.HUB_DATA = {
       "titration"
      ],
      "games": [
-      "stoichiometry"
+      "stoichiometry",
+      "algebratrainer"
      ],
      "videos": [
       "_3MEHX5yvzQ",
@@ -8285,7 +8304,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "sigfig",
-      "metric"
+      "metric",
+      "algebratrainer"
      ],
      "videos": [
       "gVI0NWuv9VU",
@@ -8426,7 +8446,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "moles",
-      "stoichiometry"
+      "stoichiometry",
+      "algebratrainer"
      ],
      "videos": [
       "wB01PrQBxVw",
@@ -8561,7 +8582,8 @@ window.HUB_DATA = {
       "enthalpy stoichiometry"
      ],
      "games": [
-      "thermochemistry"
+      "thermochemistry",
+      "algebratrainer"
      ],
      "videos": [
       "qPM-C3V0l80",
@@ -8627,7 +8649,8 @@ window.HUB_DATA = {
       "magnetism (para- and diamagnetic)"
      ],
      "games": [
-      "quantumchemistry"
+      "quantumchemistry",
+      "algebratrainer"
      ],
      "videos": [
       "T6j9Gw1EyPU",
@@ -8813,7 +8836,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "gaslaws",
-      "stoichiometry"
+      "stoichiometry",
+      "algebratrainer"
      ],
      "videos": [
       "efgNeWjlsGY",
@@ -8941,7 +8965,9 @@ window.HUB_DATA = {
       "van 't Hoff factor",
       "colloids and the Tyndall effect"
      ],
-     "games": [],
+     "games": [
+      "algebratrainer"
+     ],
      "videos": [
       "drIkMSVAE0A",
       "dtdiKtrVQ5Y",
@@ -9028,7 +9054,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "chem1bready",
-      "redox"
+      "redox",
+      "algebratrainer"
      ],
      "videos": [
       "Ca7o0AjwhcY",
@@ -9151,7 +9178,9 @@ window.HUB_DATA = {
       "titration curves and equivalence point",
       "acid–base indicators"
      ],
-     "games": [],
+     "games": [
+      "algebratrainer"
+     ],
      "videos": [
       "_3MEHX5yvzQ",
       "T8Uxtqoi1-8",
@@ -9265,7 +9294,9 @@ window.HUB_DATA = {
       "reaction mechanisms and rate-determining step",
       "catalysis"
      ],
-     "games": [],
+     "games": [
+      "algebratrainer"
+     ],
      "videos": [
       "qatdA_ALnx8"
      ],
@@ -9314,7 +9345,9 @@ window.HUB_DATA = {
       "ΔG under nonstandard conditions",
       "ΔG° and K"
      ],
-     "games": [],
+     "games": [
+      "algebratrainer"
+     ],
      "videos": [
       "KqKvWr6Y2zs"
      ],
@@ -9382,7 +9415,8 @@ window.HUB_DATA = {
       "balancing redox by half-reactions"
      ],
      "games": [
-      "redox"
+      "redox",
+      "algebratrainer"
      ],
      "videos": [
       "IsypcIC7XqA",
@@ -9481,7 +9515,9 @@ window.HUB_DATA = {
       "fission and fusion",
       "uses and biological effects of radiation"
      ],
-     "games": [],
+     "games": [
+      "algebratrainer"
+     ],
      "videos": [
       "WDBiyaeivFY",
       "tjAebD_t8PA",
