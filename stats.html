@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Game Stats · Dr. Dan's Study Hub</title>
+<link rel="icon" href="assets/logo-32.png">
+<style>
+:root{--bg:#fbf8ff;--panel:#fff;--ink:#2f2a45;--muted:#6f6a86;--line:#e7e1f3;--good:#2e9e6a;--bad:#d9534f;--warn:#e8a33d;--accent:#6c5ce7;--r:18px}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:linear-gradient(180deg,#f3ecff,#fbf8ff 240px);color:var(--ink)}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 16px 60px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+header img{width:40px;height:40px}
+h1{font-size:1.5rem;margin:0}
+.sub{color:var(--muted);margin:2px 0 0;font-size:.92rem}
+.controls{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.controls button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:inherit;font-size:.9rem;cursor:pointer;color:var(--ink)}
+.controls button[aria-pressed=true]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+.kpi,.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:0 6px 20px #6c5ce712}
+.kpi b{display:block;font-size:2rem;line-height:1.1}
+.kpi span{color:var(--muted);font-size:.85rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
+.panel h2{font-size:1.05rem;margin:0 0 10px;display:flex;justify-content:space-between;gap:8px}
+.panel h2 small{color:var(--muted);font-weight:500}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em}
+td.n{text-align:right;white-space:nowrap}
+.bar{height:8px;border-radius:6px;background:#eee;overflow:hidden;min-width:60px}
+.bar i{display:block;height:100%}
+.chip{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:999px;background:#efeaff;color:#5a4bd1;margin-left:4px}
+.note{color:var(--muted);font-size:.85rem;margin-top:16px}
+.empty{color:var(--muted);padding:18px 4px}
+svg text{fill:var(--muted);font-size:11px}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header>
+  <img src="assets/logo-mark.svg" alt="">
+  <div><h1>Game Stats</h1><p class="sub">Anonymous practice data from Dr. Dan's study games. Which topics are students missing most?</p></div>
+  <div class="controls" role="group" aria-label="Time range">
+   <button data-days="1">Today</button><button data-days="7" aria-pressed="true">7 days</button><button data-days="30">30 days</button><button data-days="120">Semester</button>
+  </div>
+ </header>
+ <div class="kpis">
+  <div class="kpi"><b id="kAnswers">—</b><span>questions answered</span></div>
+  <div class="kpi"><b id="kRate">—</b><span>right on the first try</span></div>
+  <div class="kpi"><b id="kSessions">—</b><span>study sessions</span></div>
+  <div class="kpi"><b id="kTop">—</b><span>hardest topic right now</span></div>
+ </div>
+ <div class="panel" style="margin-bottom:14px">
+  <h2>Toughest topics <small>ranked by number of first-try misses · min 5 answers</small></h2>
+  <div id="topics"></div>
+ </div>
+ <div class="grid2">
+  <div class="panel"><h2>Most-played games</h2><div id="games"></div></div>
+  <div class="panel"><h2>Answers per day <small>red = missed first try</small></h2><div id="daily"></div></div>
+ </div>
+ <p class="note" id="note">Loading…</p>
+</div>
+<script>
+const STATS_URL='https://script.google.com/macros/s/AKfycbylSKoW9GE6AkN4HiC1uts3Y5Z4oUPHY7OQ88vXrjpcanooloYRTIGW9cS5n0dulp4vQg/exec';
+const NAMES={stoichiometry:'Stoichiometry Quest',moles:'The Mole',carbohydrates:'Sweet Structures'};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pct=(a,b)=>b?Math.round(100*a/b)+'%':'—';
+let days=7;
+async function load(){
+ $('note').textContent='Loading…';
+ try{
+  const r=await fetch(STATS_URL+'?days='+days,{cache:'no-store'});const d=await r.json();render(d);
+  $('note').textContent='Updated '+new Date(d.generated).toLocaleString()+'. Counts each question once, by whether the first answer was right. No names or student IDs are collected.';
+ }catch(e){$('note').textContent='Could not load stats right now. Try again in a minute.';}
+}
+function render(d){
+ const t=d.totals;$('kAnswers').textContent=t.answers.toLocaleString();$('kRate').textContent=pct(t.correct,t.answers);$('kSessions').textContent=t.sessions.toLocaleString();
+ const tops=d.topics.filter(x=>x.answers>=5).map(x=>({...x,miss:x.wrong/x.answers}));
+ $('kTop').textContent=tops[0]?tops[0].topic:'—';$('kTop').style.fontSize=tops[0]?'1.15rem':'';
+ $('topics').innerHTML=tops.length?'<table><thead><tr><th>Topic</th><th>Game</th><th>Course</th><th class="n">Answers</th><th class="n">Missed</th><th>Miss rate</th></tr></thead><tbody>'+
+  tops.slice(0,15).map(x=>'<tr><td>'+esc(x.topic)+(x.mode&&x.mode!=='Practice'?'<span class="chip">'+esc(x.mode)+'</span>':'')+'</td><td>'+esc(NAMES[x.game]||x.game)+'</td><td>'+esc(x.course)+'</td><td class="n">'+x.answers+'</td><td class="n">'+x.wrong+'</td><td><div class="bar" title="'+pct(x.wrong,x.answers)+'"><i style="width:'+Math.round(x.miss*100)+'%;background:'+(x.miss>.5?'var(--bad)':x.miss>.3?'var(--warn)':'var(--good)')+'"></i></div> <small>'+pct(x.wrong,x.answers)+'</small></td></tr>').join('')+'</tbody></table>'
+  :'<div class="empty">Not enough answers yet in this time range.</div>';
+ $('games').innerHTML=d.games.length?'<table><thead><tr><th>Game</th><th class="n">Sessions</th><th class="n">Answers</th><th class="n">First-try right</th></tr></thead><tbody>'+
+  d.games.map(g=>'<tr><td>'+esc(NAMES[g.game]||g.game)+'</td><td class="n">'+g.sessions+'</td><td class="n">'+g.answers+'</td><td class="n">'+pct(g.answers-g.wrong,g.answers)+'</td></tr>').join('')+'</tbody></table>':'<div class="empty">No games played yet in this time range.</div>';
+ const dl=d.daily;if(!dl.length){$('daily').innerHTML='<div class="empty">No activity yet.</div>';return}
+ const W=520,H=180,max=Math.max(...dl.map(x=>x.answers),1),bw=Math.max(4,Math.min(36,(W-30)/dl.length-4));
+ $('daily').innerHTML='<svg viewBox="0 0 '+W+' '+(H+24)+'" width="100%" role="img" aria-label="Answers per day">'+dl.map((x,i)=>{const X=20+i*((W-30)/dl.length),h=H*x.answers/max,hw=H*x.wrong/max;
+  return '<rect x="'+X+'" y="'+(H-h)+'" width="'+bw+'" height="'+(h-hw)+'" rx="3" fill="#8fd8c8"><title>'+x.day+': '+x.answers+' answers, '+x.wrong+' missed</title></rect><rect x="'+X+'" y="'+(H-hw)+'" width="'+bw+'" height="'+hw+'" rx="3" fill="#ff8a80"></rect>'+(dl.length<=10||i%Math.ceil(dl.length/8)===0?'<text x="'+(X+bw/2)+'" y="'+(H+16)+'" text-anchor="middle">'+x.day.slice(5)+'</text>':'');}).join('')+'</svg>';
+}
+document.querySelectorAll('[data-days]').forEach(b=>b.onclick=()=>{days=+b.dataset.days;document.querySelectorAll('[data-days]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));load();});
+load();setInterval(load,60000);
+</script>
+</body>
+</html>
