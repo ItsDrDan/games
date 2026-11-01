@@ -421,6 +421,13 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .exambanner b{font-size:1.2rem}.exambanner p{margin:4px 0 0;color:#5e5679;font-size:1.02rem}
 .exambanner .ebtns{display:flex;gap:8px;flex-wrap:wrap}
 .exambanner .btn[data-course]{color:var(--c);border-color:var(--c);box-shadow:0 3px 0 var(--c)}
+.exambanner:has(.ebtns.big){flex-direction:column;align-items:stretch}
+.ebtns.big{display:grid!important;grid-template-columns:repeat(4,1fr);gap:14px}
+.ebig{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:84px;padding:12px;background:#fff;border:2.5px solid var(--c);box-shadow:0 5px 0 var(--c);border-radius:20px;text-decoration:none;text-align:center;transition:transform .14s,box-shadow .14s}
+.ebig b{font-size:1.45rem;color:var(--c);line-height:1.15}
+.ebig small{font-size:.95rem;font-weight:700;color:#5e5679}
+.ebig:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--c)}
+@media (max-width:760px){.ebtns.big{grid-template-columns:repeat(2,1fr)}}
 .exambanner.slim{padding:12px 18px;font-size:1.02rem}
 .examgrid{align-items:start;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:12px}
 .examgrid.small{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
@@ -697,7 +704,7 @@ function viewHome() {
       }))),
     h('section', {class: 'section wrap', style: 'padding-top:0'}, h('div', {class: 'exambanner'},
       h('div', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), h('p', {}, 'Get a checklist and a day-by-day study plan. Pick your class:')),
-      h('div', {class: 'ebtns'}, COURSE_ORDER.map(id => h('a', {class: 'btn small secondary', 'data-course': id, href: '#/exams/' + id}, 'CHEM ' + id))))));
+      h('div', {class: 'ebtns big'}, COURSE_ORDER.map(id => h('a', {class: 'ebig', 'data-course': id, href: '#/exams/' + id}, h('b', {}, 'CHEM ' + id), h('small', {}, courseById[id].title)))))));
 }
 
 function viewCourse(cid, chid) {

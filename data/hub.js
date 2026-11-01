@@ -185,7 +185,7 @@ window.HUB_DATA = {
   {
    "id": "chem1bready",
    "logo": "assets/games/chem1bready.webp",
-   "title": "CHEM 1B Readiness Quest",
+   "title": "Bridge to 1B (CHEM 1B Readiness)",
    "icon": "bridge",
    "blurb": "A 1A review with a readiness check and a personal study plan before you start 1B.",
    "courses": [
