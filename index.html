@@ -496,6 +496,12 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 .btn svg.ic,.mini svg.ic{width:1.2em;height:1.2em}
 .navlinks a.only-sm svg.ic{width:22px;height:22px}
 .playtitle svg.ic{width:1.1em;height:1.1em;color:#6a5acd}
+
+/* per-chapter icon colors */
+.chicon[style],.chbadge[style],.ritem .ri[style],.pick .pi[style],.cangroup .gi[style]{background:var(--icb)}
+.chbadge[style]{background:radial-gradient(circle at 35% 30%,#fff,var(--icb) 72%);border-color:var(--ic);box-shadow:0 4px 0 var(--ic)}
+.chicon svg.ic,.chbadge svg.ic,.ritem .ri svg.ic,.pick .pi svg.ic,.cangroup .gi svg.ic,.toc a .ti svg.ic,.day .dch svg.ic,.chtag svg.ic,.btn svg.ic[style],small svg.ic[style]{color:var(--ic,var(--c))}
+.btn:not(.secondary) svg.ic[style]{color:#fff}
 </style>
 </head>
 <body>
@@ -528,6 +534,11 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 'use strict';
 /* ---------- data ---------- */
 const D = window.HUB_DATA;
+/* Each chapter gets its own icon color so neighbors stand apart; the course color stays on labels and borders. */
+const HUES = [['#d9485f', '#fde4e8'], ['#e07b1f', '#fdebd6'], ['#b98a0c', '#fbf1c9'], ['#2f9a5b', '#dcf3e4'], ['#15918a', '#d3f1ee'],
+  ['#2b86c5', '#dbeefa'], ['#5161d0', '#e3e6fb'], ['#8a4fc9', '#efe4fa'], ['#c8479a', '#fbe2f1'], ['#a0673a', '#f5e8dc']];
+for (const c of D.courses || []) c.chapters.forEach((ch, i) => { ch._h = (i * 3) % HUES.length; });
+const hue = ch => { const x = HUES[ch && ch._h != null ? ch._h : 6]; return `--ic:${x[0]};--icb:${x[1]}`; };
 const USER = 'ItsDrDan', CACHE_KEY = 'itsdrdan-hub-games-v2', TTL = 6 * 3600 * 1000;
 const COURSE_ORDER = ['3A', '1A', '1B', '3B'];
 const courseById = Object.fromEntries(D.courses.map(c => [c.id, c]));
@@ -556,9 +567,9 @@ const ICON_URL = 'assets/icons.svg?v=2#i-';
 const ICON_NAMES = new Set(["measure", "atom", "gauge", "scales", "fire", "radioactive", "exam", "timer", "thermometer", "battery", "dna", "lightning", "bridge", "cards", "flask", "fuel", "wine", "bread", "avocado", "egg", "search", "book", "game", "video", "note", "check", "books", "finish", "idea", "tools", "calendar", "map", "warning", "film", "brain", "chat", "heart", "repeat", "rest", "fullscreen", "list", "periodic", "lattice", "pile", "molecule", "phases", "solution", "reaction", "ph", "equilibrium", "orbital", "complex", "organic", "hydrocarbon", "benzene", "alcohol", "carbonyl", "acid", "amine", "chirality", "sugar", "lipid", "protein", "enzyme", "carbmetab", "lipidmetab", "aametab", "sigfig", "ion", "formula", "hands"]);
 const EMOJI_ICON = {"🔢": "sigfig", "📏": "measure", "🔤": "periodic", "🧲": "ion", "🧩": "formula", "⚛️": "atom", "🔬": "molecule", "⚡": "lightning", "🦁": "battery", "⛏️": "pile", "⚖️": "scales", "🎈": "gauge", "🔥": "fire", "🚀": "bridge", "🃏": "cards", "🧪": "flask", "⛵": "reaction", "🍬": "sugar", "🌈": "periodic", "🧂": "lattice", "🧮": "pile", "🔗": "molecule", "🧊": "phases", "💧": "solution", "💥": "reaction", "🍳": "scales", "🍋": "ph", "🔄": "equilibrium", "☢️": "radioactive", "📝": "exam", "🪐": "orbital", "🌿": "organic", "⏱️": "timer", "🌡️": "thermometer", "🔋": "battery", "💎": "complex", "⛽": "hydrocarbon", "💍": "benzene", "🍷": "alcohol", "🍦": "carbonyl", "🤚": "chirality", "🍌": "acid", "🐟": "amine", "🧈": "lipid", "🥩": "protein", "✂️": "enzyme", "🧬": "dna", "🍞": "carbmetab", "🥑": "lipidmetab", "🍗": "aametab", "📚": "books", "📖": "book", "🎮": "game", "✅": "check", "🧠": "brain"};
 function iconKey(x) { x = String(x || '').trim(); return ICON_NAMES.has(x) ? x : EMOJI_ICON[x] || EMOJI_ICON[x.replace(/\uFE0F/g, '')] || EMOJI_ICON[x + '\uFE0F'] || 'flask'; }
-function ic(name, cls) {
+function ic(name, cls, style) {
   const NS = 'http://www.w3.org/2000/svg', svg = document.createElementNS(NS, 'svg'), use = document.createElementNS(NS, 'use');
-  svg.setAttribute('class', 'ic' + (cls ? ' ' + cls : '')); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false');
+  svg.setAttribute('class', 'ic' + (cls ? ' ' + cls : '')); svg.setAttribute('aria-hidden', 'true'); svg.setAttribute('focusable', 'false'); if (style) svg.setAttribute('style', style);
   use.setAttribute('href', ICON_URL + iconKey(name)); svg.append(use); return svg;
 }
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -624,7 +635,7 @@ function gameCard(g, courseCtx, showCh) {
   return h('article', {class: 'game'},
     h('div', {class: 'game-top'}, gameIcon(g), courseCtx ? null : h('div', {class: 'badges'}, cs.map(courseBadge))),
     h('h4', {}, g.title),
-    chs.length ? h('div', {class: 'chtags'}, chs.map(({c, ch}) => h('a', {class: 'chtag', href: `#/course/${c.id}/${ch.id}`, 'data-course': c.id, title: `${ch.label}: ${ch.title}`}, [ic(ch.icon), chs.length === 1 ? ` ${ch.label}: ${ch.title}` : ` ${ch.label}`]))) : null,
+    chs.length ? h('div', {class: 'chtags'}, chs.map(({c, ch}) => h('a', {class: 'chtag', href: `#/course/${c.id}/${ch.id}`, 'data-course': c.id, title: `${ch.label}: ${ch.title}`}, [ic(ch.icon, '', hue(ch)), chs.length === 1 ? ` ${ch.label}: ${ch.title}` : ` ${ch.label}`]))) : null,
     h('p', {}, g.blurb || g.description || ''),
     h('div', {class: 'actions'},
       h('a', {class: 'play', href: '#/play/' + encodeURIComponent(g.id) + (courseCtx ? '?from=' + courseCtx : '')}, 'Play')));
@@ -702,7 +713,7 @@ function viewCourse(cid, chid) {
     h('div', {class: 'bookline'}, ic('book'), book.url ? h('a', {href: book.url, target: '_blank', rel: 'noopener'}, `${book.title} (${book.publisher}) ↗`) : h('span', {}, h('b', {}, book.title + ': '), book.note || 'coming soon'))));
   const toc = h('nav', {class: 'toc', 'data-course': cid, 'aria-label': c.name + ' chapters'}, h('h2', {}, cid === '3B' ? 'Units' : 'Chapters'),
     c.chapters.map(x => h('a', {href: `#/course/${cid}/${x.id}`, 'aria-current': ch && x.id === ch.id ? 'true' : null},
-      h('span', {class: 'n'}, x.label), h('span', {class: 'ti', 'aria-hidden': 'true'}, ic(x.icon)), h('span', {}, x.title),
+      h('span', {class: 'n'}, x.label), h('span', {class: 'ti', 'aria-hidden': 'true', style: hue(x)}, ic(x.icon)), h('span', {}, x.title),
       h('span', {class: 'dots', 'aria-hidden': 'true'}, h('i', {class: x.read ? 'on' : ''}), h('i', {class: x.videos.length || x.playlists.length ? 'on' : ''}), h('i', {class: x.games.length ? 'on' : ''})))));
   const sel = h('select', {'aria-label': 'Jump to a chapter', onchange: e => go(e.target.value ? `#/course/${cid}/${e.target.value}` : '#/course/' + cid)},
     h('option', {value: ''}, cid === '3B' ? 'All units' : 'All chapters'), c.chapters.map(x => h('option', {value: x.id, selected: ch && x.id === ch.id}, `${x.label} · ${x.title}`)));
@@ -719,7 +730,7 @@ function courseOverview(c) {
     h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('h2', {class: 'ct', style: 'margin-top:8px'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
-      h('span', {class: 'chicon', 'aria-hidden': 'true'}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
+      h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
       h('span', {class: 'meta'}, ch.games.length ? h('span', {}, ic('game'), ` ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, ic('video'), ` ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, ic('video'), ' playlist') : null, ch.read ? h('span', {}, ic('book'), ' reading') : null)))),
     h('p', {style: 'margin:22px 0 0'}, h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, ic('game'), ` See all ${allGames.length} ${c.name} games →`)));
 }
@@ -803,7 +814,7 @@ function chapterBody(c, ch) {
   const read = ch.read;
   const top = read ? read.sections.filter(s => (s[0].match(/\./g) || []).length <= 1) : [];
   return h('article', {},
-    h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ic(ch.icon)), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
+    h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
     guideBlock(c, ch, gs, vs, top),
     h('div', {class: 'panel', id: 'sec-concepts'}, h('h3', {}, ic('brain'), ' Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
       h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
@@ -955,7 +966,7 @@ function renderResults(box, q, course) {
     const more = arr.length > limit ? h('button', {class: 'btn small secondary more', type: 'button', onclick: () => { list.replaceChildren(...arr.slice(0, 24).map(render)); more.remove(); }}, `Show ${Math.min(arr.length, 24) - limit} more`) : null;
     box.append(h('div', {class: 'rgroup'}, h('h3', {}, ic(icon), ' ' + title, h('span', {class: 'count'}, arr.length)), list, more)); };
   group('Chapters', 'books', groups.chapter, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: `#/course/${c.id}/${r.ch.id}`, 'data-course': c.id},
-    h('span', {class: 'ri'}, ic(r.ch.icon)), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
+    h('span', {class: 'ri', style: hue(r.ch)}, ic(r.ch.icon)), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
       h('div', {class: 'rs', html: r.via ? 'Covers: ' + highlight(r.via, qt) : `${r.ch.games.length} game${r.ch.games.length===1?'':'s'} · ${r.ch.videos.length} video${r.ch.videos.length===1?'':'s'}`}))); });
   group('Games', 'game', groups.game, r => h('a', {class: 'ritem', href: '#/play/' + encodeURIComponent(r.g.id) + (course !== 'all' ? '?from=' + course : '')},
     gameIcon(r.g, 'ri'), h('span', {}, h('div', {class: 'rt', html: highlight(r.g.title, qt)}), h('div', {class: 'rs'}, r.via ? `Practice for ${r.via}` : (r.g.blurb || '')))));
@@ -1016,7 +1027,7 @@ function weekCard(cid) {
       sc ? h('a', {class: 'wksrc', href: sc.url, target: '_blank', rel: 'noopener'}, 'Dr. Dan’s syllabus ↗') : null),
     doneTxt ? h('p', {class: 'wkdone'}, ic('check'), ' ' + doneTxt) : null,
     h('div', {class: 'wkgrid'},
-      lecText ? h('div', {class: 'wkitem'}, h('small', {}, ic('book'), ' In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, ic(lecCh.icon), ` Study ${lecCh.label} →`) : null) : null,
+      lecText ? h('div', {class: 'wkitem'}, h('small', {}, ic('book'), ' In lecture'), h('span', {}, lecText), lecCh ? h('a', {class: 'btn small', href: `#/course/${cid}/${lecCh.id}`}, ic(lecCh.icon, '', hue(lecCh)), ` Study ${lecCh.label} →`) : null) : null,
       chk ? h('div', {class: 'wkitem'}, h('small', {}, ic('check'), ` Next: Skill Check #${chk.n}`), h('span', {}, chk.topic || 'Topic posted on Canvas'),
         chk.ch?.length ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${chk.ch.join(',')}`}, 'Build my plan →') : null) : null,
       nx ? h('div', {class: 'wkitem'}, h('small', {}, ...(nx.id === 'final' ? [ic('finish'), ' Coming up'] : [ic('note'), ' Next exam'])), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + nx.id}${nx.w?.date ? ' · ' + nx.w.date : ''}`),
@@ -1071,7 +1082,7 @@ function builder(cid, c) {
   for (const [m, icn, label] of [['exam', 'note', 'An exam'], ['check', 'check', 'A skill check']]) seg.append(h('button', {type: 'button', class: 'chip', 'data-m': m, onclick: () => { mode = m; draw(); }}, ic(icn), ' ' + label));
   const box = h('div', {class: 'chpick'}, c.chapters.filter(ch => ch.id !== 'review').map(ch => h('label', {class: 'pick'},
     h('input', {type: 'checkbox', onchange: e => { e.target.checked ? picks.add(ch.id) : picks.delete(ch.id); btn.textContent = cta(); }}),
-    h('span', {class: 'pi'}, ic(ch.icon)), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
+    h('span', {class: 'pi', style: hue(ch)}, ic(ch.icon)), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
   draw();
   return h('div', {class: 'panel', id: 'checks', style: 'margin-top:28px'}, h('h3', {}, ic('tools'), ' Build your own plan'),
     h('p', {style: 'margin:0 0 10px;font-weight:700'}, 'In another instructor’s section, or want to pick the chapters yourself? What are you studying for?'), seg, hint, box, h('div', {style: 'margin-top:16px'}, btn));
@@ -1118,14 +1129,14 @@ function viewExam(cid, id, params, isCheck) {
   const groupUpd = [];
   const item = it => h('li', {}, h('label', {},
     h('input', {type: 'checkbox', checked: !!state[it.k], onchange: e => { state[it.k] = e.target.checked; examSave(key, state); upd(); }}),
-    h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, !grouped && it.ch ? h('small', {}, ' · ', ic(it.ch.icon), ` ${it.ch.label}`) : null)));
+    h('span', {}, ex.can ? 'I can ' + it.t.charAt(0).toLowerCase() + it.t.slice(1) : it.t, !grouped && it.ch ? h('small', {}, ' · ', ic(it.ch.icon, '', hue(it.ch)), ` ${it.ch.label}`) : null)));
   const list = grouped
     ? h('div', {class: 'cangroups'}, chs.filter(ch => items.some(it => it.ch === ch)).map((ch, i) => {
         const mine = items.filter(it => it.ch === ch);
         const cnt = h('span', {class: 'gcount'});
         groupUpd.push(() => { const n = mine.filter(x => state[x.k]).length; cnt.textContent = n === mine.length ? '✓ all ready' : `${n}/${mine.length}`; cnt.classList.toggle('done', n === mine.length); });
         return h('details', {class: 'cangroup', open: i === 0},
-          h('summary', {}, h('span', {class: 'gi'}, ic(ch.icon)), h('span', {class: 'gt'}, `${ch.label}: ${ch.title}`), cnt),
+          h('summary', {}, h('span', {class: 'gi', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'gt'}, `${ch.label}: ${ch.title}`), cnt),
           h('ul', {class: 'canlist'}, mine.map(item)));
       }))
     : h('ul', {class: 'canlist'}, items.map(item));
@@ -1140,16 +1151,16 @@ function viewExam(cid, id, params, isCheck) {
   const slots = Math.min(5, studyChs.length) || 1;
   for (let d = 0; d < slots; d++) days.push(studyChs.filter((_, i) => i % slots === d));
   const plan = isCheck ? h('ol', {class: 'days'},
-    h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
+    h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, 'Read the nutshell, work one example with the skill recipe, and watch the topic moments you need below.')),
     h('li', {class: 'day s3'}, h('div', {class: 'dn'}, 'Day 2 · Practice'), h('b', {}, ic('game'), ' Game + checklist'), h('p', {}, 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.')))
   : ex.plan ? h('ol', {class: 'days'}, ex.plan.map((d, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
       h('b', {}, d.i ? [ic(d.i), ' '] : null, d.t),
-      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
+      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, d.note))))
   : h('ol', {class: 'days'},
     days.map((group, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
-      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
+      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
       h('p', {}, 'Read the nutshell and skill recipe, watch the key moments you need, then play the game to 80%.'))),
     h('li', {class: 'day s3'}, h('div', {class: 'dn'}, `Day ${days.length + 1}`), h('b', {}, ic('repeat'), ' Mixed practice'), h('p', {}, 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.')),
     h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, ic('rest'), ' Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
@@ -1162,7 +1173,7 @@ function viewExam(cid, id, params, isCheck) {
     h('div', {class: 'wrap examwrap', 'data-course': cid},
       h('section', {class: 'panel'}, h('h3', {}, ic('books'), ' Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
         h('div', {class: 'chapters-overview'}, chs.map(ch => h('a', {class: 'ch-card', href: `#/course/${cid}/${ch.id}`},
-          h('span', {class: 'chicon', 'aria-hidden': 'true'}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
+          h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
       h('section', {class: 'panel'}, h('h3', {}, ic('list'), ' Skills checklist', h('span', {class: 'count'}, label)), bar,
         h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
       ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, ic('idea'), ' Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
