@@ -502,6 +502,7 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 .chbadge[style]{background:radial-gradient(circle at 35% 30%,#fff,var(--icb) 72%);border-color:var(--ic);box-shadow:0 4px 0 var(--ic)}
 .chicon svg.ic,.chbadge svg.ic,.ritem .ri svg.ic,.pick .pi svg.ic,.cangroup .gi svg.ic,.toc a .ti svg.ic,.day .dch svg.ic,.chtag svg.ic,.btn svg.ic[style],small svg.ic[style]{color:var(--ic,var(--c))}
 .btn:not(.secondary) svg.ic[style]{color:#fff}
+.ch-card .keys{display:block;font-size:.88rem;line-height:1.35;color:#7a7394;font-weight:600;margin-top:-2px;padding-right:58px}
 </style>
 </head>
 <body>
@@ -730,7 +731,7 @@ function courseOverview(c) {
     h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('h2', {class: 'ct', style: 'margin-top:8px'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
-      h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title),
+      h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title), ch.keys ? h('span', {class: 'keys'}, ch.keys) : null,
       h('span', {class: 'meta'}, ch.games.length ? h('span', {}, ic('game'), ` ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, ic('video'), ` ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, ic('video'), ' playlist') : null, ch.read ? h('span', {}, ic('book'), ' reading') : null)))),
     h('p', {style: 'margin:22px 0 0'}, h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, ic('game'), ` See all ${allGames.length} ${c.name} games →`)));
 }
@@ -1173,7 +1174,7 @@ function viewExam(cid, id, params, isCheck) {
     h('div', {class: 'wrap examwrap', 'data-course': cid},
       h('section', {class: 'panel'}, h('h3', {}, ic('books'), ' Chapters on this ' + (isCheck ? 'skill check' : 'exam')),
         h('div', {class: 'chapters-overview'}, chs.map(ch => h('a', {class: 'ch-card', href: `#/course/${cid}/${ch.id}`},
-          h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title))))),
+          h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title), ch.keys ? h('span', {class: 'keys'}, ch.keys) : null)))),
       h('section', {class: 'panel'}, h('h3', {}, ic('list'), ' Skills checklist', h('span', {class: 'count'}, label)), bar,
         h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
       ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, ic('idea'), ' Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,

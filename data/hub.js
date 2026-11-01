@@ -6968,7 +6968,8 @@ window.HUB_DATA = {
       "W1fKRtt0CZc"
      ],
      "playlists": [],
-     "icon": "measure"
+     "icon": "measure",
+     "keys": "sig figs, unit conversions, density"
     },
     {
      "id": "2",
@@ -7262,7 +7263,8 @@ window.HUB_DATA = {
       "W_AHDPMBqrA"
      ],
      "playlists": [],
-     "icon": "lattice"
+     "icon": "lattice",
+     "keys": "naming ionic and covalent compounds"
     },
     {
      "id": "5",
@@ -7492,7 +7494,8 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "phases"
+     "icon": "phases",
+     "keys": "heat (q = mcΔT), vapor pressure"
     },
     {
      "id": "8",
@@ -7697,7 +7700,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoAvzESG5KwkzeNLHWl0ElL9"
      ],
-     "icon": "solution"
+     "icon": "solution",
+     "keys": "molarity, dilution, solubility"
     },
     {
      "id": "10",
@@ -7939,7 +7943,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLEaxsqCAZKoDelGLsI2fXQ6mD3t3MRmYB"
      ],
-     "icon": "scales"
+     "icon": "scales",
+     "keys": "mole ratios, limiting reactant, % yield"
     },
     {
      "id": "12",
@@ -8092,7 +8097,8 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "equilibrium"
+     "icon": "equilibrium",
+     "keys": "reaction rates, K, Le Chatelier"
     },
     {
      "id": "14",
@@ -8278,7 +8284,8 @@ window.HUB_DATA = {
       "sCmUQWVB90Q"
      ],
      "playlists": [],
-     "icon": "measure"
+     "icon": "measure",
+     "keys": "sig figs, units, dimensional analysis"
     },
     {
      "id": "2",
@@ -8416,7 +8423,8 @@ window.HUB_DATA = {
       "qwkB_gLdg6s"
      ],
      "playlists": [],
-     "icon": "pile"
+     "icon": "pile",
+     "keys": "moles, empirical formulas, molarity"
     },
     {
      "id": "4",
@@ -8496,7 +8504,8 @@ window.HUB_DATA = {
       "-PeAGG6s6nY"
      ],
      "playlists": [],
-     "icon": "scales"
+     "icon": "scales",
+     "keys": "reaction types, net ionic, redox"
     },
     {
      "id": "5",
@@ -8548,7 +8557,8 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "fire"
+     "icon": "fire",
+     "keys": "calorimetry, Hess’s law, ΔH"
     },
     {
      "id": "6",
@@ -8611,7 +8621,8 @@ window.HUB_DATA = {
       "84sL9kEAVmQ"
      ],
      "playlists": [],
-     "icon": "periodic"
+     "icon": "periodic",
+     "keys": "quantum numbers, electron configurations, trends"
     },
     {
      "id": "7",
@@ -8679,7 +8690,8 @@ window.HUB_DATA = {
       "Wz23sE4KUBE"
      ],
      "playlists": [],
-     "icon": "molecule"
+     "icon": "molecule",
+     "keys": "Lewis structures, VSEPR, polarity"
     },
     {
      "id": "8",
@@ -8727,7 +8739,8 @@ window.HUB_DATA = {
       "NoEGwwWuNmg"
      ],
      "playlists": [],
-     "icon": "orbital"
+     "icon": "orbital",
+     "keys": "hybridization, sigma & pi bonds, MO theory"
     },
     {
      "id": "9",
@@ -8862,7 +8875,8 @@ window.HUB_DATA = {
       "-fyDACk_Zx0"
      ],
      "playlists": [],
-     "icon": "phases"
+     "icon": "phases",
+     "keys": "IMFs, phase diagrams, crystal solids"
     },
     {
      "id": "11",
@@ -8920,7 +8934,8 @@ window.HUB_DATA = {
       "sadO3B7s_UY"
      ],
      "playlists": [],
-     "icon": "solution"
+     "icon": "solution",
+     "keys": "colligative properties, molality"
     },
     {
      "id": "20",
@@ -9056,7 +9071,8 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "equilibrium"
+     "icon": "equilibrium",
+     "keys": "K, Q, ICE tables, Le Châtelier"
     },
     {
      "id": "14",
@@ -9130,7 +9146,8 @@ window.HUB_DATA = {
       "-UrwKIGAj08"
      ],
      "playlists": [],
-     "icon": "ph"
+     "icon": "ph",
+     "keys": "Ka & Kb, pH, buffers"
     },
     {
      "id": "15",
@@ -9173,7 +9190,8 @@ window.HUB_DATA = {
       "JbkiO-RLx6A"
      ],
      "playlists": [],
-     "icon": "lattice"
+     "icon": "lattice",
+     "keys": "Ksp, solubility, complex ions"
     },
     {
      "id": "12",
@@ -9236,7 +9254,8 @@ window.HUB_DATA = {
       "qatdA_ALnx8"
      ],
      "playlists": [],
-     "icon": "timer"
+     "icon": "timer",
+     "keys": "rate laws, half-life, activation energy"
     },
     {
      "id": "16",
@@ -9284,7 +9303,8 @@ window.HUB_DATA = {
       "KqKvWr6Y2zs"
      ],
      "playlists": [],
-     "icon": "thermometer"
+     "icon": "thermometer",
+     "keys": "entropy, Gibbs free energy"
     },
     {
      "id": "17",
@@ -9354,7 +9374,8 @@ window.HUB_DATA = {
       "zr0Y2hF_aOE"
      ],
      "playlists": [],
-     "icon": "battery"
+     "icon": "battery",
+     "keys": "galvanic cells, E°cell, Nernst equation"
     },
     {
      "id": "19",
@@ -9394,7 +9415,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "complex"
+     "icon": "complex",
+     "keys": "complex ions, ligands, crystal field"
     },
     {
      "id": "21",
@@ -9497,7 +9519,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLPg4WVI9v3T0"
      ],
-     "icon": "organic"
+     "icon": "organic",
+     "keys": "line structures, functional groups"
     },
     {
      "id": "2",
@@ -9556,7 +9579,8 @@ window.HUB_DATA = {
      ],
      "videos": [],
      "playlists": [],
-     "icon": "benzene"
+     "icon": "benzene",
+     "keys": "benzene rings, ortho/meta/para"
     },
     {
      "id": "4",
@@ -9614,7 +9638,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLKQkUY4NWfyg"
      ],
-     "icon": "carbonyl"
+     "icon": "carbonyl",
+     "keys": "carbonyl group, acetals"
     },
     {
      "id": "6",
@@ -9639,7 +9664,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLEgyNetRxDQQ"
      ],
-     "icon": "hands"
+     "icon": "hands",
+     "keys": "mirror images, chiral carbons"
     },
     {
      "id": "7",
@@ -9668,7 +9694,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLAwGSAn_Me9U"
      ],
-     "icon": "acid"
+     "icon": "acid",
+     "keys": "esterification, saponification"
     },
     {
      "id": "8",
@@ -9696,7 +9723,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLAwGSAn_Me9U"
      ],
-     "icon": "amine"
+     "icon": "amine",
+     "keys": "basicity, peptide bonds"
     },
     {
      "id": "9",
@@ -9732,7 +9760,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLRdcExlgOw6g"
      ],
-     "icon": "sugar"
+     "icon": "sugar",
+     "keys": "sugars, Fischer & Haworth projections"
     },
     {
      "id": "10",
@@ -9762,7 +9791,8 @@ window.HUB_DATA = {
      "playlists": [
       "PLaaGAcANvhHw"
      ],
-     "icon": "lipid"
+     "icon": "lipid",
+     "keys": "fats, steroids, cell membranes"
     },
     {
      "id": "11",
@@ -9806,7 +9836,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "enzyme"
+     "icon": "enzyme",
+     "keys": "lock-and-key, inhibitors, cofactors"
     },
     {
      "id": "13",
@@ -9827,7 +9858,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "dna"
+     "icon": "dna",
+     "keys": "replication, transcription, translation"
     },
     {
      "id": "14",
@@ -9848,7 +9880,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "bread"
+     "icon": "bread",
+     "keys": "glycolysis, gluconeogenesis"
     },
     {
      "id": "15",
@@ -9865,7 +9898,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "lightning"
+     "icon": "lightning",
+     "keys": "ATP, citric acid cycle"
     },
     {
      "id": "16",
@@ -9885,7 +9919,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "avocado"
+     "icon": "avocado",
+     "keys": "beta-oxidation, ketone bodies"
     },
     {
      "id": "17",
@@ -9903,7 +9938,8 @@ window.HUB_DATA = {
      "games": [],
      "videos": [],
      "playlists": [],
-     "icon": "egg"
+     "icon": "egg",
+     "keys": "transamination, urea cycle"
     }
    ]
   }
