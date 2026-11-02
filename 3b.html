@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff8f1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="description" content="Free CHEM 3B study games (organic and biological chemistry) from ItsDrDan at Fresno City College.">
+<title>CHEM 3B Study Games · ItsDrDan</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-32.png">
+<link rel="apple-touch-icon" href="assets/logo-180.png">
+<meta property="og:image" content="https://itsdrdan.github.io/games/assets/logo-512.png">
+<style>
+:root{
+  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;
+  --c:#9555bd;--cb:#f1e3fa;            /* CHEM 3B purple */
+  --org:#2a9478;--org-bg:#d9f4ea;      /* Organic section */
+  --bio:#d9654f;--bio-bg:#ffe5dc;      /* Biochemistry section */
+  --exam:#5468d4;--exam-bg:#e3e8ff;    /* Exam prep */
+  --shadow:0 8px 28px #5a4d9614;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 16px/1.55 Nunito,"Segoe UI",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 12%,#ffe3ec 0,transparent 22%),radial-gradient(circle at 92% 8%,#e3f0ff 0,transparent 24%),
+  radial-gradient(circle at 85% 85%,#e4f8ee 0,transparent 26%),radial-gradient(circle at 12% 88%,#fff1c9 0,transparent 22%)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+h1,h2,h3{letter-spacing:-.03em;margin:0}
+h1{font-weight:900} h2{font-weight:900} h3{font-weight:850}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+svg.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.15em}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:#fffaf5e8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{min-height:68px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:850;letter-spacing:-.02em;font-size:1.08rem;white-space:nowrap}
+.brand img{width:40px;height:40px}
+.brand small{color:var(--soft);font-weight:650}
+.navlinks{display:flex;gap:6px;margin-left:auto;align-items:center}
+.navlinks a{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;color:var(--ink)}
+.navlinks a:hover{background:#efe9ff;color:var(--brand-ink)}
+
+/* header */
+.head{position:relative;overflow:hidden;background:linear-gradient(120deg,var(--cb),#fff8f1 75%);border-bottom:1px solid var(--line)}
+.head .wrap{position:relative;z-index:1;padding:40px 0 32px;display:grid;gap:12px}
+.watermark{position:absolute;pointer-events:none;user-select:none;opacity:.22;width:min(460px,46vw);right:-60px;top:50%;margin-top:calc(min(460px,46vw)/-2);animation:spin 90s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-size:.76rem}
+.head h1{font-size:clamp(2.1rem,4.4vw,3rem);line-height:1.08}
+.head h1 .badge{font-size:1rem;vertical-align:middle;margin-right:10px;padding:6px 13px}
+.head p{margin:0;color:#4f4870;font-size:1.1rem;max-width:720px}
+.badge{display:inline-block;background:var(--cb);color:var(--c);font-weight:850;font-size:.78rem;border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--sc,var(--edge));background:#fff;border-radius:999px;padding:8px 16px;font-size:.98rem;font-weight:800;color:var(--sc,var(--edge));text-decoration:none;box-shadow:0 3px 0 var(--sc,var(--edge));transition:transform .14s,box-shadow .14s}
+.chip:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--sc,var(--edge))}
+.chip .n{background:var(--sb,#efe9ff);border-radius:999px;padding:1px 9px;font-size:.85rem}
+
+/* sections */
+main{padding:28px 0 50px;display:grid;gap:34px}
+section[data-sec]{--sc:var(--c);--sb:var(--cb)}
+section[data-sec=organic]{--sc:var(--org);--sb:var(--org-bg)}
+section[data-sec=bio]{--sc:var(--bio);--sb:var(--bio-bg)}
+section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
+.sechead{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.secicon{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--sb);color:var(--sc);border:2px solid #fff;box-shadow:0 4px 0 var(--sc)}
+.secicon svg.ic{width:30px;height:30px}
+.sechead h2{font-size:1.65rem}
+.sechead p{margin:2px 0 0;color:var(--muted);font-size:1rem}
+.sechead .count{margin-left:auto;font-weight:900;color:var(--sc);background:var(--sb);border-radius:999px;padding:6px 14px;font-size:.95rem}
+
+/* game cards (same as the hub) */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.game{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);min-height:210px;border-top:5px solid var(--sb)}
+.game-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.game .icon{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;flex:0 0 auto;background:linear-gradient(140deg,#fff 0%,#efe9ff 55%,#e3f4ff 100%);border:2px solid #ddd3fb;box-shadow:0 4px 0 #ddd3fb}
+.game .icon svg.ic{width:44px;height:44px;color:#6a5acd}
+.game .icon.haslogo{background:transparent;border:0;box-shadow:none;border-radius:0}
+.haslogo img{width:100%;height:100%;object-fit:contain;display:block}
+.game .units{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.unit{font-size:.74rem;font-weight:850;color:var(--sc);background:var(--sb);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.game h3{margin:14px 0 4px;font-size:1.18rem;line-height:1.3}
+.game p{margin:0 0 14px;color:#4f4870;font-size:1rem;line-height:1.55}
+.game .actions{margin-top:auto;display:flex;gap:8px}
+.play{flex:1;display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:8px 16px;border-radius:999px;border:2px solid var(--edge);box-shadow:0 3px 0 var(--edge);background:#efe9ff;color:var(--edge);font-weight:800;font-size:1.05rem;text-decoration:none;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
+.play::after{content:"→";font-size:1.35rem}
+.play:hover{background:var(--brand);color:#fff;transform:translateY(-2px);box-shadow:0 5px 0 var(--edge)}
+.play:active{transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+.soon{margin:14px 0 0;color:var(--muted);font-size:.95rem;background:#fff;border:1.5px dashed #d9cfee;border-radius:16px;padding:12px 16px}
+.soon b{color:var(--sc)}
+
+/* instructor note */
+.note{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px 24px;box-shadow:var(--shadow);display:grid;gap:8px}
+.note h2{font-size:1.25rem}
+.note p{margin:0;color:#4f4870}
+.note code{background:#f4f0ff;border-radius:8px;padding:2px 8px;font-size:.92em;color:var(--brand-ink);word-break:break-all}
+.note .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:9px 20px;border-radius:999px;border:2px solid var(--edge);box-shadow:0 4px 0 var(--edge);background:var(--brand);color:#fff;text-decoration:none;font-weight:780;cursor:pointer;transition:transform .14s,box-shadow .14s}
+.btn.secondary{background:#fff;color:var(--edge)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--edge)} .btn.secondary:hover{background:#f4f0ff}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+
+.footer{padding:24px 0 36px;color:var(--soft);font-size:.85rem}
+.footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.footbrand{display:flex;gap:8px;align-items:center}
+.footer small{display:block;opacity:.8;margin-top:2px}
+
+@media (max-width:640px){
+  .wrap{width:min(1180px,calc(100% - 28px))}
+  .navlinks a.hide-sm{display:none}
+  .head .wrap{padding:30px 0 24px}
+  .sechead .count{margin-left:0}
+  .grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.watermark{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="40" height="40">ItsDrDan <small>/ CHEM 3B Games</small></a>
+    <nav class="navlinks" aria-label="Main">
+      <a href="./#/course/3B" class="hide-sm">3B chapter guide</a>
+      <a href="./">Full Study Hub</a>
+      <a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener" class="hide-sm">YouTube ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head">
+  <img class="watermark" src="assets/logo-mark.svg" alt="" aria-hidden="true">
+  <div class="wrap">
+    <div class="eyebrow">Fresno City College · Free study games</div>
+    <h1><span class="badge">CHEM 3B</span>Organic &amp; Biological Chemistry Games</h1>
+    <p>Pick a game, play on any device, and check every answer with the step-by-step help. No login needed.</p>
+    <div class="jump" id="jump"></div>
+  </div>
+</div>
+
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<section class="wrap" style="padding-bottom:40px">
+  <div class="note">
+    <h2>For instructors</h2>
+    <p>Every game is free to use and runs in any browser. To add one to Canvas, paste its link into a page or module, or use the embed code below with the game's address.</p>
+    <p><code>&lt;iframe src="GAME-LINK" width="100%" height="800" style="border:0;border-radius:16px" allowfullscreen&gt;&lt;/iframe&gt;</code></p>
+    <div class="row">
+      <a class="btn secondary" href="./#/course/3B">See the 3B chapter guide</a>
+      <a class="btn secondary" href="./">Browse all courses</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="wrap">
+  <span class="footbrand"><img src="assets/logo.svg" alt="" width="22" height="22"><span>Made for Fresno City College chemistry students • ItsDrDan<small>Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small></span></span>
+  <span>Game design and chemistry by ItsDrDan · code written with AI help (Claude by Anthropic)</span>
+</div></footer>
+
+<script src="data/hub.js"></script>
+<script>
+(function () {
+  const D = window.HUB_DATA || {games: [], courses: []};
+  const ICON = 'assets/icons.svg?v=2#i-';
+
+  /* Which 3B games go where. Any other game tagged 3B falls into Organic unless listed here. */
+  const GROUPS = [
+    {id: 'organic', icon: 'hydrocarbon', title: 'Organic Chemistry', blurb: 'Structures, functional groups, naming, and reactions (Units 1–8).',
+     games: ['lewisstructures', 'organic', 'functionalgroups', 'organicreactions']},
+    {id: 'bio', icon: 'dna', title: 'Biochemistry', blurb: 'Carbohydrates, amino acids, proteins, and the biomolecules behind them (Units 9–17).',
+     games: ['carbohydrates', 'aminoacids'],
+     soon: 'More on the way: Lipids, Enzymes & Vitamins, Nucleic Acids, and Metabolism.'},
+    {id: 'exam', icon: 'exam', title: 'Final Exam Prep', blurb: 'Timed practice and weak-spot review for the standardized final.',
+     games: ['finalexam']}
+  ];
+  /* Short labels for cards, so students know where each game fits. */
+  const UNITS = {
+    lewisstructures: ['Unit 1', 'Unit 2'], organic: ['Unit 1'], functionalgroups: ['Units 1–8'], organicreactions: ['Units 2–8'],
+    carbohydrates: ['Unit 6', 'Unit 9'], aminoacids: ['Unit 11', 'Unit 13'], finalexam: ['Final']
+  };
+
+  const games = new Map(D.games.filter(g => (g.courses || []).includes('3B')).map(g => [g.id, g]));
+  const placed = new Set(GROUPS.flatMap(g => g.games));
+  for (const id of games.keys()) if (!placed.has(id)) GROUPS[0].games.push(id);
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) if (v != null && v !== false) el.setAttribute(k, v === true ? '' : v);
+    for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(kid));
+    return el;
+  }
+  function ic(name) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'ic'); svg.setAttribute('aria-hidden', 'true');
+    const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttribute('href', ICON + (name || 'flask')); svg.append(use);
+    return svg;
+  }
+  function gameIcon(g) {
+    return g.logo
+      ? h('span', {class: 'icon haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy'}))
+      : h('span', {class: 'icon', 'aria-hidden': 'true'}, ic(g.icon));
+  }
+  function card(g) {
+    return h('article', {class: 'game'},
+      h('div', {class: 'game-top'}, gameIcon(g), h('div', {class: 'units'}, (UNITS[g.id] || []).map(u => h('span', {class: 'unit'}, u)))),
+      h('h3', {}, g.title),
+      h('p', {}, g.blurb || ''),
+      h('div', {class: 'actions'}, h('a', {class: 'play', href: g.url, target: '_blank', rel: 'noopener'}, 'Play')));
+  }
+
+  const app = document.getElementById('app'), jump = document.getElementById('jump');
+  for (const grp of GROUPS) {
+    const list = grp.games.map(id => games.get(id)).filter(Boolean);
+    if (!list.length) continue;
+    jump.append(h('a', {class: 'chip', href: '#' + grp.id, style: `--sc:var(--${grp.id === 'organic' ? 'org' : grp.id});--sb:var(--${grp.id === 'organic' ? 'org' : grp.id}-bg)`}, ic(grp.icon), grp.title, h('span', {class: 'n'}, list.length)));
+    app.append(h('section', {'data-sec': grp.id, id: grp.id},
+      h('div', {class: 'sechead'},
+        h('span', {class: 'secicon', 'aria-hidden': 'true'}, ic(grp.icon)),
+        h('div', {}, h('h2', {}, grp.title), h('p', {}, grp.blurb)),
+        h('span', {class: 'count'}, list.length + (list.length === 1 ? ' game' : ' games'))),
+      h('div', {class: 'grid'}, list.map(card)),
+      grp.soon ? h('p', {class: 'soon'}, h('b', {}, 'Coming soon · '), grp.soon) : null));
+  }
+})();
+</script>
+</body>
+</html>
