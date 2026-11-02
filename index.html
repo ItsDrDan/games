@@ -537,6 +537,14 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 .daily-results{list-style:none;padding:0;margin:16px 0}.daily-results li{display:grid;grid-template-columns:28px 1fr;gap:2px 10px;padding:8px 0;border-top:1px solid var(--line)}.daily-results li>span{font-weight:900}.daily-results li.ok>span{color:#2e9e6a}.daily-results li.no>span{color:#d9534f}.daily-results li a{font-weight:700;color:var(--ink)}.daily-results small{grid-column:2;color:var(--muted)}
 .daily-fix{margin-top:8px}.daily-fixrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 @media(max-width:640px){.daily-head{padding-top:16px}.daily-title h1{font-size:1.4rem}.daily-card{padding:16px}.daily-next{margin-left:0;width:100%}.dailycard{flex-wrap:wrap}.dailycard .btn{width:100%}}
+
+/* embed mode (?embed=1): a single view inside another page, e.g. the Daily 5 on 3b.html */
+body.embed .top,body.embed .footer,body.embed .daily-courses,body.embed .daily-head .eyebrow{display:none!important}
+body.embed .daily-head{padding-top:6px}
+body.embed .daily{padding-bottom:12px}
+body.embed .wrap{width:min(1180px,calc(100% - 8px))}
+body.embed::before{display:none}
+body.embed{background:transparent}
 </style>
 </head>
 <body>
@@ -1320,6 +1328,15 @@ route();
 discoverGames();
 loadYouTube();
 loadSyllabus();
+</script>
+<script>
+/* embed mode: no header/footer, links leave the frame, and the parent page can read our height */
+if (new URLSearchParams(location.search).get('embed') === '1') {
+  document.body.classList.add('embed');
+  const b = document.createElement('base'); b.target = '_top'; document.head.append(b);
+  const tell = () => { try { parent.postMessage({ddEmbedHeight: document.documentElement.scrollHeight}, '*'); } catch {} };
+  new ResizeObserver(tell).observe(document.body); addEventListener('hashchange', () => setTimeout(tell, 50)); tell();
+}
 </script>
 </body>
 </html>
