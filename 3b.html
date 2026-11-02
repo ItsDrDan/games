@@ -94,12 +94,19 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
 .soon{margin:14px 0 0;color:var(--muted);font-size:.95rem;background:#fff;border:1.5px dashed #d9cfee;border-radius:16px;padding:12px 16px}
 .soon b{color:var(--sc)}
 
-/* Daily 5 (the hub's Daily 5, framed in) */
-.daily5{background:linear-gradient(110deg,#fff5f8,#fff 55%,#f1fbf6);border:2px solid #f0c4d3;border-radius:28px;padding:18px 20px 12px;box-shadow:var(--shadow)}
-.daily5 .sechead{margin-bottom:6px}
-.daily5 .secicon{background:#ffe3ec;color:#d9654f;box-shadow:0 4px 0 #f0a9bf}
+/* Daily 5 (the hub's Daily 5, framed in, collapsed until tapped) */
+.dailies{display:grid;gap:12px}
+.daily5{background:#fff;border:2px solid var(--sb);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.daily5 summary{list-style:none;display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;background:linear-gradient(110deg,var(--sb),#fff 60%)}
+.daily5 summary::-webkit-details-marker{display:none}
+.daily5 summary .secicon{width:48px;height:48px;border-radius:16px}
+.daily5 summary .secicon svg.ic{width:26px;height:26px}
+.daily5 summary .t{flex:1;min-width:0}.daily5 summary b{display:block;font-size:1.12rem;font-weight:900}.daily5 summary small{display:block;color:var(--muted);font-size:.92rem}
+.daily5 summary .count{font-weight:900;color:#fff;background:var(--sc);border-radius:999px;padding:8px 16px;font-size:.98rem;box-shadow:0 3px 0 #0001;white-space:nowrap}
+.daily5[open] summary .count{background:#fff;color:var(--sc);border:2px solid var(--sc)}
+.daily5 .body{padding:6px 8px 8px}
 .daily5 iframe{display:block;width:100%;border:0;min-height:420px;border-radius:18px;background:transparent}
-.daily5 .fallback{margin:0;padding:8px 2px 6px;color:var(--muted)}
+.daily5 .fallback{margin:0;padding:8px 10px;color:var(--muted)}
 
 /* instructor note */
 .note{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px 24px;box-shadow:var(--shadow);display:grid;gap:8px}
@@ -150,15 +157,24 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
 </div>
 
 <main class="wrap" id="app" aria-live="polite">
-  <section class="daily5" id="daily" aria-labelledby="daily-h">
-    <div class="sechead">
-      <span class="secicon" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg?v=2#i-calendar"/></svg></span>
-      <div><h2 id="daily-h">Daily 5 · CHEM 3B</h2><p>Five quick questions a day. Keep a streak going.</p></div>
-      <a class="count" href="./?embed=1#/daily/3B" target="_blank" rel="noopener" id="daily-open" style="text-decoration:none">Open full size ↗</a>
-    </div>
-    <iframe id="daily-frame" src="./?embed=1#/daily/3B" title="Daily 5 for CHEM 3B" loading="lazy"></iframe>
-    <noscript><p class="fallback"><a href="./#/daily/3B">Open today's Daily 5 →</a></p></noscript>
-  </section>
+  <div class="dailies" id="daily">
+    <details class="daily5" data-ch="1,2,3,4,5,6,7,8" data-label="Organic" style="--sc:var(--org);--sb:var(--org-bg)">
+      <summary>
+        <span class="secicon" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg?v=2#i-calendar"/></svg></span>
+        <span class="t"><b>Daily 5 · Organic</b><small>Five quick questions from Units 1–8. Keep a streak going.</small></span>
+        <span class="count">Start →</span>
+      </summary>
+      <div class="body"></div>
+    </details>
+    <details class="daily5" data-ch="9,10,11,12,13,14,15,16,17" data-label="Biochemistry" style="--sc:var(--bio);--sb:var(--bio-bg)">
+      <summary>
+        <span class="secicon" aria-hidden="true"><svg class="ic"><use href="assets/icons.svg?v=2#i-dna"/></svg></span>
+        <span class="t"><b>Daily 5 · Biochemistry</b><small>Five quick questions from Units 9–17. Keep a streak going.</small></span>
+        <span class="count">Start →</span>
+      </summary>
+      <div class="body"></div>
+    </details>
+  </div>
 </main>
 
 <section class="wrap" style="padding-bottom:40px">
@@ -244,10 +260,19 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
       h('div', {class: 'grid'}, list.map(card)),
       grp.soon ? h('p', {class: 'soon'}, h('b', {}, 'Coming soon · '), grp.soon) : null));
   }
-  /* Daily 5 frame: grow to fit whatever the hub renders */
-  const frame = document.getElementById('daily-frame');
-  addEventListener('message', e => { const hgt = e.data && e.data.ddEmbedHeight; if (frame && hgt > 0 && e.source === frame.contentWindow) frame.style.height = Math.ceil(hgt) + 'px'; });
-  document.getElementById('daily-open').href = './#/daily/3B';
+  /* Daily 5 panels: load each frame the first time it's opened, then grow it to fit */
+  const frames = new Set(), loaded = new WeakSet();
+  addEventListener('message', e => { const hgt = e.data && e.data.ddEmbedHeight; if (!(hgt > 0)) return; for (const fr of frames) if (e.source === fr.contentWindow) fr.style.height = Math.ceil(hgt) + 'px'; });
+  for (const d of document.querySelectorAll('.daily5')) {
+    const label = d.dataset.label, src = './?embed=1#/daily/3B?ch=' + d.dataset.ch + '&label=' + encodeURIComponent(label);
+    d.addEventListener('toggle', () => {
+      const btn = d.querySelector('.count'); btn.textContent = d.open ? 'Hide' : 'Start →';
+      if (!d.open || loaded.has(d)) return; loaded.add(d);
+      const fr = h('iframe', {src, title: 'Daily 5 · ' + label + ' (CHEM 3B)'});
+      frames.add(fr);
+      d.querySelector('.body').append(fr, h('p', {class: 'fallback'}, h('a', {href: src.replace('?embed=1', ''), target: '_blank', rel: 'noopener'}, 'Open full size ↗')));
+    });
+  }
 })();
 </script>
 </body>

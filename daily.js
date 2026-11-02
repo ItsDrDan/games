@@ -34,10 +34,11 @@
   function usable(q) { const p = String(q.prompt || ''); if (!p.trim()) return false; if (NEEDS_VISUAL.test(p) && !/<(table|svg|img)/i.test(p)) return false; if (q.type === 'mc' && (!q.choices || q.choices.length < 2)) return false; return true; }
 
   /* ---- choose five chapters, then one fresh question from each ---- */
-  async function pickQuestions(cid) {
+  async function pickQuestions(cid, only) {
     const c = courseById[cid], index = await QB.index(); if (!index) return null;
+    only = only || [];
     const covered = ch => Object.values(index.chapters[cid + '-' + ch.id] || {}).reduce((a, b) => a + b, 0) > 0;
-    const chs = c.chapters.filter(covered); if (!chs.length) return null;
+    const chs = c.chapters.filter(covered).filter(ch => !only.length || only.includes(ch.id)); if (!chs.length) return null;
     const cur = currentChapter(cid), curIdx = cur ? chs.indexOf(cur) : -1, hist = load(CH_KEY, {}), now = Date.now(), day = 864e5;
     const scored = chs.map((ch, i) => {
       const k = cid + '-' + ch.id, p = hist[k] || {}; let s = 1;
@@ -58,7 +59,7 @@
       if (qs.length) out.push({...qs[0], ch: ch.id, chLabel: ch.label, chTitle: ch.title});
     }
     // top up from any chapter if a chapter had nothing shareable
-    if (out.length < 5) { const more = (await QB.get({course: cid, types: TYPES, exclude: seen.concat(out.map(q => q.id)), n: 40})).filter(usable).slice(0, 5 - out.length); for (const q of more) { const ch = chs.find(x => (q.chapters || []).includes(cid + '-' + x.id)) || chs[0]; out.push({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title}); } }
+    if (out.length < 5) { const more = (await QB.get({course: cid, chapters: only.length ? chs.map(ch => cid + '-' + ch.id) : undefined, types: TYPES, exclude: seen.concat(out.map(q => q.id)), n: 40})).filter(usable).slice(0, 5 - out.length); for (const q of more) { const ch = chs.find(x => (q.chapters || []).includes(cid + '-' + x.id)) || chs[0]; out.push({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title}); } }
     return out.length ? out : null;
   }
 
@@ -89,11 +90,15 @@
   function viewDaily(cid, params) {
     cid = (cid || recall('course') || '').toUpperCase();
     if (!courseById[cid]) { setTitle('Daily 5'); app.replaceChildren(h('section', {class: 'wrap daily', style: 'padding-top:26px'}, h('div', {class: 'eyebrow'}, 'Daily 5'), h('h1', {}, 'Five questions a day. Which class?'), h('p', {class: 'lead'}, 'Pick your class and you’ll get five quick questions: what you missed lately, what you haven’t seen in a while, and what your class is on this week.'), courseChips(''))); return; }
-    remember('course', cid); setTitle('Daily 5 · CHEM ' + cid);
-    let st = load(STATE_KEY, null);
+    /* optional subset: #/daily/3B?ch=1,2,3&label=Organic keeps its own day state, so two subsets can run side by side */
+    const only = ((params && params.get('ch')) || '').split(',').map(x => x.trim()).filter(Boolean), label = (params && params.get('label')) || '';
+    const key = STATE_KEY + (only.length ? ':' + cid + ':' + only.join(',') : '');
+    remember('course', cid); setTitle('Daily 5 · CHEM ' + cid + (label ? ' · ' + label : ''));
+    let st = load(key, null);
     const fresh = st && st.date === today() && st.course === cid && Array.isArray(st.qs) && st.qs.length;
     const extra = params && params.get('more') === '1';
     if (!fresh || (extra && st.done >= st.qs.length)) st = {date: today(), course: cid, qs: [], done: 0, results: [], round: fresh && extra ? (st.round || 1) + 1 : 1};
+    st.key = key; st.only = only; st.label = label;
     const root = h('section', {class: 'wrap daily', 'data-course': cid});
     app.replaceChildren(root);
     render(root, cid, st);
@@ -102,7 +107,7 @@
   function header(cid, st) {
     const s = streak(), c = courseById[cid];
     return h('div', {class: 'daily-head'},
-      h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name), h('h1', {}, st.round > 1 ? 'Bonus round' : 'Today’s five'), h('p', {class: 'daily-streak'}, streakLine(s)))),
+      h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')), h('h1', {}, st.round > 1 ? 'Bonus round' : (st.label ? st.label + ': today’s five' : 'Today’s five')), h('p', {class: 'daily-streak'}, streakLine(s)))),
       courseChips(cid));
   }
 
@@ -111,9 +116,9 @@
     if (!st.qs.length) {
       const wait = h('div', {class: 'panel daily-wait'}, h('p', {}, 'Picking today’s five…'));
       root.append(wait);
-      let qs = null; try { qs = await pickQuestions(cid); } catch (e) { qs = null; }
+      let qs = null; try { qs = await pickQuestions(cid, st.only); } catch (e) { qs = null; }
       if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', href: '#/games?course=' + cid}, 'All CHEM ' + cid + ' games →')); return; }
-      st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(STATE_KEY, st);
+      st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
       const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
       return render(root, cid, st);
     }
@@ -141,7 +146,7 @@
       if (q.type === 'number' && q.sigfigs) answerArea.append(h('p', {class: 'daily-note'}, `Answer to ${q.sigfigs} significant figures.`));
       getAnswer = () => input.value;
     }
-    const nextBtn = h('button', {type: 'button', class: 'btn daily-next', hidden: true, onclick: () => { st.done++; save(STATE_KEY, st); render(root, cid, st); }}, n < st.qs.length ? 'Next question →' : 'See today’s results →');
+    const nextBtn = h('button', {type: 'button', class: 'btn daily-next', hidden: true, onclick: () => { st.done++; save(st.key || STATE_KEY, st); render(root, cid, st); }}, n < st.qs.length ? 'Next question →' : 'See today’s results →');
     const showBtn = h('button', {type: 'button', class: 'btn secondary small', onclick: () => { if (answered) return; finish(false, true); }}, 'Show answer');
     const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + q.hint; }}, '💡 Hint');
     function grade(resp) {
@@ -161,7 +166,7 @@
       fb.className = 'daily-fb ' + (ok ? 'good' : 'shown');
       fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + q.explain + '</span>' : '');
       const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
-      st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(STATE_KEY, st);
+      st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(st.key || STATE_KEY, st);
       if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, '');
       nextBtn.focus({preventScroll: true});
     }
@@ -174,6 +179,7 @@
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
+  const sub = st => (st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '');
   function summary(cid, st) {
     const c = courseById[cid], right = st.results.filter(r => r && r.firstTry).length;
     const s = st.round > 1 ? streak() : streakDone();
@@ -184,7 +190,7 @@
         h('div', {class: 'daily-dots', 'aria-hidden': 'true'}, st.results.map(r => h('span', {class: r && r.firstTry ? 'ok' : 'no'})))),
       h('ol', {class: 'daily-results'}, st.results.map(r => h('li', {class: r.firstTry ? 'ok' : 'no'}, h('span', {}, r.firstTry ? '✓' : r.ok ? '↺' : '✕'), h('a', {href: `#/course/${cid}/${r.ch}`}, `${r.chLabel} · ${r.chTitle}`), r.slip && SLIP_TEXT[r.slip] ? h('small', {}, SLIP_TEXT[r.slip]) : r.revealed ? h('small', {}, 'Answer shown') : r.ok && !r.firstTry ? h('small', {}, 'Got it on a retry') : null))),
       missed.length ? h('div', {class: 'daily-fix'}, h('b', {}, 'Practice what you missed:'), h('div', {class: 'daily-fixrow'}, missed.flatMap(ch => [h('a', {class: 'btn secondary small', href: `#/course/${cid}/${ch.id}`}, `📖 ${ch.label}: ${ch.title}`), game(ch.id)]))) : h('p', {class: 'daily-note'}, 'Clean sweep. Tomorrow’s five will dig a little deeper.'),
-      h('div', {class: 'daily-btns'}, h('a', {class: 'btn', href: '#/daily/' + cid + '?more=1', onclick: e => { e.preventDefault(); location.hash = '#/daily/' + cid + '?more=1&r=' + Date.now(); }}, 'Five more →'), h('a', {class: 'btn secondary', href: '#/course/' + cid}, 'Back to ' + c.name)));
+      h('div', {class: 'daily-btns'}, h('a', {class: 'btn', href: '#/daily/' + cid + '?more=1' + sub(st), onclick: e => { e.preventDefault(); location.hash = '#/daily/' + cid + '?more=1' + sub(st) + '&r=' + Date.now(); }}, 'Five more →'), h('a', {class: 'btn secondary', href: '#/course/' + cid}, 'Back to ' + c.name)));
   }
 
   /* small card other views can drop in (home page and course overview) */
