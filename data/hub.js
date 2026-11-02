@@ -209,9 +209,10 @@ window.HUB_DATA = {
   },
   {
    "id": "organic",
+   "logo": "assets/games/organic.webp",
    "title": "Functional Group Flashcards",
    "icon": "cards",
-   "blurb": "Recognize 16 common organic functional groups from pictures and names.",
+   "blurb": "Flip through the 16 functional groups, then quiz yourself: picture, name, or a real molecule’s formula.",
    "courses": [
     "3B",
     "1A"
