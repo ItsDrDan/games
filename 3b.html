@@ -43,7 +43,7 @@ svg.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;strok
 .brand img{width:40px;height:40px}
 .brand small{color:var(--soft);font-weight:650}
 .navlinks{display:flex;gap:6px;margin-left:auto;align-items:center}
-.navlinks a{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;color:var(--ink)}
+.navlinks a{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;color:var(--ink);white-space:nowrap}
 .navlinks a:hover{background:#efe9ff;color:var(--brand-ink)}
 
 /* header */
@@ -127,6 +127,8 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
 @media (max-width:640px){
   .wrap{width:min(1180px,calc(100% - 28px))}
   .navlinks a.hide-sm{display:none}
+  .brand small{display:none}
+  .nav{gap:10px;min-height:60px}
   .head .wrap{padding:30px 0 24px}
   .sechead .count{margin-left:0}
   .grid{grid-template-columns:1fr}
@@ -140,7 +142,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
     <a class="brand" href="./"><img src="assets/logo.svg" alt="" width="40" height="40">ItsDrDan <small>/ CHEM 3B Games</small></a>
     <nav class="navlinks" aria-label="Main">
       <a href="./#/course/3B" class="hide-sm">3B chapter guide</a>
-      <a href="./">Full Study Hub</a>
+      <a href="./">Study Hub</a>
       <a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener" class="hide-sm">YouTube ↗</a>
     </nav>
   </div>
