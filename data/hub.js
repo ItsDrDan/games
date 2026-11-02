@@ -252,6 +252,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/carbohydrates/"
   },
   {
+   "id": "aminoacids",
+   "logo": "assets/games/aminoacids.webp",
+   "title": "Peptide Party (Amino Acids & Proteins)",
+   "icon": "protein",
+   "blurb": "Build peptides by removing water, decode codons, name peptides, and fold proteins from 1° to 4°.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/aminoacids/"
+  },
+  {
    "id": "finalexam",
    "logo": "assets/games/finalexam.webp",
    "title": "Final Exam Review",
@@ -9861,7 +9872,9 @@ window.HUB_DATA = {
       "primary, secondary, tertiary, quaternary structure",
       "protein hydrolysis and denaturation"
      ],
-     "games": [],
+     "games": [
+      "aminoacids"
+     ],
      "videos": [
       "Y_bXmJDoANI",
       "ec1npXqFdDM"
@@ -9907,7 +9920,9 @@ window.HUB_DATA = {
       "recombinant DNA",
       "viruses"
      ],
-     "games": [],
+     "games": [
+      "aminoacids"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "dna",
