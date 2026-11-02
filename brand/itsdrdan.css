@@ -1,0 +1,35 @@
+/* ItsDrDan study games — shared brand sheet (v1, Nov 2026)
+   Load AFTER a game's own <style>:  <link rel="stylesheet" href="https://itsdrdan.github.io/games/brand/itsdrdan.css">
+   It sets the shared tokens (colors, radii, shadow, fonts) that every game template already reads through var(),
+   loads the two brand fonts, and styles the shared .ui line-art icons. A game that can't reach it keeps its inline look.
+   Edit here once → every game and the study hub follow on their next load. */
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800;900&display=swap");
+
+:root{
+  /* surfaces + text */
+  --bg:#f5f6fb;--surface:#fff;--paper:#fffdf9;--ink:#1f2a44;--muted:#4f5a74;--faint:#6f7890;--line:#e3e6f0;--line2:#d5d9e8;
+  /* accent + pastels */
+  --accent:#4b57d1;--accent-d:#3c47b8;--accent-soft:#eef0fe;
+  --mint:#e8f6ef;--mint-ink:#23704f;--mint-line:#a9d9c2;
+  --amber:#fff6e2;--amber-ink:#80601a;--amber-line:#f0dca6;
+  --rose:#fdedf0;--rose-ink:#9c3346;--rose-line:#eab3bd;
+  --lav:#f3effd;--sky:#eaf4fb;
+  /* course colors (match the study hub) */
+  --c3A:#23776c;--c3A-bg:#e4f3ec;--c1A:#4757b3;--c1A-bg:#e8ebfb;--c1B:#b0533b;--c1B-bg:#fbebe4;--c3B:#86509b;--c3B-bg:#f2e8f7;
+  /* shape */
+  --r-lg:20px;--r-md:14px;--r-sm:10px;--shadow:0 1px 2px #1f2a440d,0 6px 20px #1f2a440a;
+  /* type */
+  --font:Nunito,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-display:Fredoka,Nunito,system-ui,sans-serif;
+  --serif:Cambria,"Times New Roman",serif;
+}
+body{font-family:var(--font)}
+h1,h2,h3,.tb-brand,.mode-name,.play-title,.step-title,summary,.btn.primary,.primary.action{font-family:var(--font-display);letter-spacing:.005em}
+h1,h2,h3{font-weight:600}
+
+/* shared line-art icons: <svg class="ui" viewBox="0 0 24 24">…</svg> (see icons.js) */
+.ui{width:1.05em;height:1.05em;vertical-align:-.17em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* focus + motion */
+:focus-visible{outline:3px solid #9fb0ff;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}

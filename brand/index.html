@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ItsDrDan brand kit · study games</title>
+<link rel="icon" href="../assets/logo-32.png">
+<link rel="stylesheet" href="itsdrdan.css">
+<style>
+body{margin:0;background:linear-gradient(180deg,#eef0fb 0,var(--bg) 340px);color:var(--ink);line-height:1.55;font-size:16.5px}
+.wrap{max-width:1100px;margin:auto;padding:28px 18px 70px}
+h1{font-size:2rem;margin:0 0 4px}h2{font-size:1.35rem;margin:38px 0 10px}p{margin:6px 0}
+.lead{color:var(--muted);font-size:1.05rem}
+.card{background:var(--paper);border:1px solid #ece4d4;border-radius:var(--r-lg);box-shadow:var(--shadow);padding:18px 20px}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw div{border-radius:var(--r-md);padding:12px;border:1px solid #0001;min-height:70px;display:flex;flex-direction:column;justify-content:flex-end;font-size:.82rem;font-weight:700}
+.sw code{font-size:.75rem;opacity:.75;font-weight:600}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.icons div{text-align:center;background:#fff;border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 4px;font-size:.74rem;color:var(--muted)}
+.icons .ui{width:28px;height:28px;color:var(--ink);display:block;margin:0 auto 6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:9px 18px;border-radius:14px;border:0;font-weight:700;cursor:pointer;font-size:1rem}
+.btn.primary{background:var(--accent);color:#fff;box-shadow:0 3px 0 var(--accent-d);font-family:var(--font-display)}
+.btn.secondary{background:#fff;color:var(--ink);border:2px solid var(--line2)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line2);background:#fff;border-radius:999px;padding:5px 12px;font-weight:700;font-size:.92rem}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.field{display:block;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px}
+.field span{display:block;font-weight:600;margin-bottom:8px}.field input{font:inherit;font-size:1.05rem;padding:9px 12px;border:2px solid var(--line2);border-radius:var(--r-sm);width:180px}
+.fb{border-radius:var(--r-md);padding:12px 14px;margin-top:8px;font-weight:600}
+.fb.good{background:var(--mint);border:1.5px solid var(--mint-line);color:var(--mint-ink)}.fb.bad{background:var(--rose);border:1.5px solid var(--rose-line);color:var(--rose-ink)}.fb.info{background:var(--amber);border:1.5px solid var(--amber-line);color:var(--amber-ink)}
+pre{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px;overflow:auto;font-size:.85rem;white-space:pre-wrap}
+.type p{margin:2px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+</style>
+</head>
+<body><div class="wrap">
+<h1>ItsDrDan brand kit</h1>
+<p class="lead">One look for every study game and the hub. Games load <code>brand/itsdrdan.css</code> after their own styles; icons come from <code>brand/icons.js</code>. Change a token here and every game follows.</p>
+
+<h2>Colors</h2>
+<div class="card"><div class="sw">
+ <div style="background:var(--accent);color:#fff">Accent<code>--accent #4b57d1</code></div>
+ <div style="background:var(--accent-soft)">Accent soft<code>--accent-soft #eef0fe</code></div>
+ <div style="background:var(--ink);color:#fff">Ink<code>--ink #1f2a44</code></div>
+ <div style="background:var(--muted);color:#fff">Muted<code>--muted #4f5a74</code></div>
+ <div style="background:var(--faint);color:#fff">Faint<code>--faint #6f7890</code></div>
+ <div style="background:var(--paper)">Paper<code>--paper #fffdf9</code></div>
+ <div style="background:var(--mint);color:var(--mint-ink)">Mint · correct<code>#e8f6ef / #23704f</code></div>
+ <div style="background:var(--rose);color:var(--rose-ink)">Rose · wrong<code>#fdedf0 / #9c3346</code></div>
+ <div style="background:var(--amber);color:var(--amber-ink)">Amber · note<code>#fff6e2 / #80601a</code></div>
+ <div style="background:var(--lav)">Lavender<code>--lav #f3effd</code></div>
+ <div style="background:var(--sky)">Sky<code>--sky #eaf4fb</code></div>
+ <div style="background:var(--c3A-bg);color:var(--c3A)">CHEM 3A<code>#23776c</code></div>
+ <div style="background:var(--c1A-bg);color:var(--c1A)">CHEM 1A<code>#4757b3</code></div>
+ <div style="background:var(--c1B-bg);color:var(--c1B)">CHEM 1B<code>#b0533b</code></div>
+ <div style="background:var(--c3B-bg);color:var(--c3B)">CHEM 3B<code>#86509b</code></div>
+</div></div>
+
+<h2>Type</h2>
+<div class="card type">
+ <p style="font-family:var(--font-display);font-size:1.9rem;font-weight:600">Fredoka 600 · titles, tile names, primary buttons</p>
+ <p style="font-size:1.05rem">Nunito 600 · body, prompts, labels. Chemistry formulas use real sub/superscripts: CaCl<sub>2</sub>, SO<sub>4</sub><sup>2−</sup>, 6.022 × 10<sup>23</sup>.</p>
+ <p style="color:var(--muted);font-size:.9rem">Muted · helper text. One helper line per step, not one per box.</p>
+ <p style="color:var(--faint);font-size:.8rem">Faint · footnotes, sources, tags.</p>
+</div>
+
+<h2>Buttons, chips, fields, feedback</h2>
+<div class="card">
+ <div class="row"><button class="btn primary">Check step</button><button class="btn secondary">Hint</button><button class="btn secondary">Show step</button><span class="chip on">Kinetics</span><span class="chip">Equilibrium</span></div>
+ <div class="row" style="margin-top:14px;align-items:flex-start"><label class="field"><span>Moles of NaOH</span><input value="0.0245"> <b>mol</b></label></div>
+ <div class="fb good">✓ Correct! 0.0245 mol</div>
+ <div class="fb bad">✕ Not correct yet — Off by a factor of 1000: mL ↔ L. Divide mL by 1000 to get liters.</div>
+ <div class="fb info">Your math is right. Round to 3 significant figures: 0.0245.</div>
+</div>
+
+<h2>Icons (line art, 24-grid, currentColor)</h2>
+<div class="card"><div class="icons" id="icons"></div><p style="color:var(--muted);font-size:.9rem;margin-top:10px">Use these for interface chrome (modes, coach, chips, medals' neighbors) instead of emoji, so every device renders them the same. Tile art and medals stay as the bigger filled SVG illustrations.</p></div>
+
+<h2>Illustrations (logos, mascots, hero art)</h2>
+<div class="card">
+<p>Big illustrative art — each game's logo badge, the mascot, hero pieces — can come from an image model (ChatGPT/DALL·E, Midjourney). Keep them consistent by using the same spec every time and saving them where the hub expects them: <code>games/assets/games/&lt;game id&gt;.webp</code>, square 1024 × 1024, transparent or circular badge, under 150 KB.</p>
+<p><b>Prompt template</b> (paste as-is, then change the subject line):</p>
+<pre>Flat, friendly vector illustration for a chemistry study game badge. Thick dark-navy outlines (#2e2b38), soft pastel fills (mint #e8f6ef, lavender #f3effd, sky #eaf4fb, peach #fdeee8, butter #fff6e2), one warm accent (#ffd36b), subtle paper texture, no gradients heavier than a light wash, no text, no photorealism, no 3D render. Round badge composition with a thin gold ring (#e1b072) and a navy outer ring, centered subject, generous margin, white or transparent background, 1024×1024.
+Subject: a cheerful cartoon atom hiker with a backpack carrying a small flag, striding across a rope bridge made of an electron orbital.
+Match the style of the ItsDrDan Bridge to 1B badge.</pre>
+<table><tr><th>Asset</th><th>Size</th><th>Where</th></tr>
+<tr><td>Game logo badge</td><td>1024² → saved as .webp, also a 512² logo.png in the game repo</td><td><code>games/assets/games/&lt;id&gt;.webp</code> + <code>&lt;id&gt;/logo.png</code></td></tr>
+<tr><td>Mascot (mood variants)</td><td>SVG preferred (Bridge to 1B's hiker is SVG so it can change expression)</td><td>inline in the game</td></tr>
+<tr><td>Hero / course art</td><td>1600 × 600, .webp, under 200 KB</td><td><code>games/assets/</code></td></tr>
+<tr><td>Medals, UI icons</td><td>SVG only (this kit)</td><td><code>brand/icons.js</code>, game BART sets</td></tr></table>
+</div>
+
+<h2>Using the kit in a game</h2>
+<pre>&lt;!-- after the game's own &lt;/style&gt; --&gt;
+&lt;link rel="stylesheet" href="https://itsdrdan.github.io/games/brand/itsdrdan.css"&gt;
+&lt;script src="https://itsdrdan.github.io/games/brand/icons.js"&gt;&lt;/script&gt;
+&lt;!-- then anywhere in the game --&gt;
+button.innerHTML = ddIcon('bulb') + ' Hint';</pre>
+<p style="color:var(--muted)">Tokens the games already read: <code>--bg --surface --ink --muted --faint --line --line2 --accent --accent-d --accent-soft --mint --mint-ink --mint-line --amber --amber-ink --amber-line --rose --rose-ink --rose-line --lav --sky --r-lg --r-md --r-sm --shadow --font --serif</code>.</p>
+</div>
+<script src="icons.js"></script>
+<script>document.getElementById('icons').innerHTML=Object.keys(DD_ICONS).map(k=>'<div>'+ddIcon(k)+k+'</div>').join('');</script>
+</body></html>
