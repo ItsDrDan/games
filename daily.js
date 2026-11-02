@@ -1,0 +1,200 @@
+/* Daily 5 — five questions a day from the shared question bank, for whichever class you're in.
+   Picks chapters you've missed lately, haven't seen, or are in this week; keeps one day streak that the
+   study games share (localStorage key "itsdrdan-daily-streak", same origin for every game).
+   Uses: h(), courseById, COURSE_ORDER, remember/recall, sylCourse/sylWeekNow/matchChapter, HUB_NOW from index.html;
+   QB from questionbank/qb.js; ddTrack from track.js. Nothing here sends names or typed answers anywhere. */
+(function () {
+  const STREAK_KEY = 'itsdrdan-daily-streak', STATE_KEY = 'hub-daily', CH_KEY = 'hub-daily-chapters', SEEN_KEY = 'hub-daily-seen';
+  const TYPES = ['mc', 'number', 'text'];
+  const dayKey = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const today = () => dayKey(new Date()), yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return dayKey(d); };
+  const load = (k, fb) => { try { return JSON.parse(localStorage.getItem(k) || 'null') ?? fb; } catch { return fb; } };
+  const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+
+  /* ---- shared day streak (any ItsDrDan game may call these) ---- */
+  function streak() { const s = load(STREAK_KEY, {}); if (s.last && s.last !== today() && s.last !== yesterday()) return {...s, streak: 0}; return {streak: 0, best: 0, ...s}; }
+  function streakDone() { const s = streak(); if (s.last === today()) return s; s.streak = s.last === yesterday() ? (s.streak || 0) + 1 : 1; s.last = today(); s.best = Math.max(s.best || 0, s.streak); s.days = Object.assign({}, s.days, {[today()]: 1}); const keep = Object.keys(s.days).sort().slice(-60); s.days = Object.fromEntries(keep.map(k => [k, 1])); save(STREAK_KEY, s); return s; }
+  window.ddDaily = {streak, done: streakDone, today};
+
+  /* ---- which chapter is the class on right now (same reading as the "This week" card) ---- */
+  function currentChapter(cid) {
+    try {
+      const c = courseById[cid], now = (window.HUB_NOW || {})[cid], sc = sylCourse(cid);
+      const fresh = now && (Date.now() - new Date(now.updated + 'T12:00:00').getTime()) < 21 * 864e5;
+      if (fresh && now.lecture?.ch) return c.chapters.find(x => x.id === now.lecture.ch) || null;
+      const wn = sylWeekNow(sc); if (!wn || wn.before || wn.after) return null;
+      const wk = sc?.weeks?.find(w => w.week === wn.n); const t = wk?.lecture?.replace(/\s*\|\s*/g, ' ');
+      return t ? matchChapter(cid, t) : null;
+    } catch { return null; }
+  }
+
+  /* a question that points at a table or figure it doesn't carry can't be shown here */
+  const NEEDS_VISUAL = /((in|from|use|using) the (table|graph|figure|diagram|image)\b|schematic graph|the (table|graph|figure|diagram|image) (shows|below|above)|shown (above|below))/i;
+  function usable(q) { const p = String(q.prompt || ''); if (!p.trim()) return false; if (NEEDS_VISUAL.test(p) && !/<(table|svg|img)/i.test(p)) return false; if (q.type === 'mc' && (!q.choices || q.choices.length < 2)) return false; return true; }
+
+  /* ---- choose five chapters, then one fresh question from each ---- */
+  async function pickQuestions(cid) {
+    const c = courseById[cid], index = await QB.index(); if (!index) return null;
+    const covered = ch => Object.values(index.chapters[cid + '-' + ch.id] || {}).reduce((a, b) => a + b, 0) > 0;
+    const chs = c.chapters.filter(covered); if (!chs.length) return null;
+    const cur = currentChapter(cid), curIdx = cur ? chs.indexOf(cur) : -1, hist = load(CH_KEY, {}), now = Date.now(), day = 864e5;
+    const scored = chs.map((ch, i) => {
+      const k = cid + '-' + ch.id, p = hist[k] || {}; let s = 1;
+      const future = curIdx >= 0 && i > curIdx && ch.id !== 'review' && ch.id !== 'ready';
+      if (curIdx >= 0 && i === curIdx) s += 5;
+      if (p.miss && (now - p.miss) / day < 7) s += 4;
+      if (!p.seen) s += 2; else if ((now - p.seen) / day > 7) s += 2; else if ((now - p.seen) / day < 0.5) s -= 0.5;
+      if (ch.id === 'ready') s += 2;
+      if (future) s = p.miss && (now - p.miss) / day < 7 ? 1 : 0.01; // not taught yet: almost never, unless it was missed before
+      return [ch, Math.max(0.01, s)];
+    });
+    const picked = [];
+    while (picked.length < 5 && scored.length) { const total = scored.reduce((n, [, s]) => n + s, 0); let r = Math.random() * total, i = 0; for (; i < scored.length; i++) { r -= scored[i][1]; if (r <= 0) break; } i = Math.min(i, scored.length - 1); picked.push(scored[i][0]); scored.splice(i, 1); }
+    const seen = load(SEEN_KEY, []), out = [];
+    for (const ch of picked) {
+      let qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, exclude: seen, n: 12})).filter(usable);
+      if (!qs.length) qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, n: 12})).filter(usable);
+      if (qs.length) out.push({...qs[0], ch: ch.id, chLabel: ch.label, chTitle: ch.title});
+    }
+    // top up from any chapter if a chapter had nothing shareable
+    if (out.length < 5) { const more = (await QB.get({course: cid, types: TYPES, exclude: seen.concat(out.map(q => q.id)), n: 40})).filter(usable).slice(0, 5 - out.length); for (const q of more) { const ch = chs.find(x => (q.chapters || []).includes(cid + '-' + x.id)) || chs[0]; out.push({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title}); } }
+    return out.length ? out : null;
+  }
+
+  /* ---- grading, with the mistake catchers from Bridge to 1B ---- */
+  function parseNum(s) { s = String(s).replace(/[−]/g, '-').replace(/[,\s]/g, '').replace(/[×x*]10\^?([+-]?\d+)$/i, 'e$1'); return /^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i.test(s) ? Number(s) : NaN; }
+  function slipFor(q, raw) {
+    if (q.type !== 'number') return '';
+    const x = parseNum(raw), a = Number(q.answer); if (!isFinite(x) || !isFinite(a) || a === 0) return '';
+    const near = (p, v, tol = .006) => Math.abs(p - v) <= Math.max(Math.abs(v) * tol, 1e-12), r = x / a, u = String(q.unit || '');
+    if (near(x, a, .05)) return 'close';
+    if (near(r, -1)) return 'sign';
+    if (near(r, 1000) || near(r, .001)) return /J/.test(u) ? 'kJ-J' : /mol|L/.test(u) ? 'mL-L' : 'x1000';
+    if (/K|°C/.test(u) && (near(x, a + 273.15, .002) || near(x, a - 273.15, .002))) return '273';
+    if (!near(a, 1) && near(x * a, 1)) return 'inverted';
+    for (const n of [1, 2, 4, 5, 6]) if (near(r, 10 ** n) || near(r, 10 ** -n)) return 'power10';
+    for (const k of [2, .5, 3, 1 / 3, 4, .25]) if (near(r, k)) return 'ratio';
+    return '';
+  }
+  function fmtSig(a, n) { const t = a.toPrecision(n); return /e/.test(t) ? t.replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + Number(d)) : t; }
+  const SLIP_TEXT = {sigfigs: 'Right value, wrong number of significant figures.', close: 'Very close: rounding drifted. Keep extra digits until the last step.', sign: 'Right size, wrong sign. Check the direction.', 'kJ-J': 'Off by a factor of 1000: J vs kJ.', 'mL-L': 'Off by a factor of 1000: mL ↔ L (or mmol ↔ mol).', x1000: 'Off by a factor of 1000 (10³). Check the exponent; use the EE key.', 273: 'Off by 273: convert between °C and K.', inverted: 'Looks inverted (1 ÷ the right answer). Check what is on top and bottom.', power10: 'Off by a power of ten. Check the exponent.', ratio: 'Off by a simple factor: a coefficient or mole ratio was probably skipped or flipped.'};
+
+  /* ---- the page ---- */
+  const cal = '<svg viewBox="0 0 48 48" aria-hidden="true" width="34" height="34"><rect x="7" y="10" width="34" height="32" rx="6" fill="#fff" stroke="#24473f" stroke-width="2.4"/><path d="M7 19h34" stroke="#24473f" stroke-width="2"/><rect x="8.2" y="11.2" width="31.6" height="7" rx="4" fill="#f2a2bd"/><path d="M15 6v8M33 6v8" stroke="#24473f" stroke-width="2.6" stroke-linecap="round"/><text x="24" y="37" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="15" fill="#24473f">5</text></svg>';
+  function streakLine(s) { return s.streak ? `🔥 ${s.streak}-day streak` + (s.best > s.streak ? ` · best ${s.best}` : '') : 'Start a streak today'; }
+
+  function courseChips(cid) { return h('div', {class: 'daily-courses'}, COURSE_ORDER.map(id => h('a', {class: 'chip' + (id === cid ? ' on' : ''), 'data-course': id, href: '#/daily/' + id, 'aria-current': id === cid ? 'true' : null}, 'CHEM ' + id))); }
+
+  function viewDaily(cid, params) {
+    cid = (cid || recall('course') || '').toUpperCase();
+    if (!courseById[cid]) { setTitle('Daily 5'); app.replaceChildren(h('section', {class: 'wrap daily', style: 'padding-top:26px'}, h('div', {class: 'eyebrow'}, 'Daily 5'), h('h1', {}, 'Five questions a day. Which class?'), h('p', {class: 'lead'}, 'Pick your class and you’ll get five quick questions: what you missed lately, what you haven’t seen in a while, and what your class is on this week.'), courseChips(''))); return; }
+    remember('course', cid); setTitle('Daily 5 · CHEM ' + cid);
+    let st = load(STATE_KEY, null);
+    const fresh = st && st.date === today() && st.course === cid && Array.isArray(st.qs) && st.qs.length;
+    const extra = params && params.get('more') === '1';
+    if (!fresh || (extra && st.done >= st.qs.length)) st = {date: today(), course: cid, qs: [], done: 0, results: [], round: fresh && extra ? (st.round || 1) + 1 : 1};
+    const root = h('section', {class: 'wrap daily', 'data-course': cid});
+    app.replaceChildren(root);
+    render(root, cid, st);
+  }
+
+  function header(cid, st) {
+    const s = streak(), c = courseById[cid];
+    return h('div', {class: 'daily-head'},
+      h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name), h('h1', {}, st.round > 1 ? 'Bonus round' : 'Today’s five'), h('p', {class: 'daily-streak'}, streakLine(s)))),
+      courseChips(cid));
+  }
+
+  async function render(root, cid, st) {
+    root.replaceChildren(header(cid, st));
+    if (!st.qs.length) {
+      const wait = h('div', {class: 'panel daily-wait'}, h('p', {}, 'Picking today’s five…'));
+      root.append(wait);
+      let qs = null; try { qs = await pickQuestions(cid); } catch (e) { qs = null; }
+      if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', href: '#/games?course=' + cid}, 'All CHEM ' + cid + ' games →')); return; }
+      st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(STATE_KEY, st);
+      const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
+      return render(root, cid, st);
+    }
+    if (st.done >= st.qs.length) { if (st.round === 1) streakDone(); root.replaceChildren(header(cid, st)); return root.append(summary(cid, st)); }
+    root.append(questionCard(root, cid, st));
+  }
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function questionCard(root, cid, st) {
+    const q = st.qs[st.done], n = st.done + 1, c = courseById[cid];
+    let answered = false, tries = 0, usedHint = false, firstSlip = '';
+    const prompt = h('div', {class: 'daily-prompt', html: q.prompt});
+    const fb = h('div', {class: 'daily-fb', role: 'status'});
+    const hintBox = h('div', {class: 'daily-hint', hidden: true});
+    let getAnswer, input;
+    const answerArea = h('div', {class: 'daily-answer'});
+    const btns = [];
+    if (q.type === 'mc') {
+      q.choices.forEach(ch => btns.push(h('button', {type: 'button', class: 'daily-choice', html: ch, 'data-right': ch === q.answer ? '1' : null, onclick: e => { if (answered) return; btns.forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); grade(ch); }})));
+      answerArea.append(h('div', {class: 'daily-choices'}, btns)); getAnswer = () => null;
+    } else {
+      input = h('input', {type: 'text', inputmode: q.type === 'number' ? 'decimal' : 'text', autocomplete: 'off', spellcheck: 'false', placeholder: q.type === 'number' ? (q.sigfigs ? q.sigfigs + ' sig figs, e.g. 2.5E-3' : 'e.g. 2.5E-3') : 'Type your answer', 'aria-label': 'Your answer'});
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); grade(input.value); } });
+      answerArea.append(h('div', {class: 'daily-inrow'}, input, q.unit ? h('span', {class: 'daily-unit', html: q.unit}) : null, h('button', {type: 'button', class: 'btn', onclick: () => grade(input.value)}, 'Check')));
+      if (q.type === 'number' && q.sigfigs) answerArea.append(h('p', {class: 'daily-note'}, `Answer to ${q.sigfigs} significant figures.`));
+      getAnswer = () => input.value;
+    }
+    const nextBtn = h('button', {type: 'button', class: 'btn daily-next', hidden: true, onclick: () => { st.done++; save(STATE_KEY, st); render(root, cid, st); }}, n < st.qs.length ? 'Next question →' : 'See today’s results →');
+    const showBtn = h('button', {type: 'button', class: 'btn secondary small', onclick: () => { if (answered) return; finish(false, true); }}, 'Show answer');
+    const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + q.hint; }}, '💡 Hint');
+    function grade(resp) {
+      if (answered) return; tries++;
+      const ok = QB.check(q, resp);
+      if (ok) return finish(true, false);
+      let slip = slipFor(q, resp), msg = slip && SLIP_TEXT[slip] ? SLIP_TEXT[slip] : q.type === 'number' ? 'Check units, the mole ratio, and your calculator entry.' : 'Try again.';
+      if (q.type === 'number' && q.sigfigs) { const x = parseNum(resp), a = Number(q.answer); if (isFinite(x) && isFinite(a) && Math.abs(x - a) <= Math.abs(a) * (q.tolerance || .01)) { slip = 'sigfigs'; msg = `Right value, wrong number of digits: give it ${q.sigfigs} significant figures (${Number(a.toPrecision(q.sigfigs))}${/e/.test(a.toPrecision(q.sigfigs)) ? '' : ''}).`.replace(/\(([^)]*)\)/, (m, v) => '(' + fmtSig(a, q.sigfigs) + ')'); } }
+      if (tries === 1) firstSlip = slip;
+      fb.className = 'daily-fb bad'; fb.innerHTML = '<b>Not yet.</b> ' + msg + (tries >= 2 ? ' Tap <b>Show answer</b> if you’re stuck.' : '');
+      ddTrackSafe(cid, q, false, firstSlip);
+    }
+    function finish(ok, revealed) {
+      answered = true; nextBtn.hidden = false; showBtn.hidden = true; hintBtn.hidden = true; if (input) input.disabled = true;
+      btns.forEach(b => { b.disabled = true; if (b.dataset.right) b.classList.add('right'); });
+      const firstTry = ok && tries === 1 && !usedHint;
+      fb.className = 'daily-fb ' + (ok ? 'good' : 'shown');
+      fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + q.explain + '</span>' : '');
+      const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
+      st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(STATE_KEY, st);
+      if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, '');
+      nextBtn.focus({preventScroll: true});
+    }
+    return h('div', {class: 'panel daily-card'},
+      h('div', {class: 'daily-meta'}, h('span', {class: 'daily-n'}, `Question ${n} of ${st.qs.length}`), h('a', {class: 'chip', href: `#/course/${cid}/${q.ch}`}, `${q.chLabel} · ${q.chTitle}`), h('span', {class: 'daily-bar'}, h('i', {style: `width:${(st.done / st.qs.length) * 100}%`}))),
+      prompt, answerArea, hintBox, fb,
+      h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
+  }
+  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); return '<b>' + (Number.isFinite(a) ? (Math.abs(a) >= 1e4 || (Math.abs(a) < 1e-3 && a !== 0) ? a.toPrecision(3).replace(/e([+-]\d+)/, ' × 10^$1') : Number(a.toPrecision(3))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + q.answer + '</b>'; }
+  let logged = {};
+  function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
+
+  function summary(cid, st) {
+    const c = courseById[cid], right = st.results.filter(r => r && r.firstTry).length;
+    const s = st.round > 1 ? streak() : streakDone();
+    const missed = [...new Set(st.results.filter(r => r && !r.firstTry).map(r => r.ch))].map(id => c.chapters.find(x => x.id === id)).filter(Boolean);
+    const game = id => { const ch = c.chapters.find(x => x.id === id); const g = ch && ch.games.map(x => games.get(x)).find(Boolean); return g ? h('a', {class: 'btn secondary small', href: `#/play/${g.id}?from=${cid}`}, '🎮 ' + g.title) : null; };
+    return h('div', {class: 'panel daily-card daily-done'},
+      h('div', {class: 'daily-done-head'}, h('div', {}, h('div', {class: 'eyebrow'}, st.round > 1 ? 'Bonus round done' : 'Daily 5 complete'), h('h2', {}, `${right} of ${st.results.length} on the first try`), h('p', {class: 'daily-streak big'}, streakLine(s) + (st.round === 1 ? ' · see you tomorrow' : ''))),
+        h('div', {class: 'daily-dots', 'aria-hidden': 'true'}, st.results.map(r => h('span', {class: r && r.firstTry ? 'ok' : 'no'})))),
+      h('ol', {class: 'daily-results'}, st.results.map(r => h('li', {class: r.firstTry ? 'ok' : 'no'}, h('span', {}, r.firstTry ? '✓' : r.ok ? '↺' : '✕'), h('a', {href: `#/course/${cid}/${r.ch}`}, `${r.chLabel} · ${r.chTitle}`), r.slip && SLIP_TEXT[r.slip] ? h('small', {}, SLIP_TEXT[r.slip]) : r.revealed ? h('small', {}, 'Answer shown') : r.ok && !r.firstTry ? h('small', {}, 'Got it on a retry') : null))),
+      missed.length ? h('div', {class: 'daily-fix'}, h('b', {}, 'Practice what you missed:'), h('div', {class: 'daily-fixrow'}, missed.flatMap(ch => [h('a', {class: 'btn secondary small', href: `#/course/${cid}/${ch.id}`}, `📖 ${ch.label}: ${ch.title}`), game(ch.id)]))) : h('p', {class: 'daily-note'}, 'Clean sweep. Tomorrow’s five will dig a little deeper.'),
+      h('div', {class: 'daily-btns'}, h('a', {class: 'btn', href: '#/daily/' + cid + '?more=1', onclick: e => { e.preventDefault(); location.hash = '#/daily/' + cid + '?more=1&r=' + Date.now(); }}, 'Five more →'), h('a', {class: 'btn secondary', href: '#/course/' + cid}, 'Back to ' + c.name)));
+  }
+
+  /* small card other views can drop in (home page and course overview) */
+  function dailyCard(cid) {
+    const s = streak(), st = load(STATE_KEY, null), doneToday = st && st.date === today() && st.done >= (st.qs || []).length && (st.qs || []).length;
+    const href = '#/daily' + (cid ? '/' + cid : '');
+    return h('a', {class: 'dailycard', 'data-course': cid || null, href},
+      h('span', {class: 'daily-ico', html: cal}),
+      h('span', {class: 'dc-txt'}, h('b', {}, 'Daily 5' + (cid ? ' · CHEM ' + cid : '')), h('small', {}, doneToday ? '✓ Done for today · ' + streakLine(s) : 'Five quick questions a day: what you missed, what you haven’t seen, what’s on this week. ' + streakLine(s) + '.')),
+      h('span', {class: 'btn small'}, doneToday ? 'Five more' : 'Start →'));
+  }
+  window.viewDaily = viewDaily; window.dailyCard = dailyCard;
+})();

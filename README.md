@@ -16,6 +16,17 @@ Or search any topic (“limiting reactant”, “buffers”, “3A chapter 8”)
 | `data/transcripts.json` | *(optional, generated)* searchable caption snippets, so students can find the exact moment you explain something. |
 | `tools/update_youtube.py` | Builds the two generated files from the YouTube channel. |
 
+## Daily 5 (`daily.js`)
+
+`#/daily/1A` (also `#/daily/3A`, `1B`, `3B`) gives five questions a day from the shared question bank
+(`itsdrdan.github.io/questionbank`): one each from five chapters, weighted toward the chapter the class is on this week
+(from `data/now.js` / the syllabus), chapters missed in the last 7 days, and chapters not seen in a while. Chapters the
+class hasn't reached yet are almost never used. Only `mc`, `number` and `text` questions are shown, and questions that
+refer to a table or figure they don't carry are skipped. Finishing the five keeps a day streak in
+`localStorage["itsdrdan-daily-streak"]`, which every ItsDrDan game on this origin can share (`window.ddDaily.done()`).
+Each answer is logged through `track.js` as game `hub`, mode `Daily 5`, with the chapter as the topic and, when a
+mistake-catcher recognizes the first wrong answer, a `slip` label (x1000, sign, 273, inverted, sigfigs…).
+
 ## Common edits (all in `data/hub.js`)
 
 - **Add a new game to a chapter:** add the game to the `games` list (`id` = repo name), then put that id in the chapter’s `"games": [...]`.

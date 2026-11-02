@@ -1,5 +1,6 @@
 /* ItsDrDan study games: anonymous practice stats.
-   Each game calls ddTrack({game, course, mode, topic, correct}) once per question.
+   Each game calls ddTrack({game, course, mode, topic, correct, slip}) once per question.
+   slip (optional) names the kind of first mistake a mistake-catcher recognized (x1000, sign, 273, inverted, log-ln…).
    Sends no names, emails, student IDs, or typed answers, only which topic was practiced
    and whether the first try was right, so Dr. Dan can see which topics students find hardest.
    Honors "Do Not Track" / Global Privacy Control, and is off when a game is opened locally. */
@@ -35,7 +36,7 @@
     if (off || !ev || !ev.game) return;
     try {
       queue.push({game: ev.game, course: ev.course || '', mode: ev.mode || '', topic: ev.topic || '',
-        correct: ev.correct, tries: ev.tries || '', session: sid, source: source});
+        correct: ev.correct, tries: ev.tries || '', slip: ev.slip || '', session: sid, source: source});
       clearTimeout(timer);
       timer = setTimeout(flush, queue.length >= 10 ? 0 : 5000);
     } catch (e) {}

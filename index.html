@@ -510,6 +510,33 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 .chicon svg.ic,.chbadge svg.ic,.ritem .ri svg.ic,.pick .pi svg.ic,.cangroup .gi svg.ic,.toc a .ti svg.ic,.day .dch svg.ic,.chtag svg.ic,.btn svg.ic[style],small svg.ic[style]{color:var(--ic,var(--c))}
 .btn:not(.secondary) svg.ic[style]{color:#fff}
 .ch-card .keys{display:block;font-size:.88rem;line-height:1.35;color:#7a7394;font-weight:600;margin-top:-2px;padding-right:58px}
+
+/* ---- Daily 5 ---- */
+.dailycard{--c:var(--brand);display:flex;align-items:center;gap:14px;background:linear-gradient(110deg,#fff5f8,#fff 55%,#f1fbf6);border:2px solid #f0c4d3;border-radius:24px;padding:14px 18px;text-decoration:none;color:inherit;margin:0 0 22px;box-shadow:0 5px 0 #f0c4d3;transition:transform .14s}
+.dailycard:hover{transform:translateY(-2px)}
+.dailycard .dc-txt{flex:1;min-width:0}.dailycard b{display:block;font-size:1.08rem}.dailycard small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
+.dailycard .daily-ico svg,.daily-title .daily-ico svg{width:40px;height:40px;flex:none}
+.daily{padding-bottom:40px}
+.daily-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 0 6px}
+.daily-title{display:flex;align-items:center;gap:14px}.daily-title h1{margin:2px 0 0;font-size:1.7rem}.daily-streak{margin:4px 0 0;color:#b0533b;font-weight:800}.daily-streak.big{font-size:1.05rem}
+.daily-courses{display:flex;gap:8px;flex-wrap:wrap}.daily-courses .chip.on{background:var(--edge);color:#fff;border-color:var(--edge)}
+.daily-card{padding:22px}
+.daily-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.daily-n{font-weight:800;color:var(--muted);font-size:.9rem}
+.daily-bar{flex-basis:100%;height:8px;border-radius:6px;background:#e9f1ed;overflow:hidden}.daily-bar i{display:block;height:100%;background:var(--brand);transition:width .3s}
+.daily-prompt{font-size:1.12rem;line-height:1.5;margin:4px 0 16px}.daily-prompt table{border-collapse:collapse;margin:8px 0}.daily-prompt td,.daily-prompt th{border:1px solid var(--line);padding:4px 10px}.daily-prompt .measure{font-weight:800}
+.daily-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.daily-choice{text-align:left;font:inherit;font-size:1.02rem;font-weight:650;padding:12px 14px;min-height:50px;border:2px solid #cfdfd8;border-radius:14px;background:#fff;color:var(--ink);cursor:pointer}
+.daily-choice:hover{border-color:var(--brand)}.daily-choice[aria-pressed=true]{border-color:var(--edge);background:#f1fbf6}.daily-choice.right{border-color:#2e9e6a;background:#e6f7ee}.daily-choice:disabled{cursor:default;opacity:.85}
+.daily-inrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.daily-inrow input{flex:1;min-width:180px;font:inherit;font-size:1.1rem;padding:10px 12px;border:2px solid #cfdfd8;border-radius:12px;min-height:46px}.daily-unit{font-weight:800;font-size:1.05rem}
+.daily-note{color:var(--muted);font-size:.9rem;margin:8px 0 0}
+.daily-hint{margin-top:12px;background:#fff8e6;border:1.5px solid #ffd59a;border-radius:12px;padding:10px 12px}
+.daily-fb{margin-top:14px;border-radius:12px;padding:12px 14px;display:none}.daily-fb.bad{display:block;background:#fff0ee;border:1.5px solid #f3b4ae}.daily-fb.good{display:block;background:#e6f7ee;border:1.5px solid #9fdcbd}.daily-fb.shown{display:block;background:#eef1ff;border:1.5px solid #c3cbf5}.daily-explain{display:block;margin-top:6px;color:var(--muted)}
+.daily-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}.daily-next{margin-left:auto}
+.daily-done-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}.daily-done-head h2{margin:2px 0}
+.daily-dots{display:flex;gap:6px}.daily-dots span{width:16px;height:16px;border-radius:50%;background:#f3b4ae}.daily-dots span.ok{background:#2e9e6a}
+.daily-results{list-style:none;padding:0;margin:16px 0}.daily-results li{display:grid;grid-template-columns:28px 1fr;gap:2px 10px;padding:8px 0;border-top:1px solid var(--line)}.daily-results li>span{font-weight:900}.daily-results li.ok>span{color:#2e9e6a}.daily-results li.no>span{color:#d9534f}.daily-results li a{font-weight:700;color:var(--ink)}.daily-results small{grid-column:2;color:var(--muted)}
+.daily-fix{margin-top:8px}.daily-fixrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+@media(max-width:640px){.daily-head{padding-top:16px}.daily-title h1{font-size:1.4rem}.daily-card{padding:16px}.daily-next{margin-left:0;width:100%}.dailycard{flex-wrap:wrap}.dailycard .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -520,6 +547,7 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
     <nav class="navlinks" aria-label="Main">
       <a href="#/" data-nav="home" class="hide-sm">Courses</a>
       <a href="#/search" class="only-sm" aria-label="Search"><svg class="ic" aria-hidden="true"><use href="assets/icons.svg?v=2#i-search"/></svg></a>
+      <a href="#/daily" data-nav="daily">Daily 5</a>
       <a href="#/games" data-nav="games">All games</a>
       <a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener" class="hide-sm">YouTube ↗</a>
     </nav>
@@ -538,6 +566,11 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 <script src="data/guides.js"></script>
 <script src="data/exams.js"></script>
 <script src="data/now.js"></script>
+<script>if(location.protocol==="file:"||/^(localhost|127\.)/.test(location.hostname))window.QB_BASE="../questionbank/";</script>
+<script src="https://itsdrdan.github.io/questionbank/qb.js"></script>
+<script>if(!window.QB)document.write('<script src="../questionbank/qb.js"><\/script>');</script>
+<script src="track.js" defer></script>
+<script src="daily.js"></script>
 <script>
 'use strict';
 /* ---------- data ---------- */
@@ -693,6 +726,7 @@ function viewHome() {
       search,
       h('div', {class: 'tryrow'}, h('span', {}, 'Try:'), tries.map(t => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(t)}, t))),
       last && courseById[last] ? h('div', {}, h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`)) : null)),
+    h('section', {class: 'wrap', style: 'padding-top:22px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
       h('div', {class: 'courses'}, COURSE_ORDER.map(id => {
@@ -735,6 +769,7 @@ function courseOverview(c) {
   for (const g of games.values()) if (!allGames.includes(g) && (g.courses || []).includes(c.id)) allGames.push(g);
   return h('div', {},
     weekCard(c.id),
+    dailyCard(c.id),
     h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
     h('h2', {class: 'ct', style: 'margin-top:8px'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
     h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
@@ -1206,6 +1241,7 @@ function route() {
   else if (parts[0] === 'course') viewCourse((parts[1] || '').toUpperCase(), parts[2]);
   else if (parts[0] === 'games') { viewGames(params); document.querySelector('[data-nav=games]')?.setAttribute('aria-current', 'page'); }
   else if (parts[0] === 'play') viewPlay(parts[1], params);
+  else if (parts[0] === 'daily') { viewDaily(parts[1], params); document.querySelector('[data-nav=daily]')?.setAttribute('aria-current', 'page'); }
   else if (parts[0] === 'search') viewSearch(params);
   else if (parts[0] === 'exams') { viewExamHub((parts[1] || '').split('#')[0].toUpperCase()); if ((parts[1] || '').includes('#checks')) setTimeout(() => document.getElementById('checks')?.scrollIntoView({block: 'start'}), 50); }
   else if (parts[0] === 'exam') viewExam((parts[1] || '').toUpperCase(), parts[2] || '1', params, false);
