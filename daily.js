@@ -12,6 +12,22 @@
   const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
+
+  /* ---- stacked scripts: mass number over atomic number (²³⁴₉₂U, <span class="ss pre">…), and a charge over a subscript (PO³⁻₄) ---- */
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻', SUB = '₀₁₂₃₄₅₆₇₈₉₊₋', PLAIN = '0123456789+−';
+  const plain = (t, set) => [...t].map(c => { const i = set.indexOf(c); return i < 0 ? c : PLAIN[i]; }).join('');
+  const PRE_U = /(^|[\s(\[>"'→⟶+,;:=\/])([⁰¹²³⁴⁵⁶⁷⁸⁹]+m?)([₊₋]?[₀₁₂₃₄₅₆₇₈₉]+)(?=[A-Za-zαβγ])/g;
+  const POST_U = /([A-Za-z)\]])([⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻])([₀₁₂₃₄₅₆₇₈₉]+)/g;
+  const PRE_H = /(^|[\s(\[>"'→⟶+,;:=\/])<sup>(\d+m?)<\/sup>\s*<sub>([+−-]?\d+)<\/sub>(?=[A-Za-zαβγ])/g;
+  function stack(html) {
+    if (html == null) return html;
+    return String(html).split(/(<[^>]*>)/).map(part => part.startsWith('<') ? part : part
+      .replace(PRE_U, (m, b, a, z) => b + '<span class="ss pre"><sup>' + plain(a, SUP) + '</sup><sub>' + plain(z, SUB) + '</sub></span>')
+      .replace(POST_U, (m, b, c, n) => b + '<span class="ss"><sup>' + plain(c, SUP) + '</sup><sub>' + plain(n, SUB) + '</sub></span>')
+    ).join('').replace(PRE_H, (m, b, a, z) => b + '<span class="ss pre"><sup>' + a + '</sup><sub>' + z + '</sub></span>');
+  }
+  window.ddStack = stack;
+
   /* ---- shared day streak (any ItsDrDan game may call these) ---- */
   function streak() { const s = load(STREAK_KEY, {}); if (s.last && s.last !== today() && s.last !== yesterday()) return {...s, streak: 0}; return {streak: 0, best: 0, ...s}; }
   function streakDone() { const s = streak(); if (s.last === today()) return s; s.streak = s.last === yesterday() ? (s.streak || 0) + 1 : 1; s.last = today(); s.best = Math.max(s.best || 0, s.streak); s.days = Object.assign({}, s.days, {[today()]: 1}); const keep = Object.keys(s.days).sort().slice(-60); s.days = Object.fromEntries(keep.map(k => [k, 1])); save(STREAK_KEY, s); return s; }
@@ -130,25 +146,25 @@
   function questionCard(root, cid, st) {
     const q = st.qs[st.done], n = st.done + 1, c = courseById[cid];
     let answered = false, tries = 0, usedHint = false, firstSlip = '';
-    const prompt = h('div', {class: 'daily-prompt', html: q.prompt});
+    const prompt = h('div', {class: 'daily-prompt', html: stack(q.prompt)});
     const fb = h('div', {class: 'daily-fb', role: 'status'});
     const hintBox = h('div', {class: 'daily-hint', hidden: true});
     let getAnswer, input;
     const answerArea = h('div', {class: 'daily-answer'});
     const btns = [];
     if (q.type === 'mc') {
-      q.choices.forEach(ch => btns.push(h('button', {type: 'button', class: 'daily-choice', html: ch, 'data-right': ch === q.answer ? '1' : null, onclick: e => { if (answered) return; btns.forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); grade(ch); }})));
+      q.choices.forEach(ch => btns.push(h('button', {type: 'button', class: 'daily-choice', html: stack(ch), 'data-right': ch === q.answer ? '1' : null, onclick: e => { if (answered) return; btns.forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); grade(ch); }})));
       answerArea.append(h('div', {class: 'daily-choices'}, btns)); getAnswer = () => null;
     } else {
       input = h('input', {type: 'text', inputmode: q.type === 'number' ? 'decimal' : 'text', autocomplete: 'off', spellcheck: 'false', placeholder: q.type === 'number' ? (q.sigfigs ? q.sigfigs + ' sig figs, e.g. 2.5E-3' : 'e.g. 2.5E-3') : 'Type your answer', 'aria-label': 'Your answer'});
       input.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); grade(input.value); } });
-      answerArea.append(h('div', {class: 'daily-inrow'}, input, q.unit ? h('span', {class: 'daily-unit', html: q.unit}) : null, h('button', {type: 'button', class: 'btn', onclick: () => grade(input.value)}, 'Check')));
+      answerArea.append(h('div', {class: 'daily-inrow'}, input, q.unit ? h('span', {class: 'daily-unit', html: stack(q.unit)}) : null, h('button', {type: 'button', class: 'btn', onclick: () => grade(input.value)}, 'Check')));
       if (q.type === 'number' && q.sigfigs) answerArea.append(h('p', {class: 'daily-note'}, `Answer to ${q.sigfigs} significant figures.`));
       getAnswer = () => input.value;
     }
     const nextBtn = h('button', {type: 'button', class: 'btn daily-next', hidden: true, onclick: () => { st.done++; save(st.key || STATE_KEY, st); render(root, cid, st); }}, n < st.qs.length ? 'Next question →' : 'See today’s results →');
     const showBtn = h('button', {type: 'button', class: 'btn secondary small', onclick: () => { if (answered) return; finish(false, true); }}, 'Show answer');
-    const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + q.hint; }}, '💡 Hint');
+    const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + stack(q.hint); }}, '💡 Hint');
     function grade(resp) {
       if (answered) return; tries++;
       const ok = QB.check(q, resp);
@@ -164,7 +180,7 @@
       btns.forEach(b => { b.disabled = true; if (b.dataset.right) b.classList.add('right'); });
       const firstTry = ok && tries === 1 && !usedHint;
       fb.className = 'daily-fb ' + (ok ? 'good' : 'shown');
-      fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + q.explain + '</span>' : '');
+      fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + stack(q.explain) + '</span>' : '');
       const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
       st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(st.key || STATE_KEY, st);
       if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, '');
@@ -175,7 +191,7 @@
       prompt, answerArea, hintBox, fb,
       h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
   }
-  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); return '<b>' + (Number.isFinite(a) ? (Math.abs(a) >= 1e4 || (Math.abs(a) < 1e-3 && a !== 0) ? a.toPrecision(3).replace(/e([+-]\d+)/, ' × 10^$1') : Number(a.toPrecision(3))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + q.answer + '</b>'; }
+  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); return '<b>' + (Number.isFinite(a) ? (Math.abs(a) >= 1e4 || (Math.abs(a) < 1e-3 && a !== 0) ? a.toPrecision(3).replace(/e([+-]\d+)/, ' × 10^$1') : Number(a.toPrecision(3))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + stack(q.answer) + '</b>'; }
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
