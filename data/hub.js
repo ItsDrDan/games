@@ -288,6 +288,7 @@ window.HUB_DATA = {
   },
   {
    "id": "nucleicacids",
+   "logo": "assets/games/nucleicacids.webp",
    "title": "Helix Hustle (Nucleic Acids & Protein Synthesis)",
    "icon": "dna",
    "blurb": "Read DNA and RNA, copy it, transcribe it, and crack the genetic code.",
