@@ -287,6 +287,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/lipids/"
   },
   {
+   "id": "metabolism",
+   "logo": "assets/games/metabolism.webp",
+   "title": "Metabolic Marathon (Metabolism)",
+   "icon": "lightning",
+   "blurb": "Follow fuel to ATP: read pathway diagrams, count NADH and ATP, name reaction types, and see what your body does when fed or fasting.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/metabolism/"
+  },
+  {
    "id": "finalexam",
    "logo": "assets/games/finalexam.webp",
    "title": "Final Exam Review",
@@ -9972,7 +9983,9 @@ window.HUB_DATA = {
       "gluconeogenesis",
       "Cori cycle"
      ],
-     "games": [],
+     "games": [
+      "metabolism"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "bread",
@@ -9990,7 +10003,9 @@ window.HUB_DATA = {
       "ATP yield from glucose",
       "malate–aspartate shuttle"
      ],
-     "games": [],
+     "games": [
+      "metabolism"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "lightning",
@@ -10011,7 +10026,9 @@ window.HUB_DATA = {
       "ketone bodies",
       "lipogenesis"
      ],
-     "games": [],
+     "games": [
+      "metabolism"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "avocado",
@@ -10030,7 +10047,9 @@ window.HUB_DATA = {
       "urea cycle",
       "essential vs non-essential amino acids"
      ],
-     "games": [],
+     "games": [
+      "metabolism"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "egg",
