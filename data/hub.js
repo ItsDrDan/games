@@ -32,7 +32,8 @@ window.HUB_DATA = {
    "id": "sigfig",
    "title": "Significant Figures",
    "icon": "sigfig",
-   "blurb": "Count significant figures in measured and exact numbers, in standard and scientific notation.",
+   "logo": "assets/games/sigfig.webp",
+   "blurb": "Count, round and do math with sig figs, and read real lab glassware and balances.",
    "courses": [
     "3A",
     "1A"
