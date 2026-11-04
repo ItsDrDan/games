@@ -207,15 +207,15 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
     {id: 'organic', icon: 'benzene', title: 'Organic Chemistry', blurb: 'Structures, functional groups, naming, and reactions (Units 1–8).',
      games: ['lewisstructures', 'organic', 'functionalgroups', 'organicreactions']},
     {id: 'bio', icon: 'dna', title: 'Biochemistry', blurb: 'Carbohydrates, amino acids, proteins, and the biomolecules behind them (Units 9–17).',
-     games: ['carbohydrates', 'aminoacids', 'enzymes'],
-     soon: 'More on the way: Lipids, Nucleic Acids, and Metabolism.'},
+     games: ['carbohydrates', 'lipids', 'aminoacids', 'enzymes'],
+     soon: 'More on the way: Nucleic Acids and Metabolism.'},
     {id: 'exam', icon: 'exam', title: 'Final Exam Prep', blurb: 'Timed practice and weak-spot review for the standardized final.',
      games: ['finalexam']}
   ];
   /* Short labels for cards, so students know where each game fits. */
   const UNITS = {
     lewisstructures: ['Unit 1', 'Unit 2'], organic: ['Unit 1'], functionalgroups: ['Units 1–8'], organicreactions: ['Units 2–8'],
-    carbohydrates: ['Unit 6', 'Unit 9'], aminoacids: ['Unit 11', 'Unit 13'], enzymes: ['Unit 12'], finalexam: ['Final']
+    carbohydrates: ['Unit 6', 'Unit 9'], aminoacids: ['Unit 11', 'Unit 13'], enzymes: ['Unit 12'], lipids: ['Unit 10'], finalexam: ['Final']
   };
 
   const games = new Map(D.games.filter(g => (g.courses || []).includes('3B')).map(g => [g.id, g]));

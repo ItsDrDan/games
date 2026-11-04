@@ -276,6 +276,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/enzymes/"
   },
   {
+   "id": "lipids",
+   "logo": "assets/games/lipids.webp",
+   "title": "Lipid Lab (Lipids)",
+   "icon": "lipid",
+   "blurb": "Read fatty acid chains, make and break fats, sort the lipid families, and see how membranes work.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/lipids/"
+  },
+  {
    "id": "finalexam",
    "logo": "assets/games/finalexam.webp",
    "title": "Final Exam Review",
@@ -9857,7 +9868,9 @@ window.HUB_DATA = {
       "phospholipids and sphingolipids",
       "cell membranes and transport"
      ],
-     "games": [],
+     "games": [
+      "lipids"
+     ],
      "videos": [
       "BQwU9Z7myeg",
       "Heg74N-mZms",
