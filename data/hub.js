@@ -287,6 +287,16 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/lipids/"
   },
   {
+   "id": "nucleicacids",
+   "title": "Helix Hustle (Nucleic Acids & Protein Synthesis)",
+   "icon": "dna",
+   "blurb": "Read DNA and RNA, copy it, transcribe it, and crack the genetic code.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/nucleicacids/"
+  },
+  {
    "id": "metabolism",
    "logo": "assets/games/metabolism.webp",
    "title": "Metabolic Marathon (Metabolism)",
@@ -9960,6 +9970,7 @@ window.HUB_DATA = {
       "viruses"
      ],
      "games": [
+      "nucleicacids",
       "aminoacids"
      ],
      "videos": [],
