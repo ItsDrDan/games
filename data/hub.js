@@ -265,6 +265,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/aminoacids/"
   },
   {
+   "id": "enzymes",
+   "logo": "assets/games/enzymes.webp",
+   "title": "Enzyme Engine (Enzymes & Vitamins)",
+   "icon": "enzyme",
+   "blurb": "Classify enzymes, read activity graphs, spot the inhibitor, and match every vitamin to its coenzyme.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/enzymes/"
+  },
+  {
    "id": "finalexam",
    "logo": "assets/games/finalexam.webp",
    "title": "Final Exam Review",
@@ -9900,7 +9911,9 @@ window.HUB_DATA = {
       "enzyme inhibition",
       "cofactors and vitamins"
      ],
-     "games": [],
+     "games": [
+      "enzymes"
+     ],
      "videos": [],
      "playlists": [],
      "icon": "enzyme",
