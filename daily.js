@@ -10,6 +10,16 @@
   const today = () => dayKey(new Date()), yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return dayKey(d); };
   const load = (k, fb) => { try { return JSON.parse(localStorage.getItem(k) || 'null') ?? fb; } catch { return fb; } };
   const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  /* styles for the Canvas card (embed mode) and stacked fractions in bank items; and, when iframed, brand/embed.js so Canvas sizes the frame */
+  try {
+    const css = document.createElement('style');
+    css.textContent = '.daily-kicker{display:none;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b0466e}body.embed .daily-kicker{display:block}' +
+      '.daily-weeknote{margin:2px 0 0;color:var(--muted);font-size:.92rem}body.embed .daily-title h1{font-size:1.3rem}.daily-allgames{align-self:center}' +
+      '.daily .fraction{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .2em;line-height:1.25}.daily .fraction .num{border-bottom:2px solid currentColor;padding:0 .3em .1em}.daily .fraction .den{padding:.1em .3em 0}' +
+      'body.embed .daily{background:linear-gradient(135deg,#fde4ec,#e3f4ee);border:2px solid #24473f;border-radius:20px;padding:4px 14px 14px;margin:2px auto 4px;box-sizing:border-box}';
+    document.head.append(css);
+    if (window.parent !== window && !document.querySelector('script[src*="brand/embed.js"]')) { const sc = document.createElement('script'); sc.src = 'brand/embed.js'; sc.defer = true; document.head.append(sc); }
+  } catch {}
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
 
@@ -50,11 +60,22 @@
   function usable(q) { const p = String(q.prompt || ''); if (!p.trim()) return false; if (NEEDS_VISUAL.test(p) && !/<(table|svg|img)/i.test(p)) return false; if (q.type === 'mc' && (!q.choices || q.choices.length < 2)) return false; return true; }
 
   /* ---- choose five chapters, then one fresh question from each ---- */
-  async function pickQuestions(cid, only) {
+  async function pickQuestions(cid, only, focus) {
     const c = courseById[cid], index = await QB.index(); if (!index) return null;
     only = only || [];
     const covered = ch => Object.values(index.chapters[cid + '-' + ch.id] || {}).reduce((a, b) => a + b, 0) > 0;
-    const chs = c.chapters.filter(covered).filter(ch => !only.length || only.includes(ch.id)); if (!chs.length) return null;
+    let chs = c.chapters.filter(covered).filter(ch => !only.length || only.includes(ch.id)); if (!chs.length) return null;
+    /* focus: a fixed number of questions from one chapter (optionally only some skills), the rest from the other chapters */
+    const lead = [];
+    if (focus) {
+      const fch = c.chapters.find(x => x.id === focus.ch), seen0 = load(SEEN_KEY, []);
+      const opts = {course: cid, chapters: [cid + '-' + focus.ch], types: TYPES, n: 30}; if (focus.skills) opts.skills = focus.skills;
+      let qs = (await QB.get({...opts, exclude: seen0})).filter(usable); if (qs.length < focus.n) qs = (await QB.get(opts)).filter(usable);
+      for (const q of shuffle(qs).slice(0, focus.n)) lead.push({...q, ch: fch.id, chLabel: fch.label, chTitle: fch.title});
+      const rest = chs.filter(ch => ch.id !== focus.ch); if (rest.length) chs = rest;
+      if (lead.length >= 5) return lead;
+    }
+    const want = 5 - lead.length;
     const cur = currentChapter(cid), curIdx = cur ? chs.indexOf(cur) : -1, hist = load(CH_KEY, {}), now = Date.now(), day = 864e5;
     const scored = chs.map((ch, i) => {
       const k = cid + '-' + ch.id, p = hist[k] || {}; let s = 1;
@@ -67,8 +88,8 @@
       return [ch, Math.max(0.01, s)];
     });
     const picked = [];
-    while (picked.length < 5 && scored.length) { const total = scored.reduce((n, [, s]) => n + s, 0); let r = Math.random() * total, i = 0; for (; i < scored.length; i++) { r -= scored[i][1]; if (r <= 0) break; } i = Math.min(i, scored.length - 1); picked.push(scored[i][0]); scored.splice(i, 1); }
-    const seen = load(SEEN_KEY, []), out = [];
+    while (picked.length < want && scored.length) { const total = scored.reduce((n, [, s]) => n + s, 0); let r = Math.random() * total, i = 0; for (; i < scored.length; i++) { r -= scored[i][1]; if (r <= 0) break; } i = Math.min(i, scored.length - 1); picked.push(scored[i][0]); scored.splice(i, 1); }
+    const seen = load(SEEN_KEY, []).concat(lead.map(q => q.id)), out = lead.slice();
     for (const ch of picked) {
       let qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, exclude: seen, n: 12})).filter(usable);
       if (!qs.length) qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, n: 12})).filter(usable);
@@ -103,18 +124,41 @@
 
   function courseChips(cid) { return h('div', {class: 'daily-courses'}, COURSE_ORDER.map(id => h('a', {class: 'chip' + (id === cid ? ' on' : ''), 'data-course': id, href: '#/daily/' + id, 'aria-current': id === cid ? 'true' : null}, 'CHEM ' + id))); }
 
+  /* this week's focus for a class, from HUB_NOW (kept current in data/now.js); null when it's stale (3+ weeks old) */
+  function thisWeek(cid) {
+    const now = (window.HUB_NOW || {})[cid], c = courseById[cid]; if (!now || !c) return null;
+    if ((Date.now() - new Date(now.updated + 'T12:00:00').getTime()) > 21 * 864e5) return null;
+    const has = id => c.chapters.some(x => x.id === id), d = now.daily;
+    if (d && (d.focus || d.review)) {
+      /* a planned mix, e.g. {focus:{ch:'11', n:2, skills:[...]}, review:['1',…,'10'], title, note} */
+      const focus = d.focus && has(String(d.focus.ch)) ? {ch: String(d.focus.ch), n: Math.min(5, d.focus.n || 2), skills: d.focus.skills || null} : null;
+      const review = (d.review || []).map(String).filter(has);
+      const ids = [...new Set([].concat(focus ? [focus.ch] : [], review))]; if (!ids.length) return null;
+      return {chs: ids, focus, title: d.title || now.lecture?.text || '', note: d.note || '', names: []};
+    }
+    const ids = [...new Set([].concat(now.lecture?.ch || [], now.check?.ch || []).map(String))].filter(has);
+    if (!ids.length) return null;
+    const names = ids.map(id => { const ch = c.chapters.find(x => x.id === id); return ch.label + ' ' + ch.title; });
+    return {chs: ids, names, title: [now.lecture?.text, now.check?.n ? 'Skill Check #' + now.check.n + ' prep' : ''].filter(Boolean).join(' · ')};
+  }
+
   function viewDaily(cid, params) {
     cid = (cid || recall('course') || '').toUpperCase();
     if (!courseById[cid]) { setTitle('Daily 5'); app.replaceChildren(h('section', {class: 'wrap daily', style: 'padding-top:26px'}, h('div', {class: 'eyebrow'}, 'Daily 5'), h('h1', {}, 'Five questions a day. Which class?'), h('p', {class: 'lead'}, 'Pick your class and you’ll get five quick questions: what you missed lately, what you haven’t seen in a while, and what your class is on this week.'), courseChips(''))); return; }
     /* optional subset: #/daily/3B?ch=1,2,3&label=Organic keeps its own day state, so two subsets can run side by side */
-    const only = ((params && params.get('ch')) || '').split(',').map(x => x.trim()).filter(Boolean), label = (params && params.get('label')) || '';
+    let only = ((params && params.get('ch')) || '').split(',').map(x => x.trim()).filter(Boolean), label = (params && params.get('label')) || '';
+    /* ch=now: this week's chapters from data/now.js (what's being taught + what the next skill check covers) */
+    let week = null;
+    if (only.length === 1 && only[0] === 'now') {
+      week = thisWeek(cid); only = week ? week.chs : []; if (!label) label = 'This week';
+    }
     const key = STATE_KEY + (only.length ? ':' + cid + ':' + only.join(',') : '');
     remember('course', cid); setTitle('Daily 5 · CHEM ' + cid + (label ? ' · ' + label : ''));
     let st = load(key, null);
     const fresh = st && st.date === today() && st.course === cid && Array.isArray(st.qs) && st.qs.length;
     const extra = params && params.get('more') === '1';
     if (!fresh || (extra && st.done >= st.qs.length)) st = {date: today(), course: cid, qs: [], done: 0, results: [], round: fresh && extra ? (st.round || 1) + 1 : 1};
-    st.key = key; st.only = only; st.label = label;
+    st.key = key; st.only = only; st.label = label; st.week = week;
     const root = h('section', {class: 'wrap daily', 'data-course': cid});
     app.replaceChildren(root);
     render(root, cid, st);
@@ -123,7 +167,12 @@
   function header(cid, st) {
     const s = streak(), c = courseById[cid];
     return h('div', {class: 'daily-head'},
-      h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')), h('h1', {}, st.round > 1 ? 'Bonus round' : (st.label ? st.label + ': today’s five' : 'Today’s five')), h('p', {class: 'daily-streak'}, streakLine(s)))),
+      h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')),
+        st.week ? h('div', {class: 'daily-kicker'}, 'Today’s Daily 5 · CHEM ' + cid) : null,
+        h('h1', {}, st.round > 1 ? 'Bonus round' : st.week ? 'This week: ' + st.week.title : (st.label ? st.label + ': today’s five' : 'Today’s five')),
+        st.week ? h('p', {class: 'daily-weeknote'}, st.week.note || ('Five quick questions from ' + st.week.names.join(', ').replace(/, ([^,]*)$/, ' & $1') + '. About 5 minutes.')) : null,
+        h('p', {class: 'daily-streak'}, streakLine(s)))),
+      st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
       courseChips(cid));
   }
 
@@ -132,7 +181,7 @@
     if (!st.qs.length) {
       const wait = h('div', {class: 'panel daily-wait'}, h('p', {}, 'Picking today’s five…'));
       root.append(wait);
-      let qs = null; try { qs = await pickQuestions(cid, st.only); } catch (e) { qs = null; }
+      let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus); } catch (e) { qs = null; }
       if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', href: '#/games?course=' + cid}, 'All CHEM ' + cid + ' games →')); return; }
       st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
       const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
@@ -195,7 +244,7 @@
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
-  const sub = st => (st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '');
+  const sub = st => (st.week ? '&ch=now' : st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '');
   function summary(cid, st) {
     const c = courseById[cid], right = st.results.filter(r => r && r.firstTry).length;
     const s = st.round > 1 ? streak() : streakDone();
