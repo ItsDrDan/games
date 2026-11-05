@@ -244,7 +244,7 @@ window.HUB_DATA = {
   },
   {
    "id": "phcharge",
-   "logo": "assets/games/phcharge.svg",
+   "logo": "assets/games/phcharge.webp",
    "title": "Proton Patrol (pH & Charge)",
    "icon": "ph",
    "blurb": "Decide what each group does at pH 7.4, find net charges of drugs and amino acids, and name and dissolve salts.",
