@@ -258,7 +258,7 @@ window.HUB_DATA = {
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
    "icon": "reaction",
-   "blurb": "Identify reactions, pick or draw the products, and work backward to reactants for the 3B organic chapters.",
+   "blurb": "Identify reactions, pick reagents and products, solve two-step roadmaps, and draw structures for the 3B organic chapters, plus real body-chemistry reactions.",
    "courses": [
     "3B"
    ],
