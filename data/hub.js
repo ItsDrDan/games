@@ -225,7 +225,7 @@ window.HUB_DATA = {
    "logo": "assets/games/functionalgroups.webp",
    "title": "Organic Origins (Hydrocarbons to Amides)",
    "icon": "organic",
-   "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then predict how they react.",
+   "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then compare their properties.",
    "courses": [
     "3B"
    ],
@@ -258,7 +258,7 @@ window.HUB_DATA = {
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
    "icon": "reaction",
-   "blurb": "Identify reactions and draw reactants and products for the 3B organic chapters.",
+   "blurb": "Identify reactions, pick or draw the products, and work backward to reactants for the 3B organic chapters.",
    "courses": [
     "3B"
    ],
