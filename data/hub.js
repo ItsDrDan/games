@@ -243,6 +243,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/stereochemistry/"
   },
   {
+   "id": "phcharge",
+   "logo": "assets/games/phcharge.svg",
+   "title": "Proton Patrol (pH & Charge)",
+   "icon": "ph",
+   "blurb": "Decide what each group does at pH 7.4, find net charges of drugs and amino acids, and name and dissolve salts.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/pHcharge/"
+  },
+  {
    "id": "organicreactions",
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
@@ -9806,6 +9817,7 @@ window.HUB_DATA = {
       "saponification"
      ],
      "games": [
+      "phcharge",
       "functionalgroups",
       "organicreactions"
      ],
@@ -9837,7 +9849,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "functionalgroups",
-      "organicreactions"
+      "organicreactions",
+      "phcharge"
      ],
      "videos": [
       "HU4KHyptdVA"
@@ -9935,7 +9948,8 @@ window.HUB_DATA = {
       "protein hydrolysis and denaturation"
      ],
      "games": [
-      "aminoacids"
+      "aminoacids",
+      "phcharge"
      ],
      "videos": [
       "Y_bXmJDoANI",
