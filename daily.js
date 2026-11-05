@@ -59,8 +59,57 @@
   const NEEDS_VISUAL = /((in|from|use|using) the (table|graph|figure|diagram|image)\b|schematic graph|the (table|graph|figure|diagram|image) (shows|below|above)|shown (above|below))/i;
   function usable(q) { const p = String(q.prompt || ''); if (!p.trim()) return false; if (NEEDS_VISUAL.test(p) && !/<(table|svg|img)/i.test(p)) return false; if (q.type === 'mc' && (!q.choices || q.choices.length < 2)) return false; return true; }
 
+  /* ---- planned mix for the Canvas card (data/now.js daily.mix): a few questions from each listed topic ---- */
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const fmtF = s => String(s).replace(/([A-Za-z)\]])(\d+)/g, '$1<sub>$2</sub>');      // O2 → O<sub>2</sub>
+  const SIMPLE_CATS = ['Combination', 'Decomposition', 'Single displacement', 'Double displacement', 'Combustion'];
+  /* Reaction Rumble items (type "reaction") become multiple choice: name the reaction type, or pick the balanced equation */
+  function reactionToMC(q) {
+    const d = q.data || {}; if (!d.r || !d.p || !d.coef) return null;
+    const sp = d.r.concat(d.p), st = d.states || {};
+    const eq = (co, states) => { const side = (list, off) => list.map((f, i) => (co[off + i] > 1 ? co[off + i] + ' ' : '') + fmtF(f) + (states && st[f] ? '(' + st[f] + ')' : '')).join(' + '); return side(d.r, 0) + ' → ' + side(d.p, d.r.length); };
+    const right = eq(d.coef, true);
+    if (SIMPLE_CATS.includes(d.cat) && Math.random() < 0.5) {
+      const choices = [d.cat].concat(shuffle(SIMPLE_CATS.filter(x => x !== d.cat)).slice(0, 3));
+      return {...q, type: 'mc', prompt: 'What type of reaction is this?<br><b>' + right + '</b>', choices, answer: d.cat, explain: q.hint || ''};
+    }
+    const wrong = new Set(), key = co => co.join(',');
+    const ones = sp.map(() => 1); if (key(ones) !== key(d.coef)) wrong.add(key(ones));
+    for (let t = 0; t < 40 && wrong.size < 3; t++) { const co = d.coef.slice(), i = Math.floor(Math.random() * co.length); co[i] = Math.max(1, co[i] + (Math.random() < .5 ? 1 : -1)); if (key(co) !== key(d.coef)) wrong.add(key(co)); }
+    if (wrong.size < 3) return null;
+    const choices = [right].concat([...wrong].slice(0, 3).map(k => eq(k.split(',').map(Number), true)));
+    return {...q, type: 'mc', prompt: 'Predict the products. Which equation is correct <b>and</b> balanced?<br>' + d.r.map(fmtF).join(' + ') + ' → ?', choices, answer: right, explain: q.hint || ''};
+  }
+  /* simple molarity (M = mol ÷ L), made fresh each time */
+  const SOLUTES = [['NaCl', 58.44], ['NaOH', 40.00], ['KCl', 74.55], ['C6H12O6', 180.16], ['CaCl2', 110.98], ['KNO3', 101.10], ['MgCl2', 95.21]];
+  const r3 = x => Number(x.toPrecision(3));
+  function genMolarity() {
+    const [f, mm] = pick(SOLUTES), F = fmtF(f), id = 'gen-molarity-' + Math.random().toString(36).slice(2, 8), chart = `<br><small>Molar mass of ${F} = ${mm} g mol⁻¹</small>`;
+    const kind = Math.floor(Math.random() * 3);
+    if (kind === 0) { const mol = r3(0.05 + Math.random() * 0.9), L = r3(0.1 + Math.random() * 1.9);
+      return {id, type: 'number', unit: 'M', prompt: `${mol} mol of ${F} is dissolved in enough water to make ${L} L of solution. What is the molarity?`, answer: mol / L, tolerance: .015, hint: 'Molarity = moles of solute ÷ liters of solution.', explain: `M = ${mol} mol ÷ ${L} L`}; }
+    if (kind === 1) { const g = r3(1 + Math.random() * 40), mL = Math.round(100 + Math.random() * 400) / 1;
+      return {id, type: 'number', unit: 'M', prompt: `${g} g of ${F} is dissolved in enough water to make ${mL}. mL of solution. What is the molarity?${chart}`, answer: (g / mm) / (mL / 1000), tolerance: .015, hint: 'Grams → moles (÷ molar mass), mL → L (÷ 1000), then moles ÷ liters.', explain: `(${g} g ÷ ${mm} g mol⁻¹) ÷ ${mL / 1000} L`}; }
+    const M = r3(0.05 + Math.random() * 1.45), mL = Math.round(50 + Math.random() * 450);
+    return {id, type: 'number', unit: 'g', prompt: `How many grams of ${F} are needed to make ${mL}. mL of a ${M} M ${F} solution?${chart}`, answer: M * (mL / 1000) * mm, tolerance: .015, hint: 'Moles = M × L, then grams = moles × molar mass.', explain: `${M} mol/L × ${mL / 1000} L × ${mm} g mol⁻¹`};
+  }
+  async function pickMix(cid, mix) {
+    const c = courseById[cid], seen = load(SEEN_KEY, []), out = [];
+    for (const g of mix) {
+      const ch = c.chapters.find(x => x.id === g.ch); if (!ch) continue;
+      const tag = q => ({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title});
+      if (g.gen === 'molarity') { for (let i = 0; i < g.n; i++) out.push(tag(genMolarity())); continue; }
+      const opts = {course: cid, chapters: [cid + '-' + g.ch], types: TYPES.concat('reaction'), n: 40}; if (g.skills) opts.skills = g.skills;
+      const prep = list => list.map(q => q.type === 'reaction' ? reactionToMC(q) : q).filter(q => q && usable(q));
+      let qs = prep(await QB.get({...opts, exclude: seen})); if (qs.length < g.n) qs = prep(await QB.get(opts));
+      shuffle(qs).slice(0, g.n).forEach(q => out.push(tag(q)));
+    }
+    return out.length ? out.slice(0, 5) : null;
+  }
+
   /* ---- choose five chapters, then one fresh question from each ---- */
-  async function pickQuestions(cid, only, focus) {
+  async function pickQuestions(cid, only, focus, mix) {
+    if (mix && mix.length) { const m = await pickMix(cid, mix); if (m) return m; }
     const c = courseById[cid], index = await QB.index(); if (!index) return null;
     only = only || [];
     const covered = ch => Object.values(index.chapters[cid + '-' + ch.id] || {}).reduce((a, b) => a + b, 0) > 0;
@@ -129,6 +178,11 @@
     const now = (window.HUB_NOW || {})[cid], c = courseById[cid]; if (!now || !c) return null;
     if ((Date.now() - new Date(now.updated + 'T12:00:00').getTime()) > 21 * 864e5) return null;
     const has = id => c.chapters.some(x => x.id === id), d = now.daily;
+    if (d && Array.isArray(d.mix)) {
+      /* a planned topic mix, e.g. mix:[{ch:'11', n:2, skills:[…]}, {ch:'9', n:1, gen:'molarity'}] */
+      const mix = d.mix.map(g => ({...g, ch: String(g.ch), n: Math.max(1, Math.min(5, g.n || 1))})).filter(g => has(g.ch));
+      if (mix.length) return {chs: [...new Set(mix.map(g => g.ch))], mix, title: d.title || now.lecture?.text || '', note: d.note || '', names: []};
+    }
     if (d && (d.focus || d.review)) {
       /* a planned mix, e.g. {focus:{ch:'11', n:2, skills:[...]}, review:['1',…,'10'], title, note} */
       const focus = d.focus && has(String(d.focus.ch)) ? {ch: String(d.focus.ch), n: Math.min(5, d.focus.n || 2), skills: d.focus.skills || null} : null;
@@ -181,7 +235,7 @@
     if (!st.qs.length) {
       const wait = h('div', {class: 'panel daily-wait'}, h('p', {}, 'Picking today’s five…'));
       root.append(wait);
-      let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus); } catch (e) { qs = null; }
+      let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus, st.week && st.week.mix); } catch (e) { qs = null; }
       if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', href: '#/games?course=' + cid}, 'All CHEM ' + cid + ' games →')); return; }
       st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
       const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
