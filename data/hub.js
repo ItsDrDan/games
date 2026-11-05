@@ -233,7 +233,7 @@ window.HUB_DATA = {
   },
   {
    "id": "stereochemistry",
-   "logo": "assets/games/stereochemistry.svg",
+   "logo": "assets/games/stereochemistry.webp",
    "title": "Mirror Match (Stereochemistry)",
    "icon": "benzene",
    "blurb": "Spot chiral carbons, tell enantiomers from diastereomers on wedges and dashes, and read cis–trans and Fischer projections.",
