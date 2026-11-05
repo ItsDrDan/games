@@ -548,6 +548,9 @@ body.embed::before{display:none}
 body.embed{background:transparent}
 </style>
 <link rel="stylesheet" href="brand/itsdrdan.css">
+<style>/* In Canvas (brand/embed.js): the frame is as tall as the page, so sticky/vh boxes just show in full */
+html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .toc{max-height:none}</style>
+<script src="brand/embed.js" defer></script>
 </head>
 <body>
 <header class="top">
@@ -1259,6 +1262,9 @@ function route() {
   else if (['3a', '1a', '1b', '3b'].includes(parts[0].toLowerCase())) viewCourse(parts[0].toUpperCase(), parts[1]);
   else viewNotFound();
   window.scrollTo(0, 0);
+  // In an auto-sized Canvas frame scrollTo does nothing; bring the top of the hub back into view after a click instead (not on first load).
+  if (route.ran && document.documentElement.classList.contains('dd-autosize')) (document.querySelector('.crumbs') || app).scrollIntoView({block: 'nearest'});
+  route.ran = true;
   app.focus({preventScroll: true});
 }
 window.addEventListener('hashchange', route);
