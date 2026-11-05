@@ -232,6 +232,17 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/functionalgroups/"
   },
   {
+   "id": "stereochemistry",
+   "logo": "assets/games/stereochemistry.svg",
+   "title": "Mirror Match (Stereochemistry)",
+   "icon": "benzene",
+   "blurb": "Spot chiral carbons, tell enantiomers from diastereomers on wedges and dashes, and read cis–trans and Fischer projections.",
+   "courses": [
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/stereochemistry/"
+  },
+  {
    "id": "organicreactions",
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
@@ -9654,7 +9665,8 @@ window.HUB_DATA = {
      "games": [
       "functionalgroups",
       "organicreactions",
-      "lewisstructures"
+      "lewisstructures",
+      "stereochemistry"
      ],
      "videos": [
       "9lxWINhQtUc",
@@ -9764,6 +9776,7 @@ window.HUB_DATA = {
       "D and L notation"
      ],
      "games": [
+      "stereochemistry",
       "carbohydrates"
      ],
      "videos": [
@@ -9856,7 +9869,8 @@ window.HUB_DATA = {
       "glycosidic linkages"
      ],
      "games": [
-      "carbohydrates"
+      "carbohydrates",
+      "stereochemistry"
      ],
      "videos": [
       "417CUTR3H1E",
