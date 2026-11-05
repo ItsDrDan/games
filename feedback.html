@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff8f1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="description" content="Tell ItsDrDan what you think of the CHEM 3B study games.">
+<meta name="robots" content="noindex">
+<title>Game Feedback · CHEM 3B · ItsDrDan</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="apple-touch-icon" href="assets/logo-180.png">
+<style>
+:root{
+  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;--gold-ink:#c98200;
+  --c:#9555bd;--cb:#f1e3fa;--org:#2a9478;--org-bg:#d9f4ea;--bio:#d9654f;--bio-bg:#ffe5dc;--exam:#5468d4;--exam-bg:#e3e8ff;
+  --shadow:0 8px 28px #5a4d9614;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 16px/1.55 Nunito,"Segoe UI",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 12%,#ffe3ec 0,transparent 22%),radial-gradient(circle at 92% 8%,#e3f0ff 0,transparent 24%),
+  radial-gradient(circle at 85% 85%,#e4f8ee 0,transparent 26%),radial-gradient(circle at 12% 88%,#fff1c9 0,transparent 22%)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:min(860px,calc(100% - 32px));margin:auto}
+h1,h2,h3{letter-spacing:-.03em;margin:0;font-weight:900}
+.top{position:sticky;top:0;z-index:20;background:#fffaf5e8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{min-height:62px;display:flex;align-items:center;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:850;font-size:1.05rem;white-space:nowrap}
+.brand img{width:36px;height:36px}
+.brand small{color:var(--soft);font-weight:650}
+.nav a.back{margin-left:auto;padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem}
+.nav a.back:hover{background:#efe9ff;color:var(--brand-ink)}
+
+.head{background:linear-gradient(120deg,var(--cb),#fff8f1 75%);border-bottom:1px solid var(--line)}
+.head .wrap{padding:30px 0 24px;display:grid;gap:10px}
+.eyebrow{font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-size:.76rem}
+.head h1{font-size:clamp(1.9rem,4.2vw,2.6rem);line-height:1.1}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 0;padding:0;list-style:none}
+.steps li{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 14px 6px 6px;font-weight:800;font-size:.98rem}
+.steps b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--c);color:#fff;font-size:.85rem}
+
+main{padding:22px 0 40px;display:grid;gap:22px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:var(--shadow);display:grid;gap:14px}
+.panel h2{font-size:1.3rem;display:flex;align-items:center;gap:10px}
+.panel h2 .num{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--c);color:#fff;font-size:1rem;flex:0 0 auto}
+.hint{margin:-6px 0 0;color:var(--muted);font-size:.95rem}
+label.f{display:grid;gap:6px;font-weight:800}
+label.f small{font-weight:650;color:var(--muted)}
+input[type=text],select,textarea{width:100%;font:inherit;font-weight:650;color:var(--ink);background:#fdfbff;border:2px solid #ddd3fb;border-radius:14px;padding:11px 14px;min-height:48px}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+.sec{font-weight:900;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sc);margin:6px 0 -4px;display:flex;align-items:center;gap:8px}
+.sec::after{content:"";flex:1;height:2px;background:var(--sb);border-radius:2px}
+.game{--sc:var(--org);--sb:var(--org-bg);border:2px solid var(--line);border-radius:20px;padding:12px 14px;display:grid;gap:10px;transition:border-color .15s,background .15s}
+.game.rated{border-color:var(--sc);background:linear-gradient(110deg,var(--sb),#fff 55%)}
+.grow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:52px;height:52px;flex:0 0 auto;object-fit:contain}
+.gname{flex:1 1 180px;min-width:0}
+.gname b{display:block;font-weight:900;font-size:1.05rem;line-height:1.25}
+.gname a{font-size:.85rem;color:var(--muted);font-weight:700}
+.stars{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.star{width:44px;height:44px;border:0;background:none;padding:4px;cursor:pointer;border-radius:12px;color:#d9d1ea}
+.star svg{width:100%;height:100%;display:block}
+.star.on{color:var(--gold)}
+.star:hover{background:#fff6e3}
+.skip{border:0;background:none;font:inherit;font-size:.85rem;font-weight:800;color:var(--muted);cursor:pointer;padding:6px 8px;border-radius:8px;text-decoration:underline}
+.rlabel{font-size:.85rem;font-weight:850;color:var(--gold-ink);min-width:88px}
+.more{display:none}
+.game.rated .more{display:block}
+.more textarea{min-height:64px}
+
+.counter{font-weight:900;color:var(--c);background:var(--cb);border-radius:999px;padding:6px 14px;font-size:.95rem;justify-self:start}
+.send{display:grid;gap:10px;justify-items:start}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:10px 28px;border-radius:999px;border:2px solid var(--edge);box-shadow:0 4px 0 var(--edge);background:var(--brand);color:#fff;font:inherit;font-weight:850;font-size:1.1rem;cursor:pointer;transition:transform .14s,box-shadow .14s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--edge)}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+.btn[disabled]{opacity:.55;cursor:wait;transform:none}
+.err{color:#b8323a;font-weight:800;margin:0}
+.privacy{color:var(--muted);font-size:.88rem;margin:0}
+
+.done{text-align:center;justify-items:center;padding:34px 22px}
+.done img{width:90px;height:90px}
+.done h2{font-size:1.8rem}
+.done p{margin:0;color:#4f4870;max-width:520px}
+.code{font:900 1.6rem/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em;color:var(--brand-ink);background:#f4f0ff;border:2px dashed #c9bdf5;border-radius:16px;padding:14px 22px}
+.receipt{display:grid;gap:4px;font-size:.95rem;color:var(--muted)}
+.receipt b{color:var(--ink)}
+.warn{background:#fff6e3;border:1.5px solid #ffd98a;border-radius:14px;padding:10px 14px;font-size:.9rem;color:#7a5500;margin:0}
+
+.footer{padding:10px 0 34px;color:var(--soft);font-size:.85rem;text-align:center}
+@media (max-width:640px){
+  .two{grid-template-columns:1fr}
+  .brand small{display:none}
+  .star{width:40px;height:40px}
+  .rlabel{min-width:0}
+  .grow{gap:8px}
+  .stars{width:100%;justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+  <a class="brand" href="3b.html"><img src="assets/logo.svg" alt="" width="36" height="36">ItsDrDan <small>/ Game Feedback</small></a>
+  <a class="back" href="3b.html">← CHEM 3B games</a>
+</div></header>
+
+<div class="head"><div class="wrap">
+  <div class="eyebrow">CHEM 3B · Extra credit feedback</div>
+  <h1>What did you think of the games?</h1>
+  <ol class="steps">
+    <li><b>1</b>Type your name</li>
+    <li><b>2</b>Tap stars for games you played</li>
+    <li><b>3</b>Hit Send</li>
+  </ol>
+</div></div>
+
+<main class="wrap">
+  <form id="form" class="wrap" style="width:100%;display:grid;gap:22px" novalidate>
+    <section class="panel">
+      <h2><span class="num">1</span>Who are you?</h2>
+      <p class="hint">Your instructor uses your name only to give you extra credit.</p>
+      <div class="two">
+        <label class="f">First and last name
+          <input type="text" id="name" autocomplete="name" required maxlength="80" placeholder="e.g. Maria Lopez">
+        </label>
+        <label class="f">Your CHEM 3B instructor <small>(or class/section)</small>
+          <input type="text" id="klass" maxlength="80" placeholder="e.g. Professor Alex">
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2><span class="num">2</span>Rate the games you played</h2>
+      <p class="hint">Skip any game you didn't try. A short comment helps a lot: what was confusing, broken, or awesome?</p>
+      <div id="games"></div>
+      <span class="counter" id="counter">0 games rated</span>
+    </section>
+
+    <section class="panel">
+      <h2><span class="num">3</span>Last two questions <small style="font-weight:700;color:var(--muted);font-size:.9rem">(optional)</small></h2>
+      <label class="f">Which game helped you the most?
+        <select id="best"><option value="">Pick one…</option></select>
+      </label>
+      <label class="f">What game or topic should Dr. Dan make next? Anything else?
+        <textarea id="comments" maxlength="1500" placeholder="Ideas, bugs, things you wish the games did…"></textarea>
+      </label>
+      <div class="send">
+        <p class="err" id="err" role="alert" hidden></p>
+        <button class="btn" type="submit" id="go">Send feedback →</button>
+        <p class="privacy">Your name and answers go to Dr. Dan and your CHEM 3B instructor, and are used only for extra credit and to improve the games.</p>
+      </div>
+    </section>
+  </form>
+
+  <section class="panel done" id="done" hidden aria-live="polite">
+    <img src="assets/logo.svg" alt="">
+    <h2>Thank you!</h2>
+    <p>Your feedback was sent. <b>Take a screenshot of this screen</b> in case your instructor asks for proof.</p>
+    <div class="code" id="code"></div>
+    <div class="receipt" id="receipt"></div>
+    <p class="warn" id="localwarn" hidden>Preview copy: feedback is only sent from the live page at itsdrdan.github.io.</p>
+    <a class="btn" href="3b.html" style="text-decoration:none">Back to the games</a>
+  </section>
+</main>
+
+<footer class="footer">Made for Fresno City College chemistry students · ItsDrDan</footer>
+
+<script src="data/hub.js"></script>
+<script>
+(function () {
+  /* Same Google Apps Script web app as track.js. Feedback rows are tagged type:"feedback"
+     so the script saves them to their own tabs, away from the anonymous game stats. */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbylSKoW9GE6AkN4HiC1uts3Y5Z4oUPHY7OQ88vXrjpcanooloYRTIGW9cS5n0dulp4vQg/exec';
+  var LIVE = /\.github\.io$/.test(location.hostname);
+
+  var D = window.HUB_DATA || {games: []};
+  var GROUPS = [
+    {id: 'organic', title: 'Organic', sc: 'var(--org)', sb: 'var(--org-bg)', games: ['lewisstructures', 'organic', 'functionalgroups', 'organicreactions']},
+    {id: 'bio', title: 'Biochemistry', sc: 'var(--bio)', sb: 'var(--bio-bg)', games: ['carbohydrates', 'lipids', 'aminoacids', 'enzymes', 'nucleicacids', 'metabolism']},
+    {id: 'exam', title: 'Final exam prep', sc: 'var(--exam)', sb: 'var(--exam-bg)', games: ['finalexam']}
+  ];
+  var all = new Map(D.games.filter(function (g) { return (g.courses || []).indexOf('3B') !== -1; }).map(function (g) { return [g.id, g]; }));
+  var placed = new Set([].concat.apply([], GROUPS.map(function (g) { return g.games; })));
+  all.forEach(function (g, id) { if (!placed.has(id)) GROUPS[0].games.push(id); });
+
+  var LABELS = ['', 'Not helpful', 'A little helpful', 'Helpful', 'Very helpful', 'Loved it!'];
+  var STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="#0000" d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"/></svg>';
+  var ratings = {};   /* id -> stars */
+  var box = document.getElementById('games'), best = document.getElementById('best');
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+  GROUPS.forEach(function (grp) {
+    var list = grp.games.map(function (id) { return all.get(id); }).filter(Boolean);
+    if (!list.length) return;
+    var head = document.createElement('div');
+    head.className = 'sec'; head.style.cssText = '--sc:' + grp.sc + ';--sb:' + grp.sb; head.textContent = grp.title;
+    box.appendChild(head);
+    list.forEach(function (g) {
+      var el = document.createElement('div');
+      el.className = 'game'; el.dataset.id = g.id; el.style.cssText = '--sc:' + grp.sc + ';--sb:' + grp.sb + ';margin-top:10px';
+      var stars = '';
+      for (var i = 1; i <= 5; i++) stars += '<button type="button" class="star" data-n="' + i + '" aria-label="' + i + ' star' + (i > 1 ? 's' : '') + ' for ' + esc(g.title) + '">' + STAR + '</button>';
+      el.innerHTML =
+        '<div class="grow">' +
+          (g.logo ? '<img class="logo" src="' + esc(g.logo) + '" alt="" loading="lazy">' : '') +
+          '<div class="gname"><b>' + esc(g.title) + '</b><a href="' + esc(g.url) + '" target="_blank" rel="noopener">Open game ↗</a></div>' +
+          '<div class="stars" role="group" aria-label="Rate ' + esc(g.title) + '">' + stars +
+            '<span class="rlabel" aria-live="polite"></span><button type="button" class="skip" hidden>clear</button></div>' +
+        '</div>' +
+        '<div class="more"><textarea maxlength="800" placeholder="What was confusing, broken, or great about ' + esc(g.title.replace(/\s*\(.*\)$/, '')) + '? (optional)"></textarea></div>';
+      box.appendChild(el);
+      var opt = document.createElement('option'); opt.value = g.id; opt.textContent = g.title; best.appendChild(opt);
+    });
+  });
+
+  function paint(el) {
+    var n = ratings[el.dataset.id] || 0;
+    el.classList.toggle('rated', n > 0);
+    el.querySelectorAll('.star').forEach(function (s) { s.classList.toggle('on', +s.dataset.n <= n); s.setAttribute('aria-pressed', +s.dataset.n === n); });
+    el.querySelector('.rlabel').textContent = LABELS[n] || '';
+    el.querySelector('.skip').hidden = !n;
+    var c = Object.keys(ratings).length;
+    document.getElementById('counter').textContent = c + (c === 1 ? ' game rated' : ' games rated');
+  }
+  box.addEventListener('click', function (e) {
+    var el = e.target.closest('.game'); if (!el) return;
+    var s = e.target.closest('.star'), clr = e.target.closest('.skip');
+    if (s) { ratings[el.dataset.id] = +s.dataset.n; paint(el); if (!el.dataset.opened) { el.dataset.opened = 1; } }
+    else if (clr) { delete ratings[el.dataset.id]; el.querySelector('textarea').value = ''; paint(el); }
+  });
+
+  /* Prefill the class from the link, e.g. feedback.html?class=Prof.%20Smith */
+  try { var k = new URLSearchParams(location.search).get('class'); if (k) document.getElementById('klass').value = k.slice(0, 80); } catch (e) {}
+  try { var saved = localStorage.getItem('ddFbName'); if (saved) document.getElementById('name').value = saved; } catch (e) {}
+
+  function makeCode() {
+    var a = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', s = '';
+    for (var i = 0; i < 6; i++) s += a[Math.floor(Math.random() * a.length)];
+    return 'FB-' + s.slice(0, 3) + '-' + s.slice(3);
+  }
+
+  var form = document.getElementById('form'), err = document.getElementById('err'), go = document.getElementById('go');
+  function fail(msg, focusEl) { err.textContent = msg; err.hidden = false; if (focusEl) { focusEl.focus(); focusEl.scrollIntoView({block: 'center', behavior: 'smooth'}); } }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); err.hidden = true;
+    var name = document.getElementById('name').value.trim().replace(/\s+/g, ' ');
+    var klass = document.getElementById('klass').value.trim();
+    if (name.split(' ').length < 2) return fail('Please type your first and last name so you get credit.', document.getElementById('name'));
+    var ids = Object.keys(ratings);
+    if (!ids.length) return fail('Tap the stars for at least one game you played.', box.querySelector('.star'));
+
+    var code = makeCode();
+    var payload = {
+      type: 'feedback', page: '3b', code: code, name: name, klass: klass,
+      best: best.value ? (all.get(best.value) || {}).title || best.value : '',
+      comments: document.getElementById('comments').value.trim(),
+      ratings: ids.map(function (id) {
+        var el = box.querySelector('.game[data-id="' + id + '"]');
+        return {game: id, title: (all.get(id) || {}).title || id, stars: ratings[id], comment: el.querySelector('textarea').value.trim()};
+      })
+    };
+    go.disabled = true; go.textContent = 'Sending…';
+    try { localStorage.setItem('ddFbName', name); } catch (e) {}
+
+    function finish() {
+      form.hidden = true;
+      var d = document.getElementById('done'); d.hidden = false;
+      document.getElementById('code').textContent = code;
+      var when = new Date().toLocaleString([], {dateStyle: 'medium', timeStyle: 'short'});
+      document.getElementById('receipt').innerHTML = '<span><b>' + esc(name) + '</b>' + (klass ? ' · ' + esc(klass) : '') + '</span>' +
+        '<span>' + ids.length + (ids.length === 1 ? ' game' : ' games') + ' rated · ' + esc(when) + '</span>';
+      document.getElementById('localwarn').hidden = LIVE;
+      scrollTo({top: 0, behavior: 'smooth'});
+    }
+    if (!LIVE) { console.log('[feedback preview] not sent:', payload); return setTimeout(finish, 400); }
+    fetch(ENDPOINT, {method: 'POST', mode: 'no-cors', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(payload)})
+      .then(finish)
+      .catch(function () {
+        go.disabled = false; go.textContent = 'Send feedback →';
+        fail('That didn’t send. Check your internet connection and tap Send again.');
+      });
+  });
+})();
+</script>
+</body>
+</html>

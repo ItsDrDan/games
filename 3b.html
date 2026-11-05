@@ -108,6 +108,14 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
 .daily5 iframe{display:block;width:100%;border:0;min-height:420px;border-radius:18px;background:transparent}
 .daily5 .fallback{margin:0;padding:8px 10px;color:var(--muted)}
 
+/* feedback button */
+.fbcta{display:flex;align-items:center;gap:14px;margin-top:10px;max-width:760px;text-decoration:none;background:#fff;border:2px solid var(--gold);border-radius:20px;padding:12px 16px;box-shadow:0 4px 0 #f0b24d;transition:transform .14s,box-shadow .14s}
+.fbcta:hover{transform:translateY(-2px);box-shadow:0 6px 0 #f0b24d}
+.fbcta .star{font-size:1.8rem;color:var(--gold);line-height:1}
+.fbcta b{display:block;font-weight:900;font-size:1.05rem}.fbcta small{display:block;color:var(--muted);font-size:.9rem}
+.fbcta .go{margin-left:auto;white-space:nowrap;font-weight:900;color:#fff;background:var(--brand);border:2px solid var(--edge);border-radius:999px;padding:8px 16px}
+@media (max-width:640px){.fbcta{flex-wrap:wrap}.fbcta .go{margin-left:0;width:100%;text-align:center}}
+
 /* instructor note */
 .note{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px 24px;box-shadow:var(--shadow);display:grid;gap:8px}
 .note h2{font-size:1.25rem}
@@ -155,6 +163,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
     <h1><span class="badge">CHEM 3B</span>Organic &amp; Biological Chemistry Games</h1>
     <p>Pick a game, play on any device, and check every answer with the step-by-step help. No login needed.</p>
     <div class="jump" id="jump"></div>
+    <a class="fbcta" href="feedback.html?class=Professor%20Alex"><span class="star" aria-hidden="true">★</span><span><b>Played a few games? Tell us what you think.</b><small>Takes 2 minutes · counts for extra credit if your instructor offers it</small></span><span class="go">Give feedback →</span></a>
   </div>
 </div>
 
