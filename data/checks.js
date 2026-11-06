@@ -33,7 +33,7 @@ window.HUB_CHECKS = {
     {ch: "8", n: 1, skills: ["gaslaws.boyle"]},
     {ch: "8", n: 1, gen: "noblegas"},
     {ch: "9", n: 1, gen: "molarity"},
-    {ch: "11", n: 2, skills: ["stoichiometry.learn-gg", "stoichiometry.mass"]}
+    {ch: "11", n: 2, skills: ["stoichiometry.learn-gg"]}
    ]
   }
  },
