@@ -98,12 +98,24 @@
     const M = r3(0.05 + Math.random() * 1.45), mL = Math.round(50 + Math.random() * 450);
     return {id, type: 'number', unit: 'g', prompt: `How many grams of ${F} are needed to make ${mL}. mL of a ${M} M ${F} solution?${chart}`, answer: M * (mL / 1000) * mm, tolerance: .015, hint: 'Moles = M × L, then grams = moles × molar mass.', explain: `${M} mol/L × ${mL / 1000} L × ${mm} g mol⁻¹`};
   }
+  /* name-that-noble-gas (PV = nRT, then g ÷ mol), made fresh each time; numbers chosen so the gas is clear */
+  const NOBLE = [['He', 4.003, 'helium'], ['Ne', 20.18, 'neon'], ['Ar', 39.95, 'argon'], ['Kr', 83.80, 'krypton'], ['Xe', 131.29, 'xenon']];
+  function genNobleGas() {
+    const [sym, mm, name] = pick(NOBLE), id = 'gen-noblegas-' + Math.random().toString(36).slice(2, 8);
+    const P = r3(0.5 + Math.random() * 2.5), V = r3(1 + Math.random() * 4), tC = Math.round(10 + Math.random() * 30), T = tC + 273.15;
+    const n = P * V / (0.08206 * T), g = r3(n * mm);
+    const choices = NOBLE.map(x => x[2][0].toUpperCase() + x[2].slice(1) + ' (' + x[0] + ')');
+    return {id, type: 'mc', prompt: `A ${V} L sealed container holds ${g} g of a noble gas at ${tC} °C and ${P} atm. Which noble gas is it?<br><small>R = 0.08206 L·atm·mol⁻¹·K⁻¹ · K = °C + 273.15</small>`,
+      choices, answer: choices[NOBLE.findIndex(x => x[0] === sym)], hint: 'Find moles with n = PV ÷ RT (temperature in K), then molar mass = grams ÷ moles. Match it on the periodic table.',
+      explain: `n = (${P} atm)(${V} L) ÷ [(0.08206)(${T.toFixed(2)} K)] = ${n.toPrecision(3)} mol; ${g} g ÷ ${n.toPrecision(3)} mol = ${(g / n).toPrecision(3)} g mol⁻¹ → ${name}`};
+  }
+  const GENS = {molarity: genMolarity, noblegas: genNobleGas};
   async function pickMix(cid, mix) {
     const c = courseById[cid], seen = load(SEEN_KEY, []), out = [];
     for (const g of mix) {
       const ch = c.chapters.find(x => x.id === g.ch); if (!ch) continue;
       const tag = q => ({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title});
-      if (g.gen === 'molarity') { for (let i = 0; i < g.n; i++) out.push(tag(genMolarity())); continue; }
+      if (g.gen && GENS[g.gen]) { for (let i = 0; i < g.n; i++) out.push(tag(GENS[g.gen]())); continue; }
       const opts = {course: cid, chapters: [cid + '-' + g.ch], types: TYPES.concat('reaction'), n: 40}; if (g.skills) opts.skills = g.skills;
       const prep = list => list.map(q => q.type === 'reaction' ? reactionToMC(q) : q).filter(q => q && usable(q));
       let qs = prep(await QB.get({...opts, exclude: seen})); if (qs.length < g.n) qs = prep(await QB.get(opts));
@@ -208,10 +220,17 @@
     let only = ((params && params.get('ch')) || '').split(',').map(x => x.trim()).filter(Boolean), label = (params && params.get('label')) || '';
     /* ch=now: this week's chapters from data/now.js (what's being taught + what the next skill check covers) */
     let week = null;
-    if (only.length === 1 && only[0] === 'now') {
+    /* plan=<id>: a skill check study page's own mix from data/checks.js (check.html), with its own day state */
+    const planId = (params && params.get('plan')) || '', plan = planId && (window.HUB_CHECKS || {})[planId];
+    if (plan && plan.course === cid && plan.daily && Array.isArray(plan.daily.mix)) {
+      const c0 = courseById[cid], has = id => c0.chapters.some(x => x.id === id);
+      const mix = plan.daily.mix.map(g => ({...g, ch: String(g.ch), n: Math.max(1, Math.min(5, g.n || 1))})).filter(g => has(g.ch));
+      if (mix.length) { week = {chs: [...new Set(mix.map(g => g.ch))], mix, title: plan.daily.title || ('Skill Check #' + plan.n + ' prep'), note: plan.daily.note || '', names: [], plan: planId, heading: 'Skill Check #' + plan.n + ': ' + plan.title}; only = week.chs; if (!label) label = 'Skill Check #' + plan.n; }
+    }
+    else if (only.length === 1 && only[0] === 'now') {
       week = thisWeek(cid); only = week ? week.chs : []; if (!label) label = 'This week';
     }
-    const key = STATE_KEY + (only.length ? ':' + cid + ':' + only.join(',') : '');
+    const key = STATE_KEY + (week && week.plan ? ':plan:' + week.plan : only.length ? ':' + cid + ':' + only.join(',') : '');
     remember('course', cid); setTitle('Daily 5 · CHEM ' + cid + (label ? ' · ' + label : ''));
     let st = load(key, null);
     const fresh = st && st.date === today() && st.course === cid && Array.isArray(st.qs) && st.qs.length;
@@ -228,8 +247,8 @@
     const s = streak(), c = courseById[cid];
     return h('div', {class: 'daily-head'},
       h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')),
-        st.week ? h('div', {class: 'daily-kicker'}, 'Today’s Daily 5 · CHEM ' + cid) : null,
-        h('h1', {}, st.round > 1 ? 'Bonus round' : st.week ? 'This week: ' + st.week.title : (st.label ? st.label + ': today’s five' : 'Today’s five')),
+        st.week ? h('div', {class: 'daily-kicker'}, 'Today’s Daily 5 · CHEM ' + cid + (st.week.plan ? ' · ' + st.week.title : '')) : null,
+        h('h1', {}, st.round > 1 ? 'Bonus round' : st.week ? (st.week.heading || 'This week: ' + st.week.title) : (st.label ? st.label + ': today’s five' : 'Today’s five')),
         st.week ? h('p', {class: 'daily-weeknote'}, st.week.note || ('Five quick questions from ' + st.week.names.join(', ').replace(/, ([^,]*)$/, ' & $1') + '. About 5 minutes.')) : null,
         h('p', {class: 'daily-streak'}, streakLine(s)))),
       st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
@@ -304,7 +323,7 @@
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
-  const sub = st => (st.week ? '&ch=now' : st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '') + (st.back ? '&back=' + encodeURIComponent(st.back) + (st.backname ? '&backname=' + encodeURIComponent(st.backname) : '') : '');
+  const sub = st => (st.week && st.week.plan ? '&plan=' + encodeURIComponent(st.week.plan) : st.week ? '&ch=now' : st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '') + (st.back ? '&back=' + encodeURIComponent(st.back) + (st.backname ? '&backname=' + encodeURIComponent(st.backname) : '') : '');
   function summary(cid, st) {
     const c = courseById[cid], right = st.results.filter(r => r && r.firstTry).length;
     const s = st.round > 1 ? streak() : streakDone();

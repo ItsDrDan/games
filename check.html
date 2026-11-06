@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff8f1">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="description" content="Skill Check study plan, practice games and Daily 5 from ItsDrDan at Fresno City College.">
+<title>Skill Check Study Plan · ItsDrDan</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo-32.png">
+<link rel="apple-touch-icon" href="assets/logo-180.png">
+<meta property="og:image" content="https://itsdrdan.github.io/games/assets/logo-512.png">
+<style>
+:root{
+  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;
+  --c:#23776c;--cb:#e4f3ec;            /* course color (set from the check) */
+  --org:#2a9478;--org-bg:#d9f4ea;      /* Organic section */
+  --bio:#d9654f;--bio-bg:#ffe5dc;      /* Biochemistry section */
+  --exam:#5468d4;--exam-bg:#e3e8ff;    /* Exam prep */
+  --shadow:0 8px 28px #5a4d9614;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:600 16px/1.55 Nunito,"Segoe UI",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 12%,#ffe3ec 0,transparent 22%),radial-gradient(circle at 92% 8%,#e3f0ff 0,transparent 24%),
+  radial-gradient(circle at 85% 85%,#e4f8ee 0,transparent 26%),radial-gradient(circle at 12% 88%,#fff1c9 0,transparent 22%)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+h1,h2,h3{letter-spacing:-.03em;margin:0}
+h1{font-weight:900} h2{font-weight:900} h3{font-weight:850}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+svg.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.15em}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:#fffaf5e8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{min-height:68px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:850;letter-spacing:-.02em;font-size:1.08rem;white-space:nowrap}
+.brand img{width:40px;height:40px}
+.brand small{color:var(--soft);font-weight:650}
+.navlinks{display:flex;gap:6px;margin-left:auto;align-items:center}
+.navlinks a{padding:8px 12px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.92rem;color:var(--ink);white-space:nowrap}
+.navlinks a:hover{background:#efe9ff;color:var(--brand-ink)}
+
+/* header */
+.head{position:relative;overflow:hidden;background:linear-gradient(120deg,var(--cb),#fff8f1 75%);border-bottom:1px solid var(--line)}
+.head .wrap{position:relative;z-index:1;padding:40px 0 32px;display:grid;gap:12px}
+.watermark{position:absolute;pointer-events:none;user-select:none;opacity:.22;width:min(460px,46vw);right:-60px;top:50%;margin-top:calc(min(460px,46vw)/-2);animation:spin 90s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.eyebrow{font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-size:.76rem}
+.head h1{font-size:clamp(2.1rem,4.4vw,3rem);line-height:1.08}
+.head h1 .badge{font-size:1rem;vertical-align:middle;margin-right:10px;padding:6px 13px}
+.head p{margin:0;color:#4f4870;font-size:1.1rem;max-width:720px}
+.badge{display:inline-block;background:var(--cb);color:var(--c);font-weight:850;font-size:.78rem;border-radius:999px;padding:4px 10px;white-space:nowrap;letter-spacing:0}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--sc,var(--edge));background:#fff;border-radius:999px;padding:8px 16px;font-size:.98rem;font-weight:800;color:var(--sc,var(--edge));text-decoration:none;box-shadow:0 3px 0 var(--sc,var(--edge));transition:transform .14s,box-shadow .14s}
+.chip:hover{transform:translateY(-2px);box-shadow:0 5px 0 var(--sc,var(--edge))}
+.chip .n{background:var(--sb,#efe9ff);border-radius:999px;padding:1px 9px;font-size:.85rem}
+
+/* sections */
+main{padding:28px 0 50px;display:grid;gap:34px}
+section[data-sec]{--sc:var(--c);--sb:var(--cb)}
+section[data-sec=organic]{--sc:var(--org);--sb:var(--org-bg)}
+section[data-sec=bio]{--sc:var(--bio);--sb:var(--bio-bg)}
+section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
+.sechead{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.secicon{width:54px;height:54px;border-radius:18px;display:grid;place-items:center;background:var(--sb);color:var(--sc);border:2px solid #fff;box-shadow:0 4px 0 var(--sc)}
+.secicon svg.ic{width:30px;height:30px}
+.sechead h2{font-size:1.65rem}
+.sechead p{margin:2px 0 0;color:var(--muted);font-size:1rem}
+.sechead .count{margin-left:auto;font-weight:900;color:var(--sc);background:var(--sb);border-radius:999px;padding:6px 14px;font-size:.95rem}
+
+/* game cards (same as the hub) */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.game{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);min-height:210px;border-top:5px solid var(--sb)}
+.game-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.game .icon{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;flex:0 0 auto;background:linear-gradient(140deg,#fff 0%,#efe9ff 55%,#e3f4ff 100%);border:2px solid #ddd3fb;box-shadow:0 4px 0 #ddd3fb}
+.game .icon svg.ic{width:44px;height:44px;color:#6a5acd}
+.game .icon.haslogo{background:transparent;border:0;box-shadow:none;border-radius:0}
+.haslogo img{width:100%;height:100%;object-fit:contain;display:block}
+.game .units{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.unit{font-size:.74rem;font-weight:850;color:var(--sc);background:var(--sb);border-radius:999px;padding:3px 9px;white-space:nowrap}
+.game h3{margin:14px 0 4px;font-size:1.18rem;line-height:1.3}
+.game p{margin:0 0 14px;color:#4f4870;font-size:1rem;line-height:1.55}
+.game .actions{margin-top:auto;display:flex;gap:8px}
+.play{flex:1;display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:8px 16px;border-radius:999px;border:2px solid var(--edge);box-shadow:0 3px 0 var(--edge);background:#efe9ff;color:var(--edge);font-weight:800;font-size:1.05rem;text-decoration:none;cursor:pointer;transition:transform .14s,box-shadow .14s,background .14s}
+.play::after{content:"→";font-size:1.35rem}
+.play:hover{background:var(--brand);color:#fff;transform:translateY(-2px);box-shadow:0 5px 0 var(--edge)}
+.play:active{transform:translateY(2px);box-shadow:0 1px 0 var(--edge)}
+.soon{margin:14px 0 0;color:var(--muted);font-size:.95rem;background:#fff;border:1.5px dashed #d9cfee;border-radius:16px;padding:12px 16px}
+.soon b{color:var(--sc)}
+
+/* Daily 5 (the hub's Daily 5, framed in, collapsed until tapped) */
+.dailies{display:grid;gap:12px}
+.daily5{background:#fff;border:2px solid var(--sb);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.daily5 summary{list-style:none;display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;background:linear-gradient(110deg,var(--sb),#fff 60%)}
+.daily5 summary::-webkit-details-marker{display:none}
+.daily5 summary .secicon{width:48px;height:48px;border-radius:16px}
+.daily5 summary .secicon svg.ic{width:26px;height:26px}
+.daily5 summary .t{flex:1;min-width:0}.daily5 summary b{display:block;font-size:1.12rem;font-weight:900}.daily5 summary small{display:block;color:var(--muted);font-size:.92rem}
+.daily5 summary .count{font-weight:900;color:#fff;background:var(--sc);border-radius:999px;padding:8px 16px;font-size:.98rem;box-shadow:0 3px 0 #0001;white-space:nowrap}
+.daily5[open] summary .count{background:#fff;color:var(--sc);border:2px solid var(--sc)}
+.daily5 .body{padding:6px 8px 8px}
+.daily5 iframe{display:block;width:100%;border:0;min-height:420px;border-radius:18px;background:transparent}
+.daily5 .fallback{margin:0;padding:8px 10px;color:var(--muted)}
+
+/* feedback button */
+.fbcta{display:flex;align-items:center;gap:14px;margin-top:10px;max-width:760px;text-decoration:none;background:#fff;border:2px solid var(--gold);border-radius:20px;padding:12px 16px;box-shadow:0 4px 0 #f0b24d;transition:transform .14s,box-shadow .14s}
+.fbcta:hover{transform:translateY(-2px);box-shadow:0 6px 0 #f0b24d}
+.fbcta .star{font-size:1.8rem;color:var(--gold);line-height:1}
+.fbcta b{display:block;font-weight:900;font-size:1.05rem}.fbcta small{display:block;color:var(--muted);font-size:.9rem}
+.fbcta .go{margin-left:auto;white-space:nowrap;font-weight:900;color:#fff;background:var(--brand);border:2px solid var(--edge);border-radius:999px;padding:8px 16px}
+@media (max-width:640px){.fbcta{flex-wrap:wrap}.fbcta .go{margin-left:0;width:100%;text-align:center}}
+
+/* instructor note */
+.note{background:#fff;border:1px solid var(--line);border-radius:24px;padding:20px 24px;box-shadow:var(--shadow);display:grid;gap:8px}
+.note h2{font-size:1.25rem}
+.note p{margin:0;color:#4f4870}
+.note code{background:#f4f0ff;border-radius:8px;padding:2px 8px;font-size:.92em;color:var(--brand-ink);word-break:break-all}
+.note .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:9px 20px;border-radius:999px;border:2px solid var(--edge);box-shadow:0 4px 0 var(--edge);background:var(--brand);color:#fff;text-decoration:none;font-weight:780;cursor:pointer;transition:transform .14s,box-shadow .14s}
+.btn.secondary{background:#fff;color:var(--edge)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 var(--edge)} .btn.secondary:hover{background:#f4f0ff}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--edge)}
+
+.footer{padding:24px 0 36px;color:var(--soft);font-size:.85rem}
+.footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.footbrand{display:flex;gap:8px;align-items:center}
+.footer small{display:block;opacity:.8;margin-top:2px}
+
+@media (max-width:640px){
+  .wrap{width:min(1180px,calc(100% - 28px))}
+  .navlinks a.hide-sm{display:none}
+  .brand small{display:none}
+  .nav{gap:10px;min-height:60px}
+  .head .wrap{padding:30px 0 24px}
+  .sechead .count{margin-left:0}
+  .grid{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.watermark{animation:none}}
+
+/* skill check page */
+.facts{display:flex;gap:8px;flex-wrap:wrap}
+.fact{background:#fff;border:2px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;font-size:.95rem;color:var(--ink)}
+.fact b{color:var(--c)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px 20px}
+.onit{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.onit li{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;padding:8px 4px;border-top:1px solid var(--line)}
+.onit li:first-child{border-top:0}
+.onit .q{font-weight:900;color:var(--c);background:var(--cb);border-radius:12px;text-align:center;padding:4px 0}
+.onit .p{font-weight:900;color:var(--muted);white-space:nowrap}
+.plan{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.day{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-top:5px solid var(--c);border-radius:22px;padding:16px 18px;box-shadow:var(--shadow)}
+.day .d{font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--c);font-size:.75rem}
+.day h3{font-size:1.2rem}
+.day ul{margin:0;padding-left:20px;color:#4f4870}
+.day li{margin:3px 0}
+.day .play{flex:0 0 auto;width:100%;margin-top:auto;min-height:44px;font-size:1rem}
+.day.every{border-top-color:var(--gold)}
+.day.every .d{color:#b0533b}
+.mist{background:#fff8e6;border:1.5px solid #ffd59a;border-radius:20px;padding:14px 18px}
+.mist b{display:block;margin-bottom:4px}
+.mist ul{margin:0;padding-left:20px}
+.focus{font-size:.95rem;color:var(--c);font-weight:800;background:var(--cb);border-radius:12px;padding:8px 12px;margin:0 0 14px}
+.daily5[open]{border-color:var(--c)}
+@media (max-width:640px){.onit li{grid-template-columns:44px 1fr}.onit .p{grid-column:2}}
+</style>
+<!-- Canvas: grow the iframe to fit the page (no inner scrollbar). Idea: Rob Gilley -->
+<script src="brand/embed.js" defer></script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap nav">
+    <a class="brand" href="./" target="_blank" rel="noopener"><img src="assets/logo.svg" alt="" width="40" height="40">ItsDrDan <small id="crumb">/ Skill Check</small></a>
+    <nav class="navlinks" aria-label="Main">
+      <a href="./" target="_blank" rel="noopener">Study Hub ↗</a>
+      <a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener" class="hide-sm">YouTube ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="head">
+  <img class="watermark" src="assets/logo-mark.svg" alt="" aria-hidden="true">
+  <div class="wrap" id="head">
+    <div class="eyebrow" id="eyebrow">Skill Check study plan</div>
+    <h1 id="title">Skill Check</h1>
+    <div class="facts" id="facts"></div>
+    <div class="jump">
+      <a class="chip" href="#plan">📅 Study plan</a>
+      <a class="chip" href="#daily" style="--sc:#d9654f">⚡ Daily 5</a>
+      <a class="chip" href="#games" style="--sc:var(--brand)">🎮 Games</a>
+    </div>
+  </div>
+</div>
+
+<main class="wrap" id="app" aria-live="polite"><p>Loading…</p></main>
+
+<footer class="footer"><div class="wrap">
+  <span class="footbrand"><img src="assets/logo.svg" alt="" width="22" height="22"><span>Made for Fresno City College chemistry students • ItsDrDan<small>Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small></span></span>
+  <span>Game design and chemistry by ItsDrDan · code written with AI help (Claude by Anthropic)</span>
+</div></footer>
+
+<script src="data/hub.js"></script>
+<script src="data/checks.js"></script>
+<script>
+(function () {
+  const D = window.HUB_DATA || {games: []}, CHECKS = window.HUB_CHECKS || {};
+  const id = (new URLSearchParams(location.search).get('id') || '').toUpperCase().replace(/[^0-9A-Z-]/g, '');
+  const C = CHECKS[id], app = document.getElementById('app');
+  const games = new Map(D.games.map(g => [g.id, g]));
+  const COLORS = {'3A': ['#23776c', '#e4f3ec'], '1A': ['#5468d4', '#e3e8ff'], '1B': ['#d9654f', '#ffe5dc'], '3B': ['#9555bd', '#f1e3fa']};
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) if (v != null && v !== false) el.setAttribute(k, v === true ? '' : v);
+    for (const kid of kids.flat()) if (kid != null && kid !== false) el.append(kid.nodeType ? kid : document.createTextNode(kid));
+    return el;
+  }
+  const gameUrl = (g, course) => g.url + (g.url.includes('?') ? '&' : '?') + 'course=' + course;
+  function sechead(icon, title, blurb) {
+    return h('div', {class: 'sechead'}, h('span', {class: 'secicon', 'aria-hidden': 'true'}, icon), h('div', {}, h('h2', {}, title), blurb ? h('p', {}, blurb) : null));
+  }
+
+  if (!C) {
+    app.replaceChildren(h('div', {class: 'panel'}, h('h2', {}, 'Skill Check page not found'), h('p', {}, 'This link is missing its skill check. Try the '), h('a', {class: 'btn', href: './'}, 'Study Hub →')));
+    return;
+  }
+  const [c, cb] = COLORS[C.course] || COLORS['3A'];
+  document.documentElement.style.setProperty('--c', c); document.documentElement.style.setProperty('--cb', cb);
+  document.title = `Skill Check #${C.n} · CHEM ${C.course} · ItsDrDan`;
+  document.getElementById('crumb').textContent = `/ CHEM ${C.course} Skill Check #${C.n}`;
+  document.getElementById('eyebrow').textContent = `CHEM ${C.course} · Skill Check #${C.n} · Study plan`;
+  document.getElementById('title').textContent = C.title;
+  document.getElementById('facts').append(
+    h('span', {class: 'fact'}, h('b', {}, C.points + ' points'), ' · ' + C.topics.length + ' questions'),
+    C.allowed ? h('span', {class: 'fact'}, '📄 ' + C.allowed) : null);
+
+  app.replaceChildren();
+  /* what's on it */
+  app.append(h('section', {id: 'onit'}, sechead('📝', 'What’s on it', 'Show your work with units and sig figs.'),
+    h('div', {class: 'panel'}, h('ul', {class: 'onit'}, C.topics.map(t => h('li', {}, h('span', {class: 'q'}, t.q), h('span', {}, t.t), h('span', {class: 'p'}, t.pts + ' pts')))))));
+  /* study plan */
+  app.append(h('section', {id: 'plan'}, sechead('📅', 'Study plan', 'One topic a day, plus a Daily 5 every day.'),
+    h('div', {class: 'plan'}, C.plan.map(p => {
+      const g = p.game && games.get(p.game);
+      return h('article', {class: 'day' + (p.game ? '' : ' every')}, h('div', {class: 'd'}, p.day), h('h3', {}, p.t),
+        h('ul', {}, p.items.map(x => h('li', {}, x))),
+        g ? h('a', {class: 'play', href: gameUrl(g, C.course), target: '_blank', rel: 'noopener'}, 'Play ' + g.title.replace(/\s*\(.*\)/, ''))
+          : h('a', {class: 'play', href: '#daily'}, 'Do today’s Daily 5'));
+    })),
+    C.mistakes ? h('div', {class: 'mist', style: 'margin-top:14px'}, h('b', {}, '⚠️ Most points get lost on:'), h('ul', {}, C.mistakes.map(m => h('li', {}, m)))) : null));
+  /* Daily 5 (the hub's, with this check's mix; open by default) */
+  const back = location.href.split('#')[0];
+  const src = './?embed=1#/daily/' + C.course + '?plan=' + encodeURIComponent(id) + '&back=' + encodeURIComponent(back) + '&backname=' + encodeURIComponent('Skill Check #' + C.n + ' plan');
+  const d5 = h('details', {class: 'daily5', open: true, style: '--sc:#d9654f;--sb:#ffe3ec'},
+    h('summary', {}, h('span', {class: 'secicon', 'aria-hidden': 'true'}, '⚡'),
+      h('span', {class: 't'}, h('b', {}, 'Daily 5 · Skill Check #' + C.n + ' prep'), h('small', {}, 'Five quick questions a day until skill check day. Keep a streak going.')),
+      h('span', {class: 'count'}, 'Hide')),
+    h('div', {class: 'body'}));
+  app.append(h('section', {id: 'daily'}, d5));
+  const fr = h('iframe', {src, title: 'Daily 5 · Skill Check #' + C.n + ' (CHEM ' + C.course + ')', loading: 'lazy'});
+  d5.querySelector('.body').append(fr, h('p', {class: 'fallback'}, h('a', {href: src.replace('?embed=1', ''), target: '_blank', rel: 'noopener'}, 'Open full size ↗')));
+  d5.addEventListener('toggle', () => { d5.querySelector('.count').textContent = d5.open ? 'Hide' : 'Start →'; });
+  addEventListener('message', e => { const hgt = e.data && e.data.ddEmbedHeight; if (hgt > 0 && e.source === fr.contentWindow) fr.style.height = Math.ceil(hgt) + 'px'; });
+  /* games */
+  const list = C.games.map(x => ({...x, g: games.get(x.id)})).filter(x => x.g);
+  app.append(h('section', {id: 'games'}, sechead('🎮', 'Study games', 'Play on any device. Every answer has step-by-step help.'),
+    h('div', {class: 'grid'}, list.map(({g, focus}) => h('article', {class: 'game'},
+      h('div', {class: 'game-top'}, g.logo ? h('span', {class: 'icon haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy'})) : h('span', {class: 'icon', 'aria-hidden': 'true'}, '🧪')),
+      h('h3', {}, g.title), h('p', {}, g.blurb || ''), focus ? h('p', {class: 'focus'}, focus) : null,
+      h('div', {class: 'actions'}, h('a', {class: 'play', href: gameUrl(g, C.course), target: '_blank', rel: 'noopener'}, 'Play')))))));
+})();
+</script>
+</body>
+</html>
