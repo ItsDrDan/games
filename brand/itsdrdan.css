@@ -7,7 +7,7 @@
 
 :root{
   /* surfaces + text */
-  --bg:#f5f6fb;--surface:#fff;--paper:#fffdf9;--ink:#1f2a44;--muted:#4f5a74;--faint:#6f7890;--line:#e3e6f0;--line2:#d5d9e8;
+  --bg:#f5f6fb;--surface:#fff;--paper:#fffdf9;--ink:#1f2a44;--muted:#4f5a74;--faint:#646c82;--line:#e3e6f0;--line2:#d5d9e8;
   /* accent + pastels */
   --accent:#4b57d1;--accent-d:#3c47b8;--accent-soft:#eef0fe;
   --mint:#e8f6ef;--mint-ink:#23704f;--mint-line:#a9d9c2;
@@ -15,7 +15,7 @@
   --rose:#fdedf0;--rose-ink:#9c3346;--rose-line:#eab3bd;
   --lav:#f3effd;--sky:#eaf4fb;
   /* course colors (match the study hub) */
-  --c3A:#23776c;--c3A-bg:#e4f3ec;--c1A:#4757b3;--c1A-bg:#e8ebfb;--c1B:#b0533b;--c1B-bg:#fbebe4;--c3B:#86509b;--c3B-bg:#f2e8f7;
+  --c3A:#23776c;--c3A-bg:#e4f3ec;--c1A:#4757b3;--c1A-bg:#e8ebfb;--c1B:#aa5039;--c1B-bg:#fbebe4;--c3B:#86509b;--c3B-bg:#f2e8f7;
   /* shape */
   --r-lg:20px;--r-md:14px;--r-sm:10px;--shadow:0 1px 2px #1f2a440d,0 6px 20px #1f2a440a;
   /* type */

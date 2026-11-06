@@ -14,12 +14,12 @@
 <meta property="og:image" content="https://itsdrdan.github.io/games/assets/logo-512.png">
 <style>
 :root{
-  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --ink:#3a3157;--muted:#6f6889;--soft:#6f6691;--line:#ece4f4;--bg:#fff8f1;
   --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;
-  --c:#9555bd;--cb:#f1e3fa;            /* CHEM 3B purple */
-  --org:#2a9478;--org-bg:#d9f4ea;      /* Organic section */
-  --bio:#d9654f;--bio-bg:#ffe5dc;      /* Biochemistry section */
-  --exam:#5468d4;--exam-bg:#e3e8ff;    /* Exam prep */
+  --c:#8c47b7;--cb:#f1e3fa;            /* CHEM 3B purple */
+  --org:#227861;--org-bg:#d9f4ea;      /* Organic section */
+  --bio:#b73e27;--bio-bg:#ffe5dc;      /* Biochemistry section */
+  --exam:#465bd0;--exam-bg:#e3e8ff;    /* Exam prep */
   --shadow:0 8px 28px #5a4d9614;
 }
 *{box-sizing:border-box}
@@ -259,7 +259,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
   }
 
   const app = document.getElementById('app'), jump = document.getElementById('jump');
-  jump.append(h('a', {class: 'chip', href: '#daily', style: '--sc:#d9654f;--sb:#ffe3ec'}, ic('calendar'), 'Daily 5'));
+  jump.append(h('a', {class: 'chip', href: '#daily', style: '--sc:#b73e27;--sb:#ffe3ec'}, ic('calendar'), 'Daily 5'));
   for (const grp of GROUPS) {
     const list = grp.games.map(id => games.get(id)).filter(Boolean);
     if (!list.length) continue;

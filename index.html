@@ -16,7 +16,7 @@
 :root{
   --ink:#1f3a40;--muted:#5c7276;--soft:#7d9093;--line:#dde8e3;--bg:#f6faf7;--card:#fff;
   --brand:#23776c;--brand-ink:#17544c;--edge:#24473f;--gold:#d39b28;
-  --c3A:#23776c;--c3A-bg:#e4f3ec;--c1A:#4757b3;--c1A-bg:#e8ebfb;--c1B:#b0533b;--c1B-bg:#fbebe4;--c3B:#86509b;--c3B-bg:#f2e8f7;
+  --c3A:#23776c;--c3A-bg:#e4f3ec;--c1A:#4757b3;--c1A-bg:#e8ebfb;--c1B:#aa5039;--c1B-bg:#fbebe4;--c3B:#86509b;--c3B-bg:#f2e8f7;
   --r:20px;--shadow:0 6px 24px #214c4510;
 }
 *{box-sizing:border-box}
@@ -235,9 +235,9 @@ dialog.vmodal::backdrop{background:#0d221ecc}
 
 /* ===== Soft & fun theme ===== */
 :root{
-  --ink:#3a3157;--muted:#6f6889;--soft:#9a93b3;--line:#ece4f4;--bg:#fff8f1;
+  --ink:#3a3157;--muted:#6f6889;--soft:#6f6691;--line:#ece4f4;--bg:#fff8f1;
   --brand:#7563d9;--brand-ink:#5546b8;--edge:#5a4d96;--gold:#ffb547;
-  --c3A:#2a9478;--c3A-bg:#d9f4ea;--c1A:#5468d4;--c1A-bg:#e3e8ff;--c1B:#d9654f;--c1B-bg:#ffe5dc;--c3B:#9555bd;--c3B-bg:#f1e3fa;
+  --c3A:#227861;--c3A-bg:#d9f4ea;--c1A:#465bd0;--c1A-bg:#e3e8ff;--c1B:#b73e27;--c1B-bg:#ffe5dc;--c3B:#8c47b7;--c3B-bg:#f1e3fa;
   --r:24px;--shadow:0 8px 28px #5a4d9614;
 }
 body{background:var(--bg);color:var(--ink);font-family:Nunito,"Segoe UI",system-ui,-apple-system,sans-serif;font-weight:600}
@@ -256,7 +256,7 @@ h1{font-weight:900;letter-spacing:-.035em} h2{font-weight:900} h3{font-weight:85
 .hero::after{width:120px;height:120px;right:24%;bottom:-30px;background:radial-gradient(circle at 35% 35%,#fff,#c9b8ff 60%,#ad97ff);animation-delay:-4s}
 @keyframes bob{50%{transform:translateY(14px)}}
 .hero-inner{position:relative;z-index:1}
-.eyebrow{color:#8a5fc9;letter-spacing:.14em}
+.eyebrow{color:#8254c5;letter-spacing:.14em}
 h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{color:#5e5679}
 .btn{background:var(--brand);border-color:var(--edge);box-shadow:0 4px 0 var(--edge);border-radius:999px;padding-inline:20px}
@@ -445,7 +445,7 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .canlist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
 .canlist label{display:flex;gap:12px;align-items:flex-start;background:#faf7ff;border:2px solid #eee6fb;border-radius:14px;padding:10px 14px;cursor:pointer;line-height:1.45;font-size:1.02rem}
 .canlist label:has(input:checked){background:#e9f8f0;border-color:#a7e3c8}
-.canlist input{width:22px;height:22px;flex:0 0 22px;margin-top:1px;accent-color:#2a9478}
+.canlist input{width:22px;height:22px;flex:0 0 22px;margin-top:1px;accent-color:#227861}
 .canlist small{color:var(--muted);font-weight:700}
 .days{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
 .day{border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
@@ -518,7 +518,7 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 .dailycard .daily-ico svg,.daily-title .daily-ico svg{width:40px;height:40px;flex:none}
 .daily{padding-bottom:40px}
 .daily-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 0 6px}
-.daily-title{display:flex;align-items:center;gap:14px}.daily-title h1{margin:2px 0 0;font-size:1.7rem}.daily-streak{margin:4px 0 0;color:#b0533b;font-weight:800}.daily-streak.big{font-size:1.05rem}
+.daily-title{display:flex;align-items:center;gap:14px}.daily-title h1{margin:2px 0 0;font-size:1.7rem}.daily-streak{margin:4px 0 0;color:#aa5039;font-weight:800}.daily-streak.big{font-size:1.05rem}
 .daily-courses{display:flex;gap:8px;flex-wrap:wrap}.daily-courses .chip.on{background:var(--edge);color:#fff;border-color:var(--edge)}
 .daily-card{padding:22px}
 .daily-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.daily-n{font-weight:800;color:var(--muted);font-size:.9rem}
@@ -567,7 +567,7 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
   </div>
 </header>
 <main id="app" tabindex="-1"></main>
-<footer class="footer"><div class="wrap"><span class="footbrand"><img src="assets/logo.svg" alt="" width="22" height="22"> Made for Fresno City College chemistry students • ItsDrDan<small style="display:block;opacity:.75;margin-top:2px">Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small></span><span class="status" id="status"></span></div></footer>
+<footer class="footer"><div class="wrap"><span class="footbrand"><img src="assets/logo.svg" alt="" width="22" height="22"> Made for Fresno City College chemistry students • ItsDrDan<small style="display:block;margin-top:2px">Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small></span><span class="status" id="status"></span></div></footer>
 
 <dialog class="vmodal" id="vmodal" aria-labelledby="vtitle">
   <div class="vbar"><b id="vtitle"></b><a class="btn small secondary" id="vyt" target="_blank" rel="noopener">YouTube ↗</a><button class="btn small" id="vclose" type="button">Close ✕</button></div>
