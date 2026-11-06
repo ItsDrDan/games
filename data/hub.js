@@ -343,6 +343,16 @@ window.HUB_DATA = {
     "1B"
    ],
    "url": "https://itsdrdan.github.io/finalexam/"
+  },
+  {
+   "id": "labpractical",
+   "title": "Lab Practical (Station Rotation)",
+   "icon": "timer",
+   "blurb": "Timed mock lab practical stations, practice for every lab, and PhET simulations.",
+   "courses": [
+    "3A"
+   ],
+   "url": "https://itsdrdan.github.io/labpractical/"
   }
  ],
  "videos": [
@@ -8302,7 +8312,8 @@ window.HUB_DATA = {
       "lab practical"
      ],
      "games": [
-      "finalexam"
+      "finalexam",
+      "labpractical"
      ],
      "videos": [
       "NYbTp0OEHCM",
