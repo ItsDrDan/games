@@ -255,7 +255,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
     C.mistakes ? h('div', {class: 'mist', style: 'margin-top:14px'}, h('b', {}, '⚠️ Most points get lost on:'), h('ul', {}, C.mistakes.map(m => h('li', {}, m)))) : null));
   /* Daily 5 (the hub's, with this check's mix; open by default) */
   const back = location.href.split('#')[0];
-  const src = './?embed=1#/daily/' + C.course + '?plan=' + encodeURIComponent(id) + '&back=' + encodeURIComponent(back) + '&backname=' + encodeURIComponent('Skill Check #' + C.n + ' plan');
+  const src = './?embed=1&v=20261105c#/daily/' + C.course + '?plan=' + encodeURIComponent(id) + '&back=' + encodeURIComponent(back) + '&backname=' + encodeURIComponent('Skill Check #' + C.n + ' plan');
   const d5 = h('details', {class: 'daily5', open: true, style: '--sc:#d9654f;--sb:#ffe3ec'},
     h('summary', {}, h('span', {class: 'secicon', 'aria-hidden': 'true'}, '⚡'),
       h('span', {class: 't'}, h('b', {}, 'Daily 5 · Skill Check #' + C.n + ' prep'), h('small', {}, 'Five quick questions a day until skill check day. Keep a streak going.')),
@@ -263,7 +263,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
     h('div', {class: 'body'}));
   app.append(h('section', {id: 'daily'}, d5));
   const fr = h('iframe', {src, title: 'Daily 5 · Skill Check #' + C.n + ' (CHEM ' + C.course + ')', loading: 'lazy'});
-  d5.querySelector('.body').append(fr, h('p', {class: 'fallback'}, h('a', {href: src.replace('?embed=1', ''), target: '_blank', rel: 'noopener'}, 'Open full size ↗')));
+  d5.querySelector('.body').append(fr, h('p', {class: 'fallback'}, h('a', {href: src.replace('?embed=1&v=20261105c', ''), target: '_blank', rel: 'noopener'}, 'Open full size ↗')));
   d5.addEventListener('toggle', () => { d5.querySelector('.count').textContent = d5.open ? 'Hide' : 'Start →'; });
   addEventListener('message', e => { const hgt = e.data && e.data.ddEmbedHeight; if (hgt > 0 && e.source === fr.contentWindow) fr.style.height = Math.ceil(hgt) + 'px'; });
   /* games */
