@@ -36,5 +36,40 @@ window.HUB_CHECKS = {
     {ch: "11", n: 2, skills: ["stoichiometry.learn-gg", "stoichiometry.mass"]}
    ]
   }
+ },
+ "1A-10": {
+  course: "1A", n: 10,
+  title: "Quantum Chemistry",
+  points: 30, allowed: "Formula sheet + periodic table",
+  topics: [
+   {q: "#1", t: "Photons: frequency, energy per photon, kJ/mol", pts: 5},
+   {q: "#2", t: "Photoelectric effect: KE of the electron, and does it eject?", pts: 4},
+   {q: "#3", t: "de Broglie wavelength of an electron (in Å)", pts: 4},
+   {q: "#4", t: "Photoelectric effect concept (multiple choice)", pts: 2},
+   {q: "#5", t: "Orbital boxes: write n, l, mₗ, mₛ for a marked electron", pts: 3},
+   {q: "#6", t: "Allowed or forbidden quantum numbers", pts: 4},
+   {q: "#7", t: "Counting orbitals and electrons from n and l", pts: 3},
+   {q: "#8", t: "Complete electron configurations (ions and exceptions too)", pts: 5}
+  ],
+  plan: [
+   {day: "Day 1", t: "Light & photons", items: ["c = λν and E = hν = hc/λ (nm → m first)", "kJ/mol: multiply by 6.022 × 10²³, then ÷ 1000", "Photoelectric: KE = E(photon) − ϕ; no electrons if E < ϕ", "de Broglie: λ = h ÷ mv (mass in kg)"], game: "quantumchemistry"},
+   {day: "Day 2", t: "Quantum numbers", items: ["l goes 0 to n − 1; mₗ goes −l to +l; mₛ is only ±½", "Orbitals in a shell = n², electrons = 2n²", "Orbital boxes: mₗ runs −l (left) to +l (right)"], game: "quantumchemistry"},
+   {day: "Day 3", t: "Electron configurations", items: ["Fill in order: 1s 2s 2p 3s 3p 4s 3d 4p…", "Cations lose 4s electrons before 3d", "Know the exceptions: Cr, Cu (and Mo, Ag)"], game: "quantumchemistry"},
+   {day: "Every day", t: "Daily 5", items: ["Five quick questions on light, quantum numbers and configurations", "Keep your streak going until skill check day"]}
+  ],
+  games: [
+   {id: "quantumchemistry", focus: "Pick CHEM 1A, then do Light & Photons, Quantum Numbers and Electron Configurations."},
+   {id: "algebratrainer", focus: "Warm up on rearranging E = hc/λ and λ = h/mv, and scientific notation."}
+  ],
+  mistakes: ["Forgetting nm → m (or Å → m)", "Mixing J per photon with kJ per mole", "Using grams instead of kg in λ = h/mv", "l equal to n, or mₛ that isn’t ±½", "Removing 3d electrons before 4s in cations"],
+  daily: {
+   title: "Skill Check #10 prep",
+   note: "2 light and photon, 2 quantum number and 1 electron configuration question. About 5 minutes.",
+   mix: [
+    {ch: "6", n: 2, skills: ["quantum.light"]},
+    {ch: "6", n: 2, skills: ["quantum.numbers", "quantum.orbitals"]},
+    {ch: "6", n: 1, skills: ["quantum.config"]}
+   ]
+  }
  }
 };
