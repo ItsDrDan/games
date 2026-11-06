@@ -75,7 +75,8 @@
     const eq = (co, states) => { const side = (list, off) => list.map((f, i) => (co[off + i] > 1 ? co[off + i] + ' ' : '') + fmtF(f) + (states && st[f] ? '(' + st[f] + ')' : '')).join(' + '); return side(d.r, 0) + ' → ' + side(d.p, d.r.length); };
     const right = eq(d.coef, true);
     if (SIMPLE_CATS.includes(d.cat) && Math.random() < 0.5) {
-      const choices = [d.cat].concat(shuffle(SIMPLE_CATS.filter(x => x !== d.cat)).slice(0, 3));
+      const burn = d.cat === 'Combination' && d.r.includes('O2');   // element + O2 is also a combustion: never offer Combustion as a 'wrong' choice
+      const choices = [d.cat].concat(shuffle(SIMPLE_CATS.filter(x => x !== d.cat && !(burn && x === 'Combustion'))).slice(0, 3));
       return {...q, type: 'mc', prompt: 'What type of reaction is this?<br><b>' + right + '</b>', choices, answer: d.cat, explain: q.hint || ''};
     }
     const wrong = new Set(), key = co => co.join(',');
