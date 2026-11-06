@@ -20,6 +20,11 @@
     document.head.append(css);
     if (window.parent !== window && !document.querySelector('script[src*="brand/embed.js"]')) { const sc = document.createElement('script'); sc.src = 'brand/embed.js'; sc.defer = true; document.head.append(sc); }
   } catch {}
+  /* embedded (?embed=1, e.g. the Daily 5 on 3b.html or a Canvas card): hub links open the full hub in a new tab so the
+     page the student started on stays put; the back button returns to that page (passed in as &back=URL&backname=…) */
+  const EMBED = new URLSearchParams(location.search).get('embed') === '1';
+  const hubLink = (hash, cid) => EMBED ? {href: './?course=' + cid + hash, target: '_blank', rel: 'noopener'} : {href: hash};
+  function safeBack(u) { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } }
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
 
@@ -213,6 +218,7 @@
     const extra = params && params.get('more') === '1';
     if (!fresh || (extra && st.done >= st.qs.length)) st = {date: today(), course: cid, qs: [], done: 0, results: [], round: fresh && extra ? (st.round || 1) + 1 : 1};
     st.key = key; st.only = only; st.label = label; st.week = week;
+    st.back = safeBack((params && params.get('back')) || ''); st.backname = ((params && params.get('backname')) || '').slice(0, 60);
     const root = h('section', {class: 'wrap daily', 'data-course': cid});
     app.replaceChildren(root);
     render(root, cid, st);
@@ -236,7 +242,7 @@
       const wait = h('div', {class: 'panel daily-wait'}, h('p', {}, 'Picking today’s five…'));
       root.append(wait);
       let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus, st.week && st.week.mix); } catch (e) { qs = null; }
-      if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', href: '#/games?course=' + cid}, 'All CHEM ' + cid + ' games →')); return; }
+      if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', ...hubLink('#/games?course=' + cid, cid)}, 'All CHEM ' + cid + ' games →')); return; }
       st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
       const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
       return render(root, cid, st);
@@ -290,7 +296,7 @@
       nextBtn.focus({preventScroll: true});
     }
     return h('div', {class: 'panel daily-card'},
-      h('div', {class: 'daily-meta'}, h('span', {class: 'daily-n'}, `Question ${n} of ${st.qs.length}`), h('a', {class: 'chip', href: `#/course/${cid}/${q.ch}`}, `${q.chLabel} · ${q.chTitle}`), h('span', {class: 'daily-bar'}, h('i', {style: `width:${(st.done / st.qs.length) * 100}%`}))),
+      h('div', {class: 'daily-meta'}, h('span', {class: 'daily-n'}, `Question ${n} of ${st.qs.length}`), h('a', {class: 'chip', ...hubLink(`#/course/${cid}/${q.ch}`, cid)}, `${q.chLabel} · ${q.chTitle}`), h('span', {class: 'daily-bar'}, h('i', {style: `width:${(st.done / st.qs.length) * 100}%`}))),
       prompt, answerArea, hintBox, fb,
       h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
   }
@@ -298,18 +304,18 @@
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
-  const sub = st => (st.week ? '&ch=now' : st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '');
+  const sub = st => (st.week ? '&ch=now' : st.only && st.only.length ? '&ch=' + st.only.join(',') : '') + (st.label ? '&label=' + encodeURIComponent(st.label) : '') + (st.back ? '&back=' + encodeURIComponent(st.back) + (st.backname ? '&backname=' + encodeURIComponent(st.backname) : '') : '');
   function summary(cid, st) {
     const c = courseById[cid], right = st.results.filter(r => r && r.firstTry).length;
     const s = st.round > 1 ? streak() : streakDone();
     const missed = [...new Set(st.results.filter(r => r && !r.firstTry).map(r => r.ch))].map(id => c.chapters.find(x => x.id === id)).filter(Boolean);
-    const game = id => { const ch = c.chapters.find(x => x.id === id); const g = ch && ch.games.map(x => games.get(x)).find(Boolean); return g ? h('a', {class: 'btn secondary small', href: `#/play/${g.id}?from=${cid}`}, '🎮 ' + g.title) : null; };
+    const game = id => { const ch = c.chapters.find(x => x.id === id); const g = ch && ch.games.map(x => games.get(x)).find(Boolean); return g ? h('a', {class: 'btn secondary small', ...hubLink(`#/play/${g.id}?from=${cid}`, cid)}, '🎮 ' + g.title) : null; };
     return h('div', {class: 'panel daily-card daily-done'},
       h('div', {class: 'daily-done-head'}, h('div', {}, h('div', {class: 'eyebrow'}, st.round > 1 ? 'Bonus round done' : 'Daily 5 complete'), h('h2', {}, `${right} of ${st.results.length} on the first try`), h('p', {class: 'daily-streak big'}, streakLine(s) + (st.round === 1 ? ' · see you tomorrow' : ''))),
         h('div', {class: 'daily-dots', 'aria-hidden': 'true'}, st.results.map(r => h('span', {class: r && r.firstTry ? 'ok' : 'no'})))),
-      h('ol', {class: 'daily-results'}, st.results.map(r => h('li', {class: r.firstTry ? 'ok' : 'no'}, h('span', {}, r.firstTry ? '✓' : r.ok ? '↺' : '✕'), h('a', {href: `#/course/${cid}/${r.ch}`}, `${r.chLabel} · ${r.chTitle}`), r.slip && SLIP_TEXT[r.slip] ? h('small', {}, SLIP_TEXT[r.slip]) : r.revealed ? h('small', {}, 'Answer shown') : r.ok && !r.firstTry ? h('small', {}, 'Got it on a retry') : null))),
-      missed.length ? h('div', {class: 'daily-fix'}, h('b', {}, 'Practice what you missed:'), h('div', {class: 'daily-fixrow'}, missed.flatMap(ch => [h('a', {class: 'btn secondary small', href: `#/course/${cid}/${ch.id}`}, `📖 ${ch.label}: ${ch.title}`), game(ch.id)]))) : h('p', {class: 'daily-note'}, 'Clean sweep. Tomorrow’s five will dig a little deeper.'),
-      h('div', {class: 'daily-btns'}, h('a', {class: 'btn', href: '#/daily/' + cid + '?more=1' + sub(st), onclick: e => { e.preventDefault(); location.hash = '#/daily/' + cid + '?more=1' + sub(st) + '&r=' + Date.now(); }}, 'Five more →'), h('a', {class: 'btn secondary', href: '#/course/' + cid}, 'Back to ' + c.name)));
+      h('ol', {class: 'daily-results'}, st.results.map(r => h('li', {class: r.firstTry ? 'ok' : 'no'}, h('span', {}, r.firstTry ? '✓' : r.ok ? '↺' : '✕'), h('a', hubLink(`#/course/${cid}/${r.ch}`, cid), `${r.chLabel} · ${r.chTitle}`), r.slip && SLIP_TEXT[r.slip] ? h('small', {}, SLIP_TEXT[r.slip]) : r.revealed ? h('small', {}, 'Answer shown') : r.ok && !r.firstTry ? h('small', {}, 'Got it on a retry') : null))),
+      missed.length ? h('div', {class: 'daily-fix'}, h('b', {}, 'Practice what you missed:'), h('div', {class: 'daily-fixrow'}, missed.flatMap(ch => [h('a', {class: 'btn secondary small', ...hubLink(`#/course/${cid}/${ch.id}`, cid)}, `📖 ${ch.label}: ${ch.title}`), game(ch.id)]))) : h('p', {class: 'daily-note'}, 'Clean sweep. Tomorrow’s five will dig a little deeper.'),
+      h('div', {class: 'daily-btns'}, h('a', {class: 'btn', href: '#/daily/' + cid + '?more=1' + sub(st), onclick: e => { e.preventDefault(); location.hash = '#/daily/' + cid + '?more=1' + sub(st) + '&r=' + Date.now(); }}, 'Five more →'), st.back ? h('a', {class: 'btn secondary', href: st.back, target: '_top'}, '↩ Back to ' + (st.backname || 'where you started')) : h('a', {class: 'btn secondary', ...hubLink('#/course/' + cid, cid)}, 'Back to ' + c.name)));
   }
 
   /* small card other views can drop in (home page and course overview) */

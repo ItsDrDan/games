@@ -276,7 +276,7 @@ section[data-sec=exam]{--sc:var(--exam);--sb:var(--exam-bg)}
   const frames = new Set(), loaded = new WeakSet();
   addEventListener('message', e => { const hgt = e.data && e.data.ddEmbedHeight; if (!(hgt > 0)) return; for (const fr of frames) if (e.source === fr.contentWindow) fr.style.height = Math.ceil(hgt) + 'px'; });
   for (const d of document.querySelectorAll('.daily5')) {
-    const label = d.dataset.label, src = './?embed=1#/daily/3B?ch=' + d.dataset.ch + '&label=' + encodeURIComponent(label);
+    const label = d.dataset.label, src = './?embed=1#/daily/3B?ch=' + d.dataset.ch + '&label=' + encodeURIComponent(label) + '&back=' + encodeURIComponent(location.href.split('#')[0]) + '&backname=' + encodeURIComponent('CHEM 3B games');
     d.addEventListener('toggle', () => {
       const btn = d.querySelector('.count'); btn.textContent = d.open ? 'Hide' : 'Start →';
       if (!d.open || loaded.has(d)) return; loaded.add(d);
