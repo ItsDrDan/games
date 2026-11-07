@@ -16,6 +16,7 @@
     css.textContent = '.daily-kicker{display:none;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b0466e}body.embed .daily-kicker{display:block}' +
       '.daily-weeknote{margin:2px 0 0;color:var(--muted);font-size:.92rem}body.embed .daily-title h1{font-size:1.3rem}.daily-allgames{align-self:center}' +
       '.daily .fraction{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .2em;line-height:1.25}.daily .fraction .num{border-bottom:2px solid currentColor;padding:0 .3em .1em}.daily .fraction .den{padding:.1em .3em 0}' +
+      '.daily-level{font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1.5px solid}.daily-level.easy{background:#e6f7ee;color:#1f7a50;border-color:#9fdcbd}.daily-level.medium{background:#fff8e6;color:#94650b;border-color:#ffd59a}.daily-level.hard{background:#fde4ec;color:#a3365f;border-color:#f2a2bd}' +
       'body.embed .daily{background:linear-gradient(135deg,#fde4ec,#e3f4ee);border:2px solid #24473f;border-radius:20px;padding:4px 14px 14px;margin:2px auto 4px;box-sizing:border-box}';
     document.head.append(css);
     if (window.parent !== window && !document.querySelector('script[src*="brand/embed.js"]')) { const sc = document.createElement('script'); sc.src = 'brand/embed.js'; sc.defer = true; document.head.append(sc); }
@@ -69,16 +70,17 @@
   const fmtF = s => String(s).replace(/([A-Za-z)\]])(\d+)/g, '$1<sub>$2</sub>');      // O2 → O<sub>2</sub>
   const SIMPLE_CATS = ['Combination', 'Decomposition', 'Single displacement', 'Double displacement', 'Combustion'];
   /* Reaction Rumble items (type "reaction") become multiple choice: name the reaction type, or pick the balanced equation */
-  function reactionToMC(q) {
+  function reactionToMC(q, mode) {
     const d = q.data || {}; if (!d.r || !d.p || !d.coef) return null;
     const sp = d.r.concat(d.p), st = d.states || {};
     const eq = (co, states) => { const side = (list, off) => list.map((f, i) => (co[off + i] > 1 ? co[off + i] + ' ' : '') + fmtF(f) + (states && st[f] ? '(' + st[f] + ')' : '')).join(' + '); return side(d.r, 0) + ' → ' + side(d.p, d.r.length); };
     const right = eq(d.coef, true);
-    if (SIMPLE_CATS.includes(d.cat) && Math.random() < 0.5) {
+    if (SIMPLE_CATS.includes(d.cat) && (mode === 'type' || (mode !== 'balance' && Math.random() < 0.5))) {
       const burn = d.cat === 'Combination' && d.r.includes('O2');   // element + O2 is also a combustion: never offer Combustion as a 'wrong' choice
       const choices = [d.cat].concat(shuffle(SIMPLE_CATS.filter(x => x !== d.cat && !(burn && x === 'Combustion'))).slice(0, 3));
       return {...q, type: 'mc', prompt: 'What type of reaction is this?<br><b>' + right + '</b>', choices, answer: d.cat, explain: q.hint || ''};
     }
+    if (mode === 'type') return null;   // asked for name-the-type only, and this one isn't a simple type
     const wrong = new Set(), key = co => co.join(',');
     const ones = sp.map(() => 1); if (key(ones) !== key(d.coef)) wrong.add(key(ones));
     for (let t = 0; t < 40 && wrong.size < 3; t++) { const co = d.coef.slice(), i = Math.floor(Math.random() * co.length); co[i] = Math.max(1, co[i] + (Math.random() < .5 ? 1 : -1)); if (key(co) !== key(d.coef)) wrong.add(key(co)); }
@@ -111,16 +113,40 @@
       explain: `n = (${P} atm)(${V} L) ÷ [(0.08206)(${T.toFixed(2)} K)] = ${n.toPrecision(3)} mol; ${g} g ÷ ${n.toPrecision(3)} mol = ${(g / n).toPrecision(3)} g mol⁻¹ → ${name}`};
   }
   const GENS = {molarity: genMolarity, noblegas: genNobleGas};
+  /* a mix group is {ch, n, skills?, gen?, diff?, calc?, level?} or {n, level?, pool:[{ch, skills?, gen?, diff?, calc?}, …]}.
+     pool: one option is picked at random each day (next one tried if it has nothing usable).
+     diff: only bank items with these difficulty tags (1 easy, 2 medium, 3 hard; Final Boss items carry them).
+     calc:false: only items marked as not needing a calculator.  rx:'type'|'balance': how Reaction Rumble items are asked.
+     match: a pattern the prompt text must contain (e.g. 'molar mass'), to pick one kind of item out of a skill.  level: 'easy' | 'medium' | 'hard', shown on the card.
+     Groups are served in the order listed, so a 2 easy → 2 medium → 1 hard plan stays in that order. */
+  const LEVELS = {easy: 'Warm-up', medium: 'Medium', hard: 'Challenge'};
+  function normMix(c, mix) {
+    const has = id => c.chapters.some(x => x.id === id);
+    return (mix || []).map(g => {
+      const n = Math.max(1, Math.min(5, g.n || 1));
+      if (Array.isArray(g.pool)) { const pool = g.pool.map(a => ({...a, ch: String(a.ch)})).filter(a => has(a.ch)); return pool.length ? {...g, n, pool} : null; }
+      return has(String(g.ch)) ? {...g, ch: String(g.ch), n} : null;
+    }).filter(Boolean);
+  }
+  const mixChapters = mix => [...new Set(mix.flatMap(g => g.pool ? g.pool.map(a => a.ch) : [g.ch]))];
+  async function fetchGroup(cid, c, g, n, seen) {
+    const ch = c.chapters.find(x => x.id === g.ch); if (!ch) return [];
+    const tag = q => ({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title});
+    if (g.gen && GENS[g.gen]) { const out = []; for (let i = 0; i < n; i++) out.push(tag(GENS[g.gen]())); return out; }
+    const filtered = !!(g.diff || g.calc === false || g.match), rx = g.match ? new RegExp(g.match, 'i') : null;
+    const opts = {course: cid, chapters: [cid + '-' + g.ch], types: TYPES.concat('reaction'), n: filtered ? 400 : 40}; if (g.skills) opts.skills = g.skills;
+    const keep = q => q && usable(q) && (!g.diff || g.diff.includes(q.difficulty)) && (g.calc !== false || q.calc !== true) && (!rx || rx.test(String(q.prompt).replace(/<[^>]+>/g, '')));
+    const prep = list => list.map(q => q.type === 'reaction' ? reactionToMC(q, g.rx) : q).filter(keep);
+    let qs = prep(await QB.get({...opts, exclude: seen})); if (qs.length < n) qs = prep(await QB.get(opts));
+    return shuffle(qs).slice(0, n).map(tag);
+  }
   async function pickMix(cid, mix) {
     const c = courseById[cid], seen = load(SEEN_KEY, []), out = [];
     for (const g of mix) {
-      const ch = c.chapters.find(x => x.id === g.ch); if (!ch) continue;
-      const tag = q => ({...q, ch: ch.id, chLabel: ch.label, chTitle: ch.title});
-      if (g.gen && GENS[g.gen]) { for (let i = 0; i < g.n; i++) out.push(tag(GENS[g.gen]())); continue; }
-      const opts = {course: cid, chapters: [cid + '-' + g.ch], types: TYPES.concat('reaction'), n: 40}; if (g.skills) opts.skills = g.skills;
-      const prep = list => list.map(q => q.type === 'reaction' ? reactionToMC(q) : q).filter(q => q && usable(q));
-      let qs = prep(await QB.get({...opts, exclude: seen})); if (qs.length < g.n) qs = prep(await QB.get(opts));
-      shuffle(qs).slice(0, g.n).forEach(q => out.push(tag(q)));
+      const options = g.pool ? shuffle(g.pool) : [g];
+      let got = [];
+      for (const a of options) { got = await fetchGroup(cid, c, a, g.n, seen.concat(out.map(q => q.id))); if (got.length >= g.n) break; }
+      got.forEach(q => out.push(g.level ? {...q, level: g.level} : q));
     }
     return out.length ? out.slice(0, 5) : null;
   }
@@ -198,8 +224,8 @@
     const has = id => c.chapters.some(x => x.id === id), d = now.daily;
     if (d && Array.isArray(d.mix)) {
       /* a planned topic mix, e.g. mix:[{ch:'11', n:2, skills:[…]}, {ch:'9', n:1, gen:'molarity'}] */
-      const mix = d.mix.map(g => ({...g, ch: String(g.ch), n: Math.max(1, Math.min(5, g.n || 1))})).filter(g => has(g.ch));
-      if (mix.length) return {chs: [...new Set(mix.map(g => g.ch))], mix, title: d.title || now.lecture?.text || '', note: d.note || '', names: []};
+      const mix = normMix(c, d.mix);
+      if (mix.length) return {chs: mixChapters(mix), mix, title: d.title || now.lecture?.text || '', note: d.note || '', names: []};
     }
     if (d && (d.focus || d.review)) {
       /* a planned mix, e.g. {focus:{ch:'11', n:2, skills:[...]}, review:['1',…,'10'], title, note} */
@@ -224,9 +250,8 @@
     /* plan=<id>: a skill check study page's own mix from data/checks.js (check.html), with its own day state */
     const planId = (params && params.get('plan')) || '', plan = planId && (window.HUB_CHECKS || {})[planId];
     if (plan && plan.course === cid && plan.daily && Array.isArray(plan.daily.mix)) {
-      const c0 = courseById[cid], has = id => c0.chapters.some(x => x.id === id);
-      const mix = plan.daily.mix.map(g => ({...g, ch: String(g.ch), n: Math.max(1, Math.min(5, g.n || 1))})).filter(g => has(g.ch));
-      if (mix.length) { week = {chs: [...new Set(mix.map(g => g.ch))], mix, title: plan.daily.title || ('Skill Check #' + plan.n + ' prep'), note: plan.daily.note || '', names: [], plan: planId, heading: 'Skill Check #' + plan.n + ': ' + plan.title}; only = week.chs; if (!label) label = 'Skill Check #' + plan.n; }
+      const mix = normMix(courseById[cid], plan.daily.mix);
+      if (mix.length) { week = {chs: mixChapters(mix), mix, title: plan.daily.title || ('Skill Check #' + plan.n + ' prep'), note: plan.daily.note || '', names: [], plan: planId, heading: 'Skill Check #' + plan.n + ': ' + plan.title}; only = week.chs; if (!label) label = 'Skill Check #' + plan.n; }
     }
     else if (only.length === 1 && only[0] === 'now') {
       week = thisWeek(cid); only = week ? week.chs : []; if (!label) label = 'This week';
@@ -316,7 +341,7 @@
       nextBtn.focus({preventScroll: true});
     }
     return h('div', {class: 'panel daily-card'},
-      h('div', {class: 'daily-meta'}, h('span', {class: 'daily-n'}, `Question ${n} of ${st.qs.length}`), h('a', {class: 'chip', ...hubLink(`#/course/${cid}/${q.ch}`, cid)}, `${q.chLabel} · ${q.chTitle}`), h('span', {class: 'daily-bar'}, h('i', {style: `width:${(st.done / st.qs.length) * 100}%`}))),
+      h('div', {class: 'daily-meta'}, h('span', {class: 'daily-n'}, `Question ${n} of ${st.qs.length}`), q.level && LEVELS[q.level] ? h('span', {class: 'daily-level ' + q.level}, LEVELS[q.level]) : null, h('a', {class: 'chip', ...hubLink(`#/course/${cid}/${q.ch}`, cid)}, `${q.chLabel} · ${q.chTitle}`), h('span', {class: 'daily-bar'}, h('i', {style: `width:${(st.done / st.qs.length) * 100}%`}))),
       prompt, answerArea, hintBox, fb,
       h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
   }

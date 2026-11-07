@@ -13,18 +13,45 @@ window.HUB_NOW = {
   lecture: {text: "Starting Ch 11: Stoichiometry", ch: "11"},
   check: {n: 9, topic: "Ideal gas law, molarity, and a simple stoichiometry problem or two", ch: ["8", "9", "11"]},
   done: "Exam #2 is done, and Skill Check #8 covered chemical reactions.",
-  /* Daily 5 on the Canvas home page: 2 simple stoichiometry, 1 simple reaction, 1 simple molarity, 1 gas law */
+  /* Daily 5 on the Canvas home page: 2 easy → 2 medium → 1 hard, always in that order.
+     1 easy  = one-step Ch 1–10 final review (no calculator)
+     2 easy  = a one-step stoichiometry building block (mole ratio, reaction type, simple mole idea)
+     3 medium = one conversion with a calculator (mol → mol from an equation, or g ↔ mol)
+     4 medium = Ch 7–9 review calculation (molarity, a gas law, or specific heat)
+     5 hard  = full mass-to-mass stoichiometry (g A → mol A → mol B → g B) */
   daily: {
-   title: "Stoichiometry, reactions, molarity & gas laws",
-   note: "2 quick stoichiometry questions, 1 chemical reaction, 1 molarity and 1 gas law question. About 5 minutes.",
+   title: "Stoichiometry + final review",
+   note: "Practicing is the Fastest Way to Growth",
    /* older daily.js reads focus/review; newer daily.js uses mix */
    focus: {ch: "11", n: 2, skills: ["stoichiometry.learn-molmol", "stoichiometry.learn-gmol", "stoichiometry.learn-gg"]},
    review: ["10", "9", "8"],
    mix: [
-    {ch: "11", n: 2, skills: ["stoichiometry.learn-molmol", "stoichiometry.learn-gmol", "stoichiometry.learn-gg"]},
-    {ch: "10", n: 1, skills: ["reactions.combination", "reactions.decomposition", "reactions.single-displacement", "reactions.double-displacement", "reactions.combustion"]},
-    {ch: "9", n: 1, gen: "molarity"},
-    {ch: "8", n: 1, skills: ["gaslaws.boyle", "gaslaws.charles-gay-lussac", "gaslaws.combined", "gaslaws.ideal"]}
+    {level: "easy", n: 1, pool: [
+     {ch: "1", skills: ["sigfig.count", "metric.symboltoprefix", "metric.prefixtosymbol"]},
+     {ch: "1", skills: ["finalexam.3a.matter", "finalexam.3a.measure"], diff: [1], calc: false},
+     {ch: "2", skills: ["finalexam.3a.atoms"], diff: [1], calc: false},
+     {ch: "3", skills: ["finalexam.3a.electrons"], diff: [1], calc: false},
+     {ch: "4", skills: ["finalexam.3a.naming"], diff: [1], calc: false},
+     {ch: "6", skills: ["finalexam.3a.bonding"], diff: [1], calc: false},
+     {ch: "7", skills: ["finalexam.3a.energy"], diff: [1], calc: false},
+     {ch: "9", skills: ["finalexam.3a.solutions"], diff: [1], calc: false}
+    ]},
+    {level: "easy", n: 1, pool: [
+     {ch: "11", skills: ["stoichiometry.learn-ratio"]},
+     {ch: "10", rx: "type", skills: ["reactions.combination", "reactions.decomposition", "reactions.single-displacement", "reactions.double-displacement", "reactions.combustion"]},
+     {ch: "5", skills: ["moles.molar"], match: "molar mass of|atoms are in one"},
+     {ch: "5", skills: ["finalexam.3a.moles"], diff: [1]}
+    ]},
+    {level: "medium", n: 1, pool: [
+     {ch: "11", skills: ["stoichiometry.learn-molmol", "stoichiometry.learn-gmol"]},
+     {ch: "5", skills: ["moles.molar"], match: "has a mass of|contains [0-9.]+ mol|You have [0-9.]+ mol"}
+    ]},
+    {level: "medium", n: 1, pool: [
+     {ch: "9", gen: "molarity"},
+     {ch: "8", skills: ["gaslaws.boyle", "gaslaws.charles-gay-lussac", "gaslaws.combined", "gaslaws.ideal"]},
+     {ch: "7", skills: ["thermochemistry.specific-heat"]}
+    ]},
+    {level: "hard", n: 1, ch: "11", skills: ["stoichiometry.learn-gg"]}
    ]
   }
  },
