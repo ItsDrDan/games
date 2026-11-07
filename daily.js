@@ -211,6 +211,41 @@
   function fmtSig(a, n) { const t = a.toPrecision(n); return /e/.test(t) ? t.replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + Number(d)) : t; }
   const SLIP_TEXT = {sigfigs: 'Right value, wrong number of significant figures.', close: 'Very close: rounding drifted. Keep extra digits until the last step.', sign: 'Right size, wrong sign. Check the direction.', 'kJ-J': 'Off by a factor of 1000: J vs kJ.', 'mL-L': 'Off by a factor of 1000: mL ↔ L (or mmol ↔ mol).', x1000: 'Off by a factor of 1000 (10³). Check the exponent; use the EE key.', 273: 'Off by 273: convert between °C and K.', inverted: 'Looks inverted (1 ÷ the right answer). Check what is on top and bottom.', power10: 'Off by a power of ten. Check the exponent.', ratio: 'Off by a simple factor: a coefficient or mole ratio was probably skipped or flipped.'};
 
+  /* ---- growth & learning messages: a card whose note is "rotate" (data/now.js) shows one of these, a new one each day.
+     Everyone sees the same message on the same day. Quotes are kept to well-documented ones; add or remove freely. ---- */
+  const GROWTH = [
+    'Practicing is the fastest way to growth.',
+    '“Chance favors only the prepared mind.” — Louis Pasteur',
+    'Five minutes a day beats five hours the night before.',
+    'Confused is just the step before understanding.',
+    '“Nothing in life is to be feared, it is only to be understood.” — Marie Curie',
+    'Every mistake you fix today is one you won’t make on the exam.',
+    'Progress, not perfection.',
+    '“If I have seen further, it is by standing on the shoulders of giants.” — Isaac Newton',
+    'Getting it wrong is how your brain learns to get it right.',
+    'Small steps every day add up to big results.',
+    '“I learned very early the difference between knowing the name of something and knowing something.” — Richard Feynman',
+    'Mistakes are data. Scientists love data.',
+    'You don’t have to be fast. You just have to keep going.',
+    '“The best way to have a good idea is to have lots of ideas.” — Linus Pauling',
+    'Today’s practice is tomorrow’s confidence.',
+    'Being stuck is part of learning. That’s what the hint is for.',
+    '“Never be limited by other people’s limited imaginations.” — Mae Jemison',
+    'Every expert was once a beginner.',
+    'Don’t just get the answer. Understand the why.',
+    '“Do the best you can until you know better. Then when you know better, do better.” — Maya Angelou',
+    'Consistency beats cramming.',
+    'A streak starts with one day. Today counts.',
+    'Curiosity is the first step in every discovery.',
+    'Hard problems build strong brains.',
+    'Your future self will thank you for today’s practice.',
+    'Units are your friends. Follow them and they’ll lead you to the answer.',
+    'You can do hard things.',
+    'Keep going. You’re closer than you think.'
+  ];
+  function growthMessage(d = new Date()) { const n = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); return GROWTH[n % GROWTH.length]; }
+  const weekNote = t => t === 'rotate' ? growthMessage() : t;
+
   /* ---- the page ---- */
   const cal = '<svg viewBox="0 0 48 48" aria-hidden="true" width="34" height="34"><rect x="7" y="10" width="34" height="32" rx="6" fill="#fff" stroke="#24473f" stroke-width="2.4"/><path d="M7 19h34" stroke="#24473f" stroke-width="2"/><rect x="8.2" y="11.2" width="31.6" height="7" rx="4" fill="#f2a2bd"/><path d="M15 6v8M33 6v8" stroke="#24473f" stroke-width="2.6" stroke-linecap="round"/><text x="24" y="37" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="15" fill="#24473f">5</text></svg>';
   function streakLine(s) { return s.streak ? `🔥 ${s.streak}-day streak` + (s.best > s.streak ? ` · best ${s.best}` : '') : 'Start a streak today'; }
@@ -275,7 +310,7 @@
       h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')),
         st.week ? h('div', {class: 'daily-kicker'}, 'Today’s Daily 5 · CHEM ' + cid + (st.week.plan ? ' · ' + st.week.title : '')) : null,
         h('h1', {}, st.round > 1 ? 'Bonus round' : st.week ? (st.week.heading || 'This week: ' + st.week.title) : (st.label ? st.label + ': today’s five' : 'Today’s five')),
-        st.week ? h('p', {class: 'daily-weeknote'}, st.week.note || ('Five quick questions from ' + st.week.names.join(', ').replace(/, ([^,]*)$/, ' & $1') + '. About 5 minutes.')) : null,
+        st.week ? h('p', {class: 'daily-weeknote'}, weekNote(st.week.note) || ('Five quick questions from ' + st.week.names.join(', ').replace(/, ([^,]*)$/, ' & $1') + '. About 5 minutes.')) : null,
         h('p', {class: 'daily-streak'}, streakLine(s)))),
       st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
       courseChips(cid));

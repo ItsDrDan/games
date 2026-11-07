@@ -21,7 +21,7 @@ window.HUB_NOW = {
      5 hard  = full mass-to-mass stoichiometry (g A → mol A → mol B → g B) */
   daily: {
    title: "Stoichiometry + final review",
-   note: "Practicing is the Fastest Way to Growth",
+   note: "rotate",   /* "rotate" = a new growth/learning message or quote each day (list in daily.js) */
    /* older daily.js reads focus/review; newer daily.js uses mix */
    focus: {ch: "11", n: 2, skills: ["stoichiometry.learn-molmol", "stoichiometry.learn-gmol", "stoichiometry.learn-gg"]},
    review: ["10", "9", "8"],
@@ -65,7 +65,7 @@ window.HUB_NOW = {
   /* Daily 5 on the Canvas home page: basic quantum theory only (no electron configurations or periodic trends yet) */
   daily: {
    title: "Basic quantum theory",
-   note: "5 quick questions on light and photons, the Bohr model, and quantum numbers. About 5 minutes.",
+   note: "rotate",
    focus: {ch: "6", n: 5, skills: ["quantum.light", "quantum.bohr", "quantum.numbers"]},
    mix: [{ch: "6", n: 5, skills: ["quantum.light", "quantum.bohr", "quantum.numbers"]}]
   }
