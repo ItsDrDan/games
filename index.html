@@ -639,6 +639,7 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
 .premed img{width:58px;height:58px;border-radius:16px;flex:none;object-fit:contain}
 .premed b{display:block;font-size:1.2rem}.premed small{display:block;color:#5e5679;font-size:1rem;font-weight:700}
 .premed .btn{margin-left:auto;flex:none}
+.premed.nursing{display:flex;background:linear-gradient(90deg,#fff,#e8f7f5 60%,#e3f0ff);border-color:#9fd8d3;box-shadow:0 5px 0 #9fd8d3}
 @media (max-width:640px){.premed{flex-wrap:wrap}.premed .btn{margin-left:0}}
 /* All games page polish */
 .game{transition:transform .16s,box-shadow .16s}
@@ -707,7 +708,7 @@ body.embed .bgatom{display:none}
 <main id="app" tabindex="-1"></main>
 <footer class="footer footer2"><div class="wrap">
   <div class="fbrand"><img src="assets/logo.svg" alt="" width="40" height="40"><span><b>ItsDrDan Study Hub</b><small>Free chemistry practice for Fresno City College students, and anyone learning chemistry.</small></span></div>
-  <nav class="flinks" aria-label="Footer"><a href="#/">Courses</a><a href="#/daily">Daily 5</a><a href="#/games">All games</a><a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener">YouTube ↗</a><a href="https://itsdrdan.github.io/MCAT/" target="_blank" rel="noopener">MCAT Hub ↗</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  <nav class="flinks" aria-label="Footer"><a href="#/">Courses</a><a href="#/daily">Daily 5</a><a href="#/games">All games</a><a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener">YouTube ↗</a><a href="https://itsdrdan.github.io/MCAT/" target="_blank" rel="noopener">MCAT Hub ↗</a><a href="https://itsdrdan.github.io/teas/" target="_blank" rel="noopener">TEAS Hub ↗</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
   <small class="fnote">Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small><span class="status" id="status"></span>
 </div></footer>
 
@@ -964,7 +965,11 @@ function viewHome() {
       h('a', {class: 'premed', href: 'https://itsdrdan.github.io/MCAT/', target: '_blank', rel: 'noopener'},
         h('img', {src: 'https://itsdrdan.github.io/MCAT/assets/icon_hub_180.png', alt: '', onerror: e => { e.target.replaceWith(badgeArt('medal')); }}),
         h('span', {}, h('b', {}, 'Thinking about med, dental, or PA school?'), h('small', {}, 'The free MCAT Study Hub has practice for all four sections, a Daily 5, and a study plan.')),
-        h('span', {class: 'btn small'}, 'MCAT Study Hub ↗'))));
+        h('span', {class: 'btn small'}, 'MCAT Study Hub ↗')),
+      h('a', {class: 'premed nursing', href: 'https://itsdrdan.github.io/teas/', target: '_blank', rel: 'noopener', style: 'margin-top:14px'},
+        h('img', {src: 'https://itsdrdan.github.io/teas/assets/icon_hub_180.png', alt: '', onerror: e => { e.target.replaceWith(badgeArt('medal')); }}),
+        h('span', {}, h('b', {}, 'Applying to nursing school?'), h('small', {}, 'The free TEAS Study Hub has 1,100+ practice questions, diagrams, full practice tests, and Central Valley program requirements.')),
+        h('span', {class: 'btn small'}, 'TEAS Study Hub ↗'))));
 }
 
 function viewCourse(cid, chid) {
