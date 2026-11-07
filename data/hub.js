@@ -40,17 +40,7 @@ window.HUB_DATA = {
    ],
    "url": "https://itsdrdan.github.io/sigfig/"
   },
-  {
-   "id": "metric",
-   "title": "SI Prefix Challenge",
-   "icon": "measure",
-   "blurb": "Practice metric prefixes and powers of ten, one conversion at a time.",
-   "courses": [
-    "3A",
-    "1A"
-   ],
-   "url": "https://itsdrdan.github.io/metric/"
-  },
+  {"id": "metric", "logo": "brand/badges/gperl.webp", "title": "Prefix Power-Up (SI Prefixes)", "icon": "measure", "blurb": "Prefixes and powers of ten, metric conversions, squared and cubed units, plus IV volume and tablet-dose practice.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/metric/"},
   {
    "id": "algebratrainer",
    "logo": "assets/games/algebratrainer.webp",
@@ -64,40 +54,9 @@ window.HUB_DATA = {
    ],
    "url": "https://itsdrdan.github.io/algebratrainer/"
   },
-  {
-   "id": "elements",
-   "logo": "assets/games/elements.webp",
-   "title": "Element Symbol Study Lab",
-   "icon": "periodic",
-   "blurb": "Learn element names and symbols, starting with the first 20 and a health-science set.",
-   "courses": [
-    "3A",
-    "1A"
-   ],
-   "url": "https://itsdrdan.github.io/elements/"
-  },
-  {
-   "id": "polyatomic",
-   "title": "Polyatomic Ions (Green Sheet)",
-   "icon": "ion",
-   "blurb": "Match polyatomic ion names, formulas, and charges from the green sheet.",
-   "courses": [
-    "3A",
-    "1A"
-   ],
-   "url": "https://itsdrdan.github.io/polyatomic/"
-  },
-  {
-   "id": "ionicformula",
-   "title": "Naming & Formulas",
-   "icon": "formula",
-   "blurb": "Turn names into formulas and formulas into names: ionic, polyatomic, acids, and covalent.",
-   "courses": [
-    "3A",
-    "1A"
-   ],
-   "url": "https://itsdrdan.github.io/ionicformula/"
-  },
+  {"id": "elements", "logo": "brand/badges/book.webp", "title": "Symbol Safari (Element Symbols)", "icon": "periodic", "blurb": "Names ↔ symbols, the tricky Latin symbols, and finding elements and families on the periodic table.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/elements/"},
+  {"id": "polyatomic", "logo": "brand/badges/molecule.webp", "title": "Polyatomic Posse (Polyatomic Ions)", "icon": "ion", "blurb": "All 30 Green Sheet ions: name ↔ formula, charges, and the -ate/-ite family.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/polyatomic/"},
+  {"id": "ionicformula", "logo": "brand/badges/lattice.webp", "title": "Name That Compound! (Naming & Formulas)", "icon": "formula", "blurb": "Names ↔ formulas for ionic compounds, covalent molecules and acids, with step-by-step help.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/ionicformula/"},
   {
    "id": "quantumchemistry",
    "logo": "assets/games/quantumchemistry.webp",
