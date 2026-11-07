@@ -231,7 +231,6 @@
     'You don’t have to be fast. You just have to keep going.',
     '“The best way to have a good idea is to have lots of ideas.” — Linus Pauling',
     'Today’s practice is tomorrow’s confidence.',
-    '“You cannot uneducate the person who has learned to read.” — César Chávez',
     'Being stuck is part of learning. That’s what the hint is for.',
     '“Never be limited by other people’s limited imaginations.” — Mae Jemison',
     'Every expert was once a beginner.',
