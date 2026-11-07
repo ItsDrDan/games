@@ -669,6 +669,12 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
 @media (max-width:1020px){.heromascot{position:static;width:96px;height:96px;flex:none;order:-1}}
 @media (max-width:560px){.heromascot{width:80px;height:80px}.pointer{width:64px;height:64px}.infocard .corner.mascot{width:80px;height:80px}}
 @media (prefers-reduced-motion:reduce){.heromascot{animation:none}}
+.heroatom{position:relative;height:420px;display:grid;place-items:center}
+.atomspin{position:absolute;width:460px;height:460px;opacity:.3;animation:spin 90s linear infinite;filter:saturate(.9);pointer-events:none}
+.heroatom .heromascot{position:relative;left:auto;top:auto;width:300px;height:300px}
+.heroatom .spark.k1{left:60px;top:70px}.heroatom .spark.k2{left:340px;top:90px}.heroatom .spark.k3{left:80px;top:320px}
+@media (max-width:1020px){.heroatom{height:190px;order:-1;margin-bottom:-10px}.atomspin{width:230px;height:230px}.heroatom .heromascot{width:150px;height:150px}.heroatom .spark{display:none}}
+@media (prefers-reduced-motion:reduce){.atomspin{animation:none}}
 </style>
 <script src="brand/embed.js" defer></script>
 </head>
@@ -891,7 +897,7 @@ function viewHome() {
         h('div', {class: 'ctarow'},
           h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: MASCOT('waving'), alt: ''})), 'Start practicing →'),
           last && courseById[last] ? h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`) : h('span', {class: 'ctanote'}, 'No sign-up. Works on your phone and in Canvas.'))),
-      h('div', {class: 'herocast', 'aria-label': 'A few of the games'}, h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), cast.slice(1).map((g, i) => sticker(g, i + 1)), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
+      h('div', {class: 'heroatom'}, h('img', {class: 'atomspin', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
     h('section', {class: 'wrap', style: 'padding-top:24px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
