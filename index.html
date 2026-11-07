@@ -675,6 +675,13 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
 .heroatom .spark.k1{left:60px;top:70px}.heroatom .spark.k2{left:340px;top:90px}.heroatom .spark.k3{left:80px;top:320px}
 @media (max-width:1020px){.heroatom{height:190px;order:-1;margin-bottom:-10px}.atomspin{width:230px;height:230px}.heroatom .heromascot{width:150px;height:150px}.heroatom .spark{display:none}}
 @media (prefers-reduced-motion:reduce){.atomspin{animation:none}}
+.bgatom{position:fixed;z-index:-1;pointer-events:none;user-select:none;width:min(620px,60vw);right:calc(min(620px,60vw)/-4);top:50%;margin-top:calc(min(620px,60vw)/-2);opacity:.13;animation:spin 120s linear infinite}
+.hero2{background:radial-gradient(circle at 86% 30%,#e3f0ffcc 0,transparent 42%),radial-gradient(circle at 8% 8%,#ffe5eecc 0,transparent 45%),radial-gradient(circle at 62% 100%,#fff0e0cc 0,transparent 45%)}
+body.embed .bgatom{display:none}
+.watermark.small{display:none}
+.course-head{background:linear-gradient(120deg,color-mix(in srgb,var(--cb) 80%,transparent),transparent 75%)}
+@media (max-width:640px){.bgatom{width:360px;right:-120px;margin-top:-180px;opacity:.1}}
+@media (prefers-reduced-motion:reduce){.bgatom{animation:none}}
 </style>
 <script src="brand/embed.js" defer></script>
 </head>
@@ -692,6 +699,7 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
     </nav>
   </div>
 </header>
+<img class="bgatom" src="assets/logo-mark.svg" alt="" aria-hidden="true">
 <main id="app" tabindex="-1"></main>
 <footer class="footer footer2"><div class="wrap">
   <div class="fbrand"><img src="assets/logo.svg" alt="" width="40" height="40"><span><b>ItsDrDan Study Hub</b><small>Free chemistry practice for Fresno City College students, and anyone learning chemistry.</small></span></div>
@@ -897,7 +905,7 @@ function viewHome() {
         h('div', {class: 'ctarow'},
           h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: MASCOT('waving'), alt: ''})), 'Start practicing →'),
           last && courseById[last] ? h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`) : h('span', {class: 'ctanote'}, 'No sign-up. Works on your phone and in Canvas.'))),
-      h('div', {class: 'heroatom'}, h('img', {class: 'atomspin', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
+      h('div', {class: 'herocast', 'aria-label': 'A few of the games'}, h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), cast.slice(1).map((g, i) => sticker(g, i + 1)), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
     h('section', {class: 'wrap', style: 'padding-top:24px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
