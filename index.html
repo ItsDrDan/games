@@ -682,6 +682,10 @@ body.embed .bgatom{display:none}
 .course-head{background:linear-gradient(120deg,color-mix(in srgb,var(--cb) 80%,transparent),transparent 75%)}
 @media (max-width:640px){.bgatom{width:360px;right:-120px;margin-top:-180px;opacity:.1}}
 @media (prefers-reduced-motion:reduce){.bgatom{animation:none}}
+.heroatom.solo{height:400px}
+.heroatom.solo .glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,#ffffff 0,#f3ecff 45%,transparent 70%)}
+.heroatom.solo .heromascot{width:330px;height:330px}
+@media (max-width:1020px){.heroatom.solo{height:170px}.heroatom.solo .glow{width:190px;height:190px}.heroatom.solo .heromascot{width:160px;height:160px}}
 </style>
 <script src="brand/embed.js" defer></script>
 </head>
@@ -905,7 +909,7 @@ function viewHome() {
         h('div', {class: 'ctarow'},
           h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: MASCOT('waving'), alt: ''})), 'Start practicing →'),
           last && courseById[last] ? h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`) : h('span', {class: 'ctanote'}, 'No sign-up. Works on your phone and in Canvas.'))),
-      h('div', {class: 'herocast', 'aria-label': 'A few of the games'}, h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), cast.slice(1).map((g, i) => sticker(g, i + 1)), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
+      h('div', {class: 'heroatom solo'}, h('span', {class: 'glow', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'})))),
     h('section', {class: 'wrap', style: 'padding-top:24px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
