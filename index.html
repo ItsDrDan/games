@@ -659,6 +659,16 @@ html.dd-autosize .top,html.dd-autosize .toc{position:static}html.dd-autosize .to
 .flinks{display:flex;flex-wrap:wrap;gap:6px 18px}.flinks a{font-weight:800;color:#5a3fb5;text-decoration:none}.flinks a:hover{text-decoration:underline}
 .fnote{color:#7a6fa0;font-weight:700}
 @media (max-width:640px){.courses{grid-template-columns:minmax(0,1fr)!important}.course-card{min-height:0}.cc-art{width:60px;height:60px}.cc-art img{width:50px;height:50px}.infocard h3{padding-right:70px;font-size:1.35rem}.infocard p{padding-right:0}.infocard .corner{width:64px;height:64px}.wd{width:32px;height:32px}.facts{grid-template-columns:repeat(2,1fr)}.shelfhead .btn{width:100%}.shelfnav{width:100%}}
+.heromascot{position:absolute;left:116px;top:104px;width:196px;height:196px;object-fit:contain;z-index:2;filter:drop-shadow(0 12px 18px #9a6bff33);animation:float 6s ease-in-out infinite;transform-origin:50% 90%}
+.heromascot:hover{animation:wiggle .6s ease-in-out}
+@keyframes wiggle{25%{rotate:-6deg}75%{rotate:6deg}}
+.shelftitle{display:flex;align-items:flex-end;gap:10px}
+.pointer{width:92px;height:92px;object-fit:contain;margin-bottom:-6px}
+.infocard .corner.mascot{width:110px;height:110px;top:8px;right:12px}
+.mascotmsg{display:flex;align-items:center;gap:14px;grid-column:1/-1}.mascotmsg img{width:110px;height:110px}.mascotmsg p{margin:0;font-size:1.1rem}
+@media (max-width:1020px){.heromascot{position:static;width:96px;height:96px;flex:none;order:-1}}
+@media (max-width:560px){.heromascot{width:80px;height:80px}.pointer{width:64px;height:64px}.infocard .corner.mascot{width:80px;height:80px}}
+@media (prefers-reduced-motion:reduce){.heromascot{animation:none}}
 </style>
 <script src="brand/embed.js" defer></script>
 </head>
@@ -839,6 +849,7 @@ vmodal.addEventListener('click', e => { if (e.target === vmodal) closeVideo(); }
 /* ---------- views ---------- */
 const COURSE_ART = {'3A': 'scale', '1A': 'react', '1B': 'equilibrium', '3B': 'molecule'};
 const HERO_CAST = ['redox', 'carbohydrates', 'moles', 'sigfig', 'lipids', 'quantumchemistry', 'finalexam', 'metabolism'];
+const MASCOT = n => 'assets/mascot/' + n + '.webp';
 const SHELF_FIRST = ['moles', 'stoichiometry', 'redox', 'sigfig', 'quantumchemistry', 'reactions', 'carbohydrates', 'lipids', 'metabolism', 'enzymes', 'nucleicacids', 'stereochemistry', 'chem1bready', 'finalexam'];
 const badgeArt = (name, cls = 'art') => h('img', {class: cls, src: 'brand/badges/' + name + '.webp', alt: '', 'aria-hidden': 'true', loading: 'lazy'});
 function weekDots(s) {
@@ -878,9 +889,9 @@ function viewHome() {
         search,
         h('div', {class: 'tryrow'}, h('span', {}, 'Try:'), tries.map(t => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(t)}, t))),
         h('div', {class: 'ctarow'},
-          h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: (games.get('moles') || withLogo[0] || {}).logo || 'assets/logo.svg', alt: ''})), 'Start practicing →'),
+          h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: MASCOT('waving'), alt: ''})), 'Start practicing →'),
           last && courseById[last] ? h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`) : h('span', {class: 'ctanote'}, 'No sign-up. Works on your phone and in Canvas.'))),
-      h('div', {class: 'herocast', 'aria-label': 'A few of the games'}, cast.map(sticker), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
+      h('div', {class: 'herocast', 'aria-label': 'A few of the games'}, h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'}), cast.slice(1).map((g, i) => sticker(g, i + 1)), h('span', {class: 'spark k1'}), h('span', {class: 'spark k2'}), h('span', {class: 'spark k3'})))),
     h('section', {class: 'wrap', style: 'padding-top:24px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
@@ -893,7 +904,7 @@ function viewHome() {
           h('span', {class: 'go'}, 'Open course →'));
       }))),
     h('section', {class: 'section wrap shelfsec'},
-      h('div', {class: 'shelfhead'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Meet the games'), h('h2', {}, 'Pick one and play')),
+      h('div', {class: 'shelfhead'}, h('div', {class: 'shelftitle'}, h('img', {class: 'pointer', src: MASCOT('pointing'), alt: '', 'aria-hidden': 'true'}), h('div', {}, h('div', {class: 'eyebrow'}, 'Meet the games'), h('h2', {}, 'Pick one and play'))),
         h('div', {class: 'shelfnav'},
           h('button', {class: 'arrow', type: 'button', 'aria-label': 'Scroll games left', onclick: e => e.currentTarget.closest('.shelfsec').querySelector('.shelf').scrollBy({left: -540, behavior: 'smooth'})}, '←'),
           h('button', {class: 'arrow', type: 'button', 'aria-label': 'Scroll games right', onclick: e => e.currentTarget.closest('.shelfsec').querySelector('.shelf').scrollBy({left: 540, behavior: 'smooth'})}, '→'),
@@ -907,7 +918,7 @@ function viewHome() {
       }))),
     h('section', {class: 'section wrap', style: 'padding-top:6px'}, h('div', {class: 'twocol'},
       h('div', {class: 'infocard progress'},
-        h('img', {class: 'corner', src: 'brand/badges/' + (s.streak ? 'trophy' : 'stars') + '.webp', alt: '', 'aria-hidden': 'true'}),
+        h('img', {class: 'corner mascot', src: MASCOT(s.streak ? 'celebrating' : 'thinking'), alt: '', 'aria-hidden': 'true'}),
         h('div', {class: 'eyebrow'}, 'Your streak'),
         s.streak ? h('h3', {}, `${s.streak}-day streak`, s.best > s.streak ? h('small', {}, ` · best ${s.best}`) : null) : h('h3', {}, 'Start a streak today'),
         h('p', {}, s.streak ? 'Every game and the Daily 5 count toward it. Keep it going: five questions takes about five minutes.' : 'Do the Daily 5 once a day. Short daily practice beats one long cram session the night before.'),
@@ -1097,7 +1108,7 @@ function viewGames(params) {
     if (!found.length && qt.length) found = pool.filter(g => scoreText(haystack(used(g).flatMap(x => x.ch.concepts)), qt));
     const items = found
       .sort((a, b) => (active !== 'all' ? firstCh(a) - firstCh(b) : 0) || a.title.localeCompare(b.title));
-    list.replaceChildren(...(items.length ? items.map(g => gameCard(g, active !== 'all' ? active : '', true)) : [h('p', {class: 'noresults'}, 'No games match. Try a chapter number like “11”, a topic like “gases”, or choose All.')]));
+    list.replaceChildren(...(items.length ? items.map(g => gameCard(g, active !== 'all' ? active : '', true)) : [h('div', {class: 'noresults mascotmsg'}, h('img', {src: 'assets/mascot/thinking.webp', alt: ''}), h('p', {}, 'No games match. Try a chapter number like “11”, a topic like “gases”, or choose All.'))]));
   }
   draw();
   app.replaceChildren(h('section', {class: 'section wrap'}, h('div', {class: 'eyebrow'}, 'Every game in one place'), h('h2', {}, 'All study games', h('span', {class: 'gamecount'}, games.size + ' games')),
