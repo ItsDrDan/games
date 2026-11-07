@@ -14,7 +14,7 @@
   try {
     const css = document.createElement('style');
     css.textContent = '.daily-kicker{display:none;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#b0466e}body.embed .daily-kicker{display:block}' +
-      '.daily-weeknote{margin:2px 0 0;color:var(--muted);font-size:.92rem}body.embed .daily-title h1{font-size:1.3rem}.daily-allgames{align-self:center}' +
+      '.daily-weeknote{margin:2px 0 0;color:var(--muted);font-size:.92rem}.daily-growth{color:#7a4f9e;font-weight:700;font-style:italic}body.embed .daily-title h1{font-size:1.3rem}.daily-allgames{align-self:center}' +
       '.daily .fraction{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .2em;line-height:1.25}.daily .fraction .num{border-bottom:2px solid currentColor;padding:0 .3em .1em}.daily .fraction .den{padding:.1em .3em 0}' +
       '.daily-level{font-size:.78rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1.5px solid}.daily-level.easy{background:#e6f7ee;color:#1f7a50;border-color:#9fdcbd}.daily-level.medium{background:#fff8e6;color:#94650b;border-color:#ffd59a}.daily-level.hard{background:#fde4ec;color:#a3365f;border-color:#f2a2bd}' +
       'body.embed .daily{background:linear-gradient(135deg,#fde4ec,#e3f4ee);border:2px solid #24473f;border-radius:20px;padding:4px 14px 14px;margin:2px auto 4px;box-sizing:border-box}';
@@ -211,7 +211,7 @@
   function fmtSig(a, n) { const t = a.toPrecision(n); return /e/.test(t) ? t.replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + Number(d)) : t; }
   const SLIP_TEXT = {sigfigs: 'Right value, wrong number of significant figures.', close: 'Very close: rounding drifted. Keep extra digits until the last step.', sign: 'Right size, wrong sign. Check the direction.', 'kJ-J': 'Off by a factor of 1000: J vs kJ.', 'mL-L': 'Off by a factor of 1000: mL ↔ L (or mmol ↔ mol).', x1000: 'Off by a factor of 1000 (10³). Check the exponent; use the EE key.', 273: 'Off by 273: convert between °C and K.', inverted: 'Looks inverted (1 ÷ the right answer). Check what is on top and bottom.', power10: 'Off by a power of ten. Check the exponent.', ratio: 'Off by a simple factor: a coefficient or mole ratio was probably skipped or flipped.'};
 
-  /* ---- growth & learning messages: a card whose note is "rotate" (data/now.js) shows one of these, a new one each day.
+  /* ---- growth & learning messages: every Daily 5 (all courses) shows one of these, a new one each day.
      Everyone sees the same message on the same day. Quotes are kept to well-documented ones; add or remove freely. ---- */
   const GROWTH = [
     'Practicing is the fastest way to growth.',
@@ -244,7 +244,6 @@
     'Keep going. You’re closer than you think.'
   ];
   function growthMessage(d = new Date()) { const n = Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); return GROWTH[n % GROWTH.length]; }
-  const weekNote = t => t === 'rotate' ? growthMessage() : t;
 
   /* ---- the page ---- */
   const cal = '<svg viewBox="0 0 48 48" aria-hidden="true" width="34" height="34"><rect x="7" y="10" width="34" height="32" rx="6" fill="#fff" stroke="#24473f" stroke-width="2.4"/><path d="M7 19h34" stroke="#24473f" stroke-width="2"/><rect x="8.2" y="11.2" width="31.6" height="7" rx="4" fill="#f2a2bd"/><path d="M15 6v8M33 6v8" stroke="#24473f" stroke-width="2.6" stroke-linecap="round"/><text x="24" y="37" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="15" fill="#24473f">5</text></svg>';
@@ -310,7 +309,9 @@
       h('div', {class: 'daily-title'}, h('span', {class: 'daily-ico', html: cal}), h('div', {}, h('div', {class: 'eyebrow'}, 'Daily 5 · ' + c.name + (st.label ? ' · ' + st.label : '')),
         st.week ? h('div', {class: 'daily-kicker'}, 'Today’s Daily 5 · CHEM ' + cid + (st.week.plan ? ' · ' + st.week.title : '')) : null,
         h('h1', {}, st.round > 1 ? 'Bonus round' : st.week ? (st.week.heading || 'This week: ' + st.week.title) : (st.label ? st.label + ': today’s five' : 'Today’s five')),
-        st.week ? h('p', {class: 'daily-weeknote'}, weekNote(st.week.note) || ('Five quick questions from ' + st.week.names.join(', ').replace(/, ([^,]*)$/, ' & $1') + '. About 5 minutes.')) : null,
+        /* every Daily 5 (all courses, hub and Canvas) shows the day's growth message; a planned week/skill-check note shows above it */
+        st.week && st.week.note && st.week.note !== 'rotate' ? h('p', {class: 'daily-weeknote'}, st.week.note) : null,
+        h('p', {class: 'daily-weeknote daily-growth'}, growthMessage()),
         h('p', {class: 'daily-streak'}, streakLine(s)))),
       st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
       courseChips(cid));
