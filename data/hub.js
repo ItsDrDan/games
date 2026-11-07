@@ -348,6 +348,7 @@ window.HUB_DATA = {
    "id": "labpractical",
    "title": "Lab Practical (Station Rotation)",
    "icon": "timer",
+   "logo": "assets/games/labpractical.webp",
    "blurb": "Timed mock lab practical stations, practice for every lab, and PhET simulations.",
    "courses": [
     "3A"
