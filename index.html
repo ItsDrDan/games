@@ -689,6 +689,19 @@ body.embed .bgatom{display:none}
 @media (max-width:1020px){.heroatom.solo{height:170px}.heroatom.solo .glow{width:190px;height:190px}.heroatom.solo .heromascot{width:160px;height:160px}}
 </style>
 <script src="brand/embed.js" defer></script>
+<style>/* ===== Calmer home (Nov 2026) ===== */
+body.is-home .topsearch{visibility:hidden}
+.hero2 h1 span{background:none;-webkit-background-clip:initial;background-clip:initial;color:#7b5cd6}
+.ddfb-float{display:none!important}
+.infocard.solo{max-width:none;display:grid;grid-template-columns:1fr auto;column-gap:24px;align-items:center;padding-right:130px}
+.infocard.solo>*:not(.corner):not(.cardacts){grid-column:1}.infocard.solo .cardacts{grid-column:2;grid-row:1/span 4;margin:0}
+@media (max-width:700px){.infocard.solo{display:block;padding-right:22px}.infocard.solo h3,.infocard.solo p{padding-right:84px}.infocard.solo .cardacts{margin-top:14px}}
+.premedrow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.premedrow .premed{padding:14px 18px}
+.premedrow .premed b{font-size:1.08rem}
+.premedrow .premed small{font-size:.95rem}
+@media (max-width:860px){.premedrow{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <header class="top">
@@ -880,6 +893,7 @@ function weekDots(s) {
   }
   return h('div', {class: 'weekdots', 'aria-label': 'Daily 5 days this week'}, out);
 }
+const SHORT_WHO = {'3A': 'For nursing, dental hygiene, and allied health majors.', '1A': 'For chemistry, biology, and engineering majors.', '1B': 'Equilibrium, acids and bases, kinetics, and more.', '3B': 'Organic and biochemistry for health-science majors.'};
 function viewHome() {
   setTitle('');
   const last = recall('course');
@@ -904,26 +918,21 @@ function viewHome() {
       h('div', {class: 'herocopy'},
         h('div', {class: 'eyebrow'}, 'Dr. Dan’s chemistry study hub'),
         h('h1', {html: 'Find exactly what to study, <span>then practice it.</span>'}),
-        h('p', {class: 'lead'}, `${all.length} free chemistry games, ${nVideos} video lessons, and a study guide for every chapter. Pick your class, or search any topic.`),
+        h('p', {class: 'lead'}, `${all.length} free chemistry games, ${nVideos} video lessons, and a study guide for every chapter. No sign-up needed.`),
         search,
-        h('div', {class: 'tryrow'}, h('span', {}, 'Try:'), tries.map(t => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(t)}, t))),
-        h('div', {class: 'ctarow'},
-          h('a', {class: 'btn big', href: startHref}, h('span', {class: 'btnart'}, h('img', {src: MASCOT('waving'), alt: ''})), 'Start practicing →'),
-          last && courseById[last] ? h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`) : h('span', {class: 'ctanote'}, 'No sign-up. Works on your phone and in Canvas.'))),
+        last && courseById[last] ? h('div', {class: 'ctarow'}, h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`)) : null),
       h('div', {class: 'heroatom solo'}, h('span', {class: 'glow', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'})))),
-    h('section', {class: 'wrap', style: 'padding-top:24px'}, dailyCard(last && courseById[last] ? last : '')),
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
       h('div', {class: 'courses'}, COURSE_ORDER.map(id => {
         const c = courseById[id], n = counts(id);
         return h('a', {class: 'course-card', 'data-course': id, href: '#/course/' + id},
           h('div', {class: 'cc-top'}, h('span', {class: 'tag'}, c.name), h('span', {class: 'cc-art'}, badgeArt(COURSE_ART[id], ''))),
-          h('h3', {}, c.title), h('p', {}, c.who),
-          h('div', {class: 'stats'}, h('span', {}, `${n.ch} ${id === '3B' ? 'units' : 'chapters'}`), h('span', {}, `${n.g} games`), n.v ? h('span', {}, `${n.v} videos`) : null),
+          h('h3', {}, c.title), h('p', {}, SHORT_WHO[id] || c.who),
           h('span', {class: 'go'}, 'Open course →'));
       }))),
     h('section', {class: 'section wrap shelfsec'},
-      h('div', {class: 'shelfhead'}, h('div', {class: 'shelftitle'}, h('img', {class: 'pointer', src: MASCOT('pointing'), alt: '', 'aria-hidden': 'true'}), h('div', {}, h('div', {class: 'eyebrow'}, 'Meet the games'), h('h2', {}, 'Pick one and play'))),
+      h('div', {class: 'shelfhead'}, h('div', {class: 'shelftitle'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Meet the games'), h('h2', {}, 'Pick one and play'))),
         h('div', {class: 'shelfnav'},
           h('button', {class: 'arrow', type: 'button', 'aria-label': 'Scroll games left', onclick: e => e.currentTarget.closest('.shelfsec').querySelector('.shelf').scrollBy({left: -540, behavior: 'smooth'})}, '←'),
           h('button', {class: 'arrow', type: 'button', 'aria-label': 'Scroll games right', onclick: e => e.currentTarget.closest('.shelfsec').querySelector('.shelf').scrollBy({left: 540, behavior: 'smooth'})}, '→'),
@@ -935,41 +944,23 @@ function viewHome() {
           h('b', {}, g.title.replace(/\s*\(.*\)\s*$/, '')),
           h('span', {class: 'badges'}, cs.slice(0, 3).map(courseBadge)));
       }))),
-    h('section', {class: 'section wrap', style: 'padding-top:6px'}, h('div', {class: 'twocol'},
-      h('div', {class: 'infocard progress'},
+    h('section', {class: 'section wrap', style: 'padding-top:6px'},
+      h('div', {class: 'infocard progress solo'},
         h('img', {class: 'corner mascot', src: MASCOT(s.streak ? 'celebrating' : 'thinking'), alt: '', 'aria-hidden': 'true'}),
-        h('div', {class: 'eyebrow'}, 'Your streak'),
-        s.streak ? h('h3', {}, `${s.streak}-day streak`, s.best > s.streak ? h('small', {}, ` · best ${s.best}`) : null) : h('h3', {}, 'Start a streak today'),
-        h('p', {}, s.streak ? 'Every game and the Daily 5 count toward it. Keep it going: five questions takes about five minutes.' : 'Do the Daily 5 once a day. Short daily practice beats one long cram session the night before.'),
+        h('div', {class: 'eyebrow'}, 'Daily 5'),
+        s.streak ? h('h3', {}, `${s.streak}-day streak`, s.best > s.streak ? h('small', {}, ` · best ${s.best}`) : null) : h('h3', {}, 'Five questions a day'),
+        h('p', {}, s.streak ? 'Keep it going: five questions takes about five minutes.' : 'Short daily practice beats one long cram session the night before.'),
         weekDots(s),
-        h('div', {class: 'cardacts'}, h('a', {class: 'btn', href: '#/daily'}, 'Do today’s Daily 5 →'))),
-      h('div', {class: 'infocard exam'},
-        h('img', {class: 'corner', src: 'brand/badges/checklist.webp', alt: '', 'aria-hidden': 'true'}),
-        h('div', {class: 'eyebrow'}, 'Exam or skill check coming up?'),
-        h('h3', {}, 'Get a checklist and a study plan'),
-        h('p', {}, 'Pick your class to see what’s on it, which games to play, and a day-by-day plan.'),
-        h('div', {class: 'ebtns'}, COURSE_ORDER.map(id => h('a', {class: 'ebmini', 'data-course': id, href: '#/exams/' + id}, 'CHEM ' + id))),
-        h('div', {class: 'ptip'}, h('b', {}, 'Professor Tip: '), 'Start 3–4 days early. Play the games until you get 8 out of 10 right, then redo the ones you missed.')))),
-    h('section', {class: 'section wrap', style: 'padding-top:6px'},
-      h('div', {class: 'eyebrow'}, 'How it works'), h('h2', {}, 'Three steps, every chapter'),
-      h('div', {class: 'howgrid'},
-        [['book', 'Read', 'Each chapter links the free textbook section, so you know exactly what to read.'],
-          ['video', 'Watch', 'Dr. Dan’s video lessons, with jump-to moments for the part you need.'],
-          ['target', 'Play', 'Games with step-by-step help when you miss, so every wrong answer teaches you something.']]
-          .map(([art, t, p], i) => h('div', {class: 'how h' + i}, h('span', {class: 'hnum'}, i + 1), badgeArt(art), h('b', {}, t), h('p', {}, p))))),
-    h('section', {class: 'section wrap', style: 'padding-top:6px'},
-      h('div', {class: 'facts'},
-        [[all.length, 'study games'], [nVideos, 'video lessons'], [nChapters, 'chapters & units'], [4, 'chemistry courses'], ['$0', 'always free'], ['0', 'sign-ups needed']]
-          .map(([b, t]) => h('div', {class: 'fact'}, h('b', {}, String(b)), h('span', {}, t))))),
-    h('section', {class: 'section wrap', style: 'padding-top:6px'},
+        h('div', {class: 'cardacts'}, h('a', {class: 'btn', href: '#/daily'}, 'Do today’s Daily 5 →')))),
+    h('section', {class: 'section wrap', style: 'padding-top:6px'}, h('div', {class: 'premedrow'},
       h('a', {class: 'premed', href: 'https://itsdrdan.github.io/MCAT/', target: '_blank', rel: 'noopener'},
         h('img', {src: 'https://itsdrdan.github.io/MCAT/assets/icon_hub_180.png', alt: '', onerror: e => { e.target.replaceWith(badgeArt('medal')); }}),
-        h('span', {}, h('b', {}, 'Thinking about med, dental, or PA school?'), h('small', {}, 'The free MCAT Study Hub has practice for all four sections, a Daily 5, and a study plan.')),
+        h('span', {}, h('b', {}, 'Med, dental, or PA school?'), h('small', {}, 'Free MCAT practice for all four sections.')),
         h('span', {class: 'btn small'}, 'MCAT Study Hub ↗')),
-      h('a', {class: 'premed nursing', href: 'https://itsdrdan.github.io/teas/', target: '_blank', rel: 'noopener', style: 'margin-top:14px'},
+      h('a', {class: 'premed nursing', href: 'https://itsdrdan.github.io/teas/', target: '_blank', rel: 'noopener'},
         h('img', {src: 'https://itsdrdan.github.io/teas/assets/logo_hub.webp', alt: '', onerror: e => { e.target.replaceWith(badgeArt('medal')); }}),
-        h('span', {}, h('b', {}, 'Applying to nursing school?'), h('small', {}, 'The free TEAS Study Hub has 1,100+ practice questions, diagrams, full practice tests, and Central Valley program requirements.')),
-        h('span', {class: 'btn small'}, 'TEAS Study Hub ↗'))));
+        h('span', {}, h('b', {}, 'Applying to nursing school?'), h('small', {}, 'Free TEAS practice tests and Central Valley program info.')),
+        h('span', {class: 'btn small'}, 'TEAS Study Hub ↗')))));
 }
 
 function viewCourse(cid, chid) {
@@ -1468,6 +1459,7 @@ function route() {
   const params = new URLSearchParams(qs || '');
   const parts = path.split('/').filter(Boolean).map(decodeURIComponent);
   document.querySelectorAll('[data-nav]').forEach(a => a.removeAttribute('aria-current'));
+  document.body.classList.toggle('is-home', !raw.split('?')[0].split('/').filter(Boolean).length);
   if (!parts.length) { viewHome(); document.querySelector('[data-nav=home]')?.setAttribute('aria-current', 'page'); }
   else if (parts[0] === 'course') viewCourse((parts[1] || '').toUpperCase(), parts[2]);
   else if (parts[0] === 'games') { viewGames(params); document.querySelector('[data-nav=games]')?.setAttribute('aria-current', 'page'); }
