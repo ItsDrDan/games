@@ -328,7 +328,7 @@
       root.append(wait);
       let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus, st.week && st.week.mix); } catch (e) { qs = null; }
       if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', ...hubLink('#/games?course=' + cid, cid)}, 'All CHEM ' + cid + ' games →')); return; }
-      st.qs = qs.map(q => ({...q, choices: q.choices ? shuffle(q.choices) : undefined})); st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
+      st.qs = qs.map(q => { if (!q.choices) return {...q, choices: undefined}; const idx = shuffle(q.choices.map((c, i) => i)); return {...q, choices: idx.map(i => q.choices[i]), why: Array.isArray(q.why) ? idx.map(i => q.why[i]) : undefined}; });  // keep each choice's 'why' with it st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
       const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
       return render(root, cid, st);
     }
@@ -337,9 +337,13 @@
   }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
+  function dailyStyles() { if (document.getElementById('daily-extra-css')) return; const el = document.createElement('style'); el.id = 'daily-extra-css';
+    el.textContent = '.daily-fb.close{display:block;background:#fff3b0;border:2px solid #f0b400;color:#5c4300;box-shadow:0 0 0 3px #ffe17a55}.daily-close-title{font-weight:800;margin-bottom:4px}input.sf-close{border-color:#f0b400!important;background:#fff8d6!important}.daily-why{margin-top:10px;font-size:.95em}.daily-why summary{cursor:pointer;font-weight:700}.daily-why ul{margin:6px 0 0;padding-left:20px}.daily-why li{margin:4px 0}.daily-why li.mine{background:#fff0ee;border-radius:6px;padding:2px 6px}';
+    document.head.appendChild(el); }
   function questionCard(root, cid, st) {
     const q = st.qs[st.done], n = st.done + 1, c = courseById[cid];
-    let answered = false, tries = 0, usedHint = false, firstSlip = '';
+    let answered = false, tries = 0, usedHint = false, firstSlip = '', sfClose = null, firstPick = null;
+    dailyStyles();
     const prompt = h('div', {class: 'daily-prompt', html: stack(q.prompt)});
     const fb = h('div', {class: 'daily-fb', role: 'status'});
     const hintBox = h('div', {class: 'daily-hint', hidden: true});
@@ -361,10 +365,13 @@
     const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + stack(q.hint); }}, '💡 Hint');
     function grade(resp) {
       if (answered) return; tries++;
+      if (q.type === 'mc' && tries === 1) firstPick = resp;
       const ok = QB.check(q, resp);
       if (ok) return finish(true, false);
+      if (QB.sfOnly && QB.sfOnly(q, resp)) { sfClose = String(resp); if (tries === 1) firstSlip = 'sigfigs'; return finish(true, false); }
       let slip = slipFor(q, resp), msg = slip && SLIP_TEXT[slip] ? SLIP_TEXT[slip] : q.type === 'number' ? 'Check units, the mole ratio, and your calculator entry.' : 'Try again.';
-      if (q.type === 'number' && q.sigfigs) { const x = parseNum(resp), a = Number(q.answer); if (isFinite(x) && isFinite(a) && Math.abs(x - a) <= Math.abs(a) * (q.tolerance || .01)) { slip = 'sigfigs'; msg = `Right value, wrong number of digits: give it ${q.sigfigs} significant figures (${Number(a.toPrecision(q.sigfigs))}${/e/.test(a.toPrecision(q.sigfigs)) ? '' : ''}).`.replace(/\(([^)]*)\)/, (m, v) => '(' + fmtSig(a, q.sigfigs) + ')'); } }
+      if (q.type === 'number' && q.sigfigs) { const x = parseNum(resp), a = Number(q.answer); if (isFinite(x) && isFinite(a) && Math.abs(x - a) <= Math.abs(a) * (q.tolerance || .01)) { slip = 'close'; msg = 'Very close, but your last digits don’t match. Recheck your arithmetic and rounding, and keep extra digits until the final step.'; } }
+      if (q.type === 'mc' && QB.why) { const w = QB.why(q, resp); if (w) { msg = w; slip = slip || 'choice'; } }
       if (tries === 1) firstSlip = slip;
       fb.className = 'daily-fb bad'; fb.innerHTML = '<b>Not yet.</b> ' + msg + (tries >= 2 ? ' Tap <b>Show answer</b> if you’re stuck.' : '');
       ddTrackSafe(cid, q, false, firstSlip);
@@ -375,9 +382,13 @@
       const firstTry = ok && tries === 1 && !usedHint;
       fb.className = 'daily-fb ' + (ok ? 'good' : 'shown');
       fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + stack(q.explain) + '</span>' : '');
+      if (ok && sfClose != null) { const got = QB.sigFigs(sfClose); fb.className = 'daily-fb close'; if (input) input.classList.add('sf-close');
+        fb.innerHTML = '<div class="daily-close-title">⚠️ Close! Fix your sig figs</div><b>Your math is right, but your significant figures are not.</b> ' + (got ? 'You entered <b>' + got + '</b> sig fig' + (got === 1 ? '' : 's') + '. ' : '') + 'This answer needs <b>' + q.sigfigs + '</b>: <b>' + fmtSig(Number(q.answer), q.sigfigs) + (q.unit ? ' ' + stack(q.unit) : '') + '</b>. On a Skill Check or exam this would lose points, so fix it next time!' + (q.explain ? ' <span class="daily-explain">' + stack(q.explain) + '</span>' : ''); }
+      if (q.type === 'mc' && q.why && q.why.some(Boolean)) { const mine = firstPick;
+        fb.insertAdjacentHTML('beforeend', '<details class="daily-why"' + (ok && !(mine && mine !== q.answer) ? '' : ' open') + '><summary>Why the other choices are wrong</summary><ul>' + q.choices.map((c, i) => c === q.answer || !q.why[i] ? '' : '<li' + (c === mine ? ' class="mine"' : '') + '><b>' + stack(c) + ':</b> ' + stack(q.why[i]) + (c === mine ? ' <i>(your first pick)</i>' : '') + '</li>').join('') + '</ul></details>'); }
       const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
       st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(st.key || STATE_KEY, st);
-      if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, '');
+      if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, sfClose != null ? 'sigfigs' : '');
       nextBtn.focus({preventScroll: true});
     }
     return h('div', {class: 'panel daily-card'},
