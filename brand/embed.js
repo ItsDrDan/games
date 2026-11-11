@@ -4,6 +4,16 @@
    posts an `lti.frameResize` message; Canvas listens for that from any iframe on a page and sets the
    iframe's height to match, so the game scrolls with the Canvas page instead of inside its own box.
    Idea and reference implementation: Rob Gilley (FCC-Chem/tools, gilley/stoich-game). */
+/* Every game loads this file, so it also brings in the "Rate this game" feedback button (brand/feedback.js). */
+(function () {
+  try {
+    if (window.ddFeedbackLoaded || document.querySelector('script[src*="brand/feedback.js"]')) return;
+    var me = document.currentScript && document.currentScript.src;
+    var s = document.createElement('script'); s.defer = true;
+    s.src = me ? me.replace(/embed\.js(\?.*)?$/, 'feedback.js') : 'https://itsdrdan.github.io/games/brand/feedback.js';
+    (document.head || document.documentElement).appendChild(s);
+  } catch (e) {}
+})();
 (function () {
   if (window.parent === window) return;                 // standalone page: nothing to do
   var root = document.documentElement, lastSent = 0, pending = false, honored = false, lastY = 0, pointerSeen = false;
