@@ -94,9 +94,13 @@
   function placeCanvas() {
     var c = document.getElementById('celebrationCanvas'); if (c && !c.hidden) c.style.top = anchorY(640) + 'px';
   }
-  document.addEventListener('pointerdown', function (e) { lastY = e.pageY; pointerSeen = true; if (honored) placeFloaters(); }, true);
+  // A tap or focus INSIDE a floating overlay is not a new place on the page. Re-placing the overlay there would slide
+  // its button out from under the pointer between press and release, so the click misses (Station Rotation's
+  // "I'm at Station N" needed 3-5 clicks in Canvas).
+  function inFloater(t) { return !!(t && t.closest && t.closest('[data-dd-float],dialog,.toasts')); }
+  document.addEventListener('pointerdown', function (e) { if (inFloater(e.target)) return; lastY = e.pageY; pointerSeen = true; if (honored) placeFloaters(); }, true);
   document.addEventListener('focusin', function (e) {
-    var t = e.target; if (!t || !t.getBoundingClientRect || (t.closest && t.closest('dialog,.toasts'))) return;   // focus moving into a modal is not a new place on the page
+    var t = e.target; if (!t || !t.getBoundingClientRect || inFloater(t)) return;   // focus moving into a modal or overlay is not a new place on the page
     { lastY = t.getBoundingClientRect().top + window.scrollY; pointerSeen = true; if (honored) placeFloaters(); }
   }, true);
 
