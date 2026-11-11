@@ -6,6 +6,9 @@
    "ItsDrDan Game Stats" sheet next to the CHEM 3B feedback page's rows.
 
    TO ADD A PROFESSOR: add a line to PROFESSORS below and push the games repo. Every game updates.
+   Professors also get added automatically: a game link with ?prof=Name (e.g. ?prof=uvarov, from the
+   Station Rotation setup page) puts "Professor Uvarov" in the list and picks it, and a game can set
+   window.ddProfessor to the student's professor (Station Rotation does this from its lab picker).
    To hide the button on one page: <meta name="dd-feedback" content="off"> */
 (function () {
   if (window.ddFeedbackLoaded) return;
@@ -33,6 +36,19 @@
   function gameTitle() { return (document.title.split(/\s[•·|—–]\s/)[0] || GAME).trim(); }
   var FRAMED = (function () { try { return window.top !== window.self; } catch (e) { return true; } })();
 
+  /* The professor this link or game is set up for (see the note at the top). */
+  function tidyProf(v) {
+    v = String(v || '').replace(/[<>"]/g, '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    if (!v) return '';
+    if (/^(dan|dr\.? ?dan|kwasniewski)$/i.test(v)) return 'Dr. Dan';
+    var bare = v.toLowerCase().replace(/^(professor|prof\.?|dr\.?)\s+/, '');
+    for (var i = 0; i < PROFESSORS.length; i++) if (PROFESSORS[i].toLowerCase() === v.toLowerCase() || PROFESSORS[i].toLowerCase() === 'professor ' + bare) return PROFESSORS[i];
+    return /\s/.test(v) || /[A-Z]/.test(v) ? v : 'Professor ' + v.charAt(0).toUpperCase() + v.slice(1);
+  }
+  function linkedProf() {
+    if (window.ddProfessor) return tidyProf(window.ddProfessor);
+    try { var q = new URLSearchParams(location.search); return tidyProf(q.get('prof') || q.get('professor')); } catch (e) { return ''; }
+  }
   function store(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (e) { return ''; } }
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
   function course() {
@@ -145,6 +161,14 @@
         prof = form.elements.prof, nameEl = form.elements.name, stars = 0, flt = null;
 
     var savedProf = store('ddFbProf'); if (PROFESSORS.indexOf(savedProf) !== -1) prof.value = savedProf;
+    var autoProf = null;
+    function syncProf() {   /* add the linked professor (if new) and pick it */
+      var lp = linkedProf(); if (!lp) return;
+      if (![].some.call(prof.options, function (o) { return o.value === lp; })) { var o = document.createElement('option'); o.textContent = lp; prof.appendChild(o); }
+      if (autoProf === null || prof.value === autoProf || !prof.value) prof.value = lp;   /* a student's own later pick wins */
+      autoProf = lp;
+    }
+    syncProf();
     nameEl.value = store('ddFbName');
 
     function paint() {
@@ -152,6 +176,7 @@
       rl.textContent = LABELS[stars] || '';
     }
     function show(on) {
+      if (on) syncProf();
       form.hidden = !on; done.hidden = true; open.setAttribute('aria-expanded', on);
       open.hidden = on; zone.querySelector('.ddfb-sub').hidden = on;
       if (on) { form.scrollIntoView({block: 'center', behavior: 'smooth'}); setTimeout(function () { (prof.value ? zone.querySelector('.ddfb-star') : prof).focus({preventScroll: true}); }, 350); }
