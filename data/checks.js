@@ -71,5 +71,40 @@ window.HUB_CHECKS = {
     {ch: "6", n: 1, skills: ["quantum.config"]}
    ]
   }
+ },
+ "1A-11": {
+  course: "1A", n: 11,
+  title: "Periodic Trends & Chemical Bonding",
+  points: 30, allowed: "Periodic table (provided)",
+  topics: [
+   {q: "#1", t: "Successive ionization energies: find the 3rd-period element + noble gas configuration", pts: 4},
+   {q: "#2", t: "Periodic trends: rank atomic radius, first IE, isoelectronic ions; metallic character", pts: 4},
+   {q: "#3", t: "Orbital diagram (1s–4p) for a transition-metal ion: unpaired e⁻, para- or diamagnetic", pts: 5},
+   {q: "#4", t: "Lewis structures: multiple bonds, octet exceptions, a condensed formula", pts: 8},
+   {q: "#5", t: "Resonance structures and formal charge", pts: 5},
+   {q: "#6", t: "Bond type from ΔEN (nonpolar, polar, ionic) + dipole arrow", pts: 4}
+  ],
+  plan: [
+   {day: "Day 1", t: "Periodic trends", items: ["Radius: bigger down a group, smaller across a period", "IE and electronegativity: the opposite (up and to the right)", "Same number of electrons: more protons = smaller ion", "Successive IE: the big jump comes right after the last valence electron"], game: "quantumchemistry"},
+   {day: "Day 2", t: "Ions & orbital diagrams", items: ["Transition-metal cations lose 4s electrons before 3d", "Hund’s rule: one arrow in each box before pairing", "Any unpaired electron = paramagnetic; all paired = diamagnetic"], game: "quantumchemistry"},
+   {day: "Day 3", t: "Lewis structures & octet exceptions", items: ["Count valence electrons first (add for −, subtract for +)", "Least electronegative atom in the middle; H is never central", "B is happy with 6 e⁻; S, P, Xe can go over 8", "C(O) in a condensed formula means C=O"], game: "lewisstructures"},
+   {day: "Day 4", t: "Formal charge, resonance & polarity", items: ["FC = valence e⁻ − (lone-pair e⁻ + bonds)", "Resonance: same atoms, move only electrons; the real bonds are identical", "ΔEN: under 0.4 nonpolar, 0.4–2.0 polar, over 2.0 ionic", "Dipole arrow points to the more electronegative atom"], game: "lewisstructures"},
+   {day: "Every day", t: "Daily 5", items: ["Five quick questions on trends, configurations, Lewis structures and polarity", "Keep your streak going until skill check day"]}
+  ],
+  games: [
+   {id: "quantumchemistry", focus: "Pick CHEM 1A, then do Periodic Trends and Electron Configurations (orbital diagrams and ions)."},
+   {id: "lewisstructures", focus: "Build Lewis structures (octet exceptions too), then practice bond polarity. Skip VSEPR shapes for now."}
+  ],
+  mistakes: ["Ranking radius backwards (it gets smaller across a period)", "Removing 3d electrons before 4s in transition-metal ions", "Miscounting valence electrons for ions", "Forcing an octet on boron, or not expanding S, P and Xe", "Formal charges that don’t add up to the ion’s charge", "Dipole arrow pointing at the less electronegative atom"],
+  daily: {
+   title: "Skill Check #11 prep",
+   note: "2 periodic trend, 1 electron configuration, 1 Lewis structure and 1 bond polarity question. About 5 minutes.",
+   mix: [
+    {ch: "6", n: 2, skills: ["quantum.trends"]},
+    {ch: "6", n: 1, skills: ["quantum.config"]},
+    {ch: "7", n: 1, skills: ["lewisstructures.valence-electrons", "lewisstructures.octet-exception"]},
+    {ch: "7", n: 1, skills: ["lewisstructures.bond-category", "lewisstructures.bond-delta-en"]}
+   ]
+  }
  }
 };
