@@ -175,7 +175,7 @@
       var name = nameEl.value.trim().replace(/\s+/g, ' '), comment = form.elements.comment.value.trim(), code = makeCode();
       store('ddFbProf', prof.value); if (name) store('ddFbName', name);
       var payload = {
-        type: 'feedback', page: 'game:' + GAME, code: code, name: name, klass: prof.value, professor: prof.value,
+        type: 'feedback', page: GAME,   /* sheet's Page column keeps 20 characters, so no prefix */ code: code, name: name, klass: prof.value, professor: prof.value,
         course: course(), framed: FRAMED, best: '', comments: '',
         ratings: [{game: GAME, title: gameTitle(), stars: stars, comment: comment}]
       };
