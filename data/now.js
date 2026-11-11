@@ -56,18 +56,23 @@ window.HUB_NOW = {
   }
  },
  "1A": {
-  updated: "2026-11-04",
-  week: 13,
-  lecture: {text: "Ch 6: Basic quantum theory (light, Bohr model, quantum numbers)", ch: "6"},
-  check: {n: 10, topic: "Quantum chemistry", ch: ["6"]},
+  updated: "2026-11-11",
+  week: 14,
+  lecture: {text: "Ch 6–7: Periodic trends, then Lewis structures, formal charge, resonance and bond polarity", ch: "6"},
+  check: {n: 11, topic: "Periodic trends and chemical bonding (Lewis structures, resonance, polarity)", ch: ["6", "7"]},
   next: "3",
-  done: "Exam #2 is done, and Skill Check #9 covered gases.",
-  /* Daily 5 on the Canvas home page: basic quantum theory only (no electron configurations or periodic trends yet) */
+  done: "Skill Check #10 covered quantum chemistry.",
+  /* Daily 5 on the Canvas home page: Skill Check #11 topics (periodic trends, ion configurations, Lewis structures, bond polarity) */
   daily: {
-   title: "Basic quantum theory",
+   title: "Periodic trends & bonding",
    note: "rotate",
-   focus: {ch: "6", n: 5, skills: ["quantum.light", "quantum.bohr", "quantum.numbers"]},
-   mix: [{ch: "6", n: 5, skills: ["quantum.light", "quantum.bohr", "quantum.numbers"]}]
+   focus: {ch: "6", n: 3, skills: ["quantum.trends", "quantum.config"]},
+   mix: [
+    {ch: "6", n: 2, skills: ["quantum.trends"]},
+    {ch: "6", n: 1, skills: ["quantum.config"]},
+    {ch: "7", n: 1, skills: ["lewisstructures.valence-electrons", "lewisstructures.octet-exception"]},
+    {ch: "7", n: 1, skills: ["lewisstructures.bond-category", "lewisstructures.bond-delta-en", "lewisstructures.polarity-trends"]}
+   ]
   }
  }
 };
