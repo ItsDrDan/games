@@ -10,6 +10,7 @@
   const today = () => dayKey(new Date()), yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return dayKey(d); };
   const load = (k, fb) => { try { return JSON.parse(localStorage.getItem(k) || 'null') ?? fb; } catch { return fb; } };
   const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const loadSeen = () => { const s = load(SEEN_KEY, []); return Array.isArray(s) ? s : []; };   // a non-array (corrupted) value would break .concat
   /* styles for the Canvas card (embed mode) and stacked fractions in bank items; and, when iframed, brand/embed.js so Canvas sizes the frame */
   try {
     const css = document.createElement('style');
@@ -141,7 +142,7 @@
     return shuffle(qs).slice(0, n).map(tag);
   }
   async function pickMix(cid, mix) {
-    const c = courseById[cid], seen = load(SEEN_KEY, []), out = [];
+    const c = courseById[cid], seen = loadSeen(), out = [];
     for (const g of mix) {
       const options = g.pool ? shuffle(g.pool) : [g];
       let got = [];
@@ -161,7 +162,7 @@
     /* focus: a fixed number of questions from one chapter (optionally only some skills), the rest from the other chapters */
     const lead = [];
     if (focus) {
-      const fch = c.chapters.find(x => x.id === focus.ch), seen0 = load(SEEN_KEY, []);
+      const fch = c.chapters.find(x => x.id === focus.ch), seen0 = loadSeen();
       const opts = {course: cid, chapters: [cid + '-' + focus.ch], types: TYPES, n: 30}; if (focus.skills) opts.skills = focus.skills;
       let qs = (await QB.get({...opts, exclude: seen0})).filter(usable); if (qs.length < focus.n) qs = (await QB.get(opts)).filter(usable);
       for (const q of shuffle(qs).slice(0, focus.n)) lead.push({...q, ch: fch.id, chLabel: fch.label, chTitle: fch.title});
@@ -182,7 +183,7 @@
     });
     const picked = [];
     while (picked.length < want && scored.length) { const total = scored.reduce((n, [, s]) => n + s, 0); let r = Math.random() * total, i = 0; for (; i < scored.length; i++) { r -= scored[i][1]; if (r <= 0) break; } i = Math.min(i, scored.length - 1); picked.push(scored[i][0]); scored.splice(i, 1); }
-    const seen = load(SEEN_KEY, []).concat(lead.map(q => q.id)), out = lead.slice();
+    const seen = loadSeen().concat(lead.map(q => q.id)), out = lead.slice();
     for (const ch of picked) {
       let qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, exclude: seen, n: 12})).filter(usable);
       if (!qs.length) qs = (await QB.get({course: cid, chapters: [cid + '-' + ch.id], types: TYPES, n: 12})).filter(usable);
@@ -328,8 +329,9 @@
       root.append(wait);
       let qs = null; try { qs = await pickQuestions(cid, st.only, st.week && st.week.focus, st.week && st.week.mix); } catch (e) { qs = null; }
       if (!qs) { wait.replaceChildren(h('p', {}, 'The question bank can’t be reached right now. Try again in a minute, or open a game below.'), h('a', {class: 'btn secondary', ...hubLink('#/games?course=' + cid, cid)}, 'All CHEM ' + cid + ' games →')); return; }
-      st.qs = qs.map(q => { if (!q.choices) return {...q, choices: undefined}; const idx = shuffle(q.choices.map((c, i) => i)); return {...q, choices: idx.map(i => q.choices[i]), why: Array.isArray(q.why) ? idx.map(i => q.why[i]) : undefined}; });  // keep each choice's 'why' with it st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
-      const seen = load(SEEN_KEY, []); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
+      st.qs = qs.map(q => { if (!q.choices) return {...q, choices: undefined}; const idx = shuffle(q.choices.map((c, i) => i)); return {...q, choices: idx.map(i => q.choices[i]), why: Array.isArray(q.why) ? idx.map(i => q.why[i]) : undefined}; });  // keep each choice's 'why' with it
+      st.done = 0; st.results = []; save(st.key || STATE_KEY, st);
+      const seen = loadSeen(); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
       return render(root, cid, st);
     }
     if (st.done >= st.qs.length) { if (st.round === 1) streakDone(); root.replaceChildren(header(cid, st)); return root.append(summary(cid, st)); }
@@ -364,7 +366,10 @@
     const showBtn = h('button', {type: 'button', class: 'btn secondary small', onclick: () => { if (answered) return; finish(false, true); }}, 'Show answer');
     const hintBtn = h('button', {type: 'button', class: 'btn secondary small', hidden: !q.hint, onclick: () => { usedHint = true; hintBox.hidden = false; hintBox.innerHTML = '💡 ' + stack(q.hint); }}, '💡 Hint');
     function grade(resp) {
-      if (answered) return; tries++;
+      if (answered) return;
+      // "2,5" is a decimal comma, not 25 ("1,200" still means 1200): ask for a period instead of grading it
+      if (q.type === 'number' && /^[+\-−]?(?:\d+,\d{1,2}|0,\d+)(?![\d,])/.test(String(resp).trim())) { fb.className = 'daily-fb bad'; fb.innerHTML = 'Use a period for decimals (2.5), not a comma.'; return; }
+      tries++;
       if (q.type === 'mc' && tries === 1) firstPick = resp;
       const ok = QB.check(q, resp);
       if (ok) return finish(true, false);

@@ -738,7 +738,7 @@ body.is-home .topsearch{visibility:hidden}
 <script src="data/checks.js?v=20261111a"></script>
 <script>if(location.protocol==="file:"||/^(localhost|127\.)/.test(location.hostname))window.QB_BASE="../questionbank/";</script>
 <script src="https://itsdrdan.github.io/questionbank/qb.js"></script>
-<script>if(!window.QB)document.write('<script src="../questionbank/qb.js"><\/script>');</script>
+<script>if(!window.QB){const s=document.createElement('script');s.src='../questionbank/qb.js';s.onload=()=>{if(/^#\/daily/.test(location.hash)&&typeof route==='function')route();};document.head.append(s);}  /* local fallback; QB is only used once a Daily 5 starts, so re-open that page when it arrives */</script>
 <script src="track.js" defer></script>
 <script src="daily.js"></script>
 <script>
@@ -757,6 +757,7 @@ const games = new Map(D.games.map(g => [g.id, {...g, tags: []}]));
 const videos = new Map(D.videos.map(v => [v.id, {...v, moments: v.moments || []}]));
 const playlistTitles = {...D.playlists};
 let transcripts = null, transcriptState = 'idle'; // idle | loading | ready | none
+let transcriptsPromise = null, lastSearch = null;
 const $ = s => document.querySelector(s);
 const app = $('#app');
 
@@ -1174,8 +1175,11 @@ function viewSearch(params) {
   const results = h('div', {'aria-live': 'polite'});
   app.replaceChildren(h('section', {class: 'wrap search-page'}, h('div', {class: 'eyebrow'}, 'Search the hub'), form, chips, results));
   if (!q) { results.append(h('p', {class: 'noresults'}, 'Type a topic like “molarity”, “Hess’s law”, or “chapter 10”.')); input.focus(); return; }
+  // one shared load: when it lands, refresh whichever search is on screen now (not the box from the search that started the load)
+  const first = !transcriptsPromise; if (first) transcriptsPromise = loadTranscripts();
   renderResults(results, q, course);
-  if (transcriptState === 'idle') loadTranscripts().then(() => { if (location.hash.startsWith('#/search')) renderResults(results, q, course); });
+  lastSearch = {box: results, q, course};
+  if (first) transcriptsPromise.then(() => { const ls = lastSearch; if (ls && ls.box.isConnected && location.hash.startsWith('#/search')) renderResults(ls.box, ls.q, ls.course); });
 }
 function clip(text, qt, n = 150) {
   if (text.length <= n) return text;
@@ -1483,7 +1487,13 @@ $('#topSearchForm').addEventListener('submit', e => { e.preventDefault(); const 
 /* ---------- optional data: YouTube catalog + transcripts (built by tools/update_youtube.py) ---------- */
 async function loadYouTube() {
   try {
-    const r = await fetch('data/youtube.json', {cache: 'no-cache'}); if (!r.ok) return;
+    // data/youtube.json is optional (written by tools/update_youtube.py, not committed yet): after a 404, skip it for a day instead of re-requesting on every visit
+    const MISS = 'hub-youtube-missing'; let missed = 0; try { missed = +localStorage.getItem(MISS) || 0; } catch {}
+    if (Date.now() - missed < 864e5) return;
+    const r = await fetch('data/youtube.json', {cache: 'no-cache'});
+    if (r.status === 404) { try { localStorage.setItem(MISS, String(Date.now())); } catch {} }
+    if (!r.ok) return;
+    try { localStorage.removeItem(MISS); } catch {}
     const y = await r.json();
     Object.assign(playlistTitles, y.playlists || {});
     for (const v of y.videos || []) {
