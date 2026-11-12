@@ -168,6 +168,18 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/chem1bready/"
   },
   {
+   "id": "bondingtheories",
+   "logo": "assets/games/bondingtheories.webp",
+   "title": "Orbital Overlap (Bonding Theories)",
+   "icon": "orbital",
+   "blurb": "Valence bond theory, hybrid orbitals, sigma and pi bonds, and tap-to-fill MO diagrams, with a Theory Face-Off boss round.",
+   "courses": [
+    "1A",
+    "1B"
+   ],
+   "url": "https://itsdrdan.github.io/bondingtheories/"
+  },
+  {
    "id": "organic",
    "logo": "assets/games/organic.webp",
    "title": "Functional Group Flashcards",
@@ -8820,6 +8832,7 @@ window.HUB_DATA = {
       "homonuclear and heteronuclear diatomics"
      ],
      "games": [
+      "bondingtheories",
       "chem1bready"
      ],
      "videos": [
@@ -9104,6 +9117,7 @@ window.HUB_DATA = {
      ],
      "games": [
       "chem1bready",
+      "bondingtheories",
       "redox",
       "algebratrainer"
      ],
