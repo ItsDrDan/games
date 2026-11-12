@@ -1,8 +1,12 @@
 /* ItsDrDan study games: anonymous practice stats.
    Each game calls ddTrack({game, course, mode, topic, correct, slip}) once per question.
    slip (optional) names the kind of first mistake a mistake-catcher recognized (x1000, sign, 273, inverted, log-ln…).
-   Sends no names, emails, student IDs, or typed answers, only which topic was practiced
-   and whether the first try was right, so Dr. Dan can see which topics students find hardest.
+   Multiple-choice games may also send item (the question's ID), pick (which answer choice was chosen,
+   0-3 in the bank's stored order), key (which choice was correct) and ver (a short fingerprint of the
+   question's wording). That lets Dr. Dan find individual questions that may be mis-keyed or confusing,
+   for example when most students pick the same wrong answer.
+   Sends no names, emails, student IDs, or typed answers, only which question or topic was practiced
+   and which choice was picked, so Dr. Dan can see which topics and questions students find hardest.
    Honors "Do Not Track" / Global Privacy Control, and is off when a game is opened locally. */
 (function () {
   if (window.ddTrack) return;
@@ -36,7 +40,11 @@
     if (off || !ev || !ev.game) return;
     try {
       queue.push({game: ev.game, course: ev.course || '', mode: ev.mode || '', topic: ev.topic || '',
-        correct: ev.correct, tries: ev.tries || '', slip: ev.slip || '', session: sid, source: source});
+        correct: ev.correct, tries: ev.tries || '', slip: ev.slip || '', session: sid, source: source,
+        item: String(ev.item == null ? '' : ev.item).slice(0, 40),
+        pick: (ev.pick === 0 || ev.pick > 0) ? Number(ev.pick) : '',
+        key: (ev.key === 0 || ev.key > 0) ? Number(ev.key) : '',
+        ver: String(ev.ver == null ? '' : ev.ver).slice(0, 12)});
       clearTimeout(timer);
       timer = setTimeout(flush, queue.length >= 10 ? 0 : 5000);
     } catch (e) {}
