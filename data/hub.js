@@ -3,7 +3,7 @@
    each chapter lists the concepts (from the Course Outline of Record), the textbook
    reading, the games (by repo name), and the YouTube videos (by video ID). */
 window.HUB_DATA = {
- "updated": "2026-11-01",
+ "updated": "2026-11-12",
  "channel": "https://www.youtube.com/@itsdrdan",
  "hide": [
   "games",
@@ -154,6 +154,19 @@ window.HUB_DATA = {
     "1A"
    ],
    "url": "https://itsdrdan.github.io/thermochemistry/"
+  },
+  {
+   "id": "IMF",
+   "logo": "assets/games/imf.webp",
+   "title": "Sticky Molecules (Intermolecular Forces)",
+   "icon": "molecule",
+   "blurb": "Name the forces, win boiling point battles, and run nine predict-first labs on phase changes, osmosis, and more.",
+   "courses": [
+    "3A",
+    "1A",
+    "3B"
+   ],
+   "url": "https://itsdrdan.github.io/IMF/"
   },
   {
    "id": "chem1bready",
@@ -7461,7 +7474,8 @@ window.HUB_DATA = {
       "intermolecular forces: dispersion, dipole–dipole, hydrogen bonding"
      ],
      "games": [
-      "lewisstructures"
+      "lewisstructures",
+      "IMF"
      ],
      "videos": [
       "CGmbd2YwflY",
@@ -7570,7 +7584,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "thermochemistry",
-      "algebratrainer"
+      "algebratrainer",
+      "IMF"
      ],
      "videos": [
       "qPM-C3V0l80",
@@ -8966,7 +8981,8 @@ window.HUB_DATA = {
       "molecular, network, ionic, and amorphous solids"
      ],
      "games": [
-      "thermochemistry"
+      "thermochemistry",
+      "IMF"
      ],
      "videos": [
       "RNQKJ1hnHes",
@@ -9029,7 +9045,8 @@ window.HUB_DATA = {
       "colloids and the Tyndall effect"
      ],
      "games": [
-      "algebratrainer"
+      "algebratrainer",
+      "IMF"
      ],
      "videos": [
       "drIkMSVAE0A",
@@ -9662,7 +9679,8 @@ window.HUB_DATA = {
       "functionalgroups",
       "organicreactions",
       "lewisstructures",
-      "stereochemistry"
+      "stereochemistry",
+      "IMF"
      ],
      "videos": [
       "9lxWINhQtUc",
@@ -9903,7 +9921,8 @@ window.HUB_DATA = {
       "cell membranes and transport"
      ],
      "games": [
-      "lipids"
+      "lipids",
+      "IMF"
      ],
      "videos": [
       "BQwU9Z7myeg",
@@ -9934,7 +9953,8 @@ window.HUB_DATA = {
      ],
      "games": [
       "aminoacids",
-      "phcharge"
+      "phcharge",
+      "IMF"
      ],
      "videos": [
       "Y_bXmJDoANI",
