@@ -25,7 +25,8 @@
   /* embedded (?embed=1, e.g. the Daily 5 on 3b.html or a Canvas card): hub links open the full hub in a new tab so the
      page the student started on stays put; the back button returns to that page (passed in as &back=URL&backname=…) */
   const EMBED = new URLSearchParams(location.search).get('embed') === '1';
-  const hubLink = (hash, cid) => EMBED ? {href: './?course=' + cid + hash, target: '_blank', rel: 'noopener'} : {href: hash};
+  const CLS = () => (typeof classMode === 'function' && classMode() ? '&class=drdan' : '');   // new tabs keep Dr. Dan's class mode (an embedded frame can't share its saved setting)
+  const hubLink = (hash, cid) => EMBED ? {href: './?course=' + cid + CLS() + hash, target: '_blank', rel: 'noopener'} : {href: hash};
   function safeBack(u) { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } }
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
@@ -52,6 +53,7 @@
 
   /* ---- which chapter is the class on right now (same reading as the "This week" card) ---- */
   function currentChapter(cid) {
+    if (typeof classMode === 'function' && !classMode()) return null;   // class pace is Dr. Dan's classes only
     try {
       const c = courseById[cid], now = (window.HUB_NOW || {})[cid], sc = sylCourse(cid);
       const fresh = now && (Date.now() - new Date(now.updated + 'T12:00:00').getTime()) < 21 * 864e5;
@@ -318,7 +320,7 @@
         st.week && st.week.note && st.week.note !== 'rotate' ? h('p', {class: 'daily-weeknote'}, st.week.note) : null,
         h('p', {class: 'daily-weeknote daily-growth'}, growthMessage()),
         h('p', {class: 'daily-streak'}, streakLine(s)))),
-      st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
+      st.week ? h('a', {class: 'btn daily-allgames', href: './?course=' + cid + CLS() + '#/course/' + cid, target: '_blank', rel: 'noopener'}, '🕹️ All study games →') : null,
       courseChips(cid));
   }
 

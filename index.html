@@ -479,6 +479,8 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .wkitem .btn{margin-top:auto}
 .wkdone{margin:-4px 0 12px;font-weight:800;color:#1f7a62}
 .wknote{margin:10px 2px 0;font-size:.85rem;color:var(--muted)}
+.classnote{margin:10px 2px 0;font-size:.8rem;color:var(--muted)}
+.classnote a{color:inherit}
 
 /* ===== drawn SVG icons (assets/icons.svg) ===== */
 :root{--mag:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20256%20256%22%20fill%3D%22currentColor%22%3E%3Cpath%20d%3D%22M232.49%2C215.51%2C185%2C168a92.12%2C92.12%2C0%2C1%2C0-17%2C17l47.53%2C47.54a12%2C12%2C0%2C0%2C0%2C17-17ZM44%2C112a68%2C68%2C0%2C1%2C1%2C68%2C68A68.07%2C68.07%2C0%2C0%2C1%2C44%2C112Z%22/%3E%3C/svg%3E")}
@@ -1425,6 +1427,24 @@ function renderResults(box, q, course) {
 
 
 
+/* ---------- class mode: Dr. Dan's own syllabus, class pace and exam guides ----------
+   The public hub is general for any chemistry class. Dr. Dan's Canvas pages link here with ?class=drdan,
+   which turns on the "This week" card, his exam guides and syllabus links, and is remembered on this device.
+   ?class=off (or the "Not in Dr. Dan's class?" link) turns it back off. This only changes what is shown; it hides nothing. */
+const CLASS_KEY = 'hub-class';
+let CLASS_ON = (() => {
+  const q = new URLSearchParams(location.search).get('class');
+  try { if (q === 'drdan') localStorage.setItem(CLASS_KEY, 'drdan'); else if (q === 'off') localStorage.removeItem(CLASS_KEY); return localStorage.getItem(CLASS_KEY) === 'drdan'; }
+  catch { return q === 'drdan'; }
+})();
+function classMode() { return CLASS_ON; }
+function classOff() {
+  CLASS_ON = false; try { localStorage.removeItem(CLASS_KEY); } catch {}
+  const u = new URL(location.href); if (u.searchParams.has('class')) { u.searchParams.delete('class'); history.replaceState(null, '', u); }
+  route();
+}
+function classNote() { return h('p', {class: 'classnote'}, 'Showing Dr. Dan’s class info. ', h('a', {href: '#', onclick: e => { e.preventDefault(); classOff(); }}, 'Not in Dr. Dan’s class? Hide it')); }
+
 /* ---------- syllabus calendar ("this week") from data/syllabus.json ---------- */
 let SYL = null;
 async function loadSyllabus() { try { const r = await fetch('data/syllabus.json', {cache: 'no-cache'}); if (r.ok) { SYL = await r.json(); route(); } } catch {} }
@@ -1443,6 +1463,7 @@ function matchChapter(cid, text) {
   return bs >= 2 ? best : null;
 }
 function weekCard(cid) {
+  if (!classMode()) return null;
   const sc = sylCourse(cid);
   const now = (window.HUB_NOW || {})[cid];
   const fresh = now && (Date.now() - new Date(now.updated + 'T12:00:00').getTime()) < 21 * 864e5;
@@ -1474,7 +1495,8 @@ function weekCard(cid) {
         chk.ch?.length ? h('a', {class: 'btn small secondary', href: `#/check/${cid}/custom?ch=${chk.ch.join(',')}`}, 'Build my plan →') : null) : null,
       nx ? h('div', {class: 'wkitem'}, h('small', {}, ...(nx.id === 'final' ? [ic('finish'), ' Coming up'] : [ic('note'), ' Next exam'])), h('span', {}, `${exInfo ? exInfo.title : 'Exam ' + nx.id}${nx.w?.date ? ' · ' + nx.w.date : ''}`),
         exInfo ? h('a', {class: 'btn small secondary', href: `#/exam/${cid}/${nx.id}`}, 'Exam guide →') : null) : null),
-    fresh ? h('p', {class: 'wknote'}, `Updated by Dr. Dan on ${new Date(now.updated + 'T12:00:00').toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}. The schedule can shift; Canvas has the final word.`) : null);
+    fresh ? h('p', {class: 'wknote'}, `Updated by Dr. Dan on ${new Date(now.updated + 'T12:00:00').toLocaleDateString(undefined, {month: 'short', day: 'numeric'})}. The schedule can shift; Canvas has the final word.`) : null,
+    classNote());
 }
 
 /* ---------- exam & skill-check guides ---------- */
@@ -1493,7 +1515,7 @@ function examHits(q, filter) {
   const out = [];
   for (const cid of COURSE_ORDER) {
     if ((eq.course && cid !== eq.course) || (!eq.course && filter !== 'all' && cid !== filter)) continue;
-    const E = EXAMS[cid];
+    const E = classMode() ? EXAMS[cid] : null;
     if (eq.kind === 'exam' || eq.kind === 'any') for (const ex of E?.exams || []) if (eq.kind === 'any' || ex.id === eq.id) out.push({href: `#/exam/${cid}/${ex.id}`, cid, title: `${ex.title}`, sub: `Dr. Dan’s sections · Chapters ${ex.ch.filter(x => x !== 'review').join(', ')}`});
     if (eq.kind === 'check' || eq.kind === 'any') out.push({href: `#/exams/${cid}#checks`, cid, title: `${courseById[cid].name} skill check builder`, sub: 'Pick this week’s topic and get a quick 2-day plan', custom: true, icon: 'check'});
     if (eq.kind !== 'check') out.push({href: `#/exams/${cid}`, cid, title: `Build your own ${courseById[cid].name} exam plan`, sub: 'Pick the chapters your exam covers (works for any instructor)', custom: true});
@@ -1527,25 +1549,25 @@ function builder(cid, c) {
     h('span', {class: 'pi', style: hue(ch)}, ic(ch.icon)), h('span', {}, h('b', {}, ch.label), ' ', ch.title))));
   draw();
   return h('div', {class: 'panel', id: 'checks', style: 'margin-top:28px'}, h('h3', {}, ic('tools'), ' Build your own plan'),
-    h('p', {style: 'margin:0 0 10px;font-weight:700'}, 'In another instructor’s section, or want to pick the chapters yourself? What are you studying for?'), seg, hint, box, h('div', {style: 'margin-top:16px'}, btn));
+    h('p', {style: 'margin:0 0 10px;font-weight:700'}, classMode() ? 'In another instructor’s section, or want to pick the chapters yourself? What are you studying for?' : 'Pick the chapters from your own syllabus. What are you studying for?'), seg, hint, box, h('div', {style: 'margin-top:16px'}, btn));
 }
 function viewExamHub(cid) {
   const c = courseById[cid]; if (!c) return viewNotFound();
   setTitle(`${c.name} exam guides`);
-  const E = EXAMS[cid];
+  const E = classMode() ? EXAMS[cid] : null;
   app.replaceChildren(
     h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
       h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('span', {}, 'Exams')),
       h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), 'Exam & skill-check guides'),
-      h('p', {}, 'Pick your exam to get a checklist and a study plan.'))),
+      h('p', {}, classMode() ? 'Pick your exam to get a checklist and a study plan.' : 'Tick the chapters your exam or skill check covers to get a checklist and a study plan.'))),
     h('section', {class: 'wrap section', 'data-course': cid}, weekCard(cid),
       E ? [h('div', {class: 'kicker2'}, 'Dr. Dan’s sections'), h('h2', {}, ic('note'), ' Exams'),
         h('div', {class: 'examgrid centered'}, E.exams.map(ex => h('a', {class: 'examcard', href: `#/exam/${cid}/${ex.id}`},
           h('span', {class: 'ei'}, ic(ex.id === 'final' ? 'finish' : 'note')), h('b', {}, ex.title),
           h('small', {}, chRange(ex.ch.filter(x => x !== 'review')))))),
 
-        retakeNote()]
-        : h('p', {class: 'empty-note'}, `Exam guides for Dr. Dan’s ${c.name} sections are coming. Until then, build your own plan below.`),
+        retakeNote(), weekCard(cid) ? null : classNote()]
+        : classMode() ? h('p', {class: 'empty-note'}, `Exam guides for Dr. Dan’s ${c.name} sections are coming. Until then, build your own plan below.`) : null,
       builder(cid, c)));
 }
 
@@ -1555,6 +1577,7 @@ function viewExam(cid, id, params, isCheck) {
   let ex;
   if (isCheck) { const ids = (params.get('ch') || '').split(',').filter(Boolean); if (!ids.length) return viewExamHub(cid); ex = {title: 'My skill check plan', ch: ids, can: null, custom: true, tips: ['Skill checks are short: aim to do each skill quickly and without notes.', 'Use the skill recipe on the chapter page; it’s the exact method to practice.']}; }
   else if (id === 'custom') ex = {title: 'My exam plan', ch: (params.get('ch') || '').split(',').filter(Boolean), can: null, tips: [], custom: true};
+  else if (!classMode()) return viewExamHub(cid);
   else { ex = (E.exams || []).find(x => x.id === id); if (!ex) return viewNotFound('That exam guide isn’t listed yet. Try building your own plan.'); }
   const chs = ex.ch.map(x => c.chapters.find(y => y.id === x)).filter(Boolean);
   if (!chs.length) return viewExamHub(cid);
