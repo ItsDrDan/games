@@ -259,6 +259,7 @@ h1{font-weight:900;letter-spacing:-.035em} h2{font-weight:900} h3{font-weight:85
 .eyebrow{color:#8254c5;letter-spacing:.14em}
 h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{color:#5e5679}
+.hero p.lead a{color:inherit;font-weight:800;text-decoration-thickness:2px;text-underline-offset:3px}
 .btn{background:var(--brand);border-color:var(--edge);box-shadow:0 4px 0 var(--edge);border-radius:999px;padding-inline:20px}
 .btn.secondary{background:#fff;color:var(--edge)} .btn.secondary:hover{background:#f4f0ff}
 .btn:hover{box-shadow:0 6px 0 var(--edge)} .btn:active{box-shadow:0 1px 0 var(--edge)}
@@ -1033,9 +1034,11 @@ function viewHome() {
   app.replaceChildren(
     h('section', {class: 'hero hero2'}, h('div', {class: 'wrap hero-inner'},
       h('div', {class: 'herocopy'},
-        h('div', {class: 'eyebrow'}, 'Dr. Dan’s chemistry study hub'),
+        h('div', {class: 'eyebrow'}, 'Dr. Dan’s study hub · Made in the Central Valley'),
         h('h1', {html: 'Find exactly what to study, <span>then practice it.</span>'}),
-        h('p', {class: 'lead'}, `${all.length} free chemistry games, ${nVideos} video lessons, and a study guide for every chapter. No sign-up needed.`),
+        h('p', {class: 'lead'}, `${all.length} free chemistry games, ${nVideos} video lessons, and a study guide for every chapter. Plus `,
+          h('a', {href: 'https://itsdrdan.github.io/MCAT/', target: '_blank', rel: 'noopener'}, 'MCAT'), ' and ', h('a', {href: 'https://itsdrdan.github.io/teas/', target: '_blank', rel: 'noopener'}, 'TEAS'),
+          ' exam prep for Central Valley students. No sign-up needed.'),
         search,
         last && courseById[last] && !cont ? h('div', {class: 'ctarow'}, h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`)) : null),
       h('div', {class: 'heroatom solo'}, h('span', {class: 'glow', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'})))),
