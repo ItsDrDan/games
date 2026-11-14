@@ -52,6 +52,7 @@
 
   /* ---- which chapter is the class on right now (same reading as the "This week" card) ---- */
   function currentChapter(cid) {
+    if (typeof classMode === 'function' && !classMode()) return null;   // class pace is Dr. Dan's classes only
     try {
       const c = courseById[cid], now = (window.HUB_NOW || {})[cid], sc = sylCourse(cid);
       const fresh = now && (Date.now() - new Date(now.updated + 'T12:00:00').getTime()) < 21 * 864e5;
