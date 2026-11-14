@@ -702,6 +702,40 @@ body.is-home .topsearch{visibility:hidden}
 .premedrow .premed small{font-size:.95rem}
 @media (max-width:860px){.premedrow{grid-template-columns:1fr}}
 </style>
+<style>/* ===== Learning-path upgrade (Nov 2026): start-here search answer, pick up where you left off, builds-on chips ===== */
+.navlinks a{white-space:nowrap}
+.flinks a,.fnote a{display:inline-block;padding:3px 0;min-height:24px}
+.h2like{font-size:clamp(1.5rem,3.2vw,2.1rem);margin:6px 0 4px}
+.searchnote{margin:18px 0 0;color:#5e5679;font-weight:700}
+.starthere{margin-top:20px;background:#fff;border:2px solid var(--c,#8254c5);border-radius:22px;padding:16px 18px 18px;box-shadow:0 4px 0 var(--cb,#efe9ff)}
+.starthere[data-course="3A"]{--c:var(--c3A);--cb:var(--c3A-bg)}.starthere[data-course="1A"]{--c:var(--c1A);--cb:var(--c1A-bg)}.starthere[data-course="1B"]{--c:var(--c1B);--cb:var(--c1B-bg)}.starthere[data-course="3B"]{--c:var(--c3B);--cb:var(--c3B-bg)}
+.shhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.shalso{margin-left:auto;color:#5e5679;font-size:.95rem}.shalso a{font-weight:800}
+.shsteps{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.shsteps li{display:grid;grid-template-columns:28px 92px 1fr;align-items:center;gap:10px}
+.shn{width:28px;height:28px;border-radius:50%;background:var(--c,#8254c5);color:#fff;font-weight:900;display:grid;place-items:center;font-size:.9rem}
+.shl{font-weight:900;color:#3d3560}
+.shgo{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#faf8ff;border:1.5px solid #e6def6;border-radius:14px;padding:9px 12px;text-decoration:none;color:inherit;cursor:pointer;min-height:56px}
+.shgo:hover{border-color:var(--c,#8254c5);background:#fff}
+.shgo b{display:block;line-height:1.3}.shgo small{display:block;color:#5e5679;font-size:.92rem;line-height:1.35}
+.shgo .ri{flex:0 0 auto;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--icb,#eef3f1);color:var(--ic,inherit);font-size:1.3rem;overflow:hidden}
+.shgo .ri img{width:100%;height:100%;object-fit:contain}
+.shgo>img{width:72px;aspect-ratio:16/9;object-fit:cover;border-radius:8px;flex:0 0 auto;background:#dfe9e4}
+.shgo .ts{font-weight:800;color:#b3261e;font-variant-numeric:tabular-nums}
+.shgo mark{background:#ffe9a6}
+@media (max-width:600px){.shsteps li{grid-template-columns:28px 1fr}.shsteps .shgo{grid-column:1/-1}.shalso{margin-left:0;width:100%}}
+.contsec{padding-top:8px;padding-bottom:0}
+.conthead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}.conthead h2{font-size:1.35rem;margin:0 0 10px}
+.linkbtn{background:none;border:0;padding:4px 2px;min-height:24px;color:#5e5679;text-decoration:underline;cursor:pointer;font-weight:700;font-size:.92rem}
+.recents{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.recent{display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #e6def6;border-radius:18px;padding:12px 14px;text-decoration:none;color:inherit;min-width:0}
+.recent:hover{border-color:#8254c5}
+.recent .ri{flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--icb,#eef3f1);color:var(--ic,inherit);font-size:1.4rem;overflow:hidden}
+.recent .ri img{width:100%;height:100%;object-fit:contain}
+.recent small{display:block;color:#5e5679;font-weight:800;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}.recent b{display:block;line-height:1.25}
+.missed{margin:14px 0 0;color:#4d4470}.missed a{font-weight:800}
+.needs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:12px 0 0}.needsnote{color:var(--muted);font-size:.92rem}
+</style>
 </head>
 <body>
 <header class="top">
@@ -721,8 +755,8 @@ body.is-home .topsearch{visibility:hidden}
 <main id="app" tabindex="-1"></main>
 <footer class="footer footer2"><div class="wrap">
   <div class="fbrand"><img src="assets/logo.svg" alt="" width="40" height="40"><span><b>ItsDrDan Study Hub</b><small>Free chemistry practice for Fresno City College students, and anyone learning chemistry.</small></span></div>
-  <nav class="flinks" aria-label="Footer"><a href="#/">Courses</a><a href="#/daily">Daily 5</a><a href="#/games">All games</a><a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener">YouTube ↗</a><a href="https://itsdrdan.github.io/MCAT/" target="_blank" rel="noopener">MCAT Hub ↗</a><a href="https://itsdrdan.github.io/teas/" target="_blank" rel="noopener">TEAS Hub ↗</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
-  <small class="fnote">Games collect anonymous practice stats (no names or student IDs) to help plan new lessons.</small><span class="status" id="status"></span>
+  <nav class="flinks" aria-label="Footer"><a href="#/">Courses</a><a href="#/daily">Daily 5</a><a href="#/games">All games</a><a href="https://www.youtube.com/@itsdrdan" target="_blank" rel="noopener">YouTube ↗</a><a href="https://itsdrdan.github.io/MCAT/" target="_blank" rel="noopener">MCAT Hub ↗</a><a href="https://itsdrdan.github.io/teas/" target="_blank" rel="noopener">TEAS Hub ↗</a><a href="study-privacy.html">Privacy</a><a href="terms.html">Terms</a></nav>
+  <small class="fnote">Games send anonymous practice stats (no names or student IDs) to help plan new lessons. <a href="study-privacy.html">What is collected</a></small><span class="status" id="status"></span>
 </div></footer>
 
 <dialog class="vmodal" id="vmodal" aria-labelledby="vtitle">
@@ -793,26 +827,77 @@ function courseBadge(id) { return h('span', {class: 'badge', 'data-course': id},
 function setTitle(t) { document.title = t ? t + ' · Dr. Dan’s Chemistry Study Hub' : 'Dr. Dan’s Chemistry Study Hub'; }
 function remember(k, v) { try { localStorage.setItem('hub-' + k, v); } catch {} }
 function recall(k) { try { return localStorage.getItem('hub-' + k); } catch { return null; } }
+/* Recently opened chapters and games, kept only in this browser so "pick up where you left off" works without an account. */
+function recents() { try { const a = JSON.parse(localStorage.getItem('hub-recent') || '[]'); return Array.isArray(a) ? a.filter(x => x && typeof x === 'object' && typeof x.id === 'string') : []; } catch { return []; } }
+function noteRecent(item) { const key = x => x.t + ':' + (x.c || '') + ':' + x.id; try { localStorage.setItem('hub-recent', JSON.stringify([item, ...recents().filter(x => key(x) !== key(item))].slice(0, 8))); } catch {} }
 function coursesOf(value) { const s = Array.isArray(value) ? value.join(' ') : String(value || ''); return [...new Set([...s.toUpperCase().matchAll(/(?:CHEM\s*)?(3A|3B|1A|1B)\b/g)].map(m => m[1]))]; }
 
 /* ---------- search normalization ---------- */
+/* Each pair is [pattern, canonical phrase]. It is applied to BOTH the student's words and the hub's own text, so either wording finds the other.
+   Keep these narrow: a pair should only join words that mean the same thing in a chemistry class. */
 const SYN = [
-  ['sig figs?', 'significant figures'], ['sigfigs?', 'significant figures'], ['imfs?', 'intermolecular forces'], ['redox', 'oxidation reduction'],
-  ['le ?chatelier', 'le chatelier'], ['pv ?= ?nrt', 'ideal gas law'], ['e ?config(uration)?s?', 'electron configuration'], ['ice table', 'ice table equilibrium'],
-  ['net ionic', 'net ionic equations'], ['lewis dots?', 'lewis structures'], ['h ?bond(ing|s)?', 'hydrogen bonding'], ['mo theory', 'molecular orbital theory'],
+  ['sig ?figs?', 'significant figures'], ['imfs?', 'intermolecular forces'], ['redox', 'oxidation reduction'],
+  ['le ?chateliers?', 'le chatelier'], ['pv ?nrt', 'ideal gas law'], ['e ?config(uration)?s?', 'electron configuration'], ['ice (table|chart)s?', 'ice table equilibrium'],
+  ['net ionic', 'net ionic equations'], ['lewis dots?( structures?| diagrams?)?', 'lewis structures'], ['h ?bond(ing|s)?', 'hydrogen bonding'], ['mo theory', 'molecular orbital theory'],
   ['stoich', 'stoichiometry'], ['ksp', 'ksp solubility product'], ['naming', 'naming nomenclature'], ['nomenclature', 'naming nomenclature'], ['vsepr', 'vsepr shape geometry'],
+  ['limiting reagents?', 'limiting reactant'], ['excess reagents?', 'excess reactant'], ['mol l', 'molarity'], ['molar concentration', 'molarity'],
+  ['m1 ?v1( m2 ?v2)?', 'dilution m1v1'], ['q ?mc ?(delta )?t', 'specific heat'], ['half ?lives', 'half life'], ['halflife', 'half life'],
+  ['unit conversions?', 'unit conversion dimensional analysis'], ['factor label( method)?', 'dimensional analysis'], ['conversion factors?', 'conversion factor dimensional analysis'],
+  ['sci(entific)? notation', 'scientific notation'], ['molecular (shape|geometry)', 'molecular geometry shape'], ['electronegativities', 'electronegativity'],
+  ['oxidation (numbers?|states?)', 'oxidation number state'], ['(theoretical|percent|actual) yields?', '$1 yield'], ['grams? to grams?', 'mass to mass stoichiometry'],
+  ['mass to mass', 'mass to mass stoichiometry'], ['moles? to moles?', 'mole to mole ratio'], ['mole ratios?', 'mole to mole ratio'],
+  ['avogadros?( number)?', 'avogadro number'],
+  ['functional groups?', 'functional group'], ['amino acids?', 'amino acid'], ['fatty acids?', 'fatty acid'], ['dna|rna', '$& nucleic acid'],
+  ['bp', 'boiling point'], ['mp', 'melting point'], ['stp', 'stp standard temperature pressure'], ['kc|kp|keq', '$& equilibrium constant'], ['ka|kb|pka|pkb', '$& acid base'],
 ];
-function norm(s) { return String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9+\-.]+/g, ' ').trim(); }
-function stem(w) { if (w.length > 4 && w.endsWith('ies')) return w.slice(0, -3) + 'y'; if (w.length > 4 && /(ses|xes|ches|shes)$/.test(w)) return w.slice(0, -2); if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss')) return w.slice(0, -1); return w; }
-const STOP = new Set(['the', 'a', 'an', 'of', 'and', 'to', 'in', 'how', 'what', 'is', 'for', 'on', 'do', 'i', 'with', 'chem', 'help', 'me', 'my']);
-function tokens(s) { let t = norm(s); for (const [re, rep] of SYN) t = t.replace(new RegExp('\\b' + re + '\\b', 'g'), rep); return t.split(/\s+/).filter(w => w && !STOP.has(w)).map(stem); }
+const SYN_RE = SYN.map(([re, rep]) => [new RegExp('\\b(?:' + re + ')\\b', 'g'), rep]);
+function norm(s) { return String(s || '').normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’']/g, '').replace(/[–—‑↔→]/g, ' ').replace(/([a-z0-9])-(?=[a-z])/g, '$1 ').replace(/[^a-z0-9+\-.]+/g, ' ').replace(/(^|\s)[.\-]+(?=\s|$)/g, ' ').replace(/\.(?=\s|$)/g, '').trim(); }
+function stem(w) { if (w.length > 4 && w.endsWith('ies')) return w.slice(0, -3) + 'y'; if (w.length > 4 && /(ses|xes|ches|shes)$/.test(w)) return w.slice(0, -2); if (w.length > 3 && w.endsWith('s') && !w.endsWith('ss') && !w.endsWith('is') && !w.endsWith('us')) return w.slice(0, -1); return w; }
+const STOP = new Set(['the', 'a', 'an', 'of', 'and', 'to', 'in', 'how', 'what', 'is', 'for', 'on', 'do', 'i', 'with', 'chem', 'help', 'me', 'my',
+  'why', 'does', 'are', 'can', 'you', 'it', 'when', 'which', 'about', 'from', 'vs', 'or', 'whats', 'need', 'please', 'explain', 'chemistry']);
+function tokens(s) { let t = norm(s); for (const [re, rep] of SYN_RE) t = t.replace(re, rep); return t.split(/\s+/).filter(w => w && !STOP.has(w)).map(stem); }
 function haystack(...parts) { return ' ' + tokens(parts.flat().join(' ')).join(' ') + ' '; }
 function scoreText(hay, qt) { let s = 0; for (const w of qt) { if (hay.includes(' ' + w + ' ')) s += 3; else if (w.length > 2 && hay.includes(' ' + w)) s += 2; else return 0; } return s; }
+/* Looser match for when the strict one finds nothing: a result may miss one of the student's words. Rare words count for more than common ones. */
+function scoreLoose(hay, qt, weight) {
+  let s = 0, miss = 0;
+  for (const w of qt) { if (hay.includes(' ' + w + ' ')) s += 3 * weight(w); else if (w.length > 2 && hay.includes(' ' + w)) s += 2 * weight(w); else miss++; }
+  return miss <= 1 && miss < qt.length ? s : 0;
+}
 function highlight(text, qt) {
   let out = esc(text);
   const words = [...new Set(qt.filter(w => w.length > 1))].sort((a, b) => b.length - a.length);
-  for (const w of words) out = out.replace(new RegExp('\\b(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)', 'gi'), '<mark>$1</mark>');
+  for (const w of words) out = out.replace(new RegExp('\\b(' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)(?![^<]*>)', 'gi'), '<mark>$1</mark>');
   return out;
+}
+/* Spelling help: every word the hub knows, so "stoichometry" can be nudged to "stoichiometry". Only used when a word matches nothing. */
+let VOCAB = new Map();
+function editDistance(a, b, max) {
+  if (Math.abs(a.length - b.length) > max) return max + 1;
+  let prev = Array.from({length: b.length + 1}, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i]; let low = i;
+    for (let j = 1; j <= b.length; j++) {
+      let v = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) v = Math.min(v, prevPrev[j - 2] + 1);
+      cur.push(v); if (v < low) low = v;
+    }
+    if (low > max) return max + 1;
+    var prevPrev = prev; prev = cur;
+  }
+  return prev[b.length];
+}
+function knownWord(w) { if (VOCAB.has(w)) return true; if (w.length > 2) for (const v of VOCAB.keys()) if (v.startsWith(w)) return true; return false; }
+function respell(qt) {
+  let changed = false;
+  const out = qt.map(w => {
+    if (w.length < 4 || /\d/.test(w) || knownWord(w)) return w;
+    const max = w.length > 7 ? 2 : 1; let best = null, bd = max + 1, bn = 0;
+    for (const [v, n] of VOCAB) { if (v.length < 4 || v[0] !== w[0]) continue; const d = editDistance(w, v, max); if (d < bd || (d === bd && n > bn)) { best = v; bd = d; bn = n; } }
+    if (best && bd <= max) { changed = true; return best; }
+    return w;
+  });
+  return changed ? out : null;
 }
 
 /* ---------- index ---------- */
@@ -820,16 +905,20 @@ let INDEX = [];
 function buildIndex() {
   INDEX = [];
   for (const c of D.courses) for (const ch of c.chapters) {
-    INDEX.push({type: 'chapter', course: c.id, ch, hay: haystack(ch.title, ch.label, 'chapter ' + ch.id), hayDeep: haystack(ch.concepts, (window.HUB_GUIDES || {})[c.id + ':' + ch.id]?.s || '')});
+    INDEX.push({type: 'chapter', course: c.id, ch, hay: haystack(ch.title, ch.label, 'chapter ' + ch.id), hayDeep: haystack(ch.concepts, ch.keys || '', (window.HUB_GUIDES || {})[c.id + ':' + ch.id]?.s || '')});
     for (const con of ch.concepts) INDEX.push({type: 'concept', course: c.id, ch, text: con, hay: haystack(con)});
     if (ch.read) for (const [n, t, url] of ch.read.sections) INDEX.push({type: 'section', course: c.id, ch, num: n, text: t, url, hay: haystack(t)});
   }
-  for (const g of games.values()) INDEX.push({type: 'game', g, hay: haystack(g.title, g.blurb, g.tags || [], g.description || '')});
+  for (const g of games.values()) INDEX.push({type: 'game', g, hay: haystack(g.title, g.blurb, g.topics || [], g.tags || [], g.description || ''), thay: haystack(g.title), khay: haystack(g.title, g.topics || [])});
   for (const v of videos.values()) {
     INDEX.push({type: 'video', v, hay: haystack(v.title, playlistTitles[v.playlist] || '')});
     for (const [t, label] of v.moments) INDEX.push({type: 'moment', v, t, text: label, hay: haystack(label, v.title)});
   }
+  // word list for spelling help and for weighting rare words in the loose match
+  VOCAB = new Map();
+  for (const r of INDEX) for (const w of new Set((r.hay + (r.hayDeep || '')).split(' '))) if (w) VOCAB.set(w, (VOCAB.get(w) || 0) + 1);
 }
+const wordWeight = w => { let n = VOCAB.get(w) || 0; if (!n && w.length > 2) for (const [v, k] of VOCAB) if (v.startsWith(w)) n += k; return 1 + Math.log((INDEX.length + 1) / (n + 1)); };
 function chaptersUsing(kind, id) {
   const out = [];
   for (const c of D.courses) for (const ch of c.chapters) if ((kind === 'game' ? ch.games : ch.videos).includes(id)) out.push({c, ch});
@@ -839,7 +928,9 @@ function videoCourses(id) { return [...new Set(chaptersUsing('video', id).map(x 
 
 /* ---------- components ---------- */
 function gameIcon(g, cls = 'icon') {
-  return g.logo ? h('span', {class: cls + ' haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy'})) : h('span', {class: cls, 'aria-hidden': 'true'}, ic(g.icon));
+  if (!g.logo) return h('span', {class: cls, 'aria-hidden': 'true'}, ic(g.icon));
+  // if the picture can't load, fall back to the drawn icon instead of a broken image
+  return h('span', {class: cls + ' haslogo', 'aria-hidden': 'true'}, h('img', {src: g.logo, alt: '', loading: 'lazy', onerror: e => { const box = e.target.parentNode; if (box) { box.classList.remove('haslogo'); box.replaceChildren(ic(g.icon)); } }}));
 }
 function gameCard(g, courseCtx, showCh) {
   const cs = g.courses?.length ? g.courses : coursesOf(g.course);
@@ -895,6 +986,29 @@ function weekDots(s) {
   return h('div', {class: 'weekdots', 'aria-label': 'Daily 5 days this week'}, out);
 }
 const SHORT_WHO = {'3A': 'For nursing, dental hygiene, and allied health majors.', '1A': 'For chemistry, biology, and engineering majors.', '1B': 'Equilibrium, acids and bases, kinetics, and more.', '3B': 'Organic and biochemistry for health-science majors.'};
+/* Home: where you left off, plus chapters where a Daily 5 question was missed lately. Both come from this browser only. */
+function continueRow() {
+  const items = [];
+  for (const r of recents()) {
+    if (items.length >= 3) break;
+    if (r.t === 'ch') { const c = courseById[r.c], ch = c?.chapters.find(x => x.id === r.id); if (ch) items.push(h('a', {class: 'recent', 'data-course': c.id, href: `#/course/${c.id}/${ch.id}`}, h('span', {class: 'ri', style: hue(ch)}, ic(ch.icon)), h('span', {}, h('small', {}, `${c.name} · ${ch.label}`), h('b', {}, ch.title)))); }
+    else if (r.t === 'game') { const g = games.get(r.id); if (g) items.push(h('a', {class: 'recent', href: '#/play/' + encodeURIComponent(g.id) + (r.c ? '?from=' + r.c : '')}, gameIcon(g, 'ri'), h('span', {}, h('small', {}, 'Game'), h('b', {}, g.title.replace(/\s*\(.*\)\s*$/, ''))))); }
+  }
+  let missed = [];
+  try {
+    const m = JSON.parse(localStorage.getItem('hub-daily-chapters') || '{}');
+    missed = Object.entries(m && typeof m === 'object' ? m : {}).map(([k, v]) => { const i = k.indexOf('-'), c = courseById[k.slice(0, i)], ch = c?.chapters.find(x => x.id === k.slice(i + 1)); return ch && v && v.miss && Date.now() - v.miss < 14 * 864e5 ? {c, ch, at: v.miss} : null; })
+      .filter(Boolean).sort((a, b) => b.at - a.at).slice(0, 3);
+  } catch {}
+  if (!items.length && !missed.length) return null;
+  const sec = h('section', {class: 'section wrap contsec', 'aria-label': 'Pick up where you left off'},
+    items.length ? [h('div', {class: 'conthead'}, h('h2', {}, 'Pick up where you left off'),
+      h('button', {class: 'linkbtn', type: 'button', onclick: () => { try { localStorage.removeItem('hub-recent'); } catch {} sec.remove(); }}, 'Clear this list')),
+      h('div', {class: 'recents'}, items)] : null,
+    missed.length ? h('p', {class: 'missed'}, h('b', {}, ic('repeat'), ' Worth another look: '), 'you missed a Daily 5 question from ',
+      missed.flatMap((x, i) => [i ? (i === missed.length - 1 ? ' and ' : ', ') : '', h('a', {href: `#/course/${x.c.id}/${x.ch.id}`}, `${x.c.name} ${x.ch.label}: ${x.ch.title}`)]), ' in the last two weeks.') : null);
+  return sec;
+}
 function viewHome() {
   setTitle('');
   const last = recall('course');
@@ -903,7 +1017,7 @@ function viewHome() {
     h('label', {class: 'sr', for: 'heroQ'}, 'What do you need to study?'),
     h('input', {id: 'heroQ', name: 'q', type: 'search', placeholder: 'Try “limiting reactant”, “buffers”, or “3A chapter 8”', autocomplete: 'off'}),
     h('button', {class: 'btn', type: 'submit'}, 'Search'));
-  const tries = ['limiting reactant', 'VSEPR', 'buffers', 'exam 2'];
+  const cont = continueRow();
   const all = [...games.values()];
   const withLogo = all.filter(g => g.logo);
   const cast = HERO_CAST.map(id => games.get(id)).filter(g => g && g.logo);
@@ -921,8 +1035,9 @@ function viewHome() {
         h('h1', {html: 'Find exactly what to study, <span>then practice it.</span>'}),
         h('p', {class: 'lead'}, `${all.length} free chemistry games, ${nVideos} video lessons, and a study guide for every chapter. No sign-up needed.`),
         search,
-        last && courseById[last] ? h('div', {class: 'ctarow'}, h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`)) : null),
+        last && courseById[last] && !cont ? h('div', {class: 'ctarow'}, h('a', {class: 'btn secondary', href: '#/course/' + last}, `Continue in CHEM ${last} →`)) : null),
       h('div', {class: 'heroatom solo'}, h('span', {class: 'glow', 'aria-hidden': 'true'}), h('img', {class: 'heromascot', src: MASCOT('waving'), alt: 'The Study Hub flask mascot waving hello'})))),
+    cont,
     h('section', {class: 'section wrap', id: 'courses'},
       h('div', {class: 'eyebrow'}, 'Choose your course'), h('h2', {}, 'Which class are you in?'),
       h('div', {class: 'courses'}, COURSE_ORDER.map(id => {
@@ -931,7 +1046,8 @@ function viewHome() {
           h('div', {class: 'cc-top'}, h('span', {class: 'tag'}, c.name), h('span', {class: 'cc-art'}, badgeArt(COURSE_ART[id], ''))),
           h('h3', {}, c.title), h('p', {}, SHORT_WHO[id] || c.who),
           h('span', {class: 'go'}, 'Open course →'));
-      }))),
+      })),
+      h('a', {class: 'exambanner slim', style: 'margin:22px 0 0', href: '#/exams'}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a skills checklist and a day-by-day plan.'), h('span', {class: 'btn small'}, 'Exam guides →'))),
     h('section', {class: 'section wrap shelfsec'},
       h('div', {class: 'shelfhead'}, h('div', {class: 'shelftitle'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Meet the games'), h('h2', {}, 'Pick one and play'))),
         h('div', {class: 'shelfnav'},
@@ -970,6 +1086,7 @@ function viewCourse(cid, chid) {
   remember('course', cid);
   const ch = chid ? c.chapters.find(x => x.id === chid) : null;
   setTitle(ch ? `${c.name} ${ch.label}: ${ch.title}` : c.name);
+  if (ch) noteRecent({t: 'ch', c: cid, id: ch.id});
   const book = c.book;
   const head = h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
     h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', ch ? h('a', {href: '#/course/' + cid}, c.name) : h('span', {}, c.name), ch ? ['›', h('span', {}, ch.label)] : null),
@@ -1079,11 +1196,14 @@ function chapterBody(c, ch) {
   const vs = ch.videos.map(id => videos.get(id)).filter(Boolean);
   const read = ch.read;
   const top = read ? read.sections.filter(s => (s[0].match(/\./g) || []).length <= 1) : [];
+  const needs = (ch.needs || []).map(id => c.chapters.find(x => x.id === id)).filter(Boolean);
   return h('article', {},
     h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${ch.label}`), h('h2', {class: 'ct'}, ch.title))),
+    needs.length ? h('p', {class: 'needs'}, h('b', {}, 'Builds on: '), needs.map(x => h('a', {class: 'chip', href: `#/course/${c.id}/${x.id}`}, ic(x.icon, '', hue(x)), ` ${x.label}: ${x.title}`)), h('span', {class: 'needsnote'}, 'Shaky on one of these? Review it first.')) : null,
     guideBlock(c, ch, gs, vs, top),
     h('div', {class: 'panel', id: 'sec-concepts'}, h('h3', {}, ic('brain'), ' Concepts in this ' + (c.id === '3B' ? 'unit' : 'chapter')),
-      h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con)))),
+      h('div', {class: 'concepts'}, ch.concepts.map(con => h('a', {class: 'chip', href: '#/search?q=' + encodeURIComponent(con) + '&course=' + c.id, title: 'Find everything on ' + con}, con))),
+      h('p', {style: 'margin:14px 0 0'}, h('a', {class: 'btn small secondary', href: `#/check/${c.id}/custom?ch=${ch.id}`}, ic('list'), ' Turn these into a checklist →'))),
     h('div', {class: 'panel', id: 'sec-practice'}, h('h3', {}, ic('game'), ' Practice', h('span', {class: 'count'}, gs.length ? gs.length + (gs.length === 1 ? ' game' : ' games') : '')),
       gs.length ? h('div', {class: 'grid'}, gs.map(g => gameCard(g, c.id))) : h('p', {class: 'empty-note'}, 'No game for this one yet. Use the reading and videos, and check back: new games are added often.')),
     h('div', {class: 'panel', id: 'sec-watch'}, h('h3', {}, ic('video'), ' Watch', h('span', {class: 'count'}, vs.length ? vs.length + ' lessons' : '')),
@@ -1103,7 +1223,7 @@ function viewGames(params) {
   setTitle('All games');
   let active = params.get('course') || 'all';
   const list = h('div', {class: 'grid'});
-  const q = h('input', {class: '', type: 'search', placeholder: 'Try “gases” or “ch 11”', style: 'height:44px;border:1.5px solid #cfdfd8;border-radius:12px;padding:0 14px;min-width:300px;font-size:1rem', oninput: draw});
+  const q = h('input', {class: '', type: 'search', 'aria-label': 'Filter games by topic or chapter', placeholder: 'Try “gases” or “ch 11”', style: 'height:44px;border:1.5px solid #cfdfd8;border-radius:12px;padding:0 14px;min-width:min(300px,100%);font-size:1rem', oninput: draw});
   const chips = h('div', {class: 'filters', role: 'group', 'aria-label': 'Filter by course'}, h('strong', {}, 'COURSE'),
     ['all', ...COURSE_ORDER].map(id => h('button', {class: 'chip', type: 'button', 'aria-pressed': String(active === id), onclick: e => { active = id; chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); draw(); }}, id === 'all' ? 'All' : 'CHEM ' + id)), q);
   function draw() {
@@ -1135,6 +1255,7 @@ function viewPlay(id, params) {
   if (!g) return viewNotFound('That game could not be found. It may still be loading. Try All games.');
   setTitle(g.title);
   const from = params.get('from');
+  noteRecent({t: 'game', c: from && courseById[from] ? from : '', id});
   const frame = h('iframe', {src: g.url, title: g.title + ' (interactive study game)', allow: 'fullscreen', allowfullscreen: true});
   const box = h('section', {class: 'player'},
     h('div', {class: 'player-bar'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Now practicing'), h('h2', {class: 'playtitle'}, g.logo ? h('img', {src: g.logo, alt: ''}) : (g.icon ? g.icon + ' ' : ''), g.title)),
@@ -1172,8 +1293,8 @@ function viewSearch(params) {
     input, h('button', {class: 'btn', type: 'submit'}, 'Search'));
   const chips = h('div', {class: 'filters', role: 'group', 'aria-label': 'Limit to a course'}, h('strong', {}, 'MY COURSE'),
     ['all', ...COURSE_ORDER].map(id => h('button', {class: 'chip', type: 'button', 'aria-pressed': String(course === id), onclick: () => { remember('searchCourse', id); go('#/search?q=' + encodeURIComponent(q) + (id !== 'all' ? '&course=' + id : '')); }}, id === 'all' ? 'All courses' : 'CHEM ' + id)));
-  const results = h('div', {'aria-live': 'polite'});
-  app.replaceChildren(h('section', {class: 'wrap search-page'}, h('div', {class: 'eyebrow'}, 'Search the hub'), form, chips, results));
+  const results = h('div', {});
+  app.replaceChildren(h('section', {class: 'wrap search-page'}, h('h1', {class: 'eyebrow', style: 'margin:0'}, 'Search the hub'), form, chips, h('p', {class: 'sr', id: 'searchStatus', role: 'status'}), results));
   if (!q) { results.append(h('p', {class: 'noresults'}, 'Type a topic like “molarity”, “Hess’s law”, or “chapter 10”.')); input.focus(); return; }
   // one shared load: when it lands, refresh whichever search is on screen now (not the box from the search that started the load)
   const first = !transcriptsPromise; if (first) transcriptsPromise = loadTranscripts();
@@ -1189,33 +1310,80 @@ function clip(text, qt, n = 150) {
   let out = text.slice(st, st + n); const e = out.lastIndexOf(' '); if (st + n < text.length && e > n - 25) out = out.slice(0, e);
   return out;
 }
-function renderResults(box, q, course) {
-  const qt = tokens(q);
+/* Find everything that matches. loose=true lets a result miss one word (used only when the strict pass finds nothing). */
+function collect(q, qt, course, loose) {
+  const sc = loose ? (hay => scoreLoose(hay, qt, wordWeight)) : (hay => scoreText(hay, qt));
   const inCourse = r => course === 'all' || r.course === course || (r.type === 'game' && (r.g.courses || []).includes(course)) || ((r.type === 'video' || r.type === 'moment') && (videoCourses(r.v.id).includes(course) || !videoCourses(r.v.id).length));
   const groups = {chapter: [], game: [], video: [], moment: [], section: [], transcript: []};
   const chq = parseChapterQuery(q);
   if (chq) for (const c of D.courses) { if (chq.course && c.id !== chq.course) continue; if (!chq.course && course !== 'all' && c.id !== course) continue; const ch = c.chapters.find(x => x.id === chq.n); if (ch) groups.chapter.push({type: 'chapter', course: c.id, ch, s: 100}); }
-  if (qt.length) {
+  if (qt.length && !chq) {
     const chapterHits = new Map();
     for (const r of INDEX) {
       if (!inCourse(r)) continue;
-      let s = scoreText(r.hay, qt);
-      if (r.type === 'chapter') { const deep = scoreText(r.hayDeep, qt); s = s ? s + 4 : deep; }
+      let s = sc(r.hay);
+      if (r.type === 'chapter') { const deep = sc(r.hayDeep); s = s ? s + 4 : deep; }
       if (!s) continue;
+      if (r.type === 'game' && sc(r.thay)) s += 4; // named for this topic
       if (r.type === 'concept') { const key = r.course + r.ch.id; const prev = chapterHits.get(key); if (!prev || prev.s < s) chapterHits.set(key, {type: 'chapter', course: r.course, ch: r.ch, s, via: r.text}); continue; }
       if (r.type === 'chapter') { const key = r.course + r.ch.id; const prev = chapterHits.get(key); if (!prev || prev.s < s) chapterHits.set(key, {...r, s, via: prev?.via}); continue; }
       groups[r.type].push({...r, s});
     }
     for (const r of chapterHits.values()) if (!groups.chapter.some(x => x.course === r.course && x.ch === r.ch)) groups.chapter.push(r);
-    // games linked from matching chapters also count
-    for (const r of groups.chapter) for (const gid of r.ch.games) { const g = games.get(gid); if (g && !groups.game.some(x => x.g === g)) groups.game.push({type: 'game', g, s: 1, via: `${courseById[r.course].name} ${r.ch.label}`}); }
-    if (transcripts) for (const seg of transcripts.segments) {
+    if (!loose && transcripts) for (const seg of transcripts.segments) {
       const [vid, t, text] = seg; const v = videos.get(vid); if (!v) continue;
       if (course !== 'all' && videoCourses(vid).length && !videoCourses(vid).includes(course)) continue;
       const s = scoreText(seg.hay || (seg.hay = haystack(text)), qt); if (s) groups.transcript.push({type: 'transcript', v, t, text, s: s + (norm(text).includes(norm(q)) ? 5 : 0)});
     }
   }
-  for (const k in groups) groups[k].sort((a, b) => b.s - a.s);
+  // the student's own course floats to the top of a tie
+  const mine = course !== 'all' ? course : recall('course');
+  for (const k in groups) groups[k].sort((a, b) => b.s - a.s || (mine ? (b.course === mine) - (a.course === mine) : 0));
+  // games linked from matching chapters also count (after the games that match by name or topic)
+  for (const r of groups.chapter.slice(0, 6)) for (const gid of r.ch.games) { const g = games.get(gid); if (g && !groups.game.some(x => x.g === g)) groups.game.push({type: 'game', g, s: 0, via: `${courseById[r.course].name} ${r.ch.label}`}); }
+  return groups;
+}
+const hitCount = g => g.chapter.length + g.game.length + g.video.length + g.moment.length + g.section.length;
+/* "Start here": one chapter, one thing to watch, one thing to practice, so a search ends in a next step and not just a list. */
+function startHere(groups, qt, course) {
+  const top = groups.chapter[0]; if (!top) return null;
+  const c = courseById[top.course], ch = top.ch;
+  const inCh = id => ch.videos.includes(id);
+  const mom = groups.moment.find(r => inCh(r.v.id)), vid = groups.video.find(r => inCh(r.v.id));
+  const tr = !mom && !vid ? groups.transcript.find(r => inCh(r.v.id)) : null;
+  const firstVid = !mom && !vid && !tr && ch.videos.length ? videos.get(ch.videos[0]) : null;
+  const game = groups.game.find(r => ch.games.includes(r.g.id) && r.s > 0) || groups.game.find(r => ch.games.includes(r.g.id)) || (ch.games.length && games.get(ch.games[0]) ? {g: games.get(ch.games[0])} : null);
+  const sec = groups.section.find(r => r.ch === ch && r.course === top.course);
+  const also = groups.chapter.slice(1).filter(r => r.course !== top.course && r.s >= top.s - 1).slice(0, 2);
+  const step = (n, label, node) => h('li', {}, h('span', {class: 'shn', 'aria-hidden': 'true'}, String(n)), h('span', {class: 'shl'}, label), node);
+  const steps = []; let n = 0;
+  steps.push(step(++n, 'Learn it', h('a', {class: 'shgo', href: `#/course/${c.id}/${ch.id}`}, h('span', {class: 'ri', style: hue(ch)}, ic(ch.icon)), h('span', {}, h('b', {}, `${c.name} ${ch.label}: ${ch.title}`), h('small', {html: top.note ? esc(top.note) : top.via ? 'Covers: ' + highlight(top.via, qt) : 'Summary, skill recipe, and study tips'})))));
+  if (mom) steps.push(step(++n, 'Watch it', h('button', {class: 'shgo', type: 'button', onclick: () => openVideo(mom.v.id, mom.t)}, h('img', {src: thumb(mom.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('b', {}, h('span', {class: 'ts'}, fmtTime(mom.t)), ' ', mom.text), h('small', {}, 'Jumps to this moment in “' + mom.v.title + '”')))));
+  else if (vid || tr || firstVid) { const v = (vid || tr)?.v || firstVid, t = tr ? Math.max(0, tr.t - 2) : 0; steps.push(step(++n, 'Watch it', h('button', {class: 'shgo', type: 'button', onclick: () => openVideo(v.id, t)}, h('img', {src: thumb(v.id), alt: '', loading: 'lazy'}), h('span', {}, h('b', {}, t ? [h('span', {class: 'ts'}, fmtTime(t)), ' '] : null, v.title), h('small', {}, tr ? 'Dr. Dan talks about this here' : firstVid ? 'First lesson for this chapter' : 'Video lesson' + (v.duration ? ' · ' + Math.round(v.duration / 60) + ' min' : '')))))); }
+  if (game) steps.push(step(++n, 'Practice it', h('a', {class: 'shgo', href: '#/play/' + encodeURIComponent(game.g.id) + '?from=' + c.id}, gameIcon(game.g, 'ri'), h('span', {}, h('b', {}, game.g.title), h('small', {}, game.g.blurb || '')))));
+  if (sec && steps.length < 4) steps.push(step(++n, 'Read it', h('a', {class: 'shgo', href: sec.url, target: '_blank', rel: 'noopener'}, h('span', {class: 'ri'}, ic('book')), h('span', {}, h('b', {}, `${sec.num} ${sec.text} ↗`), h('small', {}, c.book.title)))));
+  steps.push(step(++n, 'Check it', h('a', {class: 'shgo', href: `#/check/${c.id}/custom?ch=${ch.id}`}, h('span', {class: 'ri'}, ic('list')), h('span', {}, h('b', {}, 'Skills checklist for ' + ch.label), h('small', {}, 'Tick off what you can do without notes')))));
+  return h('section', {class: 'starthere', 'data-course': c.id, 'aria-label': 'Start here'},
+    h('div', {class: 'shhead'}, h('span', {class: 'eyebrow'}, 'Start here'), courseBadge(c.id),
+      also.length ? h('span', {class: 'shalso'}, 'Also in ', also.flatMap((r, i) => [i ? ', ' : '', h('a', {href: `#/course/${r.course}/${r.ch.id}`}, `${courseById[r.course].name} ${r.ch.label}`)])) : null),
+    h('ol', {class: 'shsteps'}, steps));
+}
+function renderResults(box, q, course) {
+  let qt = tokens(q), note = null;
+  let groups = collect(q, qt, course, false);
+  if (qt.length && !hitCount(groups)) {
+    // 1) a likely typo?  2) otherwise allow one missing word
+    const fixed = respell(qt);
+    if (fixed) { const g2 = collect(q, fixed, course, false); if (hitCount(g2)) { note = ['Showing results for ', h('b', {}, fixed.join(' ')), '.']; qt = fixed; g2.transcript = g2.transcript.concat(groups.transcript); groups = g2; } }
+    if (!hitCount(groups) && qt.length > 1) { const g3 = collect(q, qt, course, true); if (hitCount(g3)) { for (const k of ['chapter', 'game', 'video', 'moment', 'section']) g3[k] = g3[k].slice(0, 6); g3.transcript = groups.transcript; groups = g3; note = ['No exact match, so here are the closest ones.']; } }
+  }
+  // found a game or video but no chapter ("how to draw lewis structures")? add the closest chapters so there is still a place to start
+  if (qt.length > 1 && !groups.chapter.length && hitCount(groups)) {
+    const tg = groups.game.find(r => r.s > 0 && scoreText(r.khay, qt)), mine = course !== 'all' ? course : recall('course');
+    const viaGame = tg ? chaptersUsing('game', tg.g.id).filter(x => course === 'all' || x.c.id === course).sort((a, b) => (b.c.id === mine) - (a.c.id === mine)).slice(0, 2).map(x => ({type: 'chapter', course: x.c.id, ch: x.ch, s: 1, note: `Practiced in ${tg.g.title}`})) : [];
+    groups.chapter = viaGame.length ? viaGame : collect(q, qt, course, true).chapter.slice(0, 3);
+  }
+  groups.transcript.sort((a, b) => b.s - a.s);
   // limit transcript hits per video to keep variety
   const perVid = {}; groups.transcript = groups.transcript.filter(r => (perVid[r.v.id] = (perVid[r.v.id] || 0) + 1) <= 3).slice(0, 24);
   const total = Object.values(groups).reduce((n, a) => n + a.length, 0);
@@ -1224,21 +1392,25 @@ function renderResults(box, q, course) {
   if (ex.length) box.append(h('div', {class: 'rgroup'}, h('h3', {}, ic('note'), ' Exam & skill-check guides', h('span', {class: 'count'}, ex.length)),
     h('div', {class: 'rlist'}, ex.map(r => h('a', {class: 'ritem', href: r.href, 'data-course': r.cid}, h('span', {class: 'ri'}, ic(r.icon || (r.custom ? 'tools' : 'note'))),
       h('span', {}, h('div', {class: 'rt'}, courseBadge(r.cid), ' ', r.title), h('div', {class: 'rs'}, r.sub)))))));
+  const say = $('#searchStatus'); if (say) say.textContent = total || ex.length ? `${total + ex.length} results for ${q}` : `No results for ${q}`;
   if (!total && ex.length) return;
   if (!total) {
     box.append(h('div', {class: 'noresults'}, h('p', {style: 'margin-top:0'}, `Nothing matched “${q}”${course !== 'all' ? ' in CHEM ' + course : ''}.`),
       course !== 'all' ? h('p', {}, h('a', {href: '#/search?q=' + encodeURIComponent(q)}, 'Search all courses instead')) : null,
-      h('p', {style: 'margin-bottom:0'}, 'Try a shorter word (like “gas” instead of “gas law problems”), or browse by course.')));
+      h('p', {}, 'Try one or two key words (like “gas laws” instead of “how do I solve gas law problems”), or pick your course:'),
+      h('p', {style: 'margin-bottom:0;display:flex;gap:8px;flex-wrap:wrap'}, COURSE_ORDER.map(id => h('a', {class: 'btn small secondary', href: '#/course/' + id}, 'CHEM ' + id)))));
     return;
   }
+  if (note) box.append(h('p', {class: 'searchnote'}, note));
+  const sh = startHere(groups, qt, course); if (sh) box.append(sh);
   const group = (title, icon, arr, render, limit = 4) => { if (!arr.length) return; const list = h('div', {class: 'rlist'}, arr.slice(0, limit).map(render));
     const more = arr.length > limit ? h('button', {class: 'btn small secondary more', type: 'button', onclick: () => { list.replaceChildren(...arr.slice(0, 24).map(render)); more.remove(); }}, `Show ${Math.min(arr.length, 24) - limit} more`) : null;
     box.append(h('div', {class: 'rgroup'}, h('h3', {}, ic(icon), ' ' + title, h('span', {class: 'count'}, arr.length)), list, more)); };
   group('Chapters', 'books', groups.chapter, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: `#/course/${c.id}/${r.ch.id}`, 'data-course': c.id},
     h('span', {class: 'ri', style: hue(r.ch)}, ic(r.ch.icon)), h('span', {}, h('div', {class: 'rt'}, courseBadge(c.id), ' ', `${r.ch.label}: `, h('span', {html: highlight(r.ch.title, qt)})),
-      h('div', {class: 'rs', html: r.via ? 'Covers: ' + highlight(r.via, qt) : `${r.ch.games.length} game${r.ch.games.length===1?'':'s'} · ${r.ch.videos.length} video${r.ch.videos.length===1?'':'s'}`}))); });
+      h('div', {class: 'rs', html: r.note ? esc(r.note) : r.via ? 'Covers: ' + highlight(r.via, qt) : `${r.ch.games.length} game${r.ch.games.length===1?'':'s'} · ${r.ch.videos.length} video${r.ch.videos.length===1?'':'s'}`}))); });
   group('Games', 'game', groups.game, r => h('a', {class: 'ritem', href: '#/play/' + encodeURIComponent(r.g.id) + (course !== 'all' ? '?from=' + course : '')},
-    gameIcon(r.g, 'ri'), h('span', {}, h('div', {class: 'rt', html: highlight(r.g.title, qt)}), h('div', {class: 'rs'}, r.via ? `Practice for ${r.via}` : (r.g.blurb || '')))));
+    gameIcon(r.g, 'ri'), h('span', {}, h('div', {class: 'rt', html: highlight(r.g.title, qt)}), h('div', {class: 'rs'}, r.via && !r.s ? `Practice for ${r.via}` : (r.g.blurb || '')))));
   group('Video lessons', 'video', groups.video, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, 0)},
     h('img', {src: thumb(r.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('div', {class: 'rt', html: highlight(r.v.title, qt)}), h('div', {class: 'rs'}, playlistTitles[r.v.playlist] || 'Dr. Dan on YouTube'))));
   group('Key moments in videos', '⏱️', groups.moment, r => h('button', {class: 'ritem', type: 'button', onclick: () => openVideo(r.v.id, r.t)},
@@ -1247,6 +1419,7 @@ function renderResults(box, q, course) {
     h('img', {src: thumb(r.v.id), alt: '', loading: 'lazy'}), h('span', {}, h('div', {class: 'rt'}, h('span', {class: 'ts'}, fmtTime(r.t)), ' ', r.v.title), h('div', {class: 'rs', html: '“…' + highlight(clip(r.text, qt), qt) + '…”'}))));
   group('Textbook sections', 'book', groups.section, r => { const c = courseById[r.course]; return h('a', {class: 'ritem', href: r.url, target: '_blank', rel: 'noopener', 'data-course': c.id},
     h('span', {class: 'ri'}, ic('book')), h('span', {}, h('div', {class: 'rt'}, `${r.num} `, h('span', {html: highlight(r.text, qt)}), ' ↗'), h('div', {class: 'rs'}, `${c.book.title} · used in `, courseBadge(c.id)))); });
+  if (course !== 'all' && !parseChapterQuery(q) && collect(q, qt, 'all', false).chapter.some(r => r.course !== course)) box.append(h('p', {class: 'searchnote'}, 'Other courses cover this too. ', h('a', {href: '#/search?q=' + encodeURIComponent(q) + '&course=all'}, 'Search all courses →')));
   if (transcriptState === 'loading') box.append(h('p', {class: 'status'}, 'Searching video transcripts…'));
 }
 
@@ -1362,7 +1535,7 @@ function viewExamHub(cid) {
   const E = EXAMS[cid];
   app.replaceChildren(
     h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
-      h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('span', {}, 'Exams')),
+      h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('span', {}, 'Exams')),
       h('h1', {}, h('span', {class: 'badge', 'data-course': cid}, c.name), 'Exam & skill-check guides'),
       h('p', {}, 'Pick your exam to get a checklist and a study plan.'))),
     h('section', {class: 'wrap section', 'data-course': cid}, weekCard(cid),
@@ -1435,7 +1608,7 @@ function viewExam(cid, id, params, isCheck) {
     h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, ic('rest'), ' Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
   app.replaceChildren(
     h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
-      h('nav', {class: 'crumbs'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
+      h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
       h('div', {class: 'chhead'}, h('span', {class: 'chbadge', 'aria-hidden': 'true'}, ic(isCheck ? 'check' : id === 'final' ? 'finish' : 'note')),
         h('div', {}, h('div', {class: 'kicker'}, `${c.name} · ${isCheck ? 'Weekly skill check' : ex.custom ? 'Custom plan' : 'Dr. Dan’s sections'}`), h('h1', {style: 'margin:2px 0'}, ex.title))),
       ex.custom ? null : h('p', {}, (() => { const w = sylCourse(cid)?.weeks?.find(w => w.events.some(e => e.type === 'exam' && e.id === id)); return w ? [ic('calendar'), ` Week ${w.week}${w.date ? ' (' + w.date + ')' : ''} on Dr. Dan’s syllabus. `] : ''; })(), 'Built from Dr. Dan’s study guides. In another instructor’s section? ', h('a', {href: '#/exams/' + cid}, 'Build your own plan'), ' from your syllabus.'))),
@@ -1451,6 +1624,12 @@ function viewExam(cid, id, params, isCheck) {
       vs.length ? h('section', {class: 'panel'}, h('h3', {}, ic('video'), ' Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
 }
 
+function viewExamPick() {
+  setTitle('Exam guides');
+  app.replaceChildren(h('section', {class: 'section wrap'}, h('div', {class: 'eyebrow'}, 'Exam & skill-check guides'), h('h1', {class: 'h2like'}, 'Which class is the exam for?'),
+    h('p', {class: 'sub'}, 'You’ll get a skills checklist, the games and videos for those chapters, and a day-by-day plan.'),
+    h('div', {style: 'display:flex;gap:12px;flex-wrap:wrap;margin-top:18px'}, COURSE_ORDER.map(id => h('a', {class: 'btn secondary', href: '#/exams/' + id}, `${courseById[id].name}: ${courseById[id].title} →`)))));
+}
 function viewNotFound(msg) { setTitle('Not found'); app.replaceChildren(h('section', {class: 'section wrap'}, h('h2', {}, 'Hmm, that page isn’t here.'), h('p', {class: 'sub'}, msg || 'Try the course list or search.'), h('a', {class: 'btn', href: '#/'}, 'Go to courses'))); }
 
 /* ---------- router ---------- */
@@ -1470,6 +1649,7 @@ function route() {
   else if (parts[0] === 'play') viewPlay(parts[1], params);
   else if (parts[0] === 'daily') { viewDaily(parts[1], params); document.querySelector('[data-nav=daily]')?.setAttribute('aria-current', 'page'); }
   else if (parts[0] === 'search') viewSearch(params);
+  else if (parts[0] === 'exams' && !parts[1]) viewExamPick();
   else if (parts[0] === 'exams') { viewExamHub((parts[1] || '').split('#')[0].toUpperCase()); if ((parts[1] || '').includes('#checks')) setTimeout(() => document.getElementById('checks')?.scrollIntoView({block: 'start'}), 50); }
   else if (parts[0] === 'exam') viewExam((parts[1] || '').toUpperCase(), parts[2] || '1', params, false);
   else if (parts[0] === 'check') viewExam((parts[1] || '').toUpperCase(), parts[2] || '1', params, true);
@@ -1562,7 +1742,7 @@ loadSyllabus();
 if (new URLSearchParams(location.search).get('embed') === '1') {
   document.body.classList.add('embed');
   const b = document.createElement('base'); b.target = '_top'; document.head.append(b);
-  const tell = () => { try { parent.postMessage({ddEmbedHeight: document.documentElement.scrollHeight}, '*'); } catch {} };
+  const tell = () => { try { const m = document.getElementById('app'); parent.postMessage({ddEmbedHeight: Math.ceil(m ? m.getBoundingClientRect().bottom + scrollY + 8 : document.documentElement.scrollHeight)}, '*'); } catch {} };
   new ResizeObserver(tell).observe(document.body); addEventListener('hashchange', () => setTimeout(tell, 50)); tell();
 }
 </script>

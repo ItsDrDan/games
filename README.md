@@ -37,6 +37,28 @@ mistake-catcher recognizes the first wrong answer, a `slip` label (x1000, sign, 
 - **Link a whole playlist to a chapter:** put the playlist id in the chapter’s `"playlists": [...]`. Once `youtube.json` exists, every video in that playlist shows up on the chapter automatically.
 - **CHEM 3B textbook:** when the LibreTexts book is published, set `book.url` for course `3B` and add a `read` block (`url` + `sections`) to each unit.
 - **Hide a repo from the catalog:** add its name to `hide`.
+- **Help search find a game:** each game has `"topics"`: the skills it practices, in the words students type
+  ("limiting reactant (limiting reagent)", "grams to moles"). Search uses them to send a topic straight to that game.
+- **Prerequisites:** a chapter can list `"needs": ["5", "10"]` (earlier chapter ids in the same course). The chapter
+  page shows them as "Builds on".
+- **Search synonyms** live in the `SYN` list near the top of the script in `index.html` (for example "limiting reagent"
+  → "limiting reactant", "mol/L" → "molarity"). Keep each pair narrow: only wordings that mean the same thing.
+
+## Check your edits before pushing
+
+```bash
+node tools/check_hub.js            # quick: missing games/videos/chapters, bad ids, missing logos, stale "this week"
+node tools/check_hub.js --online   # also opens every game, video, textbook and playlist link
+```
+
+`ERROR` lines are broken things; `WARN` lines are gaps worth a look (a chapter with no game yet, and so on).
+
+## What is saved in a student's browser
+
+Nothing needs an account. The hub keeps a few things in `localStorage` on the student's own device: the last course
+(`hub-course`), recently opened chapters and games (`hub-recent`, shown as "Pick up where you left off"), exam checklist
+ticks (`hub-check-*`), and the Daily 5 keys described below. `study-privacy.html` explains this, and the anonymous
+practice stats, to students. (`privacy.html` and `terms.html` belong to the separate TikTok uploader tool.)
 
 ## Updating transcript search from your saved captions (what we use now)
 
