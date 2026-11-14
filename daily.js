@@ -334,13 +334,15 @@
       const seen = loadSeen(); save(SEEN_KEY, seen.concat(qs.map(q => q.id)).slice(-80));
       return render(root, cid, st);
     }
-    if (st.done >= st.qs.length) { if (st.round === 1) streakDone(); root.replaceChildren(header(cid, st)); return root.append(summary(cid, st)); }
-    root.append(questionCard(root, cid, st));
+    // after "Next", put keyboard and screen-reader focus on the new card (not back at the top of the page)
+    const land = el => { root.append(el); if (st.done > 0) { el.setAttribute('tabindex', '-1'); el.style.outline = 'none'; try { el.focus({preventScroll: true}); } catch {} } };
+    if (st.done >= st.qs.length) { if (st.round === 1) streakDone(); root.replaceChildren(header(cid, st)); return land(summary(cid, st)); }
+    land(questionCard(root, cid, st));
   }
   function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 
   function dailyStyles() { if (document.getElementById('daily-extra-css')) return; const el = document.createElement('style'); el.id = 'daily-extra-css';
-    el.textContent = '.daily-prompt,.daily-fb,.daily-choice,.daily-hint,.daily-why{overflow-wrap:anywhere;max-width:100%}.daily-prompt{overflow-x:auto}.daily-prompt svg,.daily-prompt img,.daily-fb svg,.daily-fb img,.daily-choice svg,.daily-choice img{max-width:100%!important;height:auto!important}.daily-prompt [style*="nowrap"]{white-space:normal!important}.daily-fb.close{display:block;background:#fff3b0;border:2px solid #f0b400;color:#5c4300;box-shadow:0 0 0 3px #ffe17a55}.daily-close-title{font-weight:800;margin-bottom:4px}input.sf-close{border-color:#f0b400!important;background:#fff8d6!important}.daily-why{margin-top:10px;font-size:.95em}.daily-why summary{cursor:pointer;font-weight:700}.daily-why ul{margin:6px 0 0;padding-left:20px}.daily-why li{margin:4px 0}.daily-why li.mine{background:#fff0ee;border-radius:6px;padding:2px 6px}';
+    el.textContent = '.daily-prompt,.daily-fb,.daily-choice,.daily-hint,.daily-why{overflow-wrap:anywhere;max-width:100%}.daily-prompt{overflow-x:auto}.daily-prompt svg,.daily-prompt img,.daily-fb svg,.daily-fb img,.daily-choice svg,.daily-choice img{max-width:100%!important;height:auto!important}.daily-prompt [style*="nowrap"]{white-space:normal!important}.daily-fb.close{display:block;background:#fff3b0;border:2px solid #f0b400;color:#5c4300;box-shadow:0 0 0 3px #ffe17a55}.daily-close-title{font-weight:800;margin-bottom:4px}input.sf-close{border-color:#f0b400!important;background:#fff8d6!important}.daily-why{margin-top:10px;font-size:.95em}.daily-why summary{cursor:pointer;font-weight:700}.daily-why ul{margin:6px 0 0;padding-left:20px}.daily-why li{margin:4px 0}.daily-why li.mine{background:#fff0ee;border-radius:6px;padding:2px 6px}.daily-choice.right::before{content:"✓ ";font-weight:900}.daily-review{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 0}.daily-review b{margin-right:2px}';
     document.head.appendChild(el); }
   function questionCard(root, cid, st) {
     const q = st.qs[st.done], n = st.done + 1, c = courseById[cid];
@@ -369,6 +371,9 @@
       if (answered) return;
       // "2,5" is a decimal comma, not 25 ("1,200" still means 1200): ask for a period instead of grading it
       if (q.type === 'number' && /^[+\-−]?(?:\d+,\d{1,2}|0,\d+)(?![\d,])/.test(String(resp).trim())) { fb.className = 'daily-fb bad'; fb.innerHTML = 'Use a period for decimals (2.5), not a comma.'; return; }
+      if (!window.QB) { fb.className = 'daily-fb bad'; fb.innerHTML = 'The answer checker didn’t load. Check your connection and reload this page; your place is saved.'; return; }
+      // accept the ways students really type numbers: 1,200 · 1.2×10^3 · 1.2*10^3 · a typed minus sign
+      if (q.type === 'number') resp = String(resp).trim().replace(/[−–]/g, '-').replace(/(\d),(?=\d{3}(?!\d))/g, '$1').replace(/\s*[×x*]\s*10\s*\^?\s*\(?\s*([+-]?\d+)\s*\)?/i, 'e$1');
       tries++;
       if (q.type === 'mc' && tries === 1) firstPick = resp;
       const ok = QB.check(q, resp);
@@ -394,6 +399,9 @@
       const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
       st.results[st.done] = {id: q.id, ch: q.ch, chLabel: q.chLabel, chTitle: q.chTitle, firstTry, ok, revealed, slip: firstSlip}; save(st.key || STATE_KEY, st);
       if (tries === 0) ddTrackSafe(cid, q, false, 'revealed'); else if (ok && tries === 1) ddTrackSafe(cid, q, true, sfClose != null ? 'sigfigs' : '');
+      // missed it? point straight at where to relearn it
+      if (!firstTry) { const cc = courseById[cid], chap = cc && cc.chapters.find(x => x.id === q.ch), vid = chap && typeof videos !== 'undefined' && typeof openVideo === 'function' && !document.body.classList.contains('embed') ? chap.videos.map(v => videos.get(v)).find(Boolean) : null;
+        fb.append(h('p', {class: 'daily-review'}, h('b', {}, 'Review this:'), h('a', {class: 'btn secondary small', ...hubLink(`#/course/${cid}/${q.ch}`, cid)}, `📖 ${q.chLabel} study guide`), vid ? h('button', {type: 'button', class: 'btn secondary small', onclick: () => openVideo(vid.id, 0)}, '▶ Watch a lesson') : null)); }
       nextBtn.focus({preventScroll: true});
     }
     return h('div', {class: 'panel daily-card'},
@@ -401,7 +409,7 @@
       prompt, answerArea, hintBox, fb,
       h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
   }
-  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); return '<b>' + (Number.isFinite(a) ? (Math.abs(a) >= 1e4 || (Math.abs(a) < 1e-3 && a !== 0) ? a.toPrecision(3).replace(/e([+-]\d+)/, ' × 10^$1') : Number(a.toPrecision(3))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + stack(q.answer) + '</b>'; }
+  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); /* show the answer the checker accepts: the item's own sig figs when it has them, otherwise the stored value (not a 3-sig-fig rounding of it) */ const big = Math.abs(a) >= 1e6 || (Math.abs(a) < 1e-3 && a !== 0); return '<b>' + (Number.isFinite(a) ? (q.sigfigs ? fmtSig(a, q.sigfigs) : big ? Number(a.toPrecision(6)).toExponential().replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + d) : String(Number(a.toPrecision(8)))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + stack(q.answer) + '</b>'; }
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 

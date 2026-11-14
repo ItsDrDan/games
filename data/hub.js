@@ -1,7 +1,10 @@
 /* Dr. Dan's Chemistry Study Hub — course map.
    Edit this file to add games, videos, or chapter links. Each course lists its chapters;
    each chapter lists the concepts (from the Course Outline of Record), the textbook
-   reading, the games (by repo name), and the YouTube videos (by video ID). */
+   reading, the games (by repo name), and the YouTube videos (by video ID).
+   Each game may list "topics": the skills it practices, in the words students search for. Search uses them
+   to send a topic straight to the right game. Each chapter may list "needs": earlier chapters in the same
+   course that it builds on (shown as "Builds on" on the chapter page). Run `node tools/check_hub.js` after editing. */
 window.HUB_DATA = {
  "updated": "2026-11-12",
  "channel": "https://www.youtube.com/@itsdrdan",
@@ -33,20 +36,20 @@ window.HUB_DATA = {
    "title": "Significant Figures",
    "icon": "sigfig",
    "logo": "assets/games/sigfig.webp",
-   "blurb": "Count, round and do math with sig figs, and read real lab glassware and balances.",
+   "blurb": "Count, round and do math with sig figs, and read real lab glassware and balances.", "topics": ["counting significant figures", "rounding", "sig figs in addition and multiplication", "reading a graduated cylinder, buret, and balance", "measurement uncertainty", "scientific notation"],
    "courses": [
     "3A",
     "1A"
    ],
    "url": "https://itsdrdan.github.io/sigfig/"
   },
-  {"id": "metric", "logo": "brand/badges/gperl.webp", "title": "Prefix Power-Up (SI Prefixes)", "icon": "measure", "blurb": "Prefixes and powers of ten, metric conversions, squared and cubed units, plus IV volume and tablet-dose practice.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/metric/"},
+  {"id": "metric", "logo": "brand/badges/gperl.webp", "title": "Prefix Power-Up (SI Prefixes)", "icon": "measure", "blurb": "Prefixes and powers of ten, metric conversions, squared and cubed units, plus IV volume and tablet-dose practice.", "topics": ["metric prefixes", "kilo, centi, milli, micro, nano", "unit conversions", "dimensional analysis", "powers of ten", "squared and cubed units", "dosage calculations"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/metric/"},
   {
    "id": "algebratrainer",
    "logo": "assets/games/algebratrainer.webp",
    "title": "Algebra for Chemistry",
    "icon": "scales",
-   "blurb": "Rearrange chemistry equations one step at a time, then plug in the numbers with TI-36X Pro keystroke help.",
+   "blurb": "Rearrange chemistry equations one step at a time, then plug in the numbers with TI-36X Pro keystroke help.", "topics": ["rearranging equations", "solving for a variable", "calculator skills", "scientific notation on a calculator", "logarithms", "density, molarity, and ideal gas law algebra"],
    "courses": [
     "3A",
     "1A",
@@ -54,15 +57,15 @@ window.HUB_DATA = {
    ],
    "url": "https://itsdrdan.github.io/algebratrainer/"
   },
-  {"id": "elements", "logo": "brand/badges/book.webp", "title": "Symbol Safari (Element Symbols)", "icon": "periodic", "blurb": "Names ↔ symbols, the tricky Latin symbols, and finding elements and families on the periodic table.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/elements/"},
-  {"id": "polyatomic", "logo": "brand/badges/molecule.webp", "title": "Polyatomic Posse (Polyatomic Ions)", "icon": "ion", "blurb": "All 30 Green Sheet ions: name ↔ formula, charges, and the -ate/-ite family.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/polyatomic/"},
-  {"id": "ionicformula", "logo": "brand/badges/lattice.webp", "title": "Name That Compound! (Naming & Formulas)", "icon": "formula", "blurb": "Names ↔ formulas for ionic compounds, covalent molecules and acids, with step-by-step help.", "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/ionicformula/"},
+  {"id": "elements", "logo": "brand/badges/book.webp", "title": "Symbol Safari (Element Symbols)", "icon": "periodic", "blurb": "Names ↔ symbols, the tricky Latin symbols, and finding elements and families on the periodic table.", "topics": ["element names and symbols", "periodic table groups and families", "alkali metals, halogens, noble gases", "metals, nonmetals, metalloids"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/elements/"},
+  {"id": "polyatomic", "logo": "brand/badges/molecule.webp", "title": "Polyatomic Posse (Polyatomic Ions)", "icon": "ion", "blurb": "All 30 Green Sheet ions: name ↔ formula, charges, and the -ate/-ite family.", "topics": ["polyatomic ion names, formulas, and charges", "nitrate, sulfate, phosphate, carbonate, ammonium", "-ate and -ite endings", "memorizing polyatomic ions"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/polyatomic/"},
+  {"id": "ionicformula", "logo": "brand/badges/lattice.webp", "title": "Name That Compound! (Naming & Formulas)", "icon": "formula", "blurb": "Names ↔ formulas for ionic compounds, covalent molecules and acids, with step-by-step help.", "topics": ["naming ionic compounds", "writing ionic formulas", "criss-cross method", "transition metal Roman numerals", "naming covalent (molecular) compounds with prefixes", "naming acids", "nomenclature"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/ionicformula/"},
   {
    "id": "quantumchemistry",
    "logo": "assets/games/quantumchemistry.webp",
    "title": "Quantum Quest",
    "icon": "orbital",
-   "blurb": "Light, Bohr model, orbital diagrams, electron configurations, and periodic trends. Pick 3A or 1A.",
+   "blurb": "Light, Bohr model, orbital diagrams, electron configurations, and periodic trends. Pick 3A or 1A.", "topics": ["wavelength, frequency, and energy of light", "electromagnetic spectrum", "Bohr model", "quantum numbers", "orbital diagrams", "electron configurations", "noble gas shorthand", "valence electrons", "periodic trends: atomic radius, ionization energy, electronegativity"],
    "courses": [
     "3A",
     "1A"
@@ -74,7 +77,7 @@ window.HUB_DATA = {
    "logo": "assets/games/lewisstructures.webp",
    "title": "Lewis Structure Studio",
    "icon": "molecule",
-   "blurb": "Build Lewis structures, then predict shape and polarity. 3B adds condensed and skeletal drawing.",
+   "blurb": "Build Lewis structures, then predict shape and polarity. 3B adds condensed and skeletal drawing.", "topics": ["drawing Lewis structures", "counting valence electrons", "octet rule and exceptions", "formal charge", "resonance", "VSEPR molecular geometry", "bond angles", "bond polarity and molecular polarity", "electronegativity difference", "condensed and skeletal (line-angle) structures"],
    "courses": [
     "3A",
     "1A",
@@ -87,7 +90,7 @@ window.HUB_DATA = {
    "logo": "assets/games/reactions.webp",
    "title": "Reaction Rumble (Chemical Reactions)",
    "icon": "reaction",
-   "blurb": "Balance, predict products, write net ionic equations, and race the 60-second Blitz.",
+   "blurb": "Balance, predict products, write net ionic equations, and race the 60-second Blitz.", "topics": ["balancing chemical equations", "types of reactions: combination, decomposition, single and double displacement, combustion", "predicting products", "solubility rules", "precipitation reactions", "complete and net ionic equations", "spectator ions", "acid-base neutralization"],
    "courses": [
     "3A",
     "1A"
@@ -99,7 +102,7 @@ window.HUB_DATA = {
    "logo": "assets/games/redox.webp",
    "title": "LEO Goes GER! (Redox)",
    "icon": "battery",
-   "blurb": "Oxidation states, activity series, and balancing redox by half-reactions in acid and base.",
+   "blurb": "Oxidation states, activity series, and balancing redox by half-reactions in acid and base.", "topics": ["oxidation numbers", "oxidation and reduction", "oxidizing agent and reducing agent", "activity series", "half-reactions", "balancing redox equations in acid and base", "electrochemistry"],
    "courses": [
     "3A",
     "1A",
@@ -112,7 +115,7 @@ window.HUB_DATA = {
    "logo": "assets/games/moles.webp",
    "title": "The Mole",
    "icon": "pile",
-   "blurb": "Avogadro’s number, molar mass, the Mole Road Map, percent composition, and empirical and molecular formulas.",
+   "blurb": "Avogadro’s number, molar mass, the Mole Road Map, percent composition, and empirical and molecular formulas.", "topics": ["Avogadro's number", "molar mass", "grams to moles and moles to grams", "moles to particles, atoms, and molecules", "percent composition", "empirical formula", "molecular formula", "mole conversions"],
    "courses": [
     "3A",
     "1A"
@@ -124,7 +127,7 @@ window.HUB_DATA = {
    "logo": "assets/games/stoichiometry.webp",
    "title": "Stoichiometry",
    "icon": "scales",
-   "blurb": "Mass, solution, and gas stoichiometry, limiting reactants, percent yield, and titrations.",
+   "blurb": "Mass, solution, and gas stoichiometry, limiting reactants, percent yield, and titrations.", "topics": ["mole ratio", "mole-to-mole", "mass-to-mass (gram to gram) stoichiometry", "limiting reactant (limiting reagent)", "excess reactant", "theoretical yield", "percent yield", "solution stoichiometry with molarity", "gas stoichiometry", "titration"],
    "courses": [
     "3A",
     "1A"
@@ -136,7 +139,7 @@ window.HUB_DATA = {
    "logo": "assets/games/gaslaws.webp",
    "title": "Under Pressure (Gas Laws)",
    "icon": "gauge",
-   "blurb": "Gas laws, ideal gas calculations, mixtures, wet gases, and mystery gases.",
+   "blurb": "Gas laws, ideal gas calculations, mixtures, wet gases, and mystery gases.", "topics": ["Boyle's law", "Charles's law", "Gay-Lussac's law", "combined gas law", "Avogadro's law", "ideal gas law PV = nRT", "STP and molar volume", "Dalton's law of partial pressures", "gas density and molar mass", "pressure unit conversions", "kelvin temperature"],
    "courses": [
     "3A",
     "1A"
@@ -148,7 +151,7 @@ window.HUB_DATA = {
    "logo": "assets/games/thermochemistry.webp",
    "title": "Thermochemistry",
    "icon": "fire",
-   "blurb": "Specific heat, phase changes, calorimetry, Hess's law, and enthalpies of formation.",
+   "blurb": "Specific heat, phase changes, calorimetry, Hess's law, and enthalpies of formation.", "topics": ["specific heat q = mcΔT", "heat and temperature change", "heating curves", "heat of fusion and vaporization", "calorimetry", "enthalpy ΔH", "endothermic and exothermic", "Hess's law", "enthalpy of formation"],
    "courses": [
     "3A",
     "1A"
@@ -160,7 +163,7 @@ window.HUB_DATA = {
    "logo": "assets/games/imf.webp",
    "title": "Sticky Molecules (Intermolecular Forces)",
    "icon": "molecule",
-   "blurb": "Name the forces, win boiling point battles, and run nine predict-first labs on phase changes, osmosis, and more.",
+   "blurb": "Name the forces, win boiling point battles, and run nine predict-first labs on phase changes, osmosis, and more.", "topics": ["intermolecular forces", "London dispersion forces", "dipole-dipole forces", "hydrogen bonding", "ion-dipole forces", "boiling point and melting point", "vapor pressure", "surface tension and viscosity", "solubility: like dissolves like", "phase changes", "osmosis"],
    "courses": [
     "3A",
     "1A",
@@ -173,7 +176,7 @@ window.HUB_DATA = {
    "logo": "assets/games/chem1bready.webp",
    "title": "Bridge to 1B (CHEM 1B Readiness)",
    "icon": "bridge",
-   "blurb": "A 1A review with a readiness check and a personal study plan before you start 1B.",
+   "blurb": "A 1A review with a readiness check and a personal study plan before you start 1B.", "topics": ["CHEM 1A review", "readiness check", "stoichiometry, molarity, and gas law review", "Lewis structures and polarity review", "thermochemistry review"],
    "courses": [
     "1A",
     "1B"
@@ -185,7 +188,7 @@ window.HUB_DATA = {
    "logo": "assets/games/bondingtheories.webp",
    "title": "Orbital Overlap (Bonding Theories)",
    "icon": "orbital",
-   "blurb": "Valence bond theory, hybrid orbitals, sigma and pi bonds, and tap-to-fill MO diagrams, with a Theory Face-Off boss round.",
+   "blurb": "Valence bond theory, hybrid orbitals, sigma and pi bonds, and tap-to-fill MO diagrams, with a Theory Face-Off boss round.", "topics": ["valence bond theory", "hybridization: sp, sp2, sp3", "sigma and pi bonds", "molecular orbital (MO) theory", "MO diagrams", "bond order", "paramagnetic and diamagnetic", "bond energy"],
    "courses": [
     "1A",
     "1B"
@@ -197,7 +200,7 @@ window.HUB_DATA = {
    "logo": "assets/games/organic.webp",
    "title": "Functional Group Flashcards",
    "icon": "cards",
-   "blurb": "Flip through the 16 functional groups, then quiz yourself: picture, name, or a real molecule’s formula.",
+   "blurb": "Flip through the 16 functional groups, then quiz yourself: picture, name, or a real molecule’s formula.", "topics": ["functional groups", "alcohol, aldehyde, ketone, carboxylic acid, ester, amine, amide, ether", "recognizing functional groups in real molecules"],
    "courses": [
     "3B",
     "1A"
@@ -209,7 +212,7 @@ window.HUB_DATA = {
    "logo": "assets/games/functionalgroups.webp",
    "title": "Organic Origins (Hydrocarbons to Amides)",
    "icon": "organic",
-   "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then compare their properties.",
+   "blurb": "Start here for 3B: spot, classify, name, and draw organic compounds, then compare their properties.", "topics": ["functional groups", "alkanes, alkenes, alkynes", "IUPAC naming of organic compounds", "drawing organic structures", "condensed and skeletal structures", "isomers", "boiling point and solubility of organic compounds"],
    "courses": [
     "3B"
    ],
@@ -220,7 +223,7 @@ window.HUB_DATA = {
    "logo": "assets/games/stereochemistry.webp",
    "title": "Mirror Match (Stereochemistry)",
    "icon": "benzene",
-   "blurb": "Spot chiral carbons, tell enantiomers from diastereomers on wedges and dashes, and read cis–trans and Fischer projections.",
+   "blurb": "Spot chiral carbons, tell enantiomers from diastereomers on wedges and dashes, and read cis–trans and Fischer projections.", "topics": ["chirality", "chiral carbons (chiral centers)", "enantiomers and diastereomers", "wedge and dash structures", "cis-trans isomers", "Fischer projections", "D and L sugars"],
    "courses": [
     "3B"
    ],
@@ -231,7 +234,7 @@ window.HUB_DATA = {
    "logo": "assets/games/phcharge.webp",
    "title": "Proton Patrol (pH & Charge)",
    "icon": "ph",
-   "blurb": "Decide what each group does at pH 7.4, find net charges of drugs and amino acids, and name and dissolve salts.",
+   "blurb": "Decide what each group does at pH 7.4, find net charges of drugs and amino acids, and name and dissolve salts.", "topics": ["pH and charge", "physiological pH 7.4", "protonated and deprotonated groups", "carboxylic acids and amines at body pH", "zwitterions", "net charge of amino acids and drugs", "drug solubility and salts", "pKa"],
    "courses": [
     "3B"
    ],
@@ -242,7 +245,7 @@ window.HUB_DATA = {
    "logo": "assets/games/organicreactions.webp",
    "title": "Bond Voyage! Organic Reactions",
    "icon": "reaction",
-   "blurb": "Identify reactions, pick reagents and products, solve two-step roadmaps, and draw structures for the 3B organic chapters, plus real body-chemistry reactions.",
+   "blurb": "Identify reactions, pick reagents and products, solve two-step roadmaps, and draw structures for the 3B organic chapters, plus real body-chemistry reactions.", "topics": ["organic reactions", "hydrogenation, hydration, and halogenation of alkenes", "oxidation and reduction of alcohols, aldehydes, and ketones", "dehydration", "esterification and ester hydrolysis", "amide formation and hydrolysis", "acetals and hemiacetals", "reagents and products"],
    "courses": [
     "3B"
    ],
@@ -253,7 +256,7 @@ window.HUB_DATA = {
    "logo": "assets/games/carbohydrates.webp",
    "title": "Sweet Structures (Carbohydrates)",
    "icon": "sugar",
-   "blurb": "Fischer and Haworth projections, D/L sugars, anomers, glycosidic links, and sugar reactions.",
+   "blurb": "Fischer and Haworth projections, D/L sugars, anomers, glycosidic links, and sugar reactions.", "topics": ["monosaccharides and disaccharides", "glucose, fructose, galactose", "Fischer and Haworth projections", "D and L sugars", "alpha and beta anomers", "glycosidic bonds", "reducing sugars", "starch, glycogen, and cellulose"],
    "courses": [
     "3B"
    ],
@@ -264,7 +267,7 @@ window.HUB_DATA = {
    "logo": "assets/games/aminoacids.webp",
    "title": "Peptide Party (Amino Acids & Proteins)",
    "icon": "protein",
-   "blurb": "Build peptides by removing water, decode codons, name peptides, and fold proteins from 1° to 4°.",
+   "blurb": "Build peptides by removing water, decode codons, name peptides, and fold proteins from 1° to 4°.", "topics": ["amino acid structure and side chains", "peptide bonds", "naming peptides", "primary, secondary, tertiary, and quaternary protein structure", "denaturation", "genetic code and codons"],
    "courses": [
     "3B"
    ],
@@ -275,7 +278,7 @@ window.HUB_DATA = {
    "logo": "assets/games/enzymes.webp",
    "title": "Enzyme Engine (Enzymes & Vitamins)",
    "icon": "enzyme",
-   "blurb": "Classify enzymes, read activity graphs, spot the inhibitor, and match every vitamin to its coenzyme.",
+   "blurb": "Classify enzymes, read activity graphs, spot the inhibitor, and match every vitamin to its coenzyme.", "topics": ["enzyme classes", "active site and substrate", "lock-and-key and induced fit", "effect of temperature and pH on enzyme activity", "competitive and noncompetitive inhibitors", "vitamins and coenzymes"],
    "courses": [
     "3B"
    ],
@@ -286,7 +289,7 @@ window.HUB_DATA = {
    "logo": "assets/games/lipids.webp",
    "title": "Lipid Lab (Lipids)",
    "icon": "lipid",
-   "blurb": "Read fatty acid chains, make and break fats, sort the lipid families, and see how membranes work.",
+   "blurb": "Read fatty acid chains, make and break fats, sort the lipid families, and see how membranes work.", "topics": ["fatty acids: saturated and unsaturated", "cis and trans fats", "triglycerides (triacylglycerols)", "hydrogenation and saponification", "phospholipids", "steroids and cholesterol", "cell membranes and the lipid bilayer"],
    "courses": [
     "3B"
    ],
@@ -297,7 +300,7 @@ window.HUB_DATA = {
    "logo": "assets/games/nucleicacids.webp",
    "title": "Helix Hustle (Nucleic Acids & Protein Synthesis)",
    "icon": "dna",
-   "blurb": "Read DNA and RNA, copy it, transcribe it, and crack the genetic code.",
+   "blurb": "Read DNA and RNA, copy it, transcribe it, and crack the genetic code.", "topics": ["nucleotides", "DNA and RNA structure", "base pairing", "DNA replication", "transcription", "translation", "genetic code and codons", "mutations"],
    "courses": [
     "3B"
    ],
@@ -308,7 +311,7 @@ window.HUB_DATA = {
    "logo": "assets/games/metabolism.webp",
    "title": "Metabolic Marathon (Metabolism)",
    "icon": "lightning",
-   "blurb": "Follow fuel to ATP: read pathway diagrams, count NADH and ATP, name reaction types, and see what your body does when fed or fasting.",
+   "blurb": "Follow fuel to ATP: read pathway diagrams, count NADH and ATP, name reaction types, and see what your body does when fed or fasting.", "topics": ["ATP", "glycolysis", "citric acid cycle (Krebs cycle)", "electron transport chain", "NADH and FADH2", "beta oxidation of fatty acids", "ketone bodies", "amino acid catabolism and the urea cycle", "fed and fasting states"],
    "courses": [
     "3B"
    ],
@@ -319,7 +322,7 @@ window.HUB_DATA = {
    "logo": "assets/games/finalexam.webp",
    "title": "Final Exam Review",
    "icon": "exam",
-   "blurb": "Final Boss! Timed practice finals, an exam-day mode, topic training, and weak-spot review.",
+   "blurb": "Final Boss! Timed practice finals, an exam-day mode, topic training, and weak-spot review.", "topics": ["final exam review", "timed practice final", "ACS-style exam practice", "mixed review of every chapter", "weak-spot review"],
    "courses": [
     "3A",
     "3B",
@@ -333,7 +336,7 @@ window.HUB_DATA = {
    "title": "Lab Practical (Station Rotation)",
    "icon": "timer",
    "logo": "assets/games/labpractical.webp",
-   "blurb": "Timed mock lab practical stations, practice for every lab, and PhET simulations.",
+   "blurb": "Timed mock lab practical stations, practice for every lab, and PhET simulations.", "topics": ["lab practical", "lab equipment and glassware", "measuring mass and volume", "density lab", "titration technique", "lab safety", "reading instruments"],
    "courses": [
     "3A"
    ],
@@ -7156,7 +7159,7 @@ window.HUB_DATA = {
     {
      "id": "3",
      "label": "Ch 3",
-     "title": "Light, Electrons, and the Periodic Table",
+     "title": "Light, Electrons, and the Periodic Table", "needs": ["2"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/03%3A_Light_Electrons_and_the_Periodic_Table",
       "sections": [
@@ -7243,7 +7246,7 @@ window.HUB_DATA = {
     {
      "id": "4",
      "label": "Ch 4",
-     "title": "Compounds and Chemical Bonds",
+     "title": "Compounds and Chemical Bonds", "needs": ["2", "3"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/04%3A_Compounds_and_Chemical_Bonds",
       "sections": [
@@ -7372,7 +7375,7 @@ window.HUB_DATA = {
     {
      "id": "5",
      "label": "Ch 5",
-     "title": "The Mole and Chemical Formulas",
+     "title": "The Mole and Chemical Formulas", "needs": ["1", "4"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/05%3A_The_Mole_and_Chemical_Formulas",
       "sections": []
@@ -7404,7 +7407,7 @@ window.HUB_DATA = {
     {
      "id": "6",
      "label": "Ch 6",
-     "title": "Lewis Structures, Shapes, and Intermolecular Forces",
+     "title": "Lewis Structures, Shapes, and Intermolecular Forces", "needs": ["3", "4"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/06%3A_Lewis_Structures_Shapes_and_Intermolecular_Forces",
       "sections": [
@@ -7493,7 +7496,7 @@ window.HUB_DATA = {
     {
      "id": "7",
      "label": "Ch 7",
-     "title": "Solids, Liquids, and Phase Changes",
+     "title": "Solids, Liquids, and Phase Changes", "needs": ["6"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/07%3A_Solids_Liquids_and_Phase_Changes",
       "sections": [
@@ -7606,7 +7609,7 @@ window.HUB_DATA = {
     {
      "id": "8",
      "label": "Ch 8",
-     "title": "Gases",
+     "title": "Gases", "needs": ["1", "5"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/08%3A_Gases",
       "sections": [
@@ -7694,7 +7697,7 @@ window.HUB_DATA = {
     {
      "id": "9",
      "label": "Ch 9",
-     "title": "Aqueous Solutions",
+     "title": "Aqueous Solutions", "needs": ["5", "6"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/09%3A_Aqueous_Solutions",
       "sections": [
@@ -7814,7 +7817,7 @@ window.HUB_DATA = {
     {
      "id": "10",
      "label": "Ch 10",
-     "title": "Chemical Reactions",
+     "title": "Chemical Reactions", "needs": ["4", "9"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/10%3A_Chemical_Reactions",
       "sections": [
@@ -7968,7 +7971,7 @@ window.HUB_DATA = {
     {
      "id": "11",
      "label": "Ch 11",
-     "title": "Stoichiometry: Quantities in Chemical Reactions",
+     "title": "Stoichiometry: Quantities in Chemical Reactions", "needs": ["5", "10"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/11%3A_Stoichiometry-_Quantities_in_Chemical_Reactions",
       "sections": [
@@ -8057,7 +8060,7 @@ window.HUB_DATA = {
     {
      "id": "12",
      "label": "Ch 12",
-     "title": "Acids and Bases",
+     "title": "Acids and Bases", "needs": ["9", "10"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/12%3A_Acids_and_Bases",
       "sections": [
@@ -8152,7 +8155,7 @@ window.HUB_DATA = {
     {
      "id": "13",
      "label": "Ch 13",
-     "title": "Chemical Equilibrium",
+     "title": "Chemical Equilibrium", "needs": ["10"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/13%3A_Chemical_Equilibrium",
       "sections": [
@@ -8212,7 +8215,7 @@ window.HUB_DATA = {
     {
      "id": "14",
      "label": "Ch 14",
-     "title": "Radioactivity and Nuclear Chemistry",
+     "title": "Radioactivity and Nuclear Chemistry", "needs": ["2"],
      "read": {
       "url": "https://chem.libretexts.org/Courses/Fresno_City_College/Introductory_Chemistry_Atoms_First_for_FCC/14%3A_Radioactivity_and_Nuclear_Chemistry",
       "sections": [
@@ -8403,7 +8406,7 @@ window.HUB_DATA = {
     {
      "id": "2",
      "label": "Ch 2",
-     "title": "Atoms, Molecules, and Ions",
+     "title": "Atoms, Molecules, and Ions", "needs": ["1"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/2-introduction",
       "sections": [
@@ -8484,7 +8487,7 @@ window.HUB_DATA = {
     {
      "id": "3",
      "label": "Ch 3",
-     "title": "Composition of Substances and Solutions",
+     "title": "Composition of Substances and Solutions", "needs": ["1", "2"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/3-introduction",
       "sections": [
@@ -8543,7 +8546,7 @@ window.HUB_DATA = {
     {
      "id": "4",
      "label": "Ch 4",
-     "title": "Stoichiometry of Chemical Reactions",
+     "title": "Stoichiometry of Chemical Reactions", "needs": ["2", "3"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/4-introduction",
       "sections": [
@@ -8624,7 +8627,7 @@ window.HUB_DATA = {
     {
      "id": "5",
      "label": "Ch 5",
-     "title": "Thermochemistry",
+     "title": "Thermochemistry", "needs": ["3", "4"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/5-introduction",
       "sections": [
@@ -8678,7 +8681,7 @@ window.HUB_DATA = {
     {
      "id": "6",
      "label": "Ch 6",
-     "title": "Electronic Structure and Periodic Properties of Elements",
+     "title": "Electronic Structure and Periodic Properties of Elements", "needs": ["2"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/6-introduction",
       "sections": [
@@ -8743,7 +8746,7 @@ window.HUB_DATA = {
     {
      "id": "7",
      "label": "Ch 7",
-     "title": "Chemical Bonding and Molecular Geometry",
+     "title": "Chemical Bonding and Molecular Geometry", "needs": ["2", "6"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/7-introduction",
       "sections": [
@@ -8812,7 +8815,7 @@ window.HUB_DATA = {
     {
      "id": "8",
      "label": "Ch 8",
-     "title": "Advanced Theories of Covalent Bonding",
+     "title": "Advanced Theories of Covalent Bonding", "needs": ["7"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/8-introduction",
       "sections": [
@@ -8862,7 +8865,7 @@ window.HUB_DATA = {
     {
      "id": "9",
      "label": "Ch 9",
-     "title": "Gases",
+     "title": "Gases", "needs": ["3", "4"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/9-introduction",
       "sections": [
@@ -8934,7 +8937,7 @@ window.HUB_DATA = {
     {
      "id": "10",
      "label": "Ch 10",
-     "title": "Liquids and Solids",
+     "title": "Liquids and Solids", "needs": ["7"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/10-introduction",
       "sections": [
@@ -9000,7 +9003,7 @@ window.HUB_DATA = {
     {
      "id": "11",
      "label": "Ch 11",
-     "title": "Solutions and Colloids",
+     "title": "Solutions and Colloids", "needs": ["3", "10"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/11-introduction",
       "sections": [
@@ -9062,7 +9065,7 @@ window.HUB_DATA = {
     {
      "id": "20",
      "label": "Ch 20",
-     "title": "Organic Chemistry",
+     "title": "Organic Chemistry", "needs": ["7"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/20-introduction",
       "sections": [
@@ -9149,7 +9152,7 @@ window.HUB_DATA = {
     {
      "id": "13",
      "label": "Ch 13",
-     "title": "Fundamental Equilibrium Concepts",
+     "title": "Fundamental Equilibrium Concepts", "needs": ["ready"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/13-introduction",
       "sections": [
@@ -9201,7 +9204,7 @@ window.HUB_DATA = {
     {
      "id": "14",
      "label": "Ch 14",
-     "title": "Acid-Base Equilibria",
+     "title": "Acid-Base Equilibria", "needs": ["13"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/14-introduction",
       "sections": [
@@ -9278,7 +9281,7 @@ window.HUB_DATA = {
     {
      "id": "15",
      "label": "Ch 15",
-     "title": "Equilibria of Other Reaction Classes",
+     "title": "Equilibria of Other Reaction Classes", "needs": ["13", "14"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/15-introduction",
       "sections": [
@@ -9322,7 +9325,7 @@ window.HUB_DATA = {
     {
      "id": "12",
      "label": "Ch 12",
-     "title": "Kinetics",
+     "title": "Kinetics", "needs": ["ready"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/12-introduction",
       "sections": [
@@ -9388,7 +9391,7 @@ window.HUB_DATA = {
     {
      "id": "16",
      "label": "Ch 16",
-     "title": "Thermodynamics",
+     "title": "Thermodynamics", "needs": ["13"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/16-introduction",
       "sections": [
@@ -9439,7 +9442,7 @@ window.HUB_DATA = {
     {
      "id": "17",
      "label": "Ch 17",
-     "title": "Electrochemistry",
+     "title": "Electrochemistry", "needs": ["16"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/17-introduction",
       "sections": [
@@ -9511,7 +9514,7 @@ window.HUB_DATA = {
     {
      "id": "19",
      "label": "Ch 19",
-     "title": "Transition Metals and Coordination Chemistry",
+     "title": "Transition Metals and Coordination Chemistry", "needs": ["15"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/19-introduction",
       "sections": [
@@ -9552,7 +9555,7 @@ window.HUB_DATA = {
     {
      "id": "21",
      "label": "Ch 21",
-     "title": "Nuclear Chemistry",
+     "title": "Nuclear Chemistry", "needs": ["12"],
      "read": {
       "url": "https://openstax.org/books/chemistry-2e/pages/21-introduction",
       "sections": [
@@ -9658,7 +9661,7 @@ window.HUB_DATA = {
     {
      "id": "2",
      "label": "Unit 2",
-     "title": "Alkanes, Alkenes, and Alkynes",
+     "title": "Alkanes, Alkenes, and Alkynes", "needs": ["1"],
      "read": null,
      "concepts": [
       "classifying carbons (1°, 2°, 3°, 4°)",
@@ -9699,7 +9702,7 @@ window.HUB_DATA = {
     {
      "id": "3",
      "label": "Unit 3",
-     "title": "Aromatic Compounds",
+     "title": "Aromatic Compounds", "needs": ["2"],
      "read": null,
      "concepts": [
       "structure of benzene",
@@ -9720,7 +9723,7 @@ window.HUB_DATA = {
     {
      "id": "4",
      "label": "Unit 4",
-     "title": "Alcohols, Phenols, Thiols, and Ethers",
+     "title": "Alcohols, Phenols, Thiols, and Ethers", "needs": ["1", "2"],
      "read": null,
      "concepts": [
       "classifying alcohols (1°, 2°, 3°)",
@@ -9749,7 +9752,7 @@ window.HUB_DATA = {
     {
      "id": "5",
      "label": "Unit 5",
-     "title": "Aldehydes and Ketones",
+     "title": "Aldehydes and Ketones", "needs": ["4"],
      "read": null,
      "concepts": [
       "carbonyl group",
@@ -9779,7 +9782,7 @@ window.HUB_DATA = {
     {
      "id": "6",
      "label": "Unit 6",
-     "title": "Chirality",
+     "title": "Chirality", "needs": ["1"],
      "read": null,
      "concepts": [
       "handedness",
@@ -9806,7 +9809,7 @@ window.HUB_DATA = {
     {
      "id": "7",
      "label": "Unit 7",
-     "title": "Carboxylic Acids and Esters",
+     "title": "Carboxylic Acids and Esters", "needs": ["4", "5"],
      "read": null,
      "concepts": [
       "acyl functional groups",
@@ -9837,7 +9840,7 @@ window.HUB_DATA = {
     {
      "id": "8",
      "label": "Unit 8",
-     "title": "Amines and Amides",
+     "title": "Amines and Amides", "needs": ["7"],
      "read": null,
      "concepts": [
       "classifying amines and amides",
@@ -9867,7 +9870,7 @@ window.HUB_DATA = {
     {
      "id": "9",
      "label": "Unit 9",
-     "title": "Carbohydrates",
+     "title": "Carbohydrates", "needs": ["5", "6"],
      "read": null,
      "concepts": [
       "aldoses and ketoses",
@@ -9905,7 +9908,7 @@ window.HUB_DATA = {
     {
      "id": "10",
      "label": "Unit 10",
-     "title": "Lipids",
+     "title": "Lipids", "needs": ["7"],
      "read": null,
      "concepts": [
       "steroids and cholesterol",
@@ -9939,7 +9942,7 @@ window.HUB_DATA = {
     {
      "id": "11",
      "label": "Unit 11",
-     "title": "Amino Acids and Proteins",
+     "title": "Amino Acids and Proteins", "needs": ["6", "7", "8"],
      "read": null,
      "concepts": [
       "amino acid R-group classification",
@@ -9968,7 +9971,7 @@ window.HUB_DATA = {
     {
      "id": "12",
      "label": "Unit 12",
-     "title": "Enzymes and Vitamins",
+     "title": "Enzymes and Vitamins", "needs": ["11"],
      "read": null,
      "concepts": [
       "catalysts and enzyme specificity",
@@ -9990,7 +9993,7 @@ window.HUB_DATA = {
     {
      "id": "13",
      "label": "Unit 13",
-     "title": "Nucleic Acids and Protein Synthesis",
+     "title": "Nucleic Acids and Protein Synthesis", "needs": ["9", "11"],
      "read": null,
      "concepts": [
       "nucleotides",
@@ -10015,7 +10018,7 @@ window.HUB_DATA = {
     {
      "id": "14",
      "label": "Unit 14",
-     "title": "Carbohydrate Metabolism",
+     "title": "Carbohydrate Metabolism", "needs": ["9", "12"],
      "read": null,
      "concepts": [
       "catabolism and anabolism",
@@ -10039,7 +10042,7 @@ window.HUB_DATA = {
     {
      "id": "15",
      "label": "Unit 15",
-     "title": "Metabolism and Energy",
+     "title": "Metabolism and Energy", "needs": ["12"],
      "read": null,
      "concepts": [
       "citric acid cycle",
@@ -10059,7 +10062,7 @@ window.HUB_DATA = {
     {
      "id": "16",
      "label": "Unit 16",
-     "title": "Lipid Metabolism",
+     "title": "Lipid Metabolism", "needs": ["10", "15"],
      "read": null,
      "concepts": [
       "digestion of triacylglycerols",
@@ -10082,7 +10085,7 @@ window.HUB_DATA = {
     {
      "id": "17",
      "label": "Unit 17",
-     "title": "Amino Acid Metabolism",
+     "title": "Amino Acid Metabolism", "needs": ["11", "15"],
      "read": null,
      "concepts": [
       "protein digestion",
