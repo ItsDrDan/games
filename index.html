@@ -1225,10 +1225,12 @@ function viewGames(params) {
   setTitle('All games');
   let active = params.get('course') || 'all';
   const list = h('div', {class: 'grid'});
+  const daily = h('div', {class: 'gamesdaily'});   // Daily 5 sits above the game list and follows the course chip
   const q = h('input', {class: '', type: 'search', 'aria-label': 'Filter games by topic or chapter', placeholder: 'Try “gases” or “ch 11”', style: 'height:44px;border:1.5px solid #cfdfd8;border-radius:12px;padding:0 14px;min-width:min(300px,100%);font-size:1rem', oninput: draw});
   const chips = h('div', {class: 'filters', role: 'group', 'aria-label': 'Filter by course'}, h('strong', {}, 'COURSE'),
     ['all', ...COURSE_ORDER].map(id => h('button', {class: 'chip', type: 'button', 'aria-pressed': String(active === id), onclick: e => { active = id; chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === e.currentTarget))); draw(); }}, id === 'all' ? 'All' : 'CHEM ' + id)), q);
   function draw() {
+    if (window.dailyCard) { const dc = active !== 'all' ? active : (courseById[recall('course')] ? recall('course') : ''); daily.replaceChildren(dailyCard(dc)); }
     const raw = q.value.trim();
     const used = g => chaptersUsing('game', g.id).filter(x => active === 'all' || x.c.id === active);
     const num = norm(raw).match(/^(?:(3a|1a|1b|3b)\s*)?(?:ch|chapter|chap|unit|u)?\.?\s*(\d{1,2})$/);
@@ -1249,7 +1251,7 @@ function viewGames(params) {
   }
   draw();
   app.replaceChildren(h('section', {class: 'section wrap'}, h('div', {class: 'eyebrow'}, 'Every game in one place'), h('h2', {}, 'All study games', h('span', {class: 'gamecount'}, games.size + ' games')),
-    h('p', {class: 'sub'}, 'New games show up here automatically once they’re published.'), chips, list));
+    h('p', {class: 'sub'}, 'New games show up here automatically once they’re published.'), daily, chips, list));
 }
 
 function viewPlay(id, params) {
