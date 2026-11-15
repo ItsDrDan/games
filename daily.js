@@ -27,7 +27,8 @@
   const EMBED = new URLSearchParams(location.search).get('embed') === '1';
   const CLS = () => (typeof classMode === 'function' && classMode() ? '&class=drdan' : '');   // new tabs keep Dr. Dan's class mode (an embedded frame can't share its saved setting)
   const hubLink = (hash, cid) => EMBED ? {href: './?course=' + cid + CLS() + hash, target: '_blank', rel: 'noopener'} : {href: hash};
-  function safeBack(u) { try { const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } }
+  function safeBack(u) { if (!u) return ''; try {   // no back address: '' would resolve to this page itself (the hub home)
+    const x = new URL(u, location.href); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch { return ''; } }
   const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
 
@@ -430,12 +431,14 @@
   }
 
   /* small card other views can drop in (home page and course overview) */
-  function dailyCard(cid) {
-    const s = streak(), st = load(STATE_KEY, null), doneToday = st && st.date === today() && st.done >= (st.qs || []).length && (st.qs || []).length;
-    const href = '#/daily' + (cid ? '/' + cid : '');
-    return h('a', {class: 'dailycard', 'data-course': cid || null, href},
+  function dailyCard(cid, opt) {   // opt {ch: [...ids], label}: a Daily 5 for one part of a course (e.g. 3B Organic)
+    const ch = opt && opt.ch && opt.ch.length ? opt.ch : null, label = opt && opt.label || '';
+    const s = streak(), st = load(STATE_KEY + (ch ? ':' + cid + ':' + ch.join(',') : ''), null), doneToday = st && st.date === today() && (!cid || !st.course || st.course === cid) && st.done >= (st.qs || []).length && (st.qs || []).length;
+    const href = '#/daily' + (cid ? '/' + cid : '') + (ch ? '?ch=' + ch.join(',') + (label ? '&label=' + encodeURIComponent(label) : '') : '');
+    const blurb = ch && opt.blurb ? opt.blurb : 'Five quick questions a day: what you missed, what you haven’t seen, what’s on this week.';
+    return h('a', {class: 'dailycard' + (ch ? ' part' : ''), 'data-course': cid || null, href},
       h('span', {class: 'daily-ico', html: cal}),
-      h('span', {class: 'dc-txt'}, h('b', {}, 'Daily 5' + (cid ? ' · CHEM ' + cid : '')), h('small', {}, doneToday ? '✓ Done for today · ' + streakLine(s) : 'Five quick questions a day: what you missed, what you haven’t seen, what’s on this week. ' + streakLine(s) + '.')),
+      h('span', {class: 'dc-txt'}, h('b', {}, 'Daily 5' + (label ? ' · ' + label : cid ? ' · CHEM ' + cid : '')), h('small', {}, doneToday ? '✓ Done for today · ' + streakLine(s) : blurb + ' ' + streakLine(s) + '.')),
       h('span', {class: 'btn small'}, doneToday ? 'Five more' : 'Start →'));
   }
   window.viewDaily = viewDaily; window.dailyCard = dailyCard;

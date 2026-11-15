@@ -517,6 +517,13 @@ h2 svg.ic,h3 svg.ic{color:#6a5acd;width:1.15em;height:1.15em;margin-right:.1em}
 /* ---- Daily 5 ---- */
 .dailycard{--c:var(--brand);display:flex;align-items:center;gap:14px;background:linear-gradient(110deg,#fff5f8,#fff 55%,#f1fbf6);border:2px solid #f0c4d3;border-radius:24px;padding:14px 18px;text-decoration:none;color:inherit;margin:0 0 22px;box-shadow:0 5px 0 #f0c4d3;transition:transform .14s}
 .dailycard:hover{transform:translateY(-2px)}
+.half{border-radius:26px;padding:18px 18px 20px;margin:0 0 26px;border:2px solid var(--hl);background:linear-gradient(180deg,var(--hb),#fff 160px)}
+.half.org{--hl:#9fd9c3;--hb:#d9f4ea;--hc:#227861}.half.bio{--hl:#f5b9a6;--hb:#ffe5dc;--hc:#b73e27}
+.half-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin:0 2px 12px}
+.half-head h2{font-size:clamp(1.5rem,3vw,1.9rem);color:var(--hc);margin:0}
+.half-head .half-n{font-weight:900;color:#fff;background:var(--hc);border-radius:999px;padding:3px 12px;font-size:.88rem}
+.half-head p{flex-basis:100%;margin:0;color:#4f4870;font-size:1.02rem}
+.dailycard.part{margin:0 0 16px;box-shadow:0 4px 0 var(--hl);border-color:var(--hl);background:#fff}
 .dailycard .dc-txt{flex:1;min-width:0}.dailycard b{display:block;font-size:1.08rem}.dailycard small{display:block;color:var(--muted);font-size:.9rem;margin-top:2px}
 .dailycard .daily-ico svg,.daily-title .daily-ico svg{width:40px;height:40px;flex:none}
 .daily{padding-bottom:40px}
@@ -1118,19 +1125,38 @@ function viewCourse(cid, chid) {
   app.replaceChildren(head, h('div', {class: 'wrap layout' + (ch ? '' : ' solo'), 'data-course': cid}, ch ? toc : null, main));
 }
 
+/* CHEM 3B splits in two: organic first, then biochemistry (same halves as 3b.html) */
+const COURSE_HALVES = {'3B': [
+  {label: 'Organic', title: 'Organic chemistry', note: 'Structures, functional groups, naming, and reactions.', ch: ['1', '2', '3', '4', '5', '6', '7', '8'], cls: 'org'},
+  {label: 'Biochemistry', title: 'Biochemistry', note: 'Carbohydrates, lipids, proteins, enzymes, DNA, and metabolism.', ch: ['9', '10', '11', '12', '13', '14', '15', '16', '17'], cls: 'bio'}]};
 function courseOverview(c) {
   const allGames = [...new Set(c.chapters.flatMap(ch => ch.games))].map(id => games.get(id)).filter(Boolean);
   // add discovered games tagged with this course that no chapter lists yet
   for (const g of games.values()) if (!allGames.includes(g) && (g.courses || []).includes(c.id)) allGames.push(g);
+  const card = ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
+    h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title), ch.keys ? h('span', {class: 'keys'}, ch.keys) : null,
+    h('span', {class: 'meta'}, ch.games.length ? h('span', {}, ic('game'), ` ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, ic('video'), ` ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, ic('video'), ' playlist') : null, ch.read ? h('span', {}, ic('book'), ' reading') : null));
+  const halves = (COURSE_HALVES[c.id] || []).map(x => ({...x, chs: x.ch.map(id => c.chapters.find(ch => ch.id === id)).filter(Boolean)})).filter(x => x.chs.length);
+  const exam = h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →'));
+  const gamesLink = c.id === '3B'
+    ? h('a', {class: 'btn secondary', href: './3b.html' + (classMode() ? '?class=drdan' : '')}, ic('game'), ` See all ${allGames.length} ${c.name} games →`)
+    : h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, ic('game'), ` See all ${allGames.length} ${c.name} games →`);
+  const span = x => 'Units ' + x.chs[0].label.replace(/^\D+/, '') + '\u2060–\u2060' + x.chs[x.chs.length - 1].label.replace(/^\D+/, '');
+  if (halves.length) return h('div', {},
+    weekCard(c.id),
+    exam,
+    halves.map(x => h('section', {class: 'half ' + x.cls, 'aria-labelledby': 'half-' + x.cls},
+      h('div', {class: 'half-head'}, h('h2', {id: 'half-' + x.cls}, x.title), h('span', {class: 'half-n'}, span(x)), h('p', {}, x.note)),
+      dailyCard(c.id, {ch: x.ch, label: x.label, blurb: `Five quick questions from ${span(x)}.`}),
+      h('div', {class: 'chapters-overview'}, x.chs.map(card)))),
+    h('p', {style: 'margin:22px 0 0'}, gamesLink));
   return h('div', {},
     weekCard(c.id),
     dailyCard(c.id),
-    h('a', {class: 'exambanner slim', href: '#/exams/' + c.id}, h('span', {}, h('b', {}, ic('note'), ' Exam or skill check coming up?'), ' Get a checklist and a study plan.'), h('span', {class: 'btn small'}, 'Exam guides →')),
+    exam,
     h('h2', {class: 'ct', style: 'margin-top:8px'}, `Pick a ${c.id === '3B' ? 'unit' : 'chapter'}`),
-    h('div', {class: 'chapters-overview'}, c.chapters.map(ch => h('a', {class: 'ch-card', href: `#/course/${c.id}/${ch.id}`},
-      h('span', {class: 'chicon', 'aria-hidden': 'true', style: hue(ch)}, ic(ch.icon)), h('span', {class: 'n'}, ch.label), h('b', {}, ch.title), ch.keys ? h('span', {class: 'keys'}, ch.keys) : null,
-      h('span', {class: 'meta'}, ch.games.length ? h('span', {}, ic('game'), ` ${ch.games.length} game${ch.games.length > 1 ? 's' : ''}`) : null, ch.videos.length ? h('span', {}, ic('video'), ` ${ch.videos.length} video${ch.videos.length > 1 ? 's' : ''}`) : ch.playlists.length ? h('span', {}, ic('video'), ' playlist') : null, ch.read ? h('span', {}, ic('book'), ' reading') : null)))),
-    h('p', {style: 'margin:22px 0 0'}, h('a', {class: 'btn secondary', href: '#/games?course=' + c.id}, ic('game'), ` See all ${allGames.length} ${c.name} games →`)));
+    h('div', {class: 'chapters-overview'}, c.chapters.map(card)),
+    h('p', {style: 'margin:22px 0 0'}, gamesLink));
 }
 
 
@@ -1723,7 +1749,7 @@ function parentOf(parts, params) {   // one level up, for pages opened straight 
   switch (parts[0]) {
     case 'play': { const f = params.get('from'), c = courseById[f]; if (!c) return '#/games'; const ch = params.get('ch'); return '#/course/' + f + (ch && c.chapters.some(x => x.id === ch) ? '/' + ch : ''); }
     case 'course': return parts[2] ? '#/course/' + cid : '#/';
-    case 'exams': return courseById[cid] ? '#/course/' + cid : '#/';
+    case 'exams': case 'daily': return courseById[cid] ? '#/course/' + cid : '#/';
     case 'exam': case 'check': return courseById[cid] ? '#/exams/' + cid : '#/exams';
   }
   if (['3a', '1a', '1b', '3b'].includes(parts[0].toLowerCase())) return parts[1] ? '#/course/' + parts[0].toUpperCase() : '#/';
