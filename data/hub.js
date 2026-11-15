@@ -43,7 +43,7 @@ window.HUB_DATA = {
    ],
    "url": "https://itsdrdan.github.io/sigfig/"
   },
-  {"id": "metric", "logo": "brand/badges/gperl.webp", "title": "Prefix Power-Up (SI Prefixes)", "icon": "measure", "blurb": "Prefixes and powers of ten, metric conversions, squared and cubed units, plus IV volume and tablet-dose practice.", "topics": ["metric prefixes", "kilo, centi, milli, micro, nano", "unit conversions", "dimensional analysis", "powers of ten", "squared and cubed units", "dosage calculations"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/metric/"},
+  {"id": "metric", "logo": "assets/games/metric.webp", "title": "Prefix Power-Up (SI Prefixes)", "icon": "measure", "blurb": "Prefixes and powers of ten, metric conversions, squared and cubed units, plus IV volume and tablet-dose practice.", "topics": ["metric prefixes", "kilo, centi, milli, micro, nano", "unit conversions", "dimensional analysis", "powers of ten", "squared and cubed units", "dosage calculations"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/metric/"},
   {
    "id": "algebratrainer",
    "logo": "assets/games/algebratrainer.webp",
@@ -58,8 +58,8 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/algebratrainer/"
   },
   {"id": "elements", "logo": "brand/badges/book.webp", "title": "Symbol Safari (Element Symbols)", "icon": "periodic", "blurb": "Names ↔ symbols, the tricky Latin symbols, and finding elements and families on the periodic table.", "topics": ["element names and symbols", "periodic table groups and families", "alkali metals, halogens, noble gases", "metals, nonmetals, metalloids"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/elements/"},
-  {"id": "polyatomic", "logo": "brand/badges/molecule.webp", "title": "Polyatomic Posse (Polyatomic Ions)", "icon": "ion", "blurb": "All 30 Green Sheet ions: name ↔ formula, charges, and the -ate/-ite family.", "topics": ["polyatomic ion names, formulas, and charges", "nitrate, sulfate, phosphate, carbonate, ammonium", "-ate and -ite endings", "memorizing polyatomic ions"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/polyatomic/"},
-  {"id": "ionicformula", "logo": "brand/badges/lattice.webp", "title": "Name That Compound! (Naming & Formulas)", "icon": "formula", "blurb": "Names ↔ formulas for ionic compounds, covalent molecules and acids, with step-by-step help.", "topics": ["naming ionic compounds", "writing ionic formulas", "criss-cross method", "transition metal Roman numerals", "naming covalent (molecular) compounds with prefixes", "naming acids", "nomenclature"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/ionicformula/"},
+  {"id": "polyatomic", "logo": "assets/games/polyatomic.webp", "title": "Polyatomic Posse (Polyatomic Ions)", "icon": "ion", "blurb": "All 30 Green Sheet ions: name ↔ formula, charges, and the -ate/-ite family.", "topics": ["polyatomic ion names, formulas, and charges", "nitrate, sulfate, phosphate, carbonate, ammonium", "-ate and -ite endings", "memorizing polyatomic ions"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/polyatomic/"},
+  {"id": "ionicformula", "logo": "assets/games/ionicformula.webp", "title": "Name That Compound! (Naming & Formulas)", "icon": "formula", "blurb": "Names ↔ formulas for ionic compounds, covalent molecules and acids, with step-by-step help.", "topics": ["naming ionic compounds", "writing ionic formulas", "criss-cross method", "transition metal Roman numerals", "naming covalent (molecular) compounds with prefixes", "naming acids", "nomenclature"], "courses": ["3A", "1A"], "url": "https://itsdrdan.github.io/ionicformula/"},
   {
    "id": "quantumchemistry",
    "logo": "assets/games/quantumchemistry.webp",
