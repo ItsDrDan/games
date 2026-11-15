@@ -66,4 +66,20 @@ for (const [repo, d] of Object.entries(diffs)) {
   if (d.sf.length) console.log('   sig figs e.g. ' + d.sf.slice(0, 6).map(x => JSON.stringify(x[0]) + ' ' + x[1] + '→' + x[2]).join(' | '));
   ok(!kinds.other, repo + ': unexplained parse differences');
 }
+
+/* ---- v2: same reading as v1; only fmt differs (regular number whenever it can carry the sig figs) ---- */
+{const V2 = require(path.join(__dirname, '..', 'brand', 'chemparse.v2.js'));
+ ok(V2.version === 2, 'v2 version');
+ for (const t of inputs) { ok(same(V2.parseValue(t), CP.parseValue(t)) && V2.sfCount(t) === CP.sfCount(t) && V2.decimalComma(t) === CP.decimalComma(t), 'v2 reads ' + JSON.stringify(t) + ' like v1'); }
+ const FM2 = [[380, 3, '380.'], [1230, 3, '1230'], [1200, 3, '1.20 × 10³'], [6000, 2, '6.0 × 10³'], [6100, 2, '6100'], [0.0472, 3, '0.0472'], [0.0045, 2, '0.0045'],
+   [0.00045, 2, '4.5 × 10⁻⁴'], [123456, 3, '1.23 × 10⁵'], [96485, 5, '96485'], [99999, 3, '1.00 × 10⁵'], [100, 3, '100.'], [100, 1, '100'], [6.022e23, 4, '6.022 × 10²³'],
+   [-0.5, 3, '-0.500'], [12, 3, '12.0'], [1, 3, '1.00'], [0, 3, '0'], [760, 3, '760.'], [22.4, 3, '22.4'], [0.001, 2, '0.0010'], [0.000999, 3, '9.99 × 10⁻⁴']];
+ for (const [x, n, want] of FM2) ok(V2.fmt(x, n) === want, `v2 fmt(${x}, ${n}) = ${V2.fmt(x, n)}, want ${want}`);
+ for (let i = 0; i < 40000; i++) {
+   const n = 1 + (i % 5), x = (Math.random() < .5 ? -1 : 1) * Math.pow(10, Math.random() * 14 - 7) * (1 + Math.random() * 9), shown = V2.fmt(x, n), r = Number(x.toPrecision(n)), e = Math.floor(Math.log10(Math.abs(r)));
+   ok(V2.sfCount(shown) === n, `v2 fmt(${x}, ${n}) = ${shown} has ${V2.sfCount(shown)} sig figs`);
+   ok(Math.abs(V2.parseValue(shown) - r) <= 1e-9 * Math.abs(r), `v2 fmt(${x}, ${n}) = ${shown} does not read back`);
+   const isSci = /×/.test(shown), plain = r.toFixed(Math.max(0, n - 1 - e)), plainOK = plain.includes('.') || V2.sfCount(plain) === n || e + 1 === n;
+   ok(isSci === (e >= 5 || e <= -4 || !plainOK), `v2 fmt(${x}, ${n}) = ${shown}: scientific only when very big/small or the sig figs need it`);
+ }}
 console.log(`${checks} checks: ${fails ? fails + ' FAILED' : 'all passed'}`); process.exit(fails ? 1 : 0);
