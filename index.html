@@ -1674,7 +1674,7 @@ function viewNotFound(msg) { setTitle('Not found'); app.replaceChildren(h('secti
    from (a chapter, search results, All games) and return to the same spot on it. Opened from a link with
    no earlier page here, it goes up one level instead (game → its chapter or All games, chapter → course → Courses). */
 const NAV_KEY = 'hub-nav';
-let navStack = [], navCur = {i: -1, s: 0};
+let navStack = [], navCur = {i: -1, s: 0}, navPending = -1;
 try { const saved = JSON.parse(sessionStorage.getItem(NAV_KEY) || 'null'); if (saved && Array.isArray(saved.stack)) { navStack = saved.stack; navCur = saved.cur || navCur; } } catch {}
 function navKey(hash) { const [path] = (hash.replace(/^#/, '') || '/').split('?'); const p = path.split('/').filter(Boolean); return ['daily', 'search', 'games'].includes(p[0]) ? p.slice(0, p[0] === 'daily' ? 2 : 1).join('/') : (hash.replace(/^#/, '') || '/'); }
 /* Each history entry is tagged with its place in navStack (navI) and, for repeat visits to the same page such as
@@ -1683,12 +1683,15 @@ function navNote() {
   const hash = location.hash || '#/', key = navKey(hash), st = history.state || {};
   const old = navStack[navCur.i];
   let i, s;
+  let detached = false;
   if (typeof st.navI === 'number' && navStack[st.navI]) { i = st.navI; s = st.navSub || 0; }   // browser back/forward, or our own back button
   else {
-    if (old && old.k === key) { i = navCur.i; s = navCur.s + 1; }
+    if (navPending >= 0 && navStack[navPending] && navStack[navPending].h === hash) { i = navPending; s = 0; detached = true; }   // our back button, done as a plain link
+    else if (old && old.k === key) { i = navCur.i; s = navCur.s + 1; }
     else { i = navCur.i + 1; s = 0; navStack.length = Math.max(0, i); }
-    try { history.replaceState({...st, navI: i, navSub: s}, '', location.href); } catch {}
+    try { history.replaceState({...st, navI: i, navSub: s, navDetached: detached}, '', location.href); } catch {}
   }
+  navPending = -1;
   if (old && i !== navCur.i) old.y = window.scrollY;   // remember where you were on the page you are leaving
   const back = i < navCur.i;
   navStack[i] = {...(navStack[i] || {y: 0}), h: hash, k: key};
@@ -1713,7 +1716,7 @@ function placeOf(hash) {   // {name, hash} for a hub address, used for the back 
     case 'exam': case 'check': return c ? `${c.name} ${p[0] === 'check' ? 'skill check plan' : 'exam plan'}` : 'Exam guides';
     case 'play': { const g = games.get(p[1]); return g ? shortTitle(g.title) : 'the game'; }
   }
-  return 'Courses';
+  return 'Page not found';
 }
 function parentOf(parts, params) {   // one level up, for pages opened straight from a link
   const cid = (parts[1] || '').toUpperCase();
@@ -1728,10 +1731,19 @@ function parentOf(parts, params) {   // one level up, for pages opened straight 
 }
 function backBar(parts, params) {
   if (document.body.classList.contains('embed')) return;   // single-card embeds (Daily 5 in Canvas) bring their own buttons
-  const prev = navCur.i > 0 ? navStack[navCur.i - 1] : null;
+  let prev = navCur.i > 0 ? navStack[navCur.i - 1] : null;
+  if (prev && placeOf(prev.h) === 'Page not found') prev = null;   // never send people back to a broken link
   const target = prev ? prev.h : parentOf(parts, params);
   const btn = h('a', {class: 'backbtn', href: target, onclick: e => {
-    if (prev && (history.state || {}).navI === navCur.i) { e.preventDefault(); history.go(-(navCur.s + 1)); }
+    if (!prev) return;   // no earlier page here: the link goes up one level
+    e.preventDefault();
+    const st = history.state || {}, here = location.hash, from = navCur.i;
+    const asLink = () => { navPending = from - 1; if (location.hash === target) route(); else location.hash = target; };
+    // A game in the frame can add its own history steps (tabs, modes), so on a game page "back" would undo those first.
+    // There, and after an earlier link-style back, go straight to the page instead of through the browser history.
+    if (parts[0] === 'play' || st.navI !== from || st.navDetached) return asLink();
+    history.go(-(navCur.s + 1));
+    setTimeout(() => { if (location.hash === here && navCur.i === from) asLink(); }, 450);   // history didn't move us (an embedded frame took the step)
   }}, h('span', {'aria-hidden': 'true'}, '←'), h('span', {}, 'Back to ' + placeOf(target)));
   let crumbs = app.querySelector('.crumbs');
   if (crumbs) { const spot = document.createComment(''); crumbs.replaceWith(spot); spot.replaceWith(h('div', {class: 'backbar'}, btn, crumbs)); }
