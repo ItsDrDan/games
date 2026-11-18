@@ -4,7 +4,7 @@
    Google Apps Script web app in ENDPOINT (see survey-apps-script.gs). No names, emails, or IDs are collected. */
 (function () {
   'use strict';
-  var ENDPOINT = ''; /* paste the Apps Script web app URL (ends in /exec) here after deploying survey-apps-script.gs */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxGpdivSTtTMbiXEzbsEacbzMjhLFknI-gTVyZd1lMzH5a5gXmn8wITKkT8-QuUMLX9zA/exec'; /* Semester Surveys Receiver (itsdrdantv) */
   var S = window.SURVEY;
   var LIVE = /\.github\.io$/.test(location.hostname) && ENDPOINT.indexOf('https://') === 0;
   var KEY = 'ddSurvey:' + S.id, DONE = KEY + ':sent';
