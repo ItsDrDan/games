@@ -15,16 +15,25 @@
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : String(s); return d.innerHTML; }
   function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 40); }
 
+  function pick(name, val, label, row) {
+    var face = FACES[label];
+    return '<label class="pick"><input type="radio" name="' + name + '" value="' + val + '" aria-label="' + esc(row + ': ' + label) + '">' +
+      (face ? '<b aria-hidden="true">' + face + '</b>' : '<b class="num" aria-hidden="true">' + esc(label) + '</b>') + '</label>';
+  }
   var LABELS = {}; /* id -> question text, in page order, for the sheet's header row */
   var ORDER = [];
   function note(id, label) { if (!LABELS[id]) { LABELS[id] = label; ORDER.push(id); } }
 
   /* ---------- build ---------- */
+  var EMO = [[/about you/i,'👋'],[/xiong|saturday/i,'🥽'],[/hardest/i,'🤯'],[/skill check/i,'🎯'],[/flipped/i,'🔄'],[/adventure/i,'🗺️'],
+    [/mini lab|worksheet/i,'🔥'],[/resources/i,'🧰'],[/study games/i,'🎮'],[/^etc/i,'🤝'],[/fcc/i,'📋'],[/looking ahead/i,'🚀'],[/overall/i,'⭐'],[/own words/i,'💬']];
+  function emo(t) { for (var i = 0; i < EMO.length; i++) if (EMO[i][0].test(t)) return EMO[i][1]; return '🧪'; }
+  var FACES = { 'Strongly disagree': '😖', 'Disagree': '😕', 'Neutral': '😐', 'Agree': '🙂', 'Strongly agree': '🤩', 'N/A': '🤷' };
   var html = '', num = 0;
   S.sections.forEach(function (sec) {
     if (!sec.showIf) num++;
     var show = sec.showIf ? ' data-show-q="' + sec.showIf.q + '" data-show-v="' + esc(sec.showIf.v) + '" hidden' : '';
-    html += '<section class="card"' + show + '><h2><span class="n">' + (sec.badge || num) + '</span>' + esc(sec.title) + '</h2>';
+    html += '<section class="card"' + show + '><h2><span class="n">' + (sec.badge || num) + '</span>' + esc(sec.title) + '<span class="emo" aria-hidden="true">' + emo(sec.title) + '</span></h2>';
     if (sec.intro) html += '<p class="intro">' + sec.intro + '</p>';
     sec.items.forEach(function (q) {
       if (q.type === 'info') { html += '<div class="info">' + q.html + '</div>'; return; }
@@ -56,8 +65,8 @@
           var rn = name + '_' + (ri + 1);
           note(rn, (q.prefix ? q.prefix + ' ' : '') + r);
           html += '<tr><td>' + esc(r) + '</td>';
-          cols.forEach(function (c, ci) { html += '<td data-l="' + esc(c) + '"><input type="radio" name="' + rn + '" value="' + (ci + 1) + '" aria-label="' + esc(r + ': ' + c) + '"></td>'; });
-          if (na) html += '<td data-l="N/A"><input type="radio" name="' + rn + '" value="N/A" aria-label="' + esc(r + ': not applicable') + '"></td>';
+          cols.forEach(function (c, ci) { html += '<td data-l="' + esc(c) + '">' + pick(rn, ci + 1, c, r) + '</td>'; });
+          if (na) html += '<td data-l="N/A">' + pick(rn, 'N/A', 'N/A', r) + '</td>';
           html += '</tr>';
         });
         html += '</tbody></table>';
@@ -69,9 +78,9 @@
   });
   html += '<section class="card send" id="sendcard"><h2><span class="n">✓</span>Send it in</h2>' +
     '<p class="intro">Skip anything you don’t want to answer. Your answers save on this device as you go, so you can come back later and finish.</p>' +
-    '<button class="btn" id="go" type="button">Send my anonymous survey →</button>' +
+    '<p class="cheer" id="cheer"></p><button class="btn" id="go" type="button">Send my anonymous survey 🚀</button>' +
     '<p class="err" id="err" hidden></p><p class="saved" id="saved"></p></section>' +
-    '<section class="card done" id="done" hidden><div class="big">💜</div><h2 style="justify-content:center">Thank you!</h2>' + S.thanks +
+    '<section class="card done" id="done" hidden><div class="big">🎉</div><h2 style="justify-content:center">Thank you!</h2>' + S.thanks +
     '<p class="saved" id="previewnote" hidden>Preview copy: answers are only sent from the live page.</p></section>';
   root.innerHTML = html;
 
@@ -83,7 +92,9 @@
   function conds() {
     [].forEach.call(form.querySelectorAll('section[data-show-q]'), function (sec) {
       var f = form.querySelector('input[name="' + sec.dataset.showQ + '"]:checked');
-      sec.hidden = !(f && f.value === sec.dataset.showV);
+      var show = !!(f && f.value === sec.dataset.showV);
+      if (show && sec.hidden) { sec.classList.remove('pop'); void sec.offsetWidth; sec.classList.add('pop'); }
+      sec.hidden = !show;
     });
   }
   var qEls = form.querySelectorAll('.q');
@@ -108,6 +119,8 @@
     var n = vis.filter(answered).length;
     document.getElementById('pct').style.width = Math.round(100 * n / vis.length) + '%';
     document.getElementById('count').textContent = n + ' of ' + vis.length;
+    var f = n / vis.length, cheer = document.getElementById('cheer');
+    if (cheer) cheer.textContent = f >= 1 ? 'You answered everything! You’re a legend 🏆' : f >= .75 ? 'Almost there, you’ve got this! 💪' : f >= .5 ? 'Halfway done, nice work! 🌟' : f >= .25 ? 'Great start! Keep going 😄' : '';
   }
   var t;
   function save() {
@@ -130,6 +143,23 @@
   form.addEventListener('change', function () { update(); save(); });
 
   /* ---------- send ---------- */
+  function confetti() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bits = ['🎉', '✨', '🧪', '⚛️', '💜', '🎊', '⭐', '🔬'];
+    for (var i = 0; i < 40; i++) {
+      var e = document.createElement('span'); e.className = 'confetti'; e.textContent = bits[i % bits.length];
+      e.style.left = Math.random() * 100 + 'vw'; e.style.animationDuration = (2.2 + Math.random() * 2) + 's'; e.style.animationDelay = Math.random() * .6 + 's';
+      document.body.appendChild(e); setTimeout(function (x) { x.remove(); }.bind(null, e), 5000);
+    }
+  }
+  (function floaties() {
+    var head = document.querySelector('.head'); if (!head) return;
+    var box = document.createElement('div'); box.className = 'floaties'; box.setAttribute('aria-hidden', 'true');
+    var bits = ['🧪', '⚛️', '🔬', '💡', '🧬', '✨', '⚗️', '📚'];
+    var spots = [[4, 18], [14, 70], [86, 16], [93, 62], [72, 80], [60, 8], [30, 88], [78, 42]];
+    spots.forEach(function (s, i) { var e = document.createElement('span'); e.textContent = bits[i]; e.style.left = s[0] + '%'; e.style.top = s[1] + '%'; e.style.animationDelay = (i * .7) + 's'; box.appendChild(e); });
+    head.insertBefore(box, head.firstChild);
+  })();
   function showDone() {
     [].forEach.call(form.querySelectorAll('section'), function (s) { s.hidden = s.id !== 'done'; });
     document.getElementById('done').hidden = false;
@@ -145,13 +175,13 @@
     var go = this; go.disabled = true; go.textContent = 'Sending…';
     function finish() {
       try { localStorage.removeItem(KEY); if (LIVE) localStorage.setItem(DONE, '1'); } catch (e) {}
-      showDone();
+      showDone(); confetti();
     }
     if (!LIVE) { console.log('[survey preview] not sent:', payload); return setTimeout(finish, 400); }
     fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
       .then(finish)
       .catch(function () {
-        go.disabled = false; go.textContent = 'Send my anonymous survey →';
+        go.disabled = false; go.textContent = 'Send my anonymous survey 🚀';
         err.textContent = 'That didn’t send. Your answers are still saved here. Check your internet and tap Send again.'; err.hidden = false;
       });
   });
