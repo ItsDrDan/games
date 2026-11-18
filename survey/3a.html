@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>CHEM 3A End of Semester Survey · Fall 2026 · Dr. Dan</title>
+<link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+<link rel="stylesheet" href="../brand/itsdrdan.css">
+<link rel="stylesheet" href="survey.css">
+<script>window.ddFeedbackLoaded = true; /* no game-rating button on surveys */</script>
+<script src="../brand/embed.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+  <span class="brand">Dr. Dan<small>CHEM 3A</small></span>
+  <div class="prog" aria-live="polite"><div class="bar"><i id="pct"></i></div><span id="count"></span></div>
+</div></header>
+<div class="head"><div class="wrap">
+  <div class="eyebrow">Fall 2026 · End of semester survey</div>
+  <h1>Congratulations on almost finishing CHEM 3A!</h1>
+  <p>You are almost at the finish line! This survey helps me better serve future CHEM 3A students, and maybe start a wave of success in other sections and courses too. Answer as much as you can: the more detail, the better.</p>
+  <div class="chips"><span class="chip">🔒 Anonymous: no name or email</span><span class="chip">⏱ 5 to 30 minutes</span><span class="chip">💾 Saves as you go</span><span class="chip">📊 Does not affect your grade</span></div>
+</div></div>
+<main class="wrap" id="survey"></main>
+<p class="foot">Made for Fresno City College chemistry students · ItsDrDan</p>
+<script src="common.js"></script>
+<script>
+var C = window.SURVEY_COMMON, AG = C.agree;
+window.SURVEY = {
+  id: 'chem3a-fa26', course: 'CHEM 3A', term: 'Fall 2026', color: '#23776c', colorBg: '#e4f3ec',
+  thanks: C.thanks,
+  sections: [
+    { title: 'About you', intro: 'Some basic information (remember, this is anonymous).', items: [
+      { type: 'single', id: 'section', q: 'Which class were you in?', options: ['Monday/Wednesday lecture (Tuesday or Thursday lab)', 'Friday lecture (Saturday lab)', 'Prefer not to say'] },
+      { type: 'single', id: 'first', q: 'Is this your first time taking chemistry?', options: ['Yes', 'No', 'Yes (but a very long time ago)', 'Yes (2nd time taking 3A)', 'Yes (3+ times taking 3A)'] },
+      { type: 'single', id: 'grade', q: 'What is your approximate grade in this class?', options: ['A', 'B', 'C', 'D', 'F'] },
+      { type: 'short', id: 'major', q: 'What are you planning to major in?', placeholder: 'e.g. Nursing, Dental Hygiene, Radiologic Technology' },
+      { type: 'multi', id: 'more', q: 'Do you have to take any more chemistry classes? (check all that apply)', options: ['CHEM 1A', 'CHEM 1B', 'CHEM 3B', 'CHEM 28 (Organic)', 'Nope, just this one'] },
+      { type: 'text', id: 'why', q: 'Why did you take CHEM 3A?', hint: 'If it’s a prerequisite, say for which class or program.' },
+      { type: 'multi', id: 'chose', q: 'What influenced your decision to sign up for CHEM 3A with Dr. Dan? (check all that apply)', options: ['Recommended by another student', 'Time of the class', 'Only section open', 'Rate My Professor', 'Didn’t matter who I took it with', 'Hybrid format', 'Saw the YouTube channel', 'Recommended by another professor or counselor', 'Other'], other: 'Other reason (optional)' }
+    ]},
+    { title: 'The hardest topics', items: [
+      { type: 'multi', id: 'hard', q: 'Which concepts did you NOT understand, or wish we had more time for? (check all that apply)', hint: 'I know there is way too much material for one semester, but if lots of you mark the same topic, I can give it more time or better materials.',
+        options: ['Measurements and significant figures', 'Dimensional analysis', 'Atoms, electron configuration, orbitals', 'Understanding the periodic table', 'Ionic and covalent naming', 'Naming and charges of polyatomic ions', 'The mole', 'Lewis structures', 'VSEPR 3D structures', 'Polarity and intermolecular forces', 'Heat, energy, and phase changes', 'Chemical reactions', 'Balancing chemical reactions', 'Solubility', 'Gases and gas laws', 'Molarity (concentration)', 'Stoichiometry', 'Acids and bases', 'pH scale', 'Equilibrium and Le Chatelier’s principle', 'Nuclear chemistry', 'Lab skills'] },
+      { type: 'text', id: 'hard_help', q: 'For the topics you checked, what would have helped most?', hint: 'More examples in class, a video, a study game, more practice problems, a different explanation…' }
+    ]},
+    { title: 'Skill Checks + 2 exams + a final', items: [
+      { type: 'info', html: '<h3>This semester was an experiment, and it worked!</h3><p>For the first time, CHEM 3A had weekly <b>Skill Checks</b> with only <b>2 exams and a final</b>, instead of exams only. Compared with my past exams-only semesters:</p>' +
+        '<div class="stat"><div><b>Exams only</b><span>past semesters</span></div><div class="arrow">➜</div><div><b>+10–15%</b><span>higher overall grades with Skill Checks</span></div></div><p>Now I want to know what <b>you</b> thought of it.</p>' },
+      { type: 'scale', id: 'sc', q: 'How much do you agree?', labels: AG, rows: [
+        'Weekly Skill Checks helped me keep up instead of cramming.',
+        'Skill Checks made me less stressed about the exams.',
+        'The study guides in each Skill Check assignment helped me prepare.',
+        'The Mastery Skill Checks were a fair second chance.',
+        'Having only 2 exams and a final (with Skill Checks) worked well for me.',
+        'The exam retake option helped me.'] },
+      { type: 'single', id: 'sc_pick', q: 'If you took CHEM 3A again, which setup would you want?', options: ['Weekly Skill Checks + 2 exams + a final (this semester)', 'Skill Checks every other week + 2 exams + a final', 'No Skill Checks, more exams (like 4 exams + a final)', 'Not sure'] },
+      { type: 'text', id: 'sc_how', q: 'How did you usually prepare for a Skill Check, and what would make them better?' }
+    ]},
+    { title: 'An idea for next time: flipped class', items: [
+      { type: 'info', html: '<h3>What is a “flipped” class?</h3><p>You would watch the lecture videos <b>before</b> class (short videos, with questions built in). Then class time is <b>all about doing chemistry together</b>: working problems in groups, team activities, whiteboard practice, and games, with me walking around to help.</p><p>I’m seriously considering this for CHEM 3A, and your opinion matters a lot.</p>' },
+      { type: 'single', id: 'flip', q: 'How would you feel about a flipped CHEM 3A?', options: ['I would love it', 'I would like it', 'Not sure', 'I would rather keep regular lectures', 'I would strongly prefer regular lectures'] },
+      { type: 'single', id: 'flip_len', q: 'What is the longest pre-class video time you would realistically watch before each class?', options: ['10 minutes or less', '15–20 minutes', '30 minutes', '45 minutes or more', 'Honestly, I probably wouldn’t watch them'] },
+      { type: 'single', id: 'flip_acct', q: 'What would best make sure you actually watch the videos?', options: ['Questions built into the videos (WeVideo)', 'A short quiz at the start of class', 'Turning in notes on the video', 'Nothing, I would watch them anyway', 'Other'], other: 'Other idea (optional)' },
+      { type: 'multi', id: 'flip_do', q: 'Which in-class activities would help you most? (check all that apply)', options: ['Group problem sets', 'Whiteboard practice in teams', 'Team review games (like the Review Showdown or Kahoot)', 'Hands-on demos and model kits', 'Study games in class', 'Practice exam problems, then going over them', 'Worksheet time with Dr. Dan walking around', 'Short mini-experiments'] },
+      { type: 'text', id: 'flip_worry', q: 'Any worries about a flipped class, or ideas to make it work?' }
+    ]},
+    { title: 'Resources and support', items: [
+      { type: 'scale', id: 'res', q: 'Rate each resource from 1 (not helpful) to 5 (amazing). Pick N/A if you never used it.', prefix: 'Resource:', labels: ['1', '2', '3', '4', '5'], rows: [
+        'GRASP', 'Dr. Dan’s YouTube videos', 'ETC with Zane', 'Drop-in tutoring', 'Office hours / emails / talking to Dr. Dan', 'Messaging Dr. Dan on Discord',
+        'Study games (itsdrdan.github.io)', 'Mini-lecture videos (WeVideo)', 'Skill Check study pages and Daily 5', 'Practice quizzes in Canvas', 'The free online textbook (LibreTexts)'] },
+      { type: 'text', id: 'res_best', q: 'Which resource helped you the most, and why?' }
+    ]},
+    C.etc('Zane', 'CHEM 3A'),
+    C.fcc,
+    C.overall('CHEM 3A'),
+    C.words('CHEM 3A')
+  ]
+};
+</script>
+<script src="survey.js"></script>
+</body>
+</html>

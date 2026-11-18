@@ -1,0 +1,83 @@
+/* ItsDrDan end-of-semester surveys — shared look (uses the brand tokens from games/brand/itsdrdan.css) */
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg,#f5f6fb);color:var(--ink,#1f2a44);font:600 16px/1.6 var(--font,Nunito,system-ui,sans-serif);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(circle at 8% 10%,#ffe3ec 0,transparent 22%),radial-gradient(circle at 94% 6%,#e3f0ff 0,transparent 24%),
+  radial-gradient(circle at 88% 88%,#e4f8ee 0,transparent 26%),radial-gradient(circle at 10% 90%,#fff1c9 0,transparent 22%)}
+a{color:var(--c)}
+.wrap{width:min(820px,calc(100% - 28px));margin:auto}
+.top{position:sticky;top:0;z-index:20;background:#fffffff0;backdrop-filter:blur(8px);border-bottom:1px solid var(--line,#e3e6f0)}
+.nav{min-height:58px;display:flex;align-items:center;gap:12px}
+.brand{font-family:var(--font-display,Fredoka,sans-serif);font-weight:600;font-size:1.08rem;text-decoration:none;color:inherit}
+.brand small{color:var(--muted,#4f5a74);font-family:var(--font);font-weight:700;font-size:.85rem;margin-left:6px}
+.prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--muted)}
+.bar{width:120px;height:9px;border-radius:9px;background:var(--line,#e3e6f0);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--c);border-radius:9px;transition:width .3s}
+.head{background:linear-gradient(120deg,var(--cb),#fff 78%);border-bottom:1px solid var(--line)}
+.head .wrap{padding:28px 0 22px;display:grid;gap:10px}
+.eyebrow{font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-size:.76rem}
+h1{font-family:var(--font-display);font-size:clamp(1.8rem,4.4vw,2.5rem);line-height:1.12;margin:0;font-weight:600}
+.head p{margin:0;max-width:66ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.88rem;font-weight:800}
+main{padding:22px 0 50px;display:grid;gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px 20px 22px;box-shadow:var(--shadow,0 6px 20px #1f2a440a);display:grid;gap:18px}
+.card>h2{font-family:var(--font-display);font-weight:600;font-size:1.3rem;margin:0;display:flex;align-items:center;gap:10px}
+.card>h2 .n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--c);color:#fff;font-size:1rem;flex:none}
+.intro{margin:-8px 0 0;color:var(--muted)}
+.q{display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:16px}
+.card>h2+.q,.card>.intro+.q,.card>.info+.q{border-top:0;padding-top:0}
+.q>.qt{font-weight:800}
+.q>.qt small{display:block;font-weight:650;color:var(--muted);font-size:.9rem}
+.opts{display:grid;gap:7px}
+.opts.cols{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:2px solid var(--line);border-radius:14px;cursor:pointer;font-weight:700;background:#fdfdff}
+.opt:hover{border-color:var(--c)}
+.opt input{margin:4px 0 0;accent-color:var(--c);width:18px;height:18px;flex:none}
+.opt:has(input:checked){border-color:var(--c);background:var(--cb)}
+textarea,input[type=text]{width:100%;font:inherit;font-weight:650;color:var(--ink);background:#fdfdff;border:2px solid var(--line2,#d5d9e8);border-radius:14px;padding:11px 14px}
+textarea{min-height:96px;resize:vertical}
+textarea:focus,input[type=text]:focus{outline:none;border-color:var(--c);background:#fff}
+.scale{width:100%;border-collapse:separate;border-spacing:0 6px}
+.scale th{font-size:.78rem;color:var(--muted);font-weight:800;text-align:center;padding:0 2px;line-height:1.2}
+.scale td{background:#fbfbfe;padding:8px 4px;text-align:center}
+.scale td:first-child{text-align:left;padding:10px 12px;border-radius:12px 0 0 12px;font-weight:700}
+.scale td:last-child{border-radius:0 12px 12px 0}
+.scale input{width:20px;height:20px;accent-color:var(--c);cursor:pointer}
+.scale tr:has(input:checked) td{background:var(--cb)}
+.legend{font-size:.85rem;color:var(--muted);margin:0}
+.info{background:var(--cb);border:1.5px solid var(--cl,var(--line));border-radius:16px;padding:14px 16px;display:grid;gap:8px}
+.info p{margin:0}
+.info h3{margin:0;font-family:var(--font-display);font-weight:600;font-size:1.1rem}
+.stat{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;text-align:center;margin:4px 0}
+.stat div{background:#fff;border-radius:14px;padding:10px 8px;border:1.5px solid var(--line)}
+.stat b{display:block;font-family:var(--font-display);font-size:1.5rem;color:var(--c);line-height:1.2}
+.stat span{font-size:.85rem;color:var(--muted)}
+.stat .arrow{font-size:1.6rem;color:var(--c);background:none;border:0;padding:0}
+table.wt{border-collapse:collapse;width:100%;background:#fff;border-radius:12px;overflow:hidden;font-size:.92rem}
+table.wt th,table.wt td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left}
+table.wt th{background:#f6f7fb;font-weight:800}
+table.wt td.num,table.wt th.num{text-align:center}
+table.wt tr.up td.num:last-child{color:var(--mint-ink,#23704f);font-weight:900}
+table.wt tr.down td.num:last-child{color:var(--rose-ink,#9c3346);font-weight:900}
+.send{display:grid;gap:10px;justify-items:start}
+.btn{font:inherit;font-family:var(--font-display);font-weight:600;font-size:1.1rem;border:0;border-radius:14px;padding:13px 26px;background:var(--c);color:#fff;cursor:pointer;box-shadow:0 4px 0 #0002}
+.btn:disabled{opacity:.6;cursor:wait}
+.err{color:var(--rose-ink,#9c3346);font-weight:800;margin:0}
+.saved{font-size:.85rem;color:var(--muted);margin:0}
+.done{text-align:center;justify-items:center}
+.done .big{font-size:3rem;line-height:1}
+.done p{max-width:60ch;margin:0 auto}
+.foot{text-align:center;color:var(--muted);font-size:.85rem;padding:0 0 30px}
+@media(max-width:620px){
+  .prog .bar{width:70px}
+  .scale thead{display:none}
+  .scale,.scale tbody,.scale tr,.scale td{display:block;width:100%}
+  .scale tr{background:#fbfbfe;border-radius:12px;padding:8px 10px;margin-bottom:8px}
+  .scale td{background:none!important;display:inline-flex;flex-direction:column;align-items:center;width:auto;padding:4px 7px;font-size:.75rem;color:var(--muted)}
+  .scale td:first-child{display:block;width:100%;padding:0 0 4px;font-size:.95rem;color:var(--ink)}
+  .scale td[data-l]::after{content:attr(data-l)}
+  .stat{grid-template-columns:1fr;}
+  .stat .arrow{transform:rotate(90deg)}
+}

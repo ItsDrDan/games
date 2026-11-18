@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>CHEM 1A End of Semester Survey · Fall 2026 · Dr. Dan</title>
+<link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+<link rel="stylesheet" href="../brand/itsdrdan.css">
+<link rel="stylesheet" href="survey.css">
+<script>window.ddFeedbackLoaded = true; /* no game-rating button on surveys */</script>
+<script src="../brand/embed.js" defer></script>
+</head>
+<body>
+<header class="top"><div class="wrap nav">
+  <span class="brand">Dr. Dan<small>CHEM 1A</small></span>
+  <div class="prog" aria-live="polite"><div class="bar"><i id="pct"></i></div><span id="count"></span></div>
+</div></header>
+<div class="head"><div class="wrap">
+  <div class="eyebrow">Fall 2026 · End of semester survey</div>
+  <h1>Congratulations on almost finishing CHEM 1A!</h1>
+  <p>You are almost at the finish line! This survey helps me better serve future CHEM 1A students. I’m thinking about some real changes to the course, and your answers will help decide them. Answer as much as you can: the more detail, the better.</p>
+  <div class="chips"><span class="chip">🔒 Anonymous: no name or email</span><span class="chip">⏱ 5 to 30 minutes</span><span class="chip">💾 Saves as you go</span><span class="chip">📊 Does not affect your grade</span></div>
+</div></div>
+<main class="wrap" id="survey"></main>
+<p class="foot">Made for Fresno City College chemistry students · ItsDrDan</p>
+<script src="common.js"></script>
+<script>
+var C = window.SURVEY_COMMON, AG = C.agree;
+window.SURVEY = {
+  id: 'chem1a-fa26', course: 'CHEM 1A', term: 'Fall 2026', color: '#4757b3', colorBg: '#e8ebfb',
+  thanks: C.thanks,
+  sections: [
+    { title: 'About you', intro: 'Some basic information (remember, this is anonymous).', items: [
+      { type: 'single', id: 'prior', q: 'Did you take CHEM 3A before CHEM 1A?', options: ['Yes', 'Yes (but a very long time ago)', 'No (first time ever seeing chemistry)', 'No (only high school chemistry)', 'No (only AP chemistry)', 'No (only an honors or special STEM program)'] },
+      { type: 'single', id: 'grade', q: 'What is your approximate grade in this class?', options: ['A', 'B', 'C', 'D', 'F'] },
+      { type: 'short', id: 'major', q: 'What are you planning to major in?', placeholder: 'e.g. Biology, Chemistry, Engineering, Pre-Med' },
+      { type: 'multi', id: 'more', q: 'Do you have to take any more chemistry classes? (check all that apply)', options: ['CHEM 1B', 'CHEM 28 (Organic)', 'Biochemistry', 'Nope, just this one'] },
+      { type: 'text', id: 'why', q: 'Why did you take CHEM 1A?', hint: 'If it’s a prerequisite, say for which class or program.' },
+      { type: 'multi', id: 'chose', q: 'What influenced your decision to sign up for CHEM 1A with Dr. Dan? (check all that apply)', options: ['Recommended by another student', 'Time of the class', 'Only section open', 'Rate My Professor', 'Didn’t matter who I took it with', 'Familiar with the YouTube channel', 'Had Dr. Dan for CHEM 3A', 'Recommended by another professor or counselor', 'Other'], other: 'Other reason (optional)' }
+    ]},
+    { title: 'The hardest topics', items: [
+      { type: 'multi', id: 'hard', q: 'Which concepts did you NOT understand, or wish we had more time for? (check all that apply)', hint: 'I know there is way too much material for one semester, but if lots of you mark the same topic, I can give it more time or better materials.',
+        options: ['Measurements and significant figures', 'Dimensional analysis', 'Atoms, elements, and isotopes', 'Molecules, compounds, and nomenclature', 'The mole and mole conversions', 'Predicting chemical reactions', 'Balancing chemical reactions', 'Stoichiometry and limiting reactants', 'Solution chemistry and molarity', 'Oxidation-reduction (redox)', 'Gases and gas laws', 'Thermochemistry and Hess’s law', 'Light, quantum numbers, and electron configurations', 'Periodic trends', 'Lewis structures, formal charge, and resonance', 'VSEPR and polarity', 'Hybridization and MO theory', 'Intermolecular forces and phase changes', 'Solids and unit cells', 'Colligative properties', 'Lab skills and lab reports'] },
+      { type: 'text', id: 'hard_help', q: 'For the topics you checked, what would have helped most?', hint: 'More examples in class, a video, a study game, more practice problems, a different explanation…' }
+    ]},
+    { title: 'Weekly Skill Checks', items: [
+      { type: 'info', html: '<h3>Did weekly Skill Checks help?</h3><p>CHEM 1A had a <b>Skill Check every week</b> this semester. Compared with my past exams-only CHEM 1A semesters:</p>' +
+        '<div class="stat"><div><b>Exams only</b><span>past semesters</span></div><div class="arrow">➜</div><div><b>+5–10%</b><span>higher overall scores with weekly Skill Checks</span></div></div><p>Now I want to know what <b>you</b> thought of them.</p>' },
+      { type: 'scale', id: 'sc', q: 'How much do you agree?', labels: AG, rows: [
+        'Weekly Skill Checks helped me keep up instead of cramming.',
+        'Skill Checks made me less stressed about the exams.',
+        'Skill Checks showed me what to study before each exam.',
+        'Being able to replace a Skill Check score (Mastery Skill Check) was fair and helpful.',
+        'The exam retake option helped me.'] },
+      { type: 'single', id: 'sc_pick', q: 'If you took CHEM 1A again, which would you want?', options: ['Weekly Skill Checks + exams (this semester)', 'Skill Checks every other week + exams', 'No Skill Checks, just exams', 'Only Skill Checks, no big exams', 'Not sure'] },
+      { type: 'text', id: 'sc_how', q: 'How did you usually prepare for a Skill Check, and what would make them better?' }
+    ]},
+    { title: 'An idea: choose your own adventure', items: [
+      { type: 'info', html: '<h3>How your grade is split up</h3><p>I’m thinking about making <b>exams and Skill Checks</b> a bigger part of the grade and <b>homework</b> a smaller part. That way you could choose how you prepare (homework, study games, textbook problems, videos, practice exams) instead of being graded on one required path.</p>' +
+        '<table class="wt"><thead><tr><th>Category</th><th class="num">Fall 2026</th><th class="num">Idea (example)</th></tr></thead><tbody>' +
+        '<tr><td>Exams and Final</td><td class="num">45%</td><td class="num">50%</td></tr>' +
+        '<tr class="up"><td>Skill Checks</td><td class="num">10%</td><td class="num">15%</td></tr>' +
+        '<tr class="down"><td>Homework, Worksheets, Mini-Lectures, and Note Submissions</td><td class="num">20%</td><td class="num">10%</td></tr>' +
+        '<tr><td>Lab Assignments</td><td class="num">20%</td><td class="num">20%</td></tr>' +
+        '<tr><td>Lab Practical</td><td class="num">5%</td><td class="num">5%</td></tr></tbody></table>' +
+        '<p style="font-size:.88rem">The example column is just one possibility, not a final decision.</p>' },
+      { type: 'scale', id: 'wt', q: 'How much do you agree?', labels: AG, rows: [
+        'I would rather have more of my grade come from exams and Skill Checks, and less from homework.',
+        'If homework counted less, I would still practice to prepare for exams.',
+        'I like being able to choose how I study instead of having required homework.',
+        'The MyOpenMath homework helped me learn the material.'] },
+      { type: 'single', id: 'wt_pick', q: 'Which grading setup would you pick?', options: ['Keep it like Fall 2026', 'The example idea (more exams and Skill Checks, less homework)', 'Even less homework (homework mostly optional practice)', 'More homework weight, not less', 'Not sure'] },
+      { type: 'text', id: 'wt_why', q: 'Why? Anything I should think about before changing the grading?' }
+    ]},
+    { title: 'An idea: mini lab activities instead of worksheet time', items: [
+      { type: 'info', html: '<h3>Worksheet time vs. hands-on activities</h3><p>I’m thinking about replacing worksheet time with more <b>short, hands-on lab activities</b>, like the <b>fire salt (flame test) activity</b> we did this semester. Practice problems would move to homework, study games, and Skill Check prep.</p>' },
+      { type: 'scale', id: 'act', q: 'How much do you agree?', labels: AG, rows: [
+        'The fire salt (flame test) activity helped me understand light and electrons.',
+        'Worksheet time in class helped me learn the material.',
+        'I would prefer more short hands-on activities over worksheet time.',
+        'Hands-on activities make chemistry more interesting to me.'] },
+      { type: 'single', id: 'act_pick', q: 'What would you pick for that class time?', options: ['Keep worksheet time', 'A mix: a short activity, then a shorter worksheet', 'Replace worksheet time with mini lab activities', 'Not sure'] },
+      { type: 'multi', id: 'act_ideas', q: 'Which mini activities sound most useful or fun? (check all that apply)', options: ['Flame tests and emission spectra', 'Molecular model kits for VSEPR shapes', 'Gas law demos', 'Coffee-cup calorimetry', 'Color-changing redox or precipitation reactions', 'Building crystal and unit cell models', 'Ice cream and freezing point (colligative properties)', 'Quick titration or density challenges', 'Team chemistry games and puzzles'] },
+      { type: 'text', id: 'act_more', q: 'Any other activity ideas, or thoughts on worksheet time?' }
+    ]},
+    { title: 'Resources and support', items: [
+      { type: 'scale', id: 'res', q: 'Rate each resource from 1 (not helpful) to 5 (amazing). Pick N/A if you never used it.', prefix: 'Resource:', labels: ['1', '2', '3', '4', '5'], rows: [
+        'GRASP', 'Dr. Dan’s YouTube videos', 'ETC with Tany', 'Homework/worksheet hours in lab', 'Drop-in tutoring', 'Office hours / emails / talking to Dr. Dan', 'Messaging Dr. Dan on Discord',
+        'Study games (itsdrdan.github.io)', 'Mini-lecture videos (WeVideo)', 'MyOpenMath homework', 'Practice exams', 'The free OpenStax textbook'] },
+      { type: 'text', id: 'res_best', q: 'Which resource helped you the most, and why?' }
+    ]},
+    C.etc('Tany', 'CHEM 1A'),
+    C.fcc,
+    C.overall('CHEM 1A', ['Do you feel prepared for CHEM 1B?']),
+    C.words('CHEM 1A')
+  ]
+};
+</script>
+<script src="survey.js"></script>
+</body>
+</html>
