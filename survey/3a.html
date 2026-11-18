@@ -32,13 +32,27 @@ window.SURVEY = {
   thanks: C.thanks,
   sections: [
     { title: 'About you', intro: 'Some basic information (remember, this is anonymous).', items: [
-      { type: 'single', id: 'section', q: 'Which class were you in?', options: ['Monday/Wednesday lecture (Tuesday or Thursday lab)', 'Friday lecture (Saturday lab)', 'Prefer not to say'] },
+      { type: 'single', id: 'section', q: 'Which class were you in?', options: ['Monday/Wednesday lecture (Tuesday or Thursday lab)', 'Friday lecture (Saturday lab with Professor Xiong)', 'Prefer not to say'] },
       { type: 'single', id: 'first', q: 'Is this your first time taking chemistry?', options: ['Yes', 'No', 'Yes (but a very long time ago)', 'Yes (2nd time taking 3A)', 'Yes (3+ times taking 3A)'] },
       { type: 'single', id: 'grade', q: 'What is your approximate grade in this class?', options: ['A', 'B', 'C', 'D', 'F'] },
       { type: 'short', id: 'major', q: 'What are you planning to major in?', placeholder: 'e.g. Nursing, Dental Hygiene, Radiologic Technology' },
       { type: 'multi', id: 'more', q: 'Do you have to take any more chemistry classes? (check all that apply)', options: ['CHEM 1A', 'CHEM 1B', 'CHEM 3B', 'CHEM 28 (Organic)', 'Nope, just this one'] },
       { type: 'text', id: 'why', q: 'Why did you take CHEM 3A?', hint: 'If it’s a prerequisite, say for which class or program.' },
       { type: 'multi', id: 'chose', q: 'What influenced your decision to sign up for CHEM 3A with Dr. Dan? (check all that apply)', options: ['Recommended by another student', 'Time of the class', 'Only section open', 'Rate My Professor', 'Didn’t matter who I took it with', 'Hybrid format', 'Saw the YouTube channel', 'Recommended by another professor or counselor', 'Other'], other: 'Other reason (optional)' }
+    ]},
+    { title: 'Your Saturday lab with Professor Xiong', badge: '★', showIf: { q: 'section', v: 'Friday lecture (Saturday lab with Professor Xiong)' },
+      intro: 'Your lab section was taught by Professor Xiong and me together. Your feedback on Professor Xiong and the Saturday lab may be shared with her (never with your name, since this survey doesn’t collect it).', items: [
+      { type: 'scale', id: 'xiong', q: 'How much do you agree?', labels: AG, rows: [
+        'Professor Xiong explained the lab procedures clearly.',
+        'Professor Xiong was approachable and easy to ask questions.',
+        'Professor Xiong helped me when I got stuck during lab.',
+        'The Saturday labs were organized and ran smoothly.',
+        'I felt safe and knew what to do in lab.',
+        'The Saturday labs helped me understand what we learned in lecture.',
+        'Having two instructors in the lab section was helpful.'] },
+      { type: 'text', id: 'xiong_good', q: 'What did Professor Xiong do really well?' },
+      { type: 'text', id: 'xiong_better', q: 'What could Professor Xiong or the Saturday lab do better?' },
+      { type: 'text', id: 'satlab', q: 'Any other thoughts on the Saturday lab (timing, length, specific experiments)?' }
     ]},
     { title: 'The hardest topics', items: [
       { type: 'multi', id: 'hard', q: 'Which concepts did you NOT understand, or wish we had more time for? (check all that apply)', hint: 'I know there is way too much material for one semester, but if lots of you mark the same topic, I can give it more time or better materials.',
@@ -72,9 +86,11 @@ window.SURVEY = {
         'Study games (itsdrdan.github.io)', 'Mini-lecture videos (WeVideo)', 'Skill Check study pages and Daily 5', 'Practice quizzes in Canvas', 'The free online textbook (LibreTexts)'] },
       { type: 'text', id: 'res_best', q: 'Which resource helped you the most, and why?' }
     ]},
+    C.games('CHEM 3A', ["Significant Figures", "Prefix Power-Up (SI Prefixes)", "Algebra for Chemistry", "Symbol Safari (Element Symbols)", "Polyatomic Posse (Polyatomic Ions)", "Name That Compound! (Naming & Formulas)", "Quantum Quest", "Lewis Structure Studio", "Reaction Rumble (Chemical Reactions)", "LEO Goes GER! (Redox)", "The Mole", "Stoichiometry", "Under Pressure (Gas Laws)", "Thermochemistry", "Sticky Molecules (Intermolecular Forces)", "Final Exam Review", "Lab Practical (Station Rotation)"]),
     C.etc('Zane', 'CHEM 3A'),
     C.fcc,
     C.overall('CHEM 3A'),
+    C.ahead,
     C.words('CHEM 3A')
   ]
 };

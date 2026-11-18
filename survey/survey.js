@@ -20,9 +20,11 @@
   function note(id, label) { if (!LABELS[id]) { LABELS[id] = label; ORDER.push(id); } }
 
   /* ---------- build ---------- */
-  var html = '';
-  S.sections.forEach(function (sec, si) {
-    html += '<section class="card"><h2><span class="n">' + (si + 1) + '</span>' + esc(sec.title) + '</h2>';
+  var html = '', num = 0;
+  S.sections.forEach(function (sec) {
+    if (!sec.showIf) num++;
+    var show = sec.showIf ? ' data-show-q="' + sec.showIf.q + '" data-show-v="' + esc(sec.showIf.v) + '" hidden' : '';
+    html += '<section class="card"' + show + '><h2><span class="n">' + (sec.badge || num) + '</span>' + esc(sec.title) + '</h2>';
     if (sec.intro) html += '<p class="intro">' + sec.intro + '</p>';
     sec.items.forEach(function (q) {
       if (q.type === 'info') { html += '<div class="info">' + q.html + '</div>'; return; }
@@ -77,6 +79,13 @@
   var fields = function () { return form.querySelectorAll('input,textarea'); };
 
   /* ---------- progress + autosave ---------- */
+  function visible(el) { var sec = el.closest('section'); return !sec || !sec.hidden; }
+  function conds() {
+    [].forEach.call(form.querySelectorAll('section[data-show-q]'), function (sec) {
+      var f = form.querySelector('input[name="' + sec.dataset.showQ + '"]:checked');
+      sec.hidden = !(f && f.value === sec.dataset.showV);
+    });
+  }
   var qEls = form.querySelectorAll('.q');
   function answered(qe) {
     return [].some.call(qe.querySelectorAll('input,textarea'), function (f) {
@@ -86,6 +95,7 @@
   function collect() {
     var a = {};
     fields().forEach(function (f) {
+      if (!visible(f)) return;
       if (f.type === 'radio') { if (f.checked) a[f.name] = f.value; }
       else if (f.type === 'checkbox') { if (f.checked) (a[f.name] = a[f.name] || []).push(f.value); }
       else if (f.value.trim()) a[f.name] = f.value.trim();
@@ -93,9 +103,11 @@
     return a;
   }
   function update() {
-    var n = [].filter.call(qEls, answered).length;
-    document.getElementById('pct').style.width = Math.round(100 * n / qEls.length) + '%';
-    document.getElementById('count').textContent = n + ' of ' + qEls.length;
+    conds();
+    var vis = [].filter.call(qEls, visible);
+    var n = vis.filter(answered).length;
+    document.getElementById('pct').style.width = Math.round(100 * n / vis.length) + '%';
+    document.getElementById('count').textContent = n + ' of ' + vis.length;
   }
   var t;
   function save() {

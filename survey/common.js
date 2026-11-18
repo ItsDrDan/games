@@ -38,6 +38,32 @@ window.SURVEY_COMMON = {
       ]
     };
   },
+  games: function (course, list) {
+    return {
+      title: 'The study games (brand new!)',
+      items: [
+        { type: 'info', html: '<h3>The study games were brand new this semester</h3><p>I built all of the study games at <a href="https://itsdrdan.github.io/games/" target="_blank" rel="noopener">itsdrdan.github.io/games</a> this semester, so you were one of the very first classes to use them. I really want to know if they helped.</p>' },
+        { type: 'single', id: 'games_often', q: 'How often did you use the study games?', options: ['Never', 'Once or twice', 'Before Skill Checks or exams', 'Most weeks', 'Almost every day'] },
+        { type: 'multi', id: 'games_used', q: 'Which games did you use? (check all that apply)', options: list.concat(['The Daily 5', 'I didn’t use any']) },
+        { type: 'scale', id: 'games_rate', q: 'If you used them: how much do you agree?', labels: window.SURVEY_COMMON_AGREE, rows: [
+          'The study games helped me understand the material.',
+          'The study games helped me prepare for Skill Checks and exams.',
+          'The games were fun and kept me practicing longer than homework would.',
+          'The hints and step-by-step feedback helped when I got something wrong.',
+          'The games were easy to use on my phone.'] },
+        { type: 'text', id: 'games_best', q: 'Which game helped you the most, and why?' },
+        { type: 'text', id: 'games_ideas', q: 'Any general thoughts? What was confusing or broken, or what game or feature should I add next?' }
+      ]
+    };
+  },
+  ahead: {
+    title: 'Looking ahead',
+    items: [
+      { type: 'info', html: '<h3>Taking the TEAS or the MCAT someday?</h3><p>I also made free study sites for the big entrance exams. <b>Bookmark or favorite them in your browser</b> so you have them when the time comes:</p>' +
+        '<p>🩺 <b>TEAS Study Hub</b> (nursing and allied health programs): <a href="https://itsdrdan.github.io/teas/" target="_blank" rel="noopener">itsdrdan.github.io/teas</a><br>🧠 <b>MCAT Study Hub</b> (medical school): <a href="https://itsdrdan.github.io/MCAT/" target="_blank" rel="noopener">itsdrdan.github.io/MCAT</a></p>' },
+      { type: 'multi', id: 'entrance', q: 'Are you planning to take either of these exams? (check all that apply)', options: ['TEAS', 'MCAT', 'Another entrance exam (DAT, PCAT, OAT, HESI, etc.)', 'Neither', 'Not sure yet'] }
+    ]
+  },
   overall: function (course, extraRows) {
     return {
       title: 'Overall',
@@ -63,6 +89,7 @@ window.SURVEY_COMMON = {
   },
   thanks: '<p>As always, it was an absolute pleasure to have you in my class. I hope you hate chemistry a little less… or maybe you really like chemistry now and just wish it wasn’t so hard.</p>' +
     '<p>If you ever need anything in your academic journey, <b>please reach out</b>: a letter of recommendation, someone to listen to you stress about school or life, anything. I am here for you at FCC. My email is <a href="mailto:Daniel.kwasniewski@fresnocitycollege.edu">Daniel.kwasniewski@fresnocitycollege.edu</a>.</p>' +
+    '<p>Before you go: if you’re ever taking the <b>TEAS</b> or the <b>MCAT</b>, bookmark my free study sites: <a href="https://itsdrdan.github.io/teas/">TEAS Study Hub</a> and <a href="https://itsdrdan.github.io/MCAT/">MCAT Study Hub</a>.</p>' +
     '<p>I hope to see you again on campus, and I wish you the best of luck achieving your dreams. Thank you for making me a part of your journey. — Dr. Dan</p>'
 };
 window.SURVEY_COMMON_AGREE = window.SURVEY_COMMON.agree;
