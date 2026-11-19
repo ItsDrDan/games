@@ -159,6 +159,16 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/thermochemistry/"
   },
   {
+   "id": "equilibrium",
+   "title": "Equilibrium Park!",
+   "icon": "equilibrium",
+   "blurb": "Watch reactions balance, stress them, and see Le Châtelier's principle happen, with a theme-park line model and live particle labs.", "topics": ["chemical equilibrium", "dynamic equilibrium", "forward and reverse reaction rates", "reversible reactions", "Le Chatelier's principle", "equilibrium shifts", "equilibrium constant K", "writing K expressions", "heterogeneous equilibrium", "effect of temperature on equilibrium", "effect of pressure and volume on equilibrium", "catalysts and equilibrium"],
+   "courses": [
+    "3A"
+   ],
+   "url": "https://itsdrdan.github.io/equilibrium/"
+  },
+  {
    "id": "IMF",
    "logo": "assets/games/imf.webp",
    "title": "Sticky Molecules (Intermolecular Forces)",
@@ -8200,7 +8210,7 @@ window.HUB_DATA = {
       "interpreting K",
       "Le Chatelier's principle"
      ],
-     "games": [],
+     "games": ["equilibrium"],
      "videos": [
       "qatdA_ALnx8",
       "-ie15qDdHjE",
