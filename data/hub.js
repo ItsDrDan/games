@@ -160,6 +160,7 @@ window.HUB_DATA = {
   },
   {
    "id": "equilibrium",
+   "logo": "assets/games/equilibrium.webp",
    "title": "Equilibrium Park!",
    "icon": "equilibrium",
    "blurb": "Watch reactions balance, stress them, and see Le Châtelier's principle happen, with a theme-park line model and live particle labs.", "topics": ["chemical equilibrium", "dynamic equilibrium", "forward and reverse reaction rates", "reversible reactions", "Le Chatelier's principle", "equilibrium shifts", "equilibrium constant K", "writing K expressions", "heterogeneous equilibrium", "effect of temperature on equilibrium", "effect of pressure and volume on equilibrium", "catalysts and equilibrium"],
