@@ -15,7 +15,7 @@
  * Version: New version > Deploy. The URL stays the same.
  */
 
-const SHEET_ID = ""; // "" = the sheet this script is attached to
+const SHEET_ID = "1fFnqJCJ1-OZM-7k_AHVp5oKoKvOOEcetv_z848aGsgI"; // the "Semester Surveys" Google Sheet (itsdrdantv); "" = the sheet this script is attached to
 const ALLOWED = { "chem3a-fa26": "CHEM 3A Fall 2026", "chem1a-fa26": "CHEM 1A Fall 2026" };
 
 function json_(obj) {
@@ -56,7 +56,7 @@ function doPost(e) {
     Object.keys(a).forEach(id => {
       if (!(id in colOf)) return;
       const v = a[id];
-      row[colOf[id]] = String(Array.isArray(v) ? v.join("; ") : v).slice(0, 5000);
+      const s = String(Array.isArray(v) ? v.join("; ") : v).slice(0, 5000); row[colOf[id]] = /^[=+\-@]/.test(s) ? "'" + s : s; // keep "- item" text from turning into a formula
     });
     sh.appendRow(row);
     return json_({ ok: true });

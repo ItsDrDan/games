@@ -81,7 +81,9 @@
     '<p class="cheer" id="cheer"></p><button class="btn" id="go" type="button">Send my anonymous survey 🚀</button>' +
     '<p class="err" id="err" hidden></p><p class="saved" id="saved"></p></section>' +
     '<section class="card done" id="done" hidden><div class="big">🎉</div><h2 style="justify-content:center">Thank you!</h2>' + S.thanks +
-    '<p class="saved" id="previewnote" hidden>Preview copy: answers are only sent from the live page.</p></section>';
+    '<p class="saved" id="previewnote" hidden>Preview copy: answers are only sent from the live page.</p>' +
+    '<p id="againwrap" hidden style="margin-top:18px"><small>Using a shared or lab computer and haven’t taken it yet?</small><br>' +
+    '<button class="btn" id="again" type="button" style="margin-top:8px;font-size:1rem;padding:10px 20px">Start a new survey</button></p></section>';
   root.innerHTML = html;
 
   var form = root;
@@ -186,6 +188,12 @@
       });
   });
 
+  /* Shared computers: a later visitor sees the thank-you screen, so let them start fresh. */
+  document.getElementById('again').addEventListener('click', function () {
+    try { localStorage.removeItem(DONE); localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+
   restore(); update();
-  try { if (localStorage.getItem(DONE)) showDone(); } catch (e) {}
+  try { if (localStorage.getItem(DONE)) { showDone(); document.getElementById('againwrap').hidden = false; } } catch (e) {}
 })();
