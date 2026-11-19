@@ -38,9 +38,27 @@
   const PRE_U = /(^|[\s(\[>"'→⟶+,;:=\/])([⁰¹²³⁴⁵⁶⁷⁸⁹]+m?)([₊₋]?[₀₁₂₃₄₅₆₇₈₉]+)(?=[A-Za-zαβγ])/g;
   const POST_U = /([A-Za-z)\]])([⁰¹²³⁴⁵⁶⁷⁸⁹]*[⁺⁻])([₀₁₂₃₄₅₆₇₈₉]+)/g;
   const PRE_H = /(^|[\s(\[>"'→⟶+,;:=\/])<sup>(\d+m?)<\/sup>\s*<sub>([+−-]?\d+)<\/sub>(?=[A-Za-zαβγ])/g;
+  /* ---- caret powers typed as plain text in the bank (F^−, Cu^2+, 10^-3, e^−Ea/RT, sp^2) → real superscripts.
+     Typing instructions stay literal ("Type it like SO4^2-", "e.g. 1 × 10^-3", "sp^2 work too", "^ key"). ---- */
+  const KEEP = /\b(?:like|e\.g\.)\s+[^\s,;)]+(?:\s×\s10\^[^\s,;)]+)?|\bsp\^2 work too|\^ key|×10\^ typed/g;
+  const SGN = '(?:&minus;|−|-|\\+)';
+  const CHARGE = new RegExp('([A-Za-z0-9₀-₉)\\]])\\^(\\d*)(' + SGN + ')(?![\\dA-Za-zΔ]|\\.\\d|\\((?!aq\\)|s\\)|l\\)|g\\)))', 'g');
+  const PAREN = new RegExp('\\^(' + SGN + '?)\\(([^()]*)\\)((?:\\([^()]*\\))*)', 'g');
+  const POWER = new RegExp('\\^(' + SGN + '?[0-9A-Za-zΔ½°_]+(?:\\.\\d+)?(?:\\/[0-9A-Za-zΔ½°_]+)*)', 'g');
+  const sgn = t => t.replace(/&minus;|-/g, '−');
+  function carets(text) {
+    if (text.indexOf('^') < 0) return text;
+    const kept = [];
+    return text.replace(KEEP, m => '\u0000' + (kept.push(m) - 1) + '\u0000')
+      .replace(CHARGE, (m, b, n, s) => b + '<sup>' + n + sgn(s) + '</sup>')
+      .replace(PAREN, (m, s, a, rest) => s || rest ? '<sup>' + sgn(s) + '(' + a + ')' + rest + '</sup>' : '<sup>' + a + '</sup>')
+      .replace(POWER, (m, e) => '<sup>' + sgn(e) + '</sup>')
+      .replace(/\u0000(\d+)\u0000/g, (m, i) => kept[i]);
+  }
+  window.ddCarets = carets;
   function stack(html) {
     if (html == null) return html;
-    return String(html).split(/(<[^>]*>)/).map(part => part.startsWith('<') ? part : part
+    return String(html).split(/(<[^>]*>)/).map(part => part.startsWith('<') ? part : carets(part)
       .replace(PRE_U, (m, b, a, z) => b + '<span class="ss pre"><sup>' + plain(a, SUP) + '</sup><sub>' + plain(z, SUB) + '</sub></span>')
       .replace(POST_U, (m, b, c, n) => b + '<span class="ss"><sup>' + plain(c, SUP) + '</sup><sub>' + plain(n, SUB) + '</sub></span>')
     ).join('').replace(PRE_H, (m, b, a, z) => b + '<span class="ss pre"><sup>' + a + '</sup><sub>' + z + '</sub></span>');
@@ -396,7 +414,7 @@
       fb.className = 'daily-fb ' + (ok ? 'good' : 'shown');
       fb.innerHTML = (ok ? '<b>✓ Correct!</b> ' : '<b>Answer:</b> ' + answerText(q) + '. ') + (q.explain ? '<span class="daily-explain">' + stack(q.explain) + '</span>' : '');
       if (ok && sfClose != null) { const got = QB.sigFigs(sfClose); fb.className = 'daily-fb close'; if (input) input.classList.add('sf-close');
-        fb.innerHTML = '<div class="daily-close-title">⚠️ Close! Fix your sig figs</div><b>Your math is right, but your significant figures are not.</b> ' + (got ? 'You entered <b>' + got + '</b> sig fig' + (got === 1 ? '' : 's') + '. ' : '') + 'This answer needs <b>' + q.sigfigs + '</b>: <b>' + fmtSig(Number(q.answer), q.sigfigs) + (q.unit ? ' ' + stack(q.unit) : '') + '</b>. On a Skill Check or exam this would lose points, so fix it next time!' + (q.explain ? ' <span class="daily-explain">' + stack(q.explain) + '</span>' : ''); }
+        fb.innerHTML = '<div class="daily-close-title">⚠️ Close! Fix your sig figs</div><b>Your math is right, but your significant figures are not.</b> ' + (got ? 'You entered <b>' + got + '</b> sig fig' + (got === 1 ? '' : 's') + '. ' : '') + 'This answer needs <b>' + q.sigfigs + '</b>: <b>' + stack(fmtSig(Number(q.answer), q.sigfigs)) + (q.unit ? ' ' + stack(q.unit) : '') + '</b>. On a Skill Check or exam this would lose points, so fix it next time!' + (q.explain ? ' <span class="daily-explain">' + stack(q.explain) + '</span>' : ''); }
       if (q.type === 'mc' && q.why && q.why.some(Boolean)) { const mine = firstPick;
         fb.insertAdjacentHTML('beforeend', '<details class="daily-why"' + (ok && !(mine && mine !== q.answer) ? '' : ' open') + '><summary>Why the other choices are wrong</summary><ul>' + q.choices.map((c, i) => c === q.answer || !q.why[i] ? '' : '<li' + (c === mine ? ' class="mine"' : '') + '><b>' + stack(c) + ':</b> ' + stack(q.why[i]) + (c === mine ? ' <i>(your first pick)</i>' : '') + '</li>').join('') + '</ul></details>'); }
       const hist = load(CH_KEY, {}), k = cid + '-' + q.ch, p = hist[k] || {}; p.seen = Date.now(); if (!firstTry) p.miss = Date.now(); hist[k] = p; save(CH_KEY, hist);
@@ -412,7 +430,7 @@
       prompt, answerArea, hintBox, fb,
       h('div', {class: 'daily-btns'}, hintBtn, showBtn, nextBtn));
   }
-  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); /* show the answer the checker accepts: the item's own sig figs when it has them, otherwise the stored value (not a 3-sig-fig rounding of it) */ const big = Math.abs(a) >= 1e6 || (Math.abs(a) < 1e-3 && a !== 0); return '<b>' + (Number.isFinite(a) ? (q.sigfigs ? fmtSig(a, q.sigfigs) : big ? Number(a.toPrecision(6)).toExponential().replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + d) : String(Number(a.toPrecision(8)))) : esc(q.answer)) + (q.unit ? ' ' + q.unit : '') + '</b>'; } return '<b>' + stack(q.answer) + '</b>'; }
+  function answerText(q) { if (q.type === 'number') { const a = Number(q.answer); /* show the answer the checker accepts: the item's own sig figs when it has them, otherwise the stored value (not a 3-sig-fig rounding of it) */ const big = Math.abs(a) >= 1e6 || (Math.abs(a) < 1e-3 && a !== 0); return '<b>' + stack(Number.isFinite(a) ? (q.sigfigs ? fmtSig(a, q.sigfigs) : big ? Number(a.toPrecision(6)).toExponential().replace(/e([+-]?)(\d+)/, (m, sg, d) => ' × 10^' + (sg === '-' ? '-' : '') + d) : String(Number(a.toPrecision(8)))) : esc(q.answer)) + (q.unit ? ' ' + stack(q.unit) : '') + '</b>'; } return '<b>' + stack(q.answer) + '</b>'; }
   let logged = {};
   function ddTrackSafe(cid, q, correct, slip) { try { if (!window.ddTrack || logged[q.id]) return; logged[q.id] = 1; ddTrack({game: 'hub', course: cid, mode: 'Daily 5', topic: q.chLabel + ' ' + q.chTitle, correct, tries: slip ? 'slip:' + slip : '', slip}); } catch {} }
 
