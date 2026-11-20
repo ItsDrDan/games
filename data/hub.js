@@ -171,6 +171,7 @@ window.HUB_DATA = {
   },
   {
    "id": "acidbase",
+   "logo": "assets/games/acidbase.webp",
    "title": "Proton Swap!",
    "icon": "ph",
    "blurb": "Spot acids and bases, run the pH numbers, titrate to faint pink, and watch a buffer hold its ground, with live pH, titration and buffer labs.", "topics": ["acids and bases", "strong and weak acids", "strong and weak bases", "Arrhenius acids and bases", "Brønsted–Lowry acids and bases", "conjugate acid-base pairs", "pH and pOH", "[H+] and [OH-] calculations", "Kw", "indicators", "litmus", "phenolphthalein", "neutralization", "titration", "buffers", "blood buffer"],
