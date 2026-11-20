@@ -182,6 +182,7 @@ window.HUB_DATA = {
   },
   {
    "id": "nuclear",
+   "logo": "assets/games/nuclear.webp",
    "title": "Nuclear Glow Up!",
    "icon": "radioactive",
    "blurb": "Fire alpha, beta and gamma decays at a real nucleus, balance nuclear equations box by box, block radiation with shields, watch half-lives tick, and start a chain reaction.", "topics": ["nuclear chemistry", "radioactivity", "alpha decay", "beta decay", "positron emission", "electron capture", "gamma radiation", "nuclear equations", "bombardment", "transmutation", "band of stability", "penetrating and ionizing power", "radiation shielding", "Geiger counter", "half-life", "radiocarbon dating", "fission", "fusion", "chain reaction", "medical isotopes", "PET scan"],
