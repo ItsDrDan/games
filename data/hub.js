@@ -180,6 +180,16 @@ window.HUB_DATA = {
    "url": "https://itsdrdan.github.io/acidbase/"
   },
   {
+   "id": "nuclear",
+   "title": "Nuclear Glow Up!",
+   "icon": "radioactive",
+   "blurb": "Fire alpha, beta and gamma decays at a real nucleus, balance nuclear equations box by box, block radiation with shields, watch half-lives tick, and start a chain reaction.", "topics": ["nuclear chemistry", "radioactivity", "alpha decay", "beta decay", "positron emission", "electron capture", "gamma radiation", "nuclear equations", "bombardment", "transmutation", "band of stability", "penetrating and ionizing power", "radiation shielding", "Geiger counter", "half-life", "radiocarbon dating", "fission", "fusion", "chain reaction", "medical isotopes", "PET scan"],
+   "courses": [
+    "3A"
+   ],
+   "url": "https://itsdrdan.github.io/nuclear/"
+  },
+  {
    "id": "IMF",
    "logo": "assets/games/imf.webp",
    "title": "Sticky Molecules (Intermolecular Forces)",
@@ -8302,7 +8312,7 @@ window.HUB_DATA = {
       "nuclear fusion",
       "radioactivity in medicine"
      ],
-     "games": [],
+     "games": ["nuclear"],
      "videos": [
       "WDBiyaeivFY",
       "tjAebD_t8PA",
