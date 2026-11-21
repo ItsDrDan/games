@@ -193,6 +193,7 @@ window.HUB_DATA = {
   },
   {
    "id": "dosage",
+   "logo": "assets/games/dosage.webp",
    "title": "Dose Right!",
    "icon": "flask",
    "blurb": "Build dosage setups, draw up syringes, work weight-based orders, set IV pumps and drip rates, and follow patient cases. All drugs and orders are made up.", "topics": ["dosage calculations", "dimensional analysis", "conversion factors", "lb to kg", "mg/kg", "weight-based dosing", "safe dose range", "syringe reading", "IV flow rate", "mL/h", "drip rate", "gtt/min", "infusion time", "percent solutions", "dilution", "M1V1 = M2V2", "nursing math"],
