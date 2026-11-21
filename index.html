@@ -1301,7 +1301,7 @@ function viewPlay(id, params) {
   noteRecent({t: 'game', c: from && courseById[from] ? from : '', id});
   const frame = h('iframe', {src: g.url, title: g.title + ' (interactive study game)', allow: 'fullscreen', allowfullscreen: true});
   const box = h('section', {class: 'player'},
-    h('div', {class: 'player-bar'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Now practicing'), h('h2', {class: 'playtitle'}, g.logo ? h('img', {src: g.logo, alt: ''}) : (g.icon ? g.icon + ' ' : ''), g.title)),
+    h('div', {class: 'player-bar'}, h('div', {}, h('div', {class: 'eyebrow'}, 'Now practicing'), h('h2', {class: 'playtitle'}, g.logo ? h('img', {src: g.logo, alt: ''}) : (g.icon ? ic(g.icon) : ''), g.title)),
       h('div', {class: 'btns'},
         h('a', {class: 'btn secondary small', href: g.url, target: '_blank', rel: 'noopener'}, 'Open separately ↗'),
         h('button', {class: 'btn small', type: 'button', onclick: async e => { try { if (document.fullscreenElement) await document.exitFullscreen(); else await box.requestFullscreen(); } catch { e.currentTarget.textContent = 'Use “Open separately”'; } }}, ic('fullscreen'), ' Full screen'))),
