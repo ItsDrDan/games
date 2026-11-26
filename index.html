@@ -454,6 +454,9 @@ h1 span{background:linear-gradient(90deg,#ff7a8a,#9a6bff 55%,#36b39a);-webkit-ba
 .day .dn{font-weight:900;color:var(--edge);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
 .day .dch{font-weight:800;text-decoration:none;display:flex;gap:6px;line-height:1.3}.day .dch:hover{text-decoration:underline}
 .day p{margin:4px 0 0;color:#5e5679;font-size:.92rem;line-height:1.45}
+.dayspick{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px;font-weight:800}
+.dayspick label{display:flex;align-items:center;gap:6px}
+.daysel{min-height:44px;border:2px solid var(--edge);border-radius:999px;padding:0 14px;background:#fff;font-weight:800;cursor:pointer}
 
 .cangroups{display:grid;gap:10px}
 .cangroup{border:2px solid #eee6fb;border-radius:18px;background:#fff;overflow:hidden}
@@ -1557,7 +1560,7 @@ function examHits(q, filter) {
     if ((eq.course && cid !== eq.course) || (!eq.course && filter !== 'all' && cid !== filter)) continue;
     const E = classMode() ? EXAMS[cid] : null;
     if (eq.kind === 'exam' || eq.kind === 'any') for (const ex of E?.exams || []) if (eq.kind === 'any' || ex.id === eq.id) out.push({href: `#/exam/${cid}/${ex.id}`, cid, title: `${ex.title}`, sub: `Dr. Dan’s sections · Chapters ${ex.ch.filter(x => x !== 'review').join(', ')}`});
-    if (eq.kind === 'check' || eq.kind === 'any') out.push({href: `#/exams/${cid}#checks`, cid, title: `${courseById[cid].name} skill check builder`, sub: 'Pick this week’s topic and get a quick 2-day plan', custom: true, icon: 'check'});
+    if (eq.kind === 'check' || eq.kind === 'any') out.push({href: `#/exams/${cid}#checks`, cid, title: `${courseById[cid].name} skill check builder`, sub: 'Pick this week’s topic and get a quick study plan', custom: true, icon: 'check'});
     if (eq.kind !== 'check') out.push({href: `#/exams/${cid}`, cid, title: `Build your own ${courseById[cid].name} exam plan`, sub: 'Pick the chapters your exam covers (works for any instructor)', custom: true});
   }
   return out;
@@ -1582,7 +1585,7 @@ function builder(cid, c) {
   const hint = h('p', {style: 'margin:0 0 14px;color:var(--muted)'});
   const btn = h('a', {class: 'btn', href: '#', onclick: e => { e.preventDefault(); if (!picks.size) { btn.textContent = 'Tick at least one chapter first'; return; } location.hash = `#/${mode === 'check' ? 'check' : 'exam'}/${cid}/custom?ch=${[...picks].join(',')}`; }});
   const seg = h('div', {class: 'seg', role: 'group', 'aria-label': 'What are you studying for?'});
-  const draw = () => { hint.textContent = mode === 'check' ? 'Tick the chapter this week’s skill check covers (usually just one). You’ll get a short checklist and a 2-day plan.' : 'Tick the chapters your exam covers. You’ll get one checklist, the games and videos, and a 7-day plan.'; btn.textContent = cta(); seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === mode))); };
+  const draw = () => { hint.textContent = mode === 'check' ? 'Tick the chapter this week’s skill check covers (usually just one). You’ll get a short checklist and a day-by-day plan (you pick how many days).' : 'Tick the chapters your exam covers. You’ll get one checklist, the games and videos, and a day-by-day plan (you pick how many days).'; btn.textContent = cta(); seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.m === mode))); };
   for (const [m, icn, label] of [['exam', 'note', 'An exam'], ['check', 'check', 'A skill check']]) seg.append(h('button', {type: 'button', class: 'chip', 'data-m': m, onclick: () => { mode = m; draw(); }}, ic(icn), ' ' + label));
   const box = h('div', {class: 'chpick'}, c.chapters.filter(ch => ch.id !== 'review').map(ch => h('label', {class: 'pick'},
     h('input', {type: 'checkbox', onchange: e => { e.target.checked ? picks.add(ch.id) : picks.delete(ch.id); btn.textContent = cta(); }}),
@@ -1609,6 +1612,56 @@ function viewExamHub(cid) {
         retakeNote(), weekCard(cid) ? null : classNote()]
         : classMode() ? h('p', {class: 'empty-note'}, `Exam guides for Dr. Dan’s ${c.name} sections are coming. Until then, build your own plan below.`) : null,
       builder(cid, c)));
+}
+
+/* Builds a plan of exactly n days. Units are the things to learn: the chapters picked, or the learning days of an
+   authored plan (data/exams.js). The last days are review (mixed practice, timed practice, rest); with fewer days
+   the units are merged, with more days each unit gets a second practice pass. */
+const PLAN_LEARN = 'Read the nutshell and skill recipe, watch the key moments you need, then play the game to 80%.';
+function makePlanDays(cid, c, studyChs, authored, n, isCheck) {
+  const chOf = ids => (ids || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean);
+  const isLearn = d => (d.ch || []).some(id => id !== 'review');
+  let units, tail;
+  if (authored) {
+    const last = authored.map(isLearn).lastIndexOf(true);
+    units = authored.slice(0, last + 1).filter(isLearn).map(d => ({t: d.t, i: d.i, chs: chOf(d.ch), note: d.note}));
+    tail = authored.slice(last + 1).map(d => ({t: d.t, i: d.i, chs: chOf(d.ch), note: d.note}));
+    if (n === authored.length && units.length + tail.length === n) return [...units, ...tail];
+  } else {
+    units = studyChs.map(ch => ({chs: [ch], note: PLAN_LEARN}));
+    tail = [];
+  }
+  if (!units.length) units = [{t: 'Review', chs: [], note: PLAN_LEARN}];
+  const mixed = tail.find(d => d.i === 'repeat') || {t: 'Mixed practice', i: 'repeat', chs: [], note: 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.'};
+  const rest = tail.find(d => d.i === 'rest') || {t: 'Light review & rest', i: 'rest', chs: [], note: 'Skim your formulas and the “watch out for” lists. Get a full night of sleep.', s: 4};
+  const extra = tail.filter(d => d !== mixed && d !== rest);   // e.g. timed practice
+  const allChs = units.flatMap(u => u.chs);
+  if (n === 1) return [{tag: 'Cram day', t: 'Everything, fast', i: 'game', chs: allChs, note: 'Short on time: skim the nutshell for each chapter, play each game once, then tick off the checklist above. Sleep beats an all-nighter.'}];
+  if (n === 2) return isCheck || units.length <= 1
+    ? [{tag: 'Learn', chs: allChs, note: 'Read the nutshell, work one example with the skill recipe, and watch the topic moments you need below.', s: 0},
+       {tag: 'Practice', t: 'Game + checklist', i: 'game', chs: [], note: 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.', s: 3}]
+    : [{tag: 'Learn', chs: allChs, note: 'Read the nutshell and skill recipe for each chapter and watch the key moments you need.', s: 0},
+       {tag: 'Practice', t: 'Games + checklist', i: 'game', chs: [], note: 'Play each game to 80%, then tick off every skill above without notes. Get a full night of sleep.', s: 3}];
+  const end = n <= 5 || isCheck ? [mixed, rest] : [mixed, ...extra, rest];
+  if (isCheck && n === 3) end.splice(0, 1);   // 3-day skill check: learn, practice, rest
+  const L = n - end.length;
+  let learn;
+  if (L <= units.length) {
+    // merge neighbouring units into L days, as evenly as possible
+    learn = [];
+    for (let d = 0, k = 0; d < L; d++) {
+      const take = Math.floor((units.length - k) / (L - d)), grp = units.slice(k, k + take); k += take;
+      learn.push(grp.length === 1 ? grp[0] : {t: grp.length <= 2 && grp.some(u => u.t) ? grp.map(u => u.t || u.chs.map(ch => ch.title).join(', ')).join(' + ') : null, chs: grp.flatMap(u => u.chs), note: PLAN_LEARN});
+    }
+  } else {
+    // one day per unit, then practice passes through the units in order
+    learn = [...units];
+    for (let k = 0; learn.length < L; k++) {
+      const u = units[k % units.length];
+      learn.push({tag: 'Practice', t: u.t ? 'Practice: ' + u.t : null, i: 'repeat', chs: u.chs, note: 'Second pass: redo the skill recipe without notes, play the game again (try a harder mode), and tick off what you can now do.'});
+    }
+  }
+  return [...learn, ...end];
 }
 
 function viewExam(cid, id, params, isCheck) {
@@ -1650,25 +1703,26 @@ function viewExam(cid, id, params, isCheck) {
   // games and videos across chapters
   const gs = [...new Set(chs.flatMap(ch => ch.games))].map(g => games.get(g)).filter(Boolean);
   const vs = [...new Set(chs.flatMap(ch => ch.videos))].map(v => videos.get(v)).filter(Boolean);
-  // 7-day plan
+  // day-by-day plan: students pick how many days they have (1–21); the choice is saved on this device
   const studyChs = chs.filter(ch => ch.id !== 'review');
-  const days = [];
-  const slots = Math.min(5, studyChs.length) || 1;
-  for (let d = 0; d < slots; d++) days.push(studyChs.filter((_, i) => i % slots === d));
-  const plan = isCheck ? h('ol', {class: 'days'},
-    h('li', {class: 'day s0'}, h('div', {class: 'dn'}, 'Day 1 · Learn'), studyChs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
-      h('p', {}, 'Read the nutshell, work one example with the skill recipe, and watch the topic moments you need below.')),
-    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, 'Day 2 · Practice'), h('b', {}, ic('game'), ' Game + checklist'), h('p', {}, 'Play the game until you get 8 of 10 right, then tick off every skill above without notes.')))
-  : ex.plan ? h('ol', {class: 'days'}, ex.plan.map((d, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
-      h('b', {}, d.i ? [ic(d.i), ' '] : null, d.t),
-      (d.ch || []).map(id => c.chapters.find(y => y.id === id)).filter(Boolean).map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
-      h('p', {}, d.note))))
-  : h('ol', {class: 'days'},
-    days.map((group, i) => h('li', {class: 'day s' + (i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}`),
-      group.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
-      h('p', {}, 'Read the nutshell and skill recipe, watch the key moments you need, then play the game to 80%.'))),
-    h('li', {class: 'day s3'}, h('div', {class: 'dn'}, `Day ${days.length + 1}`), h('b', {}, ic('repeat'), ' Mixed practice'), h('p', {}, 'Uncheck anything shaky in the checklist above and redo just those. Play each game once more, mixed mode.')),
-    h('li', {class: 'day s4'}, h('div', {class: 'dn'}, `Day ${days.length + 2}`), h('b', {}, ic('rest'), ' Light review & rest'), h('p', {}, 'Skim your formulas and the "watch out for" lists. Get a full night of sleep.')));
+  const authored = !isCheck && ex.plan ? ex.plan : null;
+  const daysKey = 'hub-days-' + key;
+  const defDays = isCheck ? 2 : authored ? authored.length : 7;
+  const clampDays = n => Math.max(1, Math.min(21, Math.round(n)));
+  let nDays = clampDays(Number(params.get('days')) || Number((() => { try { return localStorage.getItem(daysKey); } catch { return null; } })()) || defDays);
+  const planHead = h('h3', {});
+  const planBox = h('div', {});
+  const daysSel = h('select', {id: 'plandays', class: 'daysel', onchange: e => { nDays = clampDays(Number(e.target.value)); try { nDays === defDays ? localStorage.removeItem(daysKey) : localStorage.setItem(daysKey, String(nDays)); } catch {} drawPlan(); }},
+    Array.from({length: 21}, (_, i) => h('option', {value: i + 1, selected: i + 1 === nDays}, `${i + 1} day${i ? 's' : ''}${i + 1 === defDays ? ' (suggested)' : ''}`)));
+  const daysPick = h('div', {class: 'dayspick'}, h('label', {for: 'plandays'}, 'How many days do you have to study?'), daysSel);
+  const drawPlan = () => {
+    planHead.replaceChildren(ic('calendar'), ` Your ${nDays}-day plan`);
+    planBox.replaceChildren(h('ol', {class: 'days'}, makePlanDays(cid, c, studyChs, authored, nDays, isCheck).map((d, i) => h('li', {class: 'day s' + (d.s ?? i % 5)}, h('div', {class: 'dn'}, `Day ${i + 1}${d.tag ? ' · ' + d.tag : ''}`),
+      d.t ? h('b', {}, d.i ? [ic(d.i), ' '] : null, d.t) : null,
+      d.chs.map(ch => h('a', {class: 'dch', href: `#/course/${cid}/${ch.id}`}, h('span', {style: hue(ch)}, ic(ch.icon)), `${ch.label}: ${ch.title}`)),
+      h('p', {}, d.note)))));
+  };
+  drawPlan();
   app.replaceChildren(
     h('section', {class: 'course-head', 'data-course': cid}, h('img', {class: 'watermark small', src: 'assets/logo-mark.svg', alt: '', 'aria-hidden': 'true'}), h('div', {class: 'wrap'},
       h('nav', {class: 'crumbs', 'aria-label': 'Breadcrumb'}, h('a', {href: '#/'}, 'Courses'), '›', h('a', {href: '#/course/' + cid}, c.name), '›', h('a', {href: '#/exams/' + cid}, 'Exams'), '›', h('span', {}, ex.title)),
@@ -1682,7 +1736,7 @@ function viewExam(cid, id, params, isCheck) {
       h('section', {class: 'panel'}, h('h3', {}, ic('list'), ' Skills checklist', h('span', {class: 'count'}, label)), bar,
         h('p', {style: 'color:var(--muted);margin:10px 0 12px'}, 'Tick a skill when you can do it without notes. Your checks are saved on this device.'), list),
       ex.tips?.length ? h('section', {class: 'tips', style: 'margin-top:18px'}, h('h3', {}, ic('idea'), ' Know before you go'), h('ul', {}, ex.tips.map(t => h('li', {}, t)))) : null,
-      h('section', {class: 'panel'}, h('h3', {}, ic('calendar'), isCheck ? ' Your 2-day plan' : ` Your ${ex.plan ? ex.plan.length : 7}-day plan`), plan, retakeNote()),
+      h('section', {class: 'panel'}, planHead, daysPick, planBox, retakeNote()),
       gs.length ? h('section', {class: 'panel'}, h('h3', {}, ic('game'), ' Practice games', h('span', {class: 'count'}, gs.length)), h('div', {class: 'grid'}, gs.map(g => gameCard(g, cid)))) : null,
       vs.length ? h('section', {class: 'panel'}, h('h3', {}, ic('video'), ' Lessons for this ' + (isCheck ? 'skill check' : 'exam'), h('span', {class: 'count'}, vs.length + ' lessons')), theater(vs)) : null));
 }
